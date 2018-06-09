@@ -29,7 +29,7 @@
     <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="/assets/scripts/bootstrap-table.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
-    <script src="/assets/js/selfsupport.js"></script>
+    <script src="/assets/js/cargomanage.js"></script>
     <script>
         $(function(){
             //获取警示数目
@@ -62,11 +62,6 @@
                         </a>
                         <ul class="dropdown-menu notifications">
                             <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-                            <!--<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-                            <li><a href="#" class="more">See all notifications</a></li>-->
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -96,8 +91,8 @@
                         <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-file-empty"></i> <span>贸易台账管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subPages" class="collapse in">
                             <ul class="nav">
-                                <li><a href="/trade/selfsupport" class="active">自营台账</a></li>
-                                <li><a href="/trade/inout">进销存台账</a></li>
+                                <li><a href="/trade/contract">自营台账</a></li>
+                                <li><a href="/trade/cargomanage" class="active">进销存台账</a></li>
                                 <li><a href="/trade/agent">代理台账</a></li>
                             </ul>
                         </div>
@@ -109,12 +104,6 @@
     <div class="main">
         <div class="main-content">
             <div class="container-fluid">
-                <!--<div class="panel panel-headline">
-                    <div class="panel-body">
-                        &lt;!&ndash;右侧内容&ndash;&gt;
-                        <h1>自营管理</h1>
-                    </div>
-                </div>-->
                 <div class="" style="padding-bottom:0px;">
                     <div class="panel panel-default" style="margin-bottom:10px;">
                         <div class="panel-heading" style="padding-top:10px;padding-bottom:10px;">查询条件</div>
@@ -148,7 +137,7 @@
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                         </button>
                     </div>
-                    <table id="tb_selfsupport"></table>
+                    <table id="tb_cargo"></table>
                 </div>
             </div>
         </div>

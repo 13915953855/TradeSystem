@@ -39,23 +39,29 @@ public class MainController {
     public String login() {
         return "login";
     }
-    @GetMapping("/trade/selfsupport")
-    public String selfsupport(Model model, HttpSession session) {
+    @GetMapping("/trade/contract")
+    public String contract(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        return "/trade/selfsupport";
+        return "/trade/contract";
     }
-    @GetMapping("/trade/selfsupport/add")
-    public String selfsupportadd(Model model, HttpSession session) {
+    @GetMapping("/trade/contract/add")
+    public String contractadd(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        return "/trade/selfsupportadd";
+        return "/trade/contractadd";
     }
-    @GetMapping("/trade/inout")
+    @GetMapping("/trade/cargomanage")
     public String inout(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        return "/trade/inout";
+        return "/trade/cargomanage";
+    }
+    @GetMapping("/trade/cargo/add")
+    public String cargoadd(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "/trade/cargoadd";
     }
     @GetMapping("/trade/agent")
     public String agent(Model model, HttpSession session) {

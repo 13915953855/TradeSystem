@@ -15,7 +15,7 @@ var TableInit = function () {
     var oTableInit = new Object();
     //初始化Table
     oTableInit.Init = function () {
-        $('#tb_selfsupport').bootstrapTable({
+        $('#tb_cargo').bootstrapTable({
             url: '/trade/list',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -24,7 +24,7 @@ var TableInit = function () {
             pagination: true,                   //是否显示分页（*）
             sortable: true,                     //是否启用排序
             sortName: "id",                     //排序字段名
-            sortOrder: "asc",                   //排序方式
+            sortOrder: "desc",                   //排序方式
             queryParams: oTableInit.queryParams,//传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber:1,                       //初始化加载第一页，默认第一页
@@ -73,7 +73,7 @@ var ButtonInit = function () {
     oInit.Init = function () {
         //初始化页面上面的按钮事件
         $("#btn_add").click(function(){
-            window.location.href="/trade/selfsupport/add";
+            window.location.href="/trade/cargo/add";
         });
     };
 

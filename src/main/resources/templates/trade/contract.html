@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/assets/css/demo.css"/>
     <!-- GOOGLE FONTS -->
     <link rel="stylesheet" href="/assets/css/googlefont.css"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap-table.css"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap-datetimepicker.css"/>
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png"/>
     <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon.png"/>
@@ -26,7 +28,10 @@
     <script src="/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
+    <script src="/assets/scripts/bootstrap-table.js"></script>
+    <script src="/assets/scripts/bootstrap-datetimepicker.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
+    <script src="/assets/js/contract.js"></script>
     <script>
         $(function(){
             //获取警示数目
@@ -59,11 +64,6 @@
                         </a>
                         <ul class="dropdown-menu notifications">
                             <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-                            <!--<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-                            <li><a href="#" class="more">See all notifications</a></li>-->
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -88,13 +88,13 @@
         <div class="sidebar-scroll">
             <nav>
                 <ul class="nav">
-                    <li><a href="/index" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                    <li><a href="/index"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                     <li>
                         <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-file-empty"></i> <span>贸易台账管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subPages" class="collapse in">
                             <ul class="nav">
-                                <li><a href="/trade/selfsupport">自营台账</a></li>
-                                <li><a href="/trade/inout" class="active">进销存台账</a></li>
+                                <li><a href="/trade/contract" class="active">自营台账</a></li>
+                                <li><a href="/trade/cargomanage">进销存台账</a></li>
                                 <li><a href="/trade/agent">代理台账</a></li>
                             </ul>
                         </div>
@@ -106,11 +106,43 @@
     <div class="main">
         <div class="main-content">
             <div class="container-fluid">
-                <div class="panel panel-headline">
-                    <div class="panel-body">
-                        <!--右侧内容-->
-                        <h1>进销存</h1>
+                <div class="" style="padding-bottom:0px;">
+                    <div class="panel panel-default" style="margin-bottom:10px;">
+                        <div class="panel-heading" style="padding-top:10px;padding-bottom:10px;">查询条件</div>
+                        <div class="panel-body" style="padding-top:10px;padding-bottom:0;">
+                            <form id="formSearch" class="form-horizontal">
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1" for="tradeName">名称</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="tradeName"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">日期</label>
+                                    <div class="col-sm-3">
+                                        <div class="input-append date form_datetime" id="contractDate">
+                                            <input size="16" type="text" value="" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" style="text-align:left;">
+                                        <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
+
+                    <div id="toolbar" class="btn-group">
+                        <button id="btn_add" type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                        </button>
+                        <button id="btn_edit" type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                        </button>
+                        <button id="btn_delete" type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                        </button>
+                    </div>
+                    <table id="tb_contract"></table>
                 </div>
             </div>
         </div>
