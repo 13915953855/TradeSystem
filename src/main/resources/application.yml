@@ -9,7 +9,7 @@ spring:
     mode: HTML5
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/trade
+    url: jdbc:mysql://localhost:3306/trade?useUnicode=true&characterEncoding=utf8
     username: root
     password: Dap1234$
   jpa:

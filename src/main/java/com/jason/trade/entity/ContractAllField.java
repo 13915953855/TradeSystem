@@ -1,16 +1,7 @@
 package com.jason.trade.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.io.Serializable;
-
-@Entity
-public class CargoInfo implements Serializable{
-    @Id
-    @GeneratedValue
+public class ContractAllField extends ContractBaseInfo {
     private Integer cargoId;//序号
-    private Integer contractId;//合同序号
     private String externalCompany;//外商
     private String cargoNo;//库号
     private String cargoName;//产品名称
@@ -27,14 +18,68 @@ public class CargoInfo implements Serializable{
     private String elecSendDate;//电子版发送日期
     private double hystereticFee;//滞报费
 
-    public CargoInfo(){}
-
     public Integer getCargoId() {
         return cargoId;
     }
 
     public void setCargoId(Integer cargoId) {
         this.cargoId = cargoId;
+    }
+
+    public String getExternalCompany() {
+        return externalCompany;
+    }
+
+    public void setExternalCompany(String externalCompany) {
+        this.externalCompany = externalCompany;
+    }
+
+    public String getCargoNo() {
+        return cargoNo;
+    }
+
+    public void setCargoNo(String cargoNo) {
+        this.cargoNo = cargoNo;
+    }
+
+    public String getCargoName() {
+        return cargoName;
+    }
+
+    public void setCargoName(String cargoName) {
+        this.cargoName = cargoName;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public double getContractValue() {
+        return contractValue;
+    }
+
+    public void setContractValue(double contractValue) {
+        this.contractValue = contractValue;
+    }
+
+    public String getSaleCustomer() {
+        return saleCustomer;
+    }
+
+    public void setSaleCustomer(String saleCustomer) {
+        this.saleCustomer = saleCustomer;
     }
 
     public double getUnitPrePayAmount() {
@@ -69,78 +114,6 @@ public class CargoInfo implements Serializable{
         this.unitFinalPayDate = unitFinalPayDate;
     }
 
-    public Integer getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(Integer contractId) {
-        this.contractId = contractId;
-    }
-
-    public String getSaleCustomer() {
-        return saleCustomer;
-    }
-
-    public void setSaleCustomer(String saleCustomer) {
-        this.saleCustomer = saleCustomer;
-    }
-
-    public double getHystereticFee() {
-        return hystereticFee;
-    }
-
-    public void setHystereticFee(double hystereticFee) {
-        this.hystereticFee = hystereticFee;
-    }
-
-    public String getCargoNo() {
-        return cargoNo;
-    }
-
-    public void setCargoNo(String cargoNo) {
-        this.cargoNo = cargoNo;
-    }
-
-    public String getCargoName() {
-        return cargoName;
-    }
-
-    public void setCargoName(String cargoName) {
-        this.cargoName = cargoName;
-    }
-
-    public String getExternalCompany() {
-        return externalCompany;
-    }
-
-    public void setExternalCompany(String externalCompany) {
-        this.externalCompany = externalCompany;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public double getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(double unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public double getContractValue() {
-        return contractValue;
-    }
-
-    public void setContractValue(double contractValue) {
-        this.contractValue = contractValue;
-    }
-
     public double getInvoiceNumber() {
         return invoiceNumber;
     }
@@ -163,5 +136,13 @@ public class CargoInfo implements Serializable{
 
     public void setElecSendDate(String elecSendDate) {
         this.elecSendDate = elecSendDate;
+    }
+
+    public double getHystereticFee() {
+        return hystereticFee;
+    }
+
+    public void setHystereticFee(double hystereticFee) {
+        this.hystereticFee = hystereticFee;
     }
 }

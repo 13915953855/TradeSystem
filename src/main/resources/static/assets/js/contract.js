@@ -39,10 +39,10 @@ var TableInit = function () {
             pageNumber:1,                       //初始化加载第一页，默认第一页
             pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
-            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
             strictSearch: true,
             showColumns: true,                  //是否显示所有的列
-            showRefresh: true,                  //是否显示刷新按钮
+            showRefresh: false,                  //是否显示刷新按钮
             minimumCountColumns: 2,             //最少允许的列数
             clickToSelect: true,                //是否启用点击选中行
             height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
@@ -54,10 +54,26 @@ var TableInit = function () {
                 checkbox: true
             }, {
                 field: 'id',
-                title: '部门名称'
+                title: '序号'
             }, {
-                field: 'tradeName',
-                title: '上级部门'
+                field: 'externalContract',
+                title: '外合同'
+            }, {
+                field: 'insideContract',
+                title: '内合同'
+            }, {
+                field: 'businessMode',
+                title: '业务模式'
+            }, {
+                field: 'companyNo',
+                title: '厂号'
+            }, {
+                field: 'contractDate',
+                title: '合同日期',
+                //sortable: true,
+                formatter: function(value, row, index){
+                    return value;
+                }
             } ]
         });
     };
@@ -83,6 +99,54 @@ var ButtonInit = function () {
         //初始化页面上面的按钮事件
         $("#btn_add").click(function(){
             window.location.href="/trade/contract/add";
+        });
+        $("#btn_edit").click(function(){
+            var a = $('#tb_contract').bootstrapTable('getSelections');
+            if(a.length == 1){
+                 var id = a[0].id;
+                 window.location.href="/trade/contract/update?id="+id;
+            }else if(a.length > 1){
+                alert("仅支持编辑一行！");
+            }else{
+                alert("请选中一行！");
+            }
+        });
+        $("#btn_delete").click(function(){
+            var a = $('#tb_contract').bootstrapTable('getSelections');
+            var ids = "";
+            for(var i=0;i<a.length;i++) {
+                ids += a[i].id+",";
+            }
+            if(ids != ""){
+                $.ajax({
+                    url:"/trade/contract/delete",
+                    type:"POST",
+                    dataType:"json",
+                    data:{"ids":ids},
+                    success:function(res){
+                        if(res.status == "1"){
+                            alert("删除成功");
+                        }else{
+                            alert("删除失败");
+                        }
+                    }
+                });
+            }
+        });
+        $("#btn_output").click(function(){
+            $.ajax({
+                url:"/trade/contract/output",
+                type:"POST",
+                dataType:"json",
+                data:{},
+                success:function(res){
+                    if(res.status == "1"){
+                        alert("下载成功");
+                    }else{
+                        alert("下载失败");
+                    }
+                }
+            });
         });
     };
 

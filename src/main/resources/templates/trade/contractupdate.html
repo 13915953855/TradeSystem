@@ -112,157 +112,50 @@
                                 <div class="panel-heading">基本信息</div>
                                 <div class="panel-body">
                                     <form class="form-horizontal">
-                                        <input type="hidden" id="id" value=""/>
+                                        <input type="hidden" id="id" th:value="${contract.id}"/>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">外合同编号</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="externalContract" />
+                                                <input type="text" class="form-control" id="externalContract" th:value="${contract.externalContract}"/>
                                             </div>
                                             <label class="control-label col-sm-3">内合同编号</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="insideContract" />
+                                                <input type="text" class="form-control" id="insideContract" th:value="${contract.insideContract}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">业务模式</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="businessMode" />
+                                                <input type="text" class="form-control" id="businessMode" th:value="${contract.businessMode}"/>
                                             </div>
                                             <label class="control-label col-sm-3">厂号</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="companyNo" />
+                                                <input type="text" class="form-control" id="companyNo" th:value="${contract.companyNo}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">合同日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="contractDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="contractDate" type="text" th:value="${contract.contractDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
                                             <label class="control-label col-sm-3">存储仓库</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="warehouse" />
+                                                <input type="text" class="form-control" id="warehouse" th:value="${contract.warehouse}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">入库日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="storeDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="storeDate" type="text" th:value="${contract.storeDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <span>商品列表</span>
-                                    <button id="btn_add" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
-                                        <i class="fa fa-plus-square"></i>新增
-                                    </button>
-                                </div>
-                                <!-- Modal -->
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">新增商品</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="button" class="btn btn-primary" id="save_cargo">保存</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel-body" style="overflow:auto;">
-                                    <table id="tb_cargo" class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                            <th>Username</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                            <th>Username</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                            <th>Username</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Steve</td>
-                                            <td>Jobs</td>
-                                            <td>@steve</td>
-                                            <td>1</td>
-                                            <td>Steve</td>
-                                            <td>Jobs</td>
-                                            <td>@steve</td>
-                                            <td>1</td>
-                                            <td>Steve</td>
-                                            <td>Jobs</td>
-                                            <td>@steve</td>
-                                            <td>1</td>
-                                            <td>Steve</td>
-                                            <td>Jobs</td>
-                                            <td>@steve</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Simon</td>
-                                            <td>Philips</td>
-                                            <td>@simon</td>
-                                            <td>2</td>
-                                            <td>Simon</td>
-                                            <td>Philips</td>
-                                            <td>@simon</td>
-                                            <td>2</td>
-                                            <td>Simon</td>
-                                            <td>Philips</td>
-                                            <td>@simon</td>
-                                            <td>2</td>
-                                            <td>Simon</td>
-                                            <td>Philips</td>
-                                            <td>@simon</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Jane</td>
-                                            <td>Doe</td>
-                                            <td>@jane</td>
-                                            <td>3</td>
-                                            <td>Jane</td>
-                                            <td>Doe</td>
-                                            <td>@jane</td>
-                                            <td>3</td>
-                                            <td>Jane</td>
-                                            <td>Doe</td>
-                                            <td>@jane</td>
-                                            <td>3</td>
-                                            <td>Jane</td>
-                                            <td>Doe</td>
-                                            <td>@jane</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
 
@@ -273,32 +166,32 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">规格</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="specification" />
+                                                <input type="text" class="form-control" id="specification" th:value="${contract.specification}"/>
                                             </div>
                                             <label class="control-label col-sm-3">原产地</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="originCountry" />
+                                                <input type="text" class="form-control" id="originCountry" th:value="${contract.originCountry}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">起运港</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="shipmentPort" />
+                                                <input type="text" class="form-control" id="shipmentPort" th:value="${contract.shipmentPort}"/>
                                             </div>
                                             <label class="control-label col-sm-3">目的港</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="destinationPort" />
+                                                <input type="text" class="form-control" id="destinationPort" th:value="${contract.destinationPort}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">价格条件</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="priceCondition" />
+                                                <input type="text" class="form-control" id="priceCondition" th:value="${contract.priceCondition}"/>
                                             </div>
                                             <label class="control-label col-sm-3">船期ETD</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="etd" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="etd" type="text" th:value="${contract.etd}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -307,7 +200,7 @@
                                             <label class="control-label col-sm-2">船期ETA</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="eta" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="eta" type="text" th:value="${contract.eta}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -323,12 +216,12 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">付款金额(USD)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="prePayment" />
+                                                <input type="text" class="form-control" id="prePayment" th:value="${contract.prePayment}"/>
                                             </div>
                                             <label class="control-label col-sm-3">付款日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="prePaymentDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="prePaymentDate" type="text" th:value="${contract.prePaymentDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -336,11 +229,11 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">汇率</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="preRate" />
+                                                <input type="text" class="form-control" id="preRate" th:value="${contract.preRate}"/>
                                             </div>
                                             <label class="control-label col-sm-3">总计(CNY)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="prePaymentRMB" />
+                                                <input type="text" class="form-control" id="prePaymentRMB" th:value="${contract.prePaymentRMB}"/>
                                             </div>
                                         </div>
                                     </form>
@@ -353,12 +246,12 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">付款金额(USD)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="finalPayment" />
+                                                <input type="text" class="form-control" id="finalPayment" th:value="${contract.finalPayment}"/>
                                             </div>
                                             <label class="control-label col-sm-3">付款日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="finalPaymentDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="finalPaymentDate" type="text" th:value="${contract.finalPaymentDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -366,11 +259,11 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">汇率</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="finalRate" />
+                                                <input type="text" class="form-control" id="finalRate" th:value="${contract.finalRate}"/>
                                             </div>
                                             <label class="control-label col-sm-3">总计(CNY)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="finalPaymentRMB"/>
+                                                <input type="text" class="form-control" id="finalPaymentRMB" th:value="${contract.finalPaymentRMB}"/>
                                             </div>
                                         </div>
                                     </form>
@@ -391,7 +284,7 @@
                                             <label class="control-label col-sm-3">保险购买日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="insuranceBuyDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="insuranceBuyDate" type="text" th:value="${contract.insuranceBuyDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -400,14 +293,14 @@
                                             <label class="control-label col-sm-2">寄出日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="insuranceSendDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="insuranceSendDate" type="text" th:value="${contract.insuranceSendDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
                                             <label class="control-label col-sm-3">签收日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="insuranceSignDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="insuranceSignDate" type="text" th:value="${contract.insuranceSignDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -415,22 +308,22 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">柜号</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="containerNo" />
+                                                <input type="text" class="form-control" id="containerNo" th:value="${contract.containerNo}"/>
                                             </div>
                                             <label class="control-label col-sm-3">提单号</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="ladingbillNo" />
+                                                <input type="text" class="form-control" id="ladingbillNo" th:value="${contract.ladingbillNo}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">货代</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="agent"/>
+                                                <input type="text" class="form-control" id="agent" th:value="${contract.agent}"/>
                                             </div>
                                             <label class="control-label col-sm-3">单据寄给货代日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="agentSendDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="agentSendDate" type="text" th:value="${contract.agentSendDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -439,7 +332,7 @@
                                             <label class="control-label col-sm-2">放行日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="agentPassDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="agentPassDate" type="text" th:value="${contract.agentPassDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -454,31 +347,31 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">税票抵扣方</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="taxDeductibleParty" />
+                                                <input type="text" class="form-control" id="taxDeductibleParty" th:value="${contract.taxDeductibleParty}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">关税</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff" />
+                                                <input type="text" class="form-control" id="tariff" th:value="${contract.tariff}"/>
                                             </div>
                                             <label class="control-label col-sm-3">增值税</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax" />
+                                                <input type="text" class="form-control" id="addedValueTax" th:value="${contract.addedValueTax}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">付税日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="taxPayDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="taxPayDate" type="text" th:value="${contract.taxPayDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
                                             <label class="control-label col-sm-3">税票签收日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="taxSignDate" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="taxSignDate" type="text" th:value="${contract.taxSignDate}" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>

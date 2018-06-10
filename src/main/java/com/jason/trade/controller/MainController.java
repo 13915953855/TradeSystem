@@ -5,21 +5,22 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.jason.trade.entity.ContractBaseInfo;
 import com.jason.trade.entity.UserInfo;
+import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.UserRepository;
 import com.jason.trade.util.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ContractRepository contractRepository;
 
     @GetMapping("/")
     public String index(@SessionAttribute(WebSecurityConfig.SESSION_KEY) String account, Model model, HttpSession session) {
@@ -50,6 +51,15 @@ public class MainController {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
         return "/trade/contractadd";
+    }
+    @GetMapping("/trade/contract/update")
+    public String contractupdate(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        //ContractBaseInfo contract = contractRepository.findByExternalContract(externalContract);
+        ContractBaseInfo contract = contractRepository.findOne(id);
+        model.addAttribute("contract",contract);
+        return "/trade/contractupdate";
     }
     @GetMapping("/trade/cargomanage")
     public String inout(Model model, HttpSession session) {

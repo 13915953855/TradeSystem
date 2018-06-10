@@ -3,8 +3,8 @@ package com.jason.trade.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 public class ContractBaseInfo implements Serializable {
@@ -12,13 +12,13 @@ public class ContractBaseInfo implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;//序号
-    private Date contractDate;//合同日期
+    private String contractDate;//合同日期
     private String externalContract;//外合同
     private String insideContract;//内合同
     private String businessMode;//业务模式
     private String companyNo;//厂号
     private String warehouse;//仓库
-    private Date storeDate;//入库日期
+    private String storeDate;//入库日期
     /**
      * 采购信息
      */
@@ -31,33 +31,33 @@ public class ContractBaseInfo implements Serializable {
      * 预付款&&尾款
      */
     private double prePayment;//付款金额
-    private Date prePaymentDate;//付款日期
+    private String prePaymentDate;//付款日期
     private float preRate;//汇率
     private double prePaymentRMB;//小计
     private double finalPayment;//付款金额
-    private Date finalPaymentDate;//付款日期
+    private String finalPaymentDate;//付款日期
     private float finalRate;//汇率
     private double finalPaymentRMB;//小计
     /**
      * 船期
      */
-    private Date etd;
-    private Date eta;
+    private String etd;
+    private String eta;
     /**
      * 外商单据
      */
     private Integer isCheckElec;//是否已核对电子版：0-是，1-否
-    private Date insuranceBuyDate;//保险购买日期
-    private Date insuranceSendDate;//寄出日期
-    private Date insuranceSignDate;//签收日期
+    private String insuranceBuyDate;//保险购买日期
+    private String insuranceSendDate;//寄出日期
+    private String insuranceSignDate;//签收日期
     private String containerNo;//柜号
     private String ladingbillNo;//提单号
     /**
      * 货代报关报检
      */
     private String agent;//货代
-    private Date agentSendDate;//单据寄给货代日期
-    private Date agentPassDate;//放行日期
+    private String agentSendDate;//单据寄给货代日期
+    private String agentPassDate;//放行日期
 
     /**
      * 税款
@@ -65,12 +65,21 @@ public class ContractBaseInfo implements Serializable {
     private String taxDeductibleParty;//税票抵扣方
     private double tariff;//关税
     private double addedValueTax;//增值税
-    private Date taxPayDate;//付税日期
-    private Date taxSignDate;//税票签收日期
+    private String taxPayDate;//付税日期
+    private String taxSignDate;//税票签收日期
 
+    private String status;//状态
     private String remark;//备注
 
     public ContractBaseInfo(){}
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;
@@ -80,11 +89,11 @@ public class ContractBaseInfo implements Serializable {
         this.id = id;
     }
 
-    public Date getContractDate() {
+    public String getContractDate() {
         return contractDate;
     }
 
-    public void setContractDate(Date contractDate) {
+    public void setContractDate(String contractDate) {
         this.contractDate = contractDate;
     }
 
@@ -128,11 +137,11 @@ public class ContractBaseInfo implements Serializable {
         this.warehouse = warehouse;
     }
 
-    public Date getStoreDate() {
+    public String getStoreDate() {
         return storeDate;
     }
 
-    public void setStoreDate(Date storeDate) {
+    public void setStoreDate(String storeDate) {
         this.storeDate = storeDate;
     }
 
@@ -184,11 +193,11 @@ public class ContractBaseInfo implements Serializable {
         this.prePayment = prePayment;
     }
 
-    public Date getPrePaymentDate() {
+    public String getPrePaymentDate() {
         return prePaymentDate;
     }
 
-    public void setPrePaymentDate(Date prePaymentDate) {
+    public void setPrePaymentDate(String prePaymentDate) {
         this.prePaymentDate = prePaymentDate;
     }
 
@@ -216,11 +225,11 @@ public class ContractBaseInfo implements Serializable {
         this.finalPayment = finalPayment;
     }
 
-    public Date getFinalPaymentDate() {
+    public String getFinalPaymentDate() {
         return finalPaymentDate;
     }
 
-    public void setFinalPaymentDate(Date finalPaymentDate) {
+    public void setFinalPaymentDate(String finalPaymentDate) {
         this.finalPaymentDate = finalPaymentDate;
     }
 
@@ -240,19 +249,19 @@ public class ContractBaseInfo implements Serializable {
         this.finalPaymentRMB = finalPaymentRMB;
     }
 
-    public Date getEtd() {
+    public String getEtd() {
         return etd;
     }
 
-    public void setEtd(Date etd) {
+    public void setEtd(String etd) {
         this.etd = etd;
     }
 
-    public Date getEta() {
+    public String getEta() {
         return eta;
     }
 
-    public void setEta(Date eta) {
+    public void setEta(String eta) {
         this.eta = eta;
     }
 
@@ -264,27 +273,27 @@ public class ContractBaseInfo implements Serializable {
         this.isCheckElec = isCheckElec;
     }
 
-    public Date getInsuranceBuyDate() {
+    public String getInsuranceBuyDate() {
         return insuranceBuyDate;
     }
 
-    public void setInsuranceBuyDate(Date insuranceBuyDate) {
+    public void setInsuranceBuyDate(String insuranceBuyDate) {
         this.insuranceBuyDate = insuranceBuyDate;
     }
 
-    public Date getInsuranceSendDate() {
+    public String getInsuranceSendDate() {
         return insuranceSendDate;
     }
 
-    public void setInsuranceSendDate(Date insuranceSendDate) {
+    public void setInsuranceSendDate(String insuranceSendDate) {
         this.insuranceSendDate = insuranceSendDate;
     }
 
-    public Date getInsuranceSignDate() {
+    public String getInsuranceSignDate() {
         return insuranceSignDate;
     }
 
-    public void setInsuranceSignDate(Date insuranceSignDate) {
+    public void setInsuranceSignDate(String insuranceSignDate) {
         this.insuranceSignDate = insuranceSignDate;
     }
 
@@ -312,19 +321,19 @@ public class ContractBaseInfo implements Serializable {
         this.agent = agent;
     }
 
-    public Date getAgentSendDate() {
+    public String getAgentSendDate() {
         return agentSendDate;
     }
 
-    public void setAgentSendDate(Date agentSendDate) {
+    public void setAgentSendDate(String agentSendDate) {
         this.agentSendDate = agentSendDate;
     }
 
-    public Date getAgentPassDate() {
+    public String getAgentPassDate() {
         return agentPassDate;
     }
 
-    public void setAgentPassDate(Date agentPassDate) {
+    public void setAgentPassDate(String agentPassDate) {
         this.agentPassDate = agentPassDate;
     }
 
@@ -352,19 +361,19 @@ public class ContractBaseInfo implements Serializable {
         this.addedValueTax = addedValueTax;
     }
 
-    public Date getTaxPayDate() {
+    public String getTaxPayDate() {
         return taxPayDate;
     }
 
-    public void setTaxPayDate(Date taxPayDate) {
+    public void setTaxPayDate(String taxPayDate) {
         this.taxPayDate = taxPayDate;
     }
 
-    public Date getTaxSignDate() {
+    public String getTaxSignDate() {
         return taxSignDate;
     }
 
-    public void setTaxSignDate(Date taxSignDate) {
+    public void setTaxSignDate(String taxSignDate) {
         this.taxSignDate = taxSignDate;
     }
 
