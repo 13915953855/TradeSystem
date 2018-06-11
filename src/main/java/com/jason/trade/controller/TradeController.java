@@ -47,10 +47,32 @@ public class TradeController {
         return result.toString();
     }
 
+    @RequestMapping(value = "/cargo/list")
+    public String getCargoList(@RequestParam("contractId") String contractId) throws JSONException {
+        int id = 0;
+        if(StringUtils.isNotBlank(contractId)){
+            id = Integer.valueOf(contractId);
+        }
+        List<CargoInfo> list = cargoRepository.findByContractId(id);
+        JSONObject result = new JSONObject();
+        result.put("total",list.size());
+        result.put("rows",list);
+        return result.toString();
+    }
+
     @PostMapping(value="/contract/add")
-    public String contractAdd(ContractBaseInfo contractBaseInfo, HttpSession session){
+    public String contractAdd(ContractBaseInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
         contractBaseInfo.setStatus(GlobalConst.ENABLE);
-        contractRepository.save(contractBaseInfo);
+        ContractBaseInfo record = contractRepository.save(contractBaseInfo);
+        Integer contractId = record.getId();
+        cargoRepository.updateContractIdAndStatus(contractId,"("+cargoId+")");
+        return GlobalConst.SUCCESS;
+    }
+
+    @PostMapping(value="/cargo/add")
+    public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
+        cargoInfo.setStatus(GlobalConst.DISABLE);
+        cargoRepository.save(cargoInfo);
         return GlobalConst.SUCCESS;
     }
 
@@ -97,7 +119,7 @@ public class TradeController {
             //创建单元格
             XSSFCell cell = null;
             for (List<String> rowData : list) {
-                for (int j = 0; j < GlobalConst.BODY_COLOR.length; j++) {
+                for (int j = 0; j < GlobalConst.BODY_COLOR.length - 1; j++) {//-1是因为有个备注
                     cell = row.createCell(j, CellType.STRING);
                     cell.setCellValue(rowData.get(j));
                     cell.setCellStyle(SetStyleUtils.setStyle(workBook, GlobalConst.BODY_COLOR[j],false));

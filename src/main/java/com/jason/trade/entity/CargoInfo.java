@@ -26,8 +26,17 @@ public class CargoInfo implements Serializable{
     private double invoiceValue;//发票金额
     private String elecSendDate;//电子版发送日期
     private double hystereticFee;//滞报费
+    private String status;
 
     public CargoInfo(){}
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Integer getCargoId() {
         return cargoId;
