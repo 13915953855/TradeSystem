@@ -23,23 +23,31 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#tb_cargo').bootstrapTable({
-            url: '/trade/cargo/list?contractId='+$("#id").val(),         //请求后台的URL（*）
+            url: '/trade/cargo/list?contractId='+$("#contractId").val(),         //请求后台的URL（*）
             method: 'get',
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             showColumns: true,                  //是否显示所有的列
             minimumCountColumns: 2,             //最少允许的列数
             clickToSelect: true,                //是否启用点击选中行
-            uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
             showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
             detailView: false,                   //是否显示父子表
             showColumns:false,                  //是否显示内容列下拉框。
+            showRefresh: true,
+            responseHandler:function(res){
+                return res.rows;
+            },
             columns: [{
                 checkbox: true
             }, {
-                field: 'cargoId',
+                field: 'id',
                 title: '序号',
+                visible: false
+            }, {
+                field: 'cargoId',
+                title: '商品序号',
                 visible: false
             }, {
                 field: 'contractId',
@@ -119,19 +127,44 @@ var ButtonInit = function () {
             window.location.href = "/trade/contract";
         });
         $("#btn_add").click(function(){
-            //alert(JSON.stringify($("#tb_cargo").bootstrapTable("getData")));
+
         });
         $("#btn_edit").click(function(){
-            alert(JSON.stringify($("#tb_cargo").bootstrapTable("getData")));
+            var data = $("#tb_cargo").bootstrapTable("getSelections");
+            if(data.length == 1){
+                setFormData(data[0]);
+            }else if(data.length > 1){
+                alert("只能选择一项进行编辑");
+            }
         });
         $("#btn_del").click(function(){
-            //alert(JSON.stringify($("#tb_cargo").bootstrapTable("getData")));
+            var a = $('#tb_cargo').bootstrapTable('getSelections');
+            var ids = "";
+            for(var i=0;i<a.length;i++) {
+                ids += a[i].id+",";
+            }
+            if(ids != ""){
+                $.ajax({
+                    url:"/trade/cargo/delete",
+                    type:"POST",
+                    dataType:"json",
+                    data:{"ids":ids},
+                    success:function(res){
+                        if(res.status == "1"){
+                            alert("删除成功");
+                        }else{
+                            alert("删除失败");
+                        }
+                        $("#tb_cargo").bootstrapTable("refresh");
+                    }
+                });
+            }
         });
         $("#save_cargo").click(function(){
             //todo 保存商品信息
             var cargo = {};
-            if($("#id").val() != "") {
-                cargo.contractId = $("#id").val();//合同序号
+            if($("#contractId").val() != "") {
+                cargo.contractId = $("#contractId").val();//合同序号
             }else {
                 cargo.contractId = -1;//合同序号
             }
@@ -146,18 +179,18 @@ var ButtonInit = function () {
                 return;
             }
             cargo.cargoName = $("#cargoName").val();//产品名称
-            cargo.amount = $("#amount").val();//数量
-            cargo.unitPrice = $("#unitPrice").val();//单价
-            cargo.contractValue = $("#contractValue").val();//合同金额
+            cargo.amount = $("#amount").val() == "" ? 0:$("#amount").val();//数量
+            cargo.unitPrice = $("#unitPrice").val() == "" ? 0:$("#unitPrice").val();//单价
+            cargo.contractValue = $("#contractValue").val() == "" ? 0:$("#contractValue").val();//合同金额
             cargo.saleCustomer = $("#saleCustomer").val();//销售客户
-            cargo.unitPrePayAmount = $("#unitPrePayAmount").val();//来款金额
+            cargo.unitPrePayAmount = $("#unitPrePayAmount").val() == "" ? 0:$("#unitPrePayAmount").val();//来款金额
             cargo.unitPrePayDate = $("#unitPrePayDate").val();//来款日期
-            cargo.unitFinalPayAmount = $("#unitFinalPayAmount").val();//尾款金额
+            cargo.unitFinalPayAmount = $("#unitFinalPayAmount").val() == "" ? 0:$("#unitFinalPayAmount").val();//尾款金额
             cargo.unitFinalPayDate = $("#unitFinalPayDate").val();//来款日期
-            cargo.invoiceNumber = $("#invoiceNumber").val();//发票数量
-            cargo.invoiceValue = $("#invoiceValue").val();//发票金额
+            cargo.invoiceNumber = $("#invoiceNumber").val() == "" ? 0:$("#invoiceNumber").val();//发票数量
+            cargo.invoiceValue = $("#invoiceValue").val() == "" ? 0:$("#invoiceValue").val();//发票金额
             cargo.elecSendDate = $("#elecSendDate").val();//电子版发送日期
-            cargo.hystereticFee = $("#hystereticFee").val();//滞报费
+            cargo.hystereticFee = $("#hystereticFee").val() == "" ? 0:$("#hystereticFee").val();//滞报费
 
             $.ajax({
                 url:"/trade/cargo/add",
@@ -180,11 +213,30 @@ var ButtonInit = function () {
 function resetForm(formId){
     $("#"+formId+" input[type=text]").val('');
 }
+function setFormData(data){
+    $("#id").val(data.id);
+    $("#cargoId").val(data.cargoId);
+    $("#externalCompany").val(data.externalCompany);
+    $("#cargoNo").val(data.cargoNo);
+    $("#cargoName").val(data.cargoName);
+    $("#amount").val(data.amount);
+    $("#unitPrice").val(data.unitPrice);
+    $("#contractValue").val(data.contractValue);
+    $("#saleCustomer").val(data.saleCustomer);
+    $("#unitPrePayAmount").val(data.unitPrePayAmount);
+    $("#unitPrePayDate").val(data.unitPrePayDate);
+    $("#unitFinalPayAmount").val(data.unitFinalPayAmount);
+    $("#unitFinalPayDate").val(data.unitFinalPayDate);
+    $("#invoiceNumber").val(data.invoiceNumber);
+    $("#invoiceValue").val(data.invoiceValue);
+    $("#hystereticFee").val(data.hystereticFee);
+    $("#elecSendDate").val(data.elecSendDate);
+}
 function saveContract(){
     var $btn = $("#save").button('loading');
 
     var contract = {};
-    contract.id = $("#id").val();
+    contract.contractId = $("#contractId").val();
     contract.externalContract = $("#externalContract").val();
     contract.insideContract = $("#insideContract").val();
     contract.businessMode = $("#businessMode").val();
@@ -225,6 +277,17 @@ function saveContract(){
     contract.addedValueTax = $("#addedValueTax").val() == "" ? 0:$("#addedValueTax").val();
     contract.taxPayDate = $("#taxPayDate").val();
     contract.taxSignDate = $("#taxSignDate").val();
+
+    var a = $("#tb_cargo").bootstrapTable("getData");
+    var cargoIds = "";
+    for(var i=0;i<a.length;i++) {
+        cargoIds += a[i].id;
+        if(i < a.length - 1){
+            cargoIds += ",";
+        }
+    }
+    contract.cargoId = cargoIds;
+
     $.ajax({
         url:"/trade/contract/add",
         type:"POST",
@@ -232,12 +295,12 @@ function saveContract(){
         data:contract,
         success:function(res){
             if(res.status == "1"){
-                $btn.button('reset');
                 alert("保存成功");
                 window.location.href = "/trade/contract";
             }else{
 
             }
+            $btn.button('reset');
         }
     });
 }

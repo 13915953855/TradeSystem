@@ -9,8 +9,9 @@ import java.io.Serializable;
 public class CargoInfo implements Serializable{
     @Id
     @GeneratedValue
-    private Integer cargoId;//序号
-    private Integer contractId;//合同序号
+    private Integer id;//序号
+    private String cargoId;//产品序号
+    private String contractId;//合同序号
     private String externalCompany;//外商
     private String cargoNo;//库号
     private String cargoName;//产品名称
@@ -38,11 +39,27 @@ public class CargoInfo implements Serializable{
         this.status = status;
     }
 
-    public Integer getCargoId() {
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCargoId() {
         return cargoId;
     }
 
-    public void setCargoId(Integer cargoId) {
+    public void setCargoId(String cargoId) {
         this.cargoId = cargoId;
     }
 
@@ -76,14 +93,6 @@ public class CargoInfo implements Serializable{
 
     public void setUnitFinalPayDate(String unitFinalPayDate) {
         this.unitFinalPayDate = unitFinalPayDate;
-    }
-
-    public Integer getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(Integer contractId) {
-        this.contractId = contractId;
     }
 
     public String getSaleCustomer() {

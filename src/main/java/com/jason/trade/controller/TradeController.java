@@ -7,6 +7,7 @@ import com.jason.trade.entity.ContractBaseInfo;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.util.DateUtil;
+import com.jason.trade.util.RespUtil;
 import com.jason.trade.util.SetStyleUtils;
 import net.sf.json.JSONException;
 import org.apache.commons.lang.StringUtils;
@@ -49,11 +50,7 @@ public class TradeController {
 
     @RequestMapping(value = "/cargo/list")
     public String getCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        int id = 0;
-        if(StringUtils.isNotBlank(contractId)){
-            id = Integer.valueOf(contractId);
-        }
-        List<CargoInfo> list = cargoRepository.findByContractId(id);
+        List<CargoInfo> list = cargoRepository.findByContractId(contractId);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -64,16 +61,17 @@ public class TradeController {
     public String contractAdd(ContractBaseInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
         contractBaseInfo.setStatus(GlobalConst.ENABLE);
         ContractBaseInfo record = contractRepository.save(contractBaseInfo);
-        Integer contractId = record.getId();
-        cargoRepository.updateContractIdAndStatus(contractId,"("+cargoId+")");
+        if(StringUtils.isNotBlank(cargoId)) {
+            cargoRepository.updateStatus("(" + cargoId + ")");
+        }
         return GlobalConst.SUCCESS;
     }
 
     @PostMapping(value="/cargo/add")
     public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
         cargoInfo.setStatus(GlobalConst.DISABLE);
-        cargoRepository.save(cargoInfo);
-        return GlobalConst.SUCCESS;
+        CargoInfo data = cargoRepository.save(cargoInfo);
+        return RespUtil.respSuccess(data);
     }
 
     @PostMapping(value="/contract/update")
@@ -90,6 +88,18 @@ public class TradeController {
             contractBaseInfo.setId(Integer.valueOf(idArr[i]));
             contractBaseInfo.setStatus(GlobalConst.DISABLE);
             contractRepository.save(contractBaseInfo);
+        }
+        return GlobalConst.SUCCESS;
+    }
+
+    @PostMapping(value="/cargo/delete")
+    public String cargoDel(@RequestParam("ids") String ids, HttpSession session){
+        String idArr[] = ids.split(",");
+        CargoInfo cargoInfo = new CargoInfo();
+        for (int i = 0; i < idArr.length; i++) {
+            cargoInfo.setId(Integer.valueOf(idArr[i]));
+            cargoInfo.setStatus(GlobalConst.DISABLE);
+            cargoRepository.save(cargoInfo);
         }
         return GlobalConst.SUCCESS;
     }
@@ -111,20 +121,24 @@ public class TradeController {
         writeExcelHeadZiYing(workBook,sheet);
         for (int i = 0,len = data.size(); i < len; i++) {
             ContractBaseInfo baseInfo = data.get(i);
-            List<CargoInfo> cargoData = cargoRepository.findByContractId(baseInfo.getId());
+            List<CargoInfo> cargoData = cargoRepository.findByContractId(baseInfo.getContractId());
             //拼接商品详情，组成多条记录
             List<List<String>> list = convertBeanToList(baseInfo,cargoData);
-            //创建行
-            XSSFRow row = sheet.createRow(i+2);
-            //创建单元格
-            XSSFCell cell = null;
+            int rowNum = i+2;
+            int start = rowNum;
             for (List<String> rowData : list) {
+                //创建行
+                XSSFRow row = sheet.createRow(rowNum++);
+                //创建单元格
+                XSSFCell cell = null;
                 for (int j = 0; j < GlobalConst.BODY_COLOR.length - 1; j++) {//-1是因为有个备注
                     cell = row.createCell(j, CellType.STRING);
                     cell.setCellValue(rowData.get(j));
                     cell.setCellStyle(SetStyleUtils.setStyle(workBook, GlobalConst.BODY_COLOR[j],false));
                 }
             }
+            int end = rowNum;
+            MergeRow(sheet,start,end - 1);
         }
 
         FileOutputStream outputStream = null;
@@ -145,7 +159,7 @@ public class TradeController {
 
     private void writeExcelHeadZiYing(XSSFWorkbook workBook,XSSFSheet sheet){
         //合并单元格
-        MergeCellRow(sheet);
+        MergeCell(sheet);
         //创建第一行
         XSSFRow row = sheet.createRow(0);
         //创建单元格
@@ -166,11 +180,18 @@ public class TradeController {
         }
     }
 
+    private void MergeRow(XSSFSheet sheet,Integer start,Integer end) {
+        CellRangeAddress cellRangeAddress = null;
+        for (int i = 0; i < GlobalConst.NEED_MERGE_CELL.length; i++) {
+            cellRangeAddress = new CellRangeAddress(start, end, GlobalConst.NEED_MERGE_CELL[i], GlobalConst.NEED_MERGE_CELL[i]);
+            sheet.addMergedRegion(cellRangeAddress);
+        }
+    }
     /**
      * 合并单元格--头部信息
      * @param sheet
      */
-    private void MergeCellRow(XSSFSheet sheet) {
+    private void MergeCell(XSSFSheet sheet) {
         CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 0, 1, 16);
         sheet.addMergedRegion(cellRangeAddress);
         cellRangeAddress = new CellRangeAddress(0, 0, 17, 20);
@@ -197,7 +218,7 @@ public class TradeController {
         List<List<String>> result = new ArrayList<>();
         for (CargoInfo cargoInfo : cargoData) {
             List<String> list = new ArrayList<>();
-            list.add(String.valueOf(baseInfo.getId()));//序号//
+            list.add(String.valueOf(cargoInfo.getId()));//序号//
             list.add(baseInfo.getContractDate());//合同日期//
             list.add(cargoInfo.getExternalCompany());//外商//
             list.add(baseInfo.getExternalContract());//外合同//

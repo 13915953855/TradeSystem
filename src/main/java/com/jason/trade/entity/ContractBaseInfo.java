@@ -12,6 +12,7 @@ public class ContractBaseInfo implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;//序号
+    private String contractId;//合同编号
     private String contractDate;//合同日期
     private String externalContract;//外合同
     private String insideContract;//内合同
@@ -72,6 +73,14 @@ public class ContractBaseInfo implements Serializable {
     private String remark;//备注
 
     public ContractBaseInfo(){}
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
+    }
 
     public String getStatus() {
         return status;

@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CargoRepository extends JpaRepository<CargoInfo,Integer> {
-    List<CargoInfo> findByContractId(Integer contractId);
+    List<CargoInfo> findByContractId(String contractId);
     //原生SQL实现更新方法接口
-    @Query(value = "update cargo_info set contractId=?1,status=0 where id in ?2 ", nativeQuery = true)
+    @Query(value = "update cargo_info set status=0 where id in ?1 ", nativeQuery = true)
     @Modifying
-    public void updateContractIdAndStatus(int contractId,String id);
+    public void updateStatus(String id);
 }

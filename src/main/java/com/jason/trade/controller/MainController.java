@@ -2,6 +2,7 @@ package com.jason.trade.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -50,13 +51,14 @@ public class MainController {
     public String contractadd(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
+        String uuid = UUID.randomUUID().toString();
+        model.addAttribute("contractId",uuid);
         return "/trade/contractadd";
     }
     @GetMapping("/trade/contract/update")
     public String contractupdate(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        //ContractBaseInfo contract = contractRepository.findByExternalContract(externalContract);
         ContractBaseInfo contract = contractRepository.findOne(id);
         model.addAttribute("contract",contract);
         return "/trade/contractupdate";
