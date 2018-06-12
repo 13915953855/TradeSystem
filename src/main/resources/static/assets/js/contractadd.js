@@ -141,7 +141,10 @@ var ButtonInit = function () {
             var a = $('#tb_cargo').bootstrapTable('getSelections');
             var ids = "";
             for(var i=0;i<a.length;i++) {
-                ids += a[i].id+",";
+                ids += a[i].id;
+                if(i<a.length-1){
+                    ids += ",";
+                }
             }
             if(ids != ""){
                 $.ajax({
@@ -236,6 +239,7 @@ function saveContract(){
     var $btn = $("#save").button('loading');
 
     var contract = {};
+    contract.id = $("#id").val();
     contract.contractId = $("#contractId").val();
     contract.externalContract = $("#externalContract").val();
     contract.insideContract = $("#insideContract").val();

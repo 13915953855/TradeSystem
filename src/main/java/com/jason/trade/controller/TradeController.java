@@ -6,6 +6,7 @@ import com.jason.trade.entity.ContractAllField;
 import com.jason.trade.entity.ContractBaseInfo;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
+import com.jason.trade.service.TradeService;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.RespUtil;
 import com.jason.trade.util.SetStyleUtils;
@@ -36,6 +37,8 @@ public class TradeController {
     private ContractRepository contractRepository;
     @Autowired
     private CargoRepository cargoRepository;
+    @Autowired
+    private TradeService tradeService;
 
     @RequestMapping(value = "/list")
     public String getTradeList(@RequestParam("limit") int limit,
@@ -50,7 +53,7 @@ public class TradeController {
 
     @RequestMapping(value = "/cargo/list")
     public String getCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        List<CargoInfo> list = cargoRepository.findByContractId(contractId);
+        List<CargoInfo> list = cargoRepository.findByContractIdAndStatus(contractId,GlobalConst.ENABLE);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -59,17 +62,13 @@ public class TradeController {
 
     @PostMapping(value="/contract/add")
     public String contractAdd(ContractBaseInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
-        contractBaseInfo.setStatus(GlobalConst.ENABLE);
-        ContractBaseInfo record = contractRepository.save(contractBaseInfo);
-        if(StringUtils.isNotBlank(cargoId)) {
-            cargoRepository.updateStatus("(" + cargoId + ")");
-        }
+        tradeService.saveContract(contractBaseInfo,cargoId);
         return GlobalConst.SUCCESS;
     }
 
     @PostMapping(value="/cargo/add")
     public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
-        cargoInfo.setStatus(GlobalConst.DISABLE);
+        cargoInfo.setStatus(GlobalConst.ENABLE);
         CargoInfo data = cargoRepository.save(cargoInfo);
         return RespUtil.respSuccess(data);
     }
@@ -94,13 +93,7 @@ public class TradeController {
 
     @PostMapping(value="/cargo/delete")
     public String cargoDel(@RequestParam("ids") String ids, HttpSession session){
-        String idArr[] = ids.split(",");
-        CargoInfo cargoInfo = new CargoInfo();
-        for (int i = 0; i < idArr.length; i++) {
-            cargoInfo.setId(Integer.valueOf(idArr[i]));
-            cargoInfo.setStatus(GlobalConst.DISABLE);
-            cargoRepository.save(cargoInfo);
-        }
+        tradeService.updateCargoStatus(ids,GlobalConst.DISABLE);
         return GlobalConst.SUCCESS;
     }
 
@@ -119,12 +112,12 @@ public class TradeController {
         XSSFSheet sheet = workBook.createSheet("自营");
         //创建头
         writeExcelHeadZiYing(workBook,sheet);
+        int rowNum = 2;
         for (int i = 0,len = data.size(); i < len; i++) {
             ContractBaseInfo baseInfo = data.get(i);
-            List<CargoInfo> cargoData = cargoRepository.findByContractId(baseInfo.getContractId());
+            List<CargoInfo> cargoData = cargoRepository.findByContractIdAndStatus(baseInfo.getContractId(),GlobalConst.ENABLE);
             //拼接商品详情，组成多条记录
             List<List<String>> list = convertBeanToList(baseInfo,cargoData);
-            int rowNum = i+2;
             int start = rowNum;
             for (List<String> rowData : list) {
                 //创建行

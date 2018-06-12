@@ -129,6 +129,7 @@ var ButtonInit = function () {
                         }else{
                             alert("删除失败");
                         }
+                        $("#tb_contract").bootstrapTable("refresh");
                     }
                 });
             }
