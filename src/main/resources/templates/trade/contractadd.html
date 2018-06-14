@@ -28,6 +28,7 @@
     <script src="/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="/assets/scripts/bootstrapValidator.min.js"></script>
     <script src="/assets/scripts/bootstrap-table.js"></script>
+    <script src="/assets/scripts/jquery.editable.select.js"></script>
     <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="/assets/scripts/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
@@ -38,7 +39,7 @@
             getNoticeNum();
         });
         var getNoticeNum = function(){
-            $("#noticeNum").html("4");
+            $("#noticeNum").html("");
         }
     </script>
 </head>
@@ -126,16 +127,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">业务模式</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="businessMode" />
-                                            </div>
-                                            <label class="control-label col-sm-3">厂号</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="companyNo" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
                                             <label class="control-label col-sm-2">合同日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
@@ -143,18 +134,83 @@
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
-                                            <label class="control-label col-sm-3">存储仓库</label>
+                                            <label class="control-label col-sm-3">外商</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="warehouse" />
+                                                <input type="text" class="form-control" id="externalCompany" />
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">入库日期</label>
+                                            <label class="control-label col-sm-2">原产地</label>
                                             <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="storeDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
+                                                <input type="text" class="form-control" id="originCountry" />
+                                            </div>
+                                            <label class="control-label col-sm-3">厂号</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="companyNo" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">起运港</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="shipmentPort" />
+                                            </div>
+                                            <label class="control-label col-sm-3">目的港</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="destinationPort" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">价格条件</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="priceCondition" />
+                                            </div>
+                                            <label class="control-label col-sm-3">付款方式</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-control" id="payType" onchange="payTypeChange()">
+                                                    <option>L/C</option>
+                                                    <option>TT</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">币种</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-control" id="currency">
+                                                </select>
+                                            </div>
+                                            <label class="control-label col-sm-3">预计船期</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="expectSailingDate" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">业务模式</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="businessMode" />
+                                            </div>
+                                            <label class="control-label col-sm-3">箱数总计</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalBoxes" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">合同总数量</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalContractAmount" />
+                                            </div>
+                                            <label class="control-label col-sm-3">合同总金额(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalContractMoney" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">发票总数量</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalInvoiceAmount" />
+                                            </div>
+                                            <label class="control-label col-sm-3">发票总金额(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalInvoiceMoney" />
                                             </div>
                                         </div>
                                     </form>
@@ -191,9 +247,19 @@
                                                             <input type="hidden" id="id" value=""/>
                                                             <input type="hidden" id="cargoId" value=""/>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">外商</label>
+                                                                <label class="control-label col-sm-2">产品名称</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="externalCompany"/>
+                                                                    <input type="text" class="form-control" id="cargoName" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">级别</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="level" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">规格</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="specification" />
                                                                 </div>
                                                                 <label class="control-label col-sm-3">库号</label>
                                                                 <div class="col-sm-3">
@@ -201,78 +267,33 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">产品名称</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="cargoName" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">数量</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="amount" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
                                                                 <label class="control-label col-sm-2">单价</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="unitPrice" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">合同金额</label>
+                                                                <label class="control-label col-sm-3">箱数(小计)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="contractValue" />
+                                                                    <input type="text" class="form-control" id="boxes" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">销售客户</label>
+                                                                <label class="control-label col-sm-2">合同数量(小计)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="saleCustomer" />
+                                                                    <input type="text" class="form-control" id="contractAmount" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">来款金额</label>
+                                                                <label class="control-label col-sm-3">合同金额(小计:元)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="unitPrePayAmount" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">来款日期</label>
-                                                                <div class="col-sm-3">
-                                                                    <div class="input-append date form-date">
-                                                                        <input class="form-control" size="16" id="unitPrePayDate" type="text" readonly="readonly"/>
-                                                                        <span class="add-on"><i class="icon-th"></i></span>
-                                                                    </div>
-                                                                </div>
-                                                                <label class="control-label col-sm-3">尾款金额</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="unitFinalPayAmount" />
+                                                                    <input type="text" class="form-control" id="contractMoney" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">尾款来款日期</label>
+                                                                <label class="control-label col-sm-2">发票数量(小计)</label>
                                                                 <div class="col-sm-3">
-                                                                    <div class="input-append date form-date">
-                                                                        <input class="form-control" size="16" id="unitFinalPayDate" type="text" readonly="readonly"/>
-                                                                        <span class="add-on"><i class="icon-th"></i></span>
-                                                                    </div>
+                                                                    <input type="text" class="form-control" id="invoiceAmount" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">发票数量</label>
+                                                                <label class="control-label col-sm-3">发票金额(小计:元)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="invoiceNumber" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">发票金额</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="invoiceValue" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">滞报费</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="hystereticFee" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">电子版发送日期</label>
-                                                                <div class="col-sm-3">
-                                                                    <div class="input-append date form-date">
-                                                                        <input class="form-control" size="16" id="elecSendDate" type="text" readonly="readonly"/>
-                                                                        <span class="add-on"><i class="icon-th"></i></span>
-                                                                    </div>
+                                                                    <input type="text" class="form-control" id="invoiceMoney" />
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -291,50 +312,93 @@
                                 </div>
                             </div>
 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">采购信息</div>
+                            <div id="LCDiv" class="panel panel-default">
+                                <div class="panel-heading">付款信息(L/C)</div>
                                 <div class="panel-body">
                                     <form class="form-horizontal">
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">规格</label>
+                                            <label class="control-label col-sm-2">开证行</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="specification" />
+                                                <input type="text" class="form-control" id="issuingBank" />
                                             </div>
-                                            <label class="control-label col-sm-3">原产地</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="originCountry" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">起运港</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="shipmentPort" />
-                                            </div>
-                                            <label class="control-label col-sm-3">目的港</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="destinationPort" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">价格条件</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="priceCondition" />
-                                            </div>
-                                            <label class="control-label col-sm-3">船期ETD</label>
+                                            <label class="control-label col-sm-3">开证日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="etd" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="issuingDate" type="text" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">船期ETA</label>
+                                            <label class="control-label col-sm-2">LC NO.</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="LCNo" />
+                                            </div>
+                                            <label class="control-label col-sm-3">银行到单日</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="eta" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="bankDaodanDate" type="text" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">付汇日</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="remittanceDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                            <label class="control-label col-sm-3">押汇到期日</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="yahuidaoqiDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">付汇汇率</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="remittanceRate" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="TTDiv" class="panel panel-default">
+                                <div class="panel-heading">付款信息(TT)<span id="currencyNotice" style="float:right;"></span></div>
+                                <div class="panel-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">预付款金额(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="prePayment" />
+                                            </div>
+                                            <label class="control-label col-sm-3">尾款金额(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="finalPayment" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">预付款日期</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="prePaymentDate" />
+                                            </div>
+                                            <label class="control-label col-sm-3">尾款日期</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="finalPaymentDate" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">预付款汇率</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="preRate" />
+                                            </div>
+                                            <label class="control-label col-sm-3">尾款汇率</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="finalRate" />
                                             </div>
                                         </div>
                                     </form>
@@ -342,101 +406,9 @@
                             </div>
 
                             <div class="panel panel-default">
-                                <div class="panel-heading">预付款信息</div>
-                                <div class="panel-body">
-                                    <form class="form-horizontal">
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">付款金额(USD)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="prePayment" />
-                                            </div>
-                                            <label class="control-label col-sm-3">付款日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="prePaymentDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">汇率</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="preRate" />
-                                            </div>
-                                            <label class="control-label col-sm-3">总计(CNY)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="prePaymentRMB" />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">尾款信息</div>
-                                <div class="panel-body">
-                                    <form class="form-horizontal">
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">付款金额(USD)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="finalPayment" />
-                                            </div>
-                                            <label class="control-label col-sm-3">付款日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="finalPaymentDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">汇率</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="finalRate" />
-                                            </div>
-                                            <label class="control-label col-sm-3">总计(CNY)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="finalPaymentRMB"/>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
                                 <div class="panel-heading">单据信息</div>
                                 <div class="panel-body">
                                     <form class="form-horizontal">
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">已核对电子版</label>
-                                            <div class="col-sm-3">
-                                                <label class="fancy-checkbox" style="padding-top:5px;">
-                                                    <input type="checkbox" id="isCheckElec"/>
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                            <label class="control-label col-sm-3">保险购买日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="insuranceBuyDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">寄出日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="insuranceSendDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                            <label class="control-label col-sm-3">签收日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="insuranceSignDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">柜号</label>
                                             <div class="col-sm-3">
@@ -445,6 +417,94 @@
                                             <label class="control-label col-sm-3">提单号</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="ladingbillNo" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">船公司名称</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="shipCompany" />
+                                            </div>
+                                            <label class="control-label col-sm-3">货柜尺寸</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="containerSize" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">需要购买保险</label>
+                                            <div class="col-sm-3">
+                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="isNeedInsurance"/>
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="baoxianDiv">
+                                            <div class="form-group" style="">
+                                                <label class="control-label col-sm-2">保险公司名称</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="insuranceCompany" />
+                                                </div>
+                                                <label class="control-label col-sm-3">保险购买日期</label>
+                                                <div class="col-sm-3">
+                                                    <div class="input-append date form-date">
+                                                        <input class="form-control" size="16" id="insuranceBuyDate" type="text" readonly="readonly"/>
+                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="">
+                                                <label class="control-label col-sm-2">保费</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="insuranceMoney" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">ETD</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="etd" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                            <label class="control-label col-sm-3">ETA</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="eta" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">已核对电子版</label>
+                                            <div class="col-sm-3">
+                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="isCheckElec"/>
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                            <label class="control-label col-sm-3">电子版发送日期</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="elecSendDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">外商邮寄正本单据日期</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="exCompanySendBillDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                            <label class="control-label col-sm-3">正本单据签收日期</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="billSignDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
@@ -458,28 +518,6 @@
                                                     <input class="form-control" size="16" id="agentSendDate" type="text" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">放行日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="agentPassDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">税款信息</div>
-                                <div class="panel-body">
-                                    <form class="form-horizontal">
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">税票抵扣方</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="taxDeductibleParty" />
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
@@ -508,10 +546,47 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">税票抵扣方</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="taxDeductibleParty" />
+                                            </div>
+                                            <label class="control-label col-sm-3">放行日期</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="agentPassDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">仓库</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="warehouse" />
+                                            </div>
+                                            <label class="control-label col-sm-3">入库日期</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="storeDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">滞箱滞报费</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="delayFee" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">备注</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" rows="3" id="remark"></textarea>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
-
                         </div>
                         <div class="panel-footer">
                             <div style="text-align:center;">

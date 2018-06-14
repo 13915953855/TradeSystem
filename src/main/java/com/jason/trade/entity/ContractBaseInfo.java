@@ -16,79 +16,75 @@ public class ContractBaseInfo implements Serializable {
     private String contractDate;//合同日期
     private String externalContract;//外合同
     private String insideContract;//内合同
-    private String businessMode;//业务模式
-    private String companyNo;//厂号
-    private String warehouse;//仓库
-    private String storeDate;//入库日期
-    /**
-     * 采购信息
-     */
-    private String specification;//规格
+    private String externalCompany;//外商
     private String originCountry;//原产地
-    private String priceCondition;//价格条件
+    private String companyNo;//厂号
     private String shipmentPort;//起运港
     private String destinationPort;//目的港
+    private String priceCondition;//价格条件
+    private String payType;//付款方式
+    private String currency;//币种
+    private String expectSailingDate;//预计船期
+    private String businessMode;//业务模式
+    private double totalContractAmount;//合同总数量
+    private double totalContractMoney;//合同总金额
+    private double totalInvoiceAmount;//发票总数量
+    private double totalInvoiceMoney;//发票总金额
+    private Integer totalBoxes;//箱数总计
+
     /**
-     * 预付款&&尾款
+     * 付款信息（L/C）
+     */
+    private String issuingBank;//开证行
+    private String issuingDate;//开证日期
+    private String LCNo;//LC NO.
+    private String bankDaodanDate;//银行到单日
+    private String remittanceDate;//付汇日
+    private String yahuidaoqiDate;//押汇到期日
+    private double remittanceRate;//付汇汇率
+
+    /**
+     * 付款信息（TT）
      */
     private double prePayment;//付款金额
     private String prePaymentDate;//付款日期
     private float preRate;//汇率
-    private double prePaymentRMB;//小计
     private double finalPayment;//付款金额
     private String finalPaymentDate;//付款日期
     private float finalRate;//汇率
-    private double finalPaymentRMB;//小计
-    /**
-     * 船期
-     */
-    private String etd;
-    private String eta;
-    /**
-     * 外商单据
-     */
-    private Integer isCheckElec;//是否已核对电子版：0-是，1-否
-    private String insuranceBuyDate;//保险购买日期
-    private String insuranceSendDate;//寄出日期
-    private String insuranceSignDate;//签收日期
-    private String containerNo;//柜号
-    private String ladingbillNo;//提单号
-    /**
-     * 货代报关报检
-     */
-    private String agent;//货代
-    private String agentSendDate;//单据寄给货代日期
-    private String agentPassDate;//放行日期
 
     /**
-     * 税款
+     * 单据信息
      */
-    private String taxDeductibleParty;//税票抵扣方
+    private String containerNo;//柜号
+    private String ladingbillNo;//提单号
+    private String shipCompany;//船公司
+    private String containerSize;//货柜尺寸
+    private Integer isNeedInsurance;//是否需要购买保险：0-是，1-否
+    private String insuranceBuyDate;//保险购买日期
+    private double insuranceMoney;//保险费用
+    private String insuranceCompany;//保险公司
+    private String ETD;
+    private String ETA;
+    private Integer isCheckElec;//是否已核对电子版：0-是，1-否
+    private String elecSendDate;//电子版发送日期
+    private String exCompanySendBillDate;//外商邮寄正本单据日期
+    private String billSignDate;//正本单据签收日期
+    private String agent;//货代
+    private String agentSendDate;//单据寄给货代日期
     private double tariff;//关税
     private double addedValueTax;//增值税
     private String taxPayDate;//付税日期
     private String taxSignDate;//税票签收日期
-
+    private String taxDeductibleParty;//税票抵扣方
+    private String agentPassDate;//放行日期
+    private String warehouse;//仓库
+    private String storeDate;//入库日期
+    private double delayFee;//滞箱滞报费
     private String status;//状态
     private String remark;//备注
 
     public ContractBaseInfo(){}
-
-    public String getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public Integer getId() {
         return id;
@@ -96,6 +92,14 @@ public class ContractBaseInfo implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
     }
 
     public String getContractDate() {
@@ -122,44 +126,12 @@ public class ContractBaseInfo implements Serializable {
         this.insideContract = insideContract;
     }
 
-    public String getBusinessMode() {
-        return businessMode;
+    public String getExternalCompany() {
+        return externalCompany;
     }
 
-    public void setBusinessMode(String businessMode) {
-        this.businessMode = businessMode;
-    }
-
-    public String getCompanyNo() {
-        return companyNo;
-    }
-
-    public void setCompanyNo(String companyNo) {
-        this.companyNo = companyNo;
-    }
-
-    public String getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(String warehouse) {
-        this.warehouse = warehouse;
-    }
-
-    public String getStoreDate() {
-        return storeDate;
-    }
-
-    public void setStoreDate(String storeDate) {
-        this.storeDate = storeDate;
-    }
-
-    public String getSpecification() {
-        return specification;
-    }
-
-    public void setSpecification(String specification) {
-        this.specification = specification;
+    public void setExternalCompany(String externalCompany) {
+        this.externalCompany = externalCompany;
     }
 
     public String getOriginCountry() {
@@ -170,12 +142,12 @@ public class ContractBaseInfo implements Serializable {
         this.originCountry = originCountry;
     }
 
-    public String getPriceCondition() {
-        return priceCondition;
+    public String getCompanyNo() {
+        return companyNo;
     }
 
-    public void setPriceCondition(String priceCondition) {
-        this.priceCondition = priceCondition;
+    public void setCompanyNo(String companyNo) {
+        this.companyNo = companyNo;
     }
 
     public String getShipmentPort() {
@@ -192,6 +164,142 @@ public class ContractBaseInfo implements Serializable {
 
     public void setDestinationPort(String destinationPort) {
         this.destinationPort = destinationPort;
+    }
+
+    public String getPriceCondition() {
+        return priceCondition;
+    }
+
+    public void setPriceCondition(String priceCondition) {
+        this.priceCondition = priceCondition;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getExpectSailingDate() {
+        return expectSailingDate;
+    }
+
+    public void setExpectSailingDate(String expectSailingDate) {
+        this.expectSailingDate = expectSailingDate;
+    }
+
+    public String getBusinessMode() {
+        return businessMode;
+    }
+
+    public void setBusinessMode(String businessMode) {
+        this.businessMode = businessMode;
+    }
+
+    public double getTotalContractAmount() {
+        return totalContractAmount;
+    }
+
+    public void setTotalContractAmount(double totalContractAmount) {
+        this.totalContractAmount = totalContractAmount;
+    }
+
+    public double getTotalContractMoney() {
+        return totalContractMoney;
+    }
+
+    public void setTotalContractMoney(double totalContractMoney) {
+        this.totalContractMoney = totalContractMoney;
+    }
+
+    public double getTotalInvoiceAmount() {
+        return totalInvoiceAmount;
+    }
+
+    public void setTotalInvoiceAmount(double totalInvoiceAmount) {
+        this.totalInvoiceAmount = totalInvoiceAmount;
+    }
+
+    public double getTotalInvoiceMoney() {
+        return totalInvoiceMoney;
+    }
+
+    public void setTotalInvoiceMoney(double totalInvoiceMoney) {
+        this.totalInvoiceMoney = totalInvoiceMoney;
+    }
+
+    public Integer getTotalBoxes() {
+        return totalBoxes;
+    }
+
+    public void setTotalBoxes(Integer totalBoxes) {
+        this.totalBoxes = totalBoxes;
+    }
+
+    public String getIssuingBank() {
+        return issuingBank;
+    }
+
+    public void setIssuingBank(String issuingBank) {
+        this.issuingBank = issuingBank;
+    }
+
+    public String getIssuingDate() {
+        return issuingDate;
+    }
+
+    public void setIssuingDate(String issuingDate) {
+        this.issuingDate = issuingDate;
+    }
+
+    public String getLCNo() {
+        return LCNo;
+    }
+
+    public void setLCNo(String LCNo) {
+        this.LCNo = LCNo;
+    }
+
+    public String getBankDaodanDate() {
+        return bankDaodanDate;
+    }
+
+    public void setBankDaodanDate(String bankDaodanDate) {
+        this.bankDaodanDate = bankDaodanDate;
+    }
+
+    public String getRemittanceDate() {
+        return remittanceDate;
+    }
+
+    public void setRemittanceDate(String remittanceDate) {
+        this.remittanceDate = remittanceDate;
+    }
+
+    public String getYahuidaoqiDate() {
+        return yahuidaoqiDate;
+    }
+
+    public void setYahuidaoqiDate(String yahuidaoqiDate) {
+        this.yahuidaoqiDate = yahuidaoqiDate;
+    }
+
+    public double getRemittanceRate() {
+        return remittanceRate;
+    }
+
+    public void setRemittanceRate(double remittanceRate) {
+        this.remittanceRate = remittanceRate;
     }
 
     public double getPrePayment() {
@@ -218,14 +326,6 @@ public class ContractBaseInfo implements Serializable {
         this.preRate = preRate;
     }
 
-    public double getPrePaymentRMB() {
-        return prePaymentRMB;
-    }
-
-    public void setPrePaymentRMB(double prePaymentRMB) {
-        this.prePaymentRMB = prePaymentRMB;
-    }
-
     public double getFinalPayment() {
         return finalPayment;
     }
@@ -250,62 +350,6 @@ public class ContractBaseInfo implements Serializable {
         this.finalRate = finalRate;
     }
 
-    public double getFinalPaymentRMB() {
-        return finalPaymentRMB;
-    }
-
-    public void setFinalPaymentRMB(double finalPaymentRMB) {
-        this.finalPaymentRMB = finalPaymentRMB;
-    }
-
-    public String getEtd() {
-        return etd;
-    }
-
-    public void setEtd(String etd) {
-        this.etd = etd;
-    }
-
-    public String getEta() {
-        return eta;
-    }
-
-    public void setEta(String eta) {
-        this.eta = eta;
-    }
-
-    public Integer getIsCheckElec() {
-        return isCheckElec;
-    }
-
-    public void setIsCheckElec(Integer isCheckElec) {
-        this.isCheckElec = isCheckElec;
-    }
-
-    public String getInsuranceBuyDate() {
-        return insuranceBuyDate;
-    }
-
-    public void setInsuranceBuyDate(String insuranceBuyDate) {
-        this.insuranceBuyDate = insuranceBuyDate;
-    }
-
-    public String getInsuranceSendDate() {
-        return insuranceSendDate;
-    }
-
-    public void setInsuranceSendDate(String insuranceSendDate) {
-        this.insuranceSendDate = insuranceSendDate;
-    }
-
-    public String getInsuranceSignDate() {
-        return insuranceSignDate;
-    }
-
-    public void setInsuranceSignDate(String insuranceSignDate) {
-        this.insuranceSignDate = insuranceSignDate;
-    }
-
     public String getContainerNo() {
         return containerNo;
     }
@@ -322,6 +366,102 @@ public class ContractBaseInfo implements Serializable {
         this.ladingbillNo = ladingbillNo;
     }
 
+    public String getShipCompany() {
+        return shipCompany;
+    }
+
+    public void setShipCompany(String shipCompany) {
+        this.shipCompany = shipCompany;
+    }
+
+    public String getContainerSize() {
+        return containerSize;
+    }
+
+    public void setContainerSize(String containerSize) {
+        this.containerSize = containerSize;
+    }
+
+    public Integer getIsNeedInsurance() {
+        return isNeedInsurance;
+    }
+
+    public void setIsNeedInsurance(Integer isNeedInsurance) {
+        this.isNeedInsurance = isNeedInsurance;
+    }
+
+    public String getInsuranceBuyDate() {
+        return insuranceBuyDate;
+    }
+
+    public void setInsuranceBuyDate(String insuranceBuyDate) {
+        this.insuranceBuyDate = insuranceBuyDate;
+    }
+
+    public double getInsuranceMoney() {
+        return insuranceMoney;
+    }
+
+    public void setInsuranceMoney(double insuranceMoney) {
+        this.insuranceMoney = insuranceMoney;
+    }
+
+    public String getInsuranceCompany() {
+        return insuranceCompany;
+    }
+
+    public void setInsuranceCompany(String insuranceCompany) {
+        this.insuranceCompany = insuranceCompany;
+    }
+
+    public String getETD() {
+        return ETD;
+    }
+
+    public void setETD(String ETD) {
+        this.ETD = ETD;
+    }
+
+    public String getETA() {
+        return ETA;
+    }
+
+    public void setETA(String ETA) {
+        this.ETA = ETA;
+    }
+
+    public Integer getIsCheckElec() {
+        return isCheckElec;
+    }
+
+    public void setIsCheckElec(Integer isCheckElec) {
+        this.isCheckElec = isCheckElec;
+    }
+
+    public String getElecSendDate() {
+        return elecSendDate;
+    }
+
+    public void setElecSendDate(String elecSendDate) {
+        this.elecSendDate = elecSendDate;
+    }
+
+    public String getExCompanySendBillDate() {
+        return exCompanySendBillDate;
+    }
+
+    public void setExCompanySendBillDate(String exCompanySendBillDate) {
+        this.exCompanySendBillDate = exCompanySendBillDate;
+    }
+
+    public String getBillSignDate() {
+        return billSignDate;
+    }
+
+    public void setBillSignDate(String billSignDate) {
+        this.billSignDate = billSignDate;
+    }
+
     public String getAgent() {
         return agent;
     }
@@ -336,22 +476,6 @@ public class ContractBaseInfo implements Serializable {
 
     public void setAgentSendDate(String agentSendDate) {
         this.agentSendDate = agentSendDate;
-    }
-
-    public String getAgentPassDate() {
-        return agentPassDate;
-    }
-
-    public void setAgentPassDate(String agentPassDate) {
-        this.agentPassDate = agentPassDate;
-    }
-
-    public String getTaxDeductibleParty() {
-        return taxDeductibleParty;
-    }
-
-    public void setTaxDeductibleParty(String taxDeductibleParty) {
-        this.taxDeductibleParty = taxDeductibleParty;
     }
 
     public double getTariff() {
@@ -384,6 +508,54 @@ public class ContractBaseInfo implements Serializable {
 
     public void setTaxSignDate(String taxSignDate) {
         this.taxSignDate = taxSignDate;
+    }
+
+    public String getTaxDeductibleParty() {
+        return taxDeductibleParty;
+    }
+
+    public void setTaxDeductibleParty(String taxDeductibleParty) {
+        this.taxDeductibleParty = taxDeductibleParty;
+    }
+
+    public String getAgentPassDate() {
+        return agentPassDate;
+    }
+
+    public void setAgentPassDate(String agentPassDate) {
+        this.agentPassDate = agentPassDate;
+    }
+
+    public String getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(String warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public String getStoreDate() {
+        return storeDate;
+    }
+
+    public void setStoreDate(String storeDate) {
+        this.storeDate = storeDate;
+    }
+
+    public double getDelayFee() {
+        return delayFee;
+    }
+
+    public void setDelayFee(double delayFee) {
+        this.delayFee = delayFee;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getRemark() {

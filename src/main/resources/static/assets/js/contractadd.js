@@ -16,8 +16,30 @@ $(function () {
         todayHighlight: true,
         language: 'zh-CN'
     });
+
+    var currencySelector = $("#currency").editableSelect();
+    currencySelector.addOption("RMB");
+    currencySelector.addOption("USD");
+    $("#currency").blur(function(){
+        $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());
+    });
+    $("#currency").change(function(){
+        $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());
+    });
+
+    payTypeChange();
 });
 
+function payTypeChange(){
+    var type = $("#payType").val();
+    if(type == "L/C"){
+        $("#LCDiv").show();
+        $("#TTDiv").hide();
+    }else{
+        $("#TTDiv").show();
+        $("#LCDiv").hide();
+    }
+}
 var TableInit = function () {
     var oTableInit = new Object();
     //初始化Table

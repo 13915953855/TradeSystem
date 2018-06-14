@@ -2,7 +2,6 @@ package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.CargoInfo;
-import com.jason.trade.entity.ContractAllField;
 import com.jason.trade.entity.ContractBaseInfo;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
@@ -11,24 +10,26 @@ import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.RespUtil;
 import com.jason.trade.util.SetStyleUtils;
 import net.sf.json.JSONException;
-import org.apache.commons.lang.StringUtils;
 import net.sf.json.JSONObject;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.management.StringValueExp;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/trade")
@@ -42,8 +43,7 @@ public class TradeController {
 
     @RequestMapping(value = "/list")
     public String getTradeList(@RequestParam("limit") int limit,
-                                   @RequestParam("offset") int offset,
-                                   @RequestParam("tradeName") String tradeName) throws JSONException {
+                                   @RequestParam("offset") int offset) throws JSONException {
         List<ContractBaseInfo> list = contractRepository.findByStatus(GlobalConst.ENABLE);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
@@ -127,7 +127,7 @@ public class TradeController {
                 for (int j = 0; j < GlobalConst.BODY_COLOR.length - 1; j++) {//-1是因为有个备注
                     cell = row.createCell(j, CellType.STRING);
                     cell.setCellValue(rowData.get(j));
-                    cell.setCellStyle(SetStyleUtils.setStyle(workBook, GlobalConst.BODY_COLOR[j],false));
+                    cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
                 }
             }
             int end = rowNum;
@@ -161,7 +161,7 @@ public class TradeController {
         for (int i = 0; i < GlobalConst.FIRST_HEAD_ARRAY.length; i++) {
             cell = row.createCell(i, CellType.STRING);
             cell.setCellValue(GlobalConst.FIRST_HEAD_ARRAY[i]);
-            cell.setCellStyle(SetStyleUtils.setStyle(workBook, GlobalConst.FIRST_HEAD_COLOR[i],false));
+            cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
         }
         //创建第二行
         row = sheet.createRow(1);
@@ -169,7 +169,7 @@ public class TradeController {
         for (int i = 0; i < GlobalConst.SECOND_HEAD_ARRAY.length; i++) {
             cell = row.createCell(i, CellType.STRING);
             cell.setCellValue(GlobalConst.SECOND_HEAD_ARRAY[i]);
-            cell.setCellStyle(SetStyleUtils.setStyle(workBook, GlobalConst.SECOND_HEAD_COLOR[i],false));
+            cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
         }
     }
 
@@ -209,7 +209,7 @@ public class TradeController {
 
     private List<List<String>> convertBeanToList(ContractBaseInfo baseInfo,List<CargoInfo> cargoData){
         List<List<String>> result = new ArrayList<>();
-        for (CargoInfo cargoInfo : cargoData) {
+        /*for (CargoInfo cargoInfo : cargoData) {
             List<String> list = new ArrayList<>();
             list.add(String.valueOf(cargoInfo.getId()));//序号//
             list.add(baseInfo.getContractDate());//合同日期//
@@ -264,7 +264,7 @@ public class TradeController {
             list.add(baseInfo.getWarehouse());//仓库//
             list.add(baseInfo.getStoreDate());//入库日期//
             result.add(list);
-        }
+        }*/
         return result;
     }
 }

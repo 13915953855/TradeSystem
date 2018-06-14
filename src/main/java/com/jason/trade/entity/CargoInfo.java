@@ -12,40 +12,19 @@ public class CargoInfo implements Serializable{
     private Integer id;//序号
     private String cargoId;//产品序号
     private String contractId;//合同序号
-    private String externalCompany;//外商
     private String cargoNo;//库号
     private String cargoName;//产品名称
-    private double amount;//数量
+    private String level;//级别
+    private String specification;//规格
     private double unitPrice;//单价
-    private double contractValue;//合同金额
-    private String saleCustomer;//销售客户
-    private double unitPrePayAmount;//来款金额
-    private String unitPrePayDate;//来款日期
-    private double unitFinalPayAmount;//尾款金额
-    private String unitFinalPayDate;//来款日期
-    private double invoiceNumber;//发票数量
-    private double invoiceValue;//发票金额
-    private String elecSendDate;//电子版发送日期
-    private double hystereticFee;//滞报费
+    private double contractAmount;//合同数量
+    private double contractMoney;//合同金额
+    private double invoiceAmount;//发票数量
+    private double invoiceMoney;//发票金额
+    private Integer boxes;//箱数
     private String status;
 
     public CargoInfo(){}
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
-    }
 
     public Integer getId() {
         return id;
@@ -63,52 +42,12 @@ public class CargoInfo implements Serializable{
         this.cargoId = cargoId;
     }
 
-    public double getUnitPrePayAmount() {
-        return unitPrePayAmount;
+    public String getContractId() {
+        return contractId;
     }
 
-    public void setUnitPrePayAmount(double unitPrePayAmount) {
-        this.unitPrePayAmount = unitPrePayAmount;
-    }
-
-    public String getUnitPrePayDate() {
-        return unitPrePayDate;
-    }
-
-    public void setUnitPrePayDate(String unitPrePayDate) {
-        this.unitPrePayDate = unitPrePayDate;
-    }
-
-    public double getUnitFinalPayAmount() {
-        return unitFinalPayAmount;
-    }
-
-    public void setUnitFinalPayAmount(double unitFinalPayAmount) {
-        this.unitFinalPayAmount = unitFinalPayAmount;
-    }
-
-    public String getUnitFinalPayDate() {
-        return unitFinalPayDate;
-    }
-
-    public void setUnitFinalPayDate(String unitFinalPayDate) {
-        this.unitFinalPayDate = unitFinalPayDate;
-    }
-
-    public String getSaleCustomer() {
-        return saleCustomer;
-    }
-
-    public void setSaleCustomer(String saleCustomer) {
-        this.saleCustomer = saleCustomer;
-    }
-
-    public double getHystereticFee() {
-        return hystereticFee;
-    }
-
-    public void setHystereticFee(double hystereticFee) {
-        this.hystereticFee = hystereticFee;
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
     }
 
     public String getCargoNo() {
@@ -127,20 +66,20 @@ public class CargoInfo implements Serializable{
         this.cargoName = cargoName;
     }
 
-    public String getExternalCompany() {
-        return externalCompany;
+    public String getLevel() {
+        return level;
     }
 
-    public void setExternalCompany(String externalCompany) {
-        this.externalCompany = externalCompany;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public double getAmount() {
-        return amount;
+    public String getSpecification() {
+        return specification;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setSpecification(String specification) {
+        this.specification = specification;
     }
 
     public double getUnitPrice() {
@@ -151,35 +90,51 @@ public class CargoInfo implements Serializable{
         this.unitPrice = unitPrice;
     }
 
-    public double getContractValue() {
-        return contractValue;
+    public double getContractAmount() {
+        return contractAmount;
     }
 
-    public void setContractValue(double contractValue) {
-        this.contractValue = contractValue;
+    public void setContractAmount(double contractAmount) {
+        this.contractAmount = contractAmount;
     }
 
-    public double getInvoiceNumber() {
-        return invoiceNumber;
+    public double getContractMoney() {
+        return contractMoney;
     }
 
-    public void setInvoiceNumber(double invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
+    public void setContractMoney(double contractMoney) {
+        this.contractMoney = contractMoney;
     }
 
-    public double getInvoiceValue() {
-        return invoiceValue;
+    public double getInvoiceAmount() {
+        return invoiceAmount;
     }
 
-    public void setInvoiceValue(double invoiceValue) {
-        this.invoiceValue = invoiceValue;
+    public void setInvoiceAmount(double invoiceAmount) {
+        this.invoiceAmount = invoiceAmount;
     }
 
-    public String getElecSendDate() {
-        return elecSendDate;
+    public double getInvoiceMoney() {
+        return invoiceMoney;
     }
 
-    public void setElecSendDate(String elecSendDate) {
-        this.elecSendDate = elecSendDate;
+    public void setInvoiceMoney(double invoiceMoney) {
+        this.invoiceMoney = invoiceMoney;
+    }
+
+    public Integer getBoxes() {
+        return boxes;
+    }
+
+    public void setBoxes(Integer boxes) {
+        this.boxes = boxes;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
