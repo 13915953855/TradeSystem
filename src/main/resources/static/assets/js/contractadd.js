@@ -28,6 +28,19 @@ $(function () {
     });
 
     payTypeChange();
+
+    if($("#isNeedInsurance").checked){
+        $("#baoxianDiv").show();
+    }else{
+        $("#baoxianDiv").hide();
+    }
+    $("#isNeedInsurance").change(function(){
+        if(this.checked){
+            $("#baoxianDiv").show();
+        }else{
+            $("#baoxianDiv").hide();
+        }
+    });
 });
 
 function payTypeChange(){
@@ -129,7 +142,7 @@ var TableInit = function () {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
-            tradeName: $("#tradeName").val()
+            //tradeName: $("#tradeName").val()
         };
         return temp;
     };
@@ -239,6 +252,7 @@ function resetForm(formId){
     $("#"+formId+" input[type=text]").val('');
 }
 function setFormData(data){
+//todo 整改
     $("#id").val(data.id);
     $("#cargoId").val(data.cargoId);
     $("#externalCompany").val(data.externalCompany);
@@ -257,6 +271,7 @@ function setFormData(data){
     $("#hystereticFee").val(data.hystereticFee);
     $("#elecSendDate").val(data.elecSendDate);
 }
+
 function saveContract(){
     var $btn = $("#save").button('loading');
 
@@ -265,44 +280,69 @@ function saveContract(){
     contract.contractId = $("#contractId").val();
     contract.externalContract = $("#externalContract").val();
     contract.insideContract = $("#insideContract").val();
-    contract.businessMode = $("#businessMode").val();
-    contract.companyNo = $("#companyNo").val();
     contract.contractDate = $("#contractDate").val();
-    contract.warehouse = $("#warehouse").val();
-    contract.storeDate = $("#storeDate").val();
-    contract.specification = $("#specification").val();
+    contract.externalCompany = $("#externalCompany").val();
     contract.originCountry = $("#originCountry").val();
+    contract.companyNo = $("#companyNo").val();
     contract.shipmentPort = $("#shipmentPort").val();
     contract.destinationPort = $("#destinationPort").val();
     contract.priceCondition = $("#priceCondition").val();
-    contract.etd = $("#etd").val();
-    contract.eta = $("#eta").val();
+    contract.payType = $("#payType").val();
+    contract.currency = $("#currency").val();
+    contract.expectSailingDate = $("#expectSailingDate").val();
+    contract.businessMode = $("#businessMode").val();
+    contract.totalContractAmount = $("#totalContractAmount").val() == "" ? 0:$("#totalContractAmount").val();
+    contract.totalContractMoney = $("#totalContractMoney").val() == "" ? 0:$("#totalContractMoney").val();
+    contract.totalInvoiceAmount = $("#totalInvoiceAmount").val() == "" ? 0:$("#totalInvoiceAmount").val();
+    contract.totalInvoiceMoney = $("#totalInvoiceMoney").val() == "" ? 0:$("#totalInvoiceMoney").val();
+    contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:$("#totalBoxes").val();
+    contract.issuingBank = $("#issuingBank").val();
+    contract.issuingDate = $("#issuingDate").val();
+    contract.LCNo = $("#LCNo").val();
+    contract.bankDaodanDate = $("#bankDaodanDate").val();
+    contract.remittanceDate = $("#remittanceDate").val();
+    contract.yahuidaoqiDate = $("#yahuidaoqiDate").val();
+    contract.remittanceRate = $("#remittanceRate").val() == "" ? 0:$("#remittanceRate").val();
     contract.prePayment = $("#prePayment").val() == "" ? 0:$("#prePayment").val();
     contract.prePaymentDate = $("#prePaymentDate").val();
     contract.preRate = $("#preRate").val() == "" ? 0:$("#preRate").val();
-    contract.prePaymentRMB = $("#prePaymentRMB").val() == "" ? 0:$("#prePaymentRMB").val();
     contract.finalPayment = $("#finalPayment").val() == "" ? 0:$("#finalPayment").val();
     contract.finalPaymentDate = $("#finalPaymentDate").val();
     contract.finalRate = $("#finalRate").val() == "" ? 0:$("#finalRate").val();
-    contract.finalPaymentRMB = $("#finalPaymentRMB").val() == "" ? 0:$("#finalPaymentRMB").val();
+    contract.containerNo = $("#containerNo").val();
+    contract.ladingbillNo = $("#ladingbillNo").val();
+    contract.shipCompany = $("#shipCompany").val();
+    contract.containerSize = $("#containerSize").val();
+    if($("#isNeedInsurance").is(':checked')){
+        contract.isNeedInsurance = "1";
+    }else{
+        contract.isNeedInsurance = "0";
+    }
+    contract.insuranceBuyDate = $("#insuranceBuyDate").val();
+    contract.insuranceMoney = $("#insuranceMoney").val() == "" ? 0:$("#insuranceMoney").val();
+    contract.insuranceCompany = $("#insuranceCompany").val();
+    contract.ETD = $("#etd").val();
+    contract.ETA = $("#eta").val();
     if($("#isCheckElec").is(':checked')){
         contract.isCheckElec = "1";
     }else{
         contract.isCheckElec = "0";
     }
-    contract.insuranceBuyDate = $("#insuranceBuyDate").val();
-    contract.insuranceSendDate = $("#insuranceSendDate").val();
-    contract.insuranceSignDate = $("#insuranceSignDate").val();
-    contract.containerNo = $("#containerNo").val();
-    contract.ladingbillNo = $("#ladingbillNo").val();
+    contract.elecSendDate = $("#elecSendDate").val();
+    contract.exCompanySendBillDate = $("#exCompanySendBillDate").val();
+    contract.billSignDate = $("#billSignDate").val();
     contract.agent = $("#agent").val();
     contract.agentSendDate = $("#agentSendDate").val();
-    contract.agentPassDate = $("#agentPassDate").val();
-    contract.taxDeductibleParty = $("#taxDeductibleParty").val();
     contract.tariff = $("#tariff").val() == "" ? 0:$("#tariff").val();
     contract.addedValueTax = $("#addedValueTax").val() == "" ? 0:$("#addedValueTax").val();
     contract.taxPayDate = $("#taxPayDate").val();
     contract.taxSignDate = $("#taxSignDate").val();
+    contract.taxDeductibleParty = $("#taxDeductibleParty").val();
+    contract.agentPassDate = $("#agentPassDate").val();
+    contract.warehouse = $("#warehouse").val();
+    contract.storeDate = $("#storeDate").val();
+    contract.delayFee = $("#delayFee").val() == "" ? 0:$("#delayFee").val();
+    contract.remark = $("#remark").val();
 
     var a = $("#tb_cargo").bootstrapTable("getData");
     var cargoIds = "";

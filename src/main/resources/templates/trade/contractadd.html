@@ -115,6 +115,7 @@
                                 <div class="panel-heading">基本信息</div>
                                 <div class="panel-body">
                                     <form class="form-horizontal">
+                                        <input type="hidden" id="id" value=""/>
                                         <input type="hidden" id="contractId" th:value="${contractId}"/>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">外合同编号</label>
@@ -244,7 +245,7 @@
                                                     <div class="panel-heading">基本信息</div>
                                                     <div class="panel-body">
                                                         <form class="form-horizontal" id="cargoForm">
-                                                            <input type="hidden" id="id" value=""/>
+                                                            <input type="hidden" id="id_" value=""/>
                                                             <input type="hidden" id="cargoId" value=""/>
                                                             <div class="form-group" style="">
                                                                 <label class="control-label col-sm-2">产品名称</label>
@@ -384,11 +385,17 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">预付款日期</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="prePaymentDate" />
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="prePaymentDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
                                             </div>
                                             <label class="control-label col-sm-3">尾款日期</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="finalPaymentDate" />
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="finalPaymentDate" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">

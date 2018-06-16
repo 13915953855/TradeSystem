@@ -42,9 +42,11 @@ public class TradeController {
     private TradeService tradeService;
 
     @RequestMapping(value = "/list")
-    public String getTradeList(@RequestParam("limit") int limit,
-                                   @RequestParam("offset") int offset) throws JSONException {
+    public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset,
+                               @RequestParam("externalContract") String externalContract,
+                               @RequestParam("contractDate") String contractDate) throws JSONException {
         List<ContractBaseInfo> list = contractRepository.findByStatus(GlobalConst.ENABLE);
+        //List<ContractBaseInfo> list = contractRepository.queryContractList('%'+externalContract+'%');
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);

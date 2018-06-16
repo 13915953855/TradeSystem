@@ -83,7 +83,8 @@ var TableInit = function () {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
-            tradeName: $("#tradeName").val()
+            externalContract: $("#externalContract").val(),
+            contractDate: $("#contractDate").val()
         };
         return temp;
     };
@@ -97,6 +98,9 @@ var ButtonInit = function () {
 
     oInit.Init = function () {
         //初始化页面上面的按钮事件
+        $("#btn_query").click(function(){
+            $('#tb_contract').bootstrapTable("refresh");
+        });
         $("#btn_add").click(function(){
             window.location.href="/trade/contract/add";
         });

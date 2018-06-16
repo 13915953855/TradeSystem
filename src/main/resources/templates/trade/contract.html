@@ -38,7 +38,7 @@
             getNoticeNum();
         });
         var getNoticeNum = function(){
-            $("#noticeNum").html("4");
+            $("#noticeNum").html("");
         }
     </script>
 </head>
@@ -93,9 +93,8 @@
                         <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-file-empty"></i> <span>贸易台账管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subPages" class="collapse in">
                             <ul class="nav">
-                                <li><a href="/trade/contract" class="active">自营台账</a></li>
+                                <li><a href="/trade/contract" class="active">台账</a></li>
                                 <li><a href="/trade/cargomanage">进销存台账</a></li>
-                                <li><a href="/trade/agent">代理台账</a></li>
                             </ul>
                         </div>
                     </li>
@@ -112,11 +111,11 @@
                         <div class="panel-body" style="padding-top:10px;padding-bottom:0;">
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-1" for="tradeName">名称</label>
+                                    <label class="control-label col-sm-1" for="externalContract">外合同编号</label>
                                     <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="tradeName"/>
+                                        <input type="text" class="form-control" id="externalContract"/>
                                     </div>
-                                    <label class="control-label col-sm-1">日期</label>
+                                    <label class="control-label col-sm-1">合同日期</label>
                                     <div class="col-sm-3">
                                         <div class="input-append date form_datetime" id="contractDate">
                                             <input size="16" type="text" value="" class="form-control" />
