@@ -32,7 +32,6 @@
     <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="/assets/scripts/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
-    <script src="/assets/js/contractadd.js"></script>
     <script th:inline="javascript">
         $(function(){
             //获取警示数目
@@ -56,12 +55,6 @@
             }
             if(isCheckElec == 1){
                 $("#isCheckElec").attr("checked","checked");
-            }
-            var action = /*[[${action}]]*/;
-            if(action == "view"){
-                $("button").attr("disabled","disabled");
-                $("#cancel").removeAttr("disabled");
-                $("#cancel").html("关闭");
             }
             /*]]>*/
         }
@@ -248,7 +241,7 @@
                                     <button id="btn_add" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
                                         <i class="fa fa-plus-square"></i>新增
                                     </button>
-                                    <button id="btn_edit" type="button" class="btn btn-default" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
+                                    <button id="btn_edit" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
                                         <i class="fa fa-plus-square"></i>修改
                                     </button>
                                     <button id="btn_del" type="button" class="btn btn-default" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">

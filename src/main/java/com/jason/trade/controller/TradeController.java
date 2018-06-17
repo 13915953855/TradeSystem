@@ -11,6 +11,7 @@ import com.jason.trade.util.RespUtil;
 import com.jason.trade.util.SetStyleUtils;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/trade")
@@ -71,6 +73,9 @@ public class TradeController {
     @PostMapping(value="/cargo/add")
     public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
         cargoInfo.setStatus(GlobalConst.ENABLE);
+        if(StringUtils.isBlank(cargoInfo.getCargoId())) {
+            cargoInfo.setCargoId(UUID.randomUUID().toString());
+        }
         CargoInfo data = cargoRepository.save(cargoInfo);
         return RespUtil.respSuccess(data);
     }

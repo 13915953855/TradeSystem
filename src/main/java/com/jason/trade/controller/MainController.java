@@ -61,6 +61,16 @@ public class MainController {
         model.addAttribute("user", userInfo);
         ContractBaseInfo contract = contractRepository.findOne(id);
         model.addAttribute("contract",contract);
+        model.addAttribute("action","update");
+        return "/trade/contractupdate";
+    }
+    @GetMapping("/trade/contract/view")
+    public String contractview(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        ContractBaseInfo contract = contractRepository.findOne(id);
+        model.addAttribute("contract",contract);
+        model.addAttribute("action","view");
         return "/trade/contractupdate";
     }
     @GetMapping("/trade/cargomanage")

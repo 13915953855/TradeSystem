@@ -74,6 +74,9 @@ var TableInit = function () {
             responseHandler:function(res){
                 return res.rows;
             },
+            onLoadSuccess:function(data){
+                autoSetTotalMoney();
+            },
             columns: [{
                 checkbox: true
             }, {
@@ -89,62 +92,37 @@ var TableInit = function () {
                 title: '合同序号',
                 visible: false
             }, {
-                field: 'externalCompany',
-                title: '外商'
+                field: 'cargoName',
+                title: '产品名称'
+            }, {
+                field: 'level',
+                title: '级别'
+            }, {
+                field: 'specification',
+                title: '规格'
             }, {
                 field: 'cargoNo',
                 title: '库号'
             }, {
-                field: 'cargoName',
-                title: '产品名称'
-            }, {
-                field: 'amount',
-                title: '数量'
+                field: 'boxes',
+                title: '箱数(小计)'
             }, {
                 field: 'unitPrice',
                 title: '单价'
             }, {
-                field: 'contractValue',
-                title: '合同金额'
+                field: 'contractAmount',
+                title: '合同数量(小计)'
             }, {
-                field: 'saleCustomer',
-                title: '销售客户'
+                field: 'contractMoney',
+                title: '合同金额(小计:元)'
             }, {
-                field: 'unitPrePayAmount',
-                title: '来款金额'
+                field: 'invoiceAmount',
+                title: '发票数量(小计)'
             }, {
-                field: 'unitPrePayDate',
-                title: '来款日期'
-            }, {
-                field: 'unitFinalPayAmount',
-                title: '尾款金额'
-            }, {
-                field: 'unitFinalPayDate',
-                title: '来款日期'
-            }, {
-                field: 'invoiceNumber',
-                title: '发票数量'
-            }, {
-                field: 'invoiceValue',
-                title: '发票金额'
-            }, {
-                field: 'elecSendDate',
-                title: '电子版发送日期'
-            }, {
-                field: 'hystereticFee',
-                title: '滞报费'
+                field: 'invoiceMoney',
+                title: '发票金额(小计:元)'
             } ]
         });
-    };
-
-    //得到查询的参数
-    oTableInit.queryParams = function (params) {
-        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-            limit: params.limit,   //页面大小
-            offset: params.offset,  //页码
-            //tradeName: $("#tradeName").val()
-        };
-        return temp;
     };
     return oTableInit;
 };
@@ -167,9 +145,14 @@ var ButtonInit = function () {
         $("#btn_edit").click(function(){
             var data = $("#tb_cargo").bootstrapTable("getSelections");
             if(data.length == 1){
+                $("#myModal").modal('show');
                 setFormData(data[0]);
             }else if(data.length > 1){
                 alert("只能选择一项进行编辑");
+                $("#myModal").modal('hide');
+            }else {
+                alert("请选中一行！");
+                $("#myModal").modal('hide');
             }
         });
         $("#btn_del").click(function(){
@@ -200,6 +183,7 @@ var ButtonInit = function () {
         });
         $("#save_cargo").click(function(){
             var cargo = {};
+            cargo.id = $("#_id").val();
             cargo.cargoId = $("#cargoId").val();
             cargo.contractId = $("#contractId").val();//合同序号
             if($("#cargoName").val() == "") {
@@ -237,8 +221,30 @@ var ButtonInit = function () {
 };
 function resetForm(formId){
     $("#"+formId+" input[type=text]").val('');
+    autoSetTotalMoney();
+}
+function autoSetTotalMoney(){
+    var all = $('#tb_cargo').bootstrapTable('getData');
+    var totalBoxes = 0;
+    var totalInvoiceMoney = 0;
+    var totalInvoiceAmount = 0;
+    var totalContractMoney = 0;
+    var totalContractAmount = 0;
+    for(var i=0;i<all.length;i++) {
+        totalBoxes += all[i].boxes;
+        totalInvoiceMoney += all[i].invoiceMoney;
+        totalInvoiceAmount += all[i].invoiceAmount;
+        totalContractMoney += all[i].contractMoney;
+        totalContractAmount += all[i].contractAmount;
+    }
+    $("#totalBoxes").val(totalBoxes);
+    $("#totalInvoiceMoney").val(totalInvoiceMoney);
+    $("#totalInvoiceAmount").val(totalInvoiceAmount);
+    $("#totalContractMoney").val(totalContractMoney);
+    $("#totalContractAmount").val(totalContractAmount);
 }
 function setFormData(data){
+    $("#_id").val(data.id);
     $("#cargoId").val(data.cargoId);
     $("#cargoNo").val(data.cargoNo);
     $("#cargoName").val(data.cargoName);

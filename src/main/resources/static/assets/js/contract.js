@@ -74,7 +74,14 @@ var TableInit = function () {
                 formatter: function(value, row, index){
                     return value;
                 }
-            } ]
+            }, {
+                 field: 'id',
+                 title: '操作',
+                 formatter: function(value, row, index){
+                    var s = '<a href="/trade/contract/view?id='+value+'">查看</a>';
+                    return s;
+                 }
+             }  ]
         });
     };
 
