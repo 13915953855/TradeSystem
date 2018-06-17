@@ -8,7 +8,7 @@ $(function () {
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
 
-    $("#contractDate").datetimepicker({
+    $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
         todayBtn: true,
@@ -57,13 +57,16 @@ var TableInit = function () {
                 title: '序号'
             }, {
                 field: 'externalContract',
-                title: '外合同'
+                title: '外合同编号'
             }, {
                 field: 'insideContract',
-                title: '内合同'
+                title: '内合同编号'
             }, {
                 field: 'businessMode',
                 title: '业务模式'
+            }, {
+                field: 'externalCompany',
+                title: '外商'
             }, {
                 field: 'companyNo',
                 title: '厂号'
@@ -91,7 +94,11 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             externalContract: $("#externalContract").val(),
-            contractDate: $("#contractDate").val()
+            insideContract: $("#insideContract").val(),
+            contractStartDate: $("#contractStartDate").val(),
+            contractEndDate: $("#contractEndDate").val(),
+            businessMode: $("#businessMode").val(),
+            externalCompany: $("#externalCompany").val()
         };
         return temp;
     };

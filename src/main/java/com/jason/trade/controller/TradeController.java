@@ -3,6 +3,7 @@ package com.jason.trade.controller;
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.CargoInfo;
 import com.jason.trade.entity.ContractBaseInfo;
+import com.jason.trade.entity.ContractParam;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.service.TradeService;
@@ -44,10 +45,14 @@ public class TradeController {
     private TradeService tradeService;
 
     @RequestMapping(value = "/list")
-    public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset,
-                               @RequestParam("externalContract") String externalContract,
-                               @RequestParam("contractDate") String contractDate) throws JSONException {
-        List<ContractBaseInfo> list = contractRepository.findByStatus(GlobalConst.ENABLE);
+    public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam
+                               /*@RequestParam("externalContract") String externalContract,
+                               @RequestParam("contractStartDate") String contractStartDate,
+                               @RequestParam("contractEndDate") String contractEndDate,
+                               @RequestParam("businessMode") String businessMode,
+                               @RequestParam("externalCompany") String externalCompany,
+                               @RequestParam("insideContract") String insideContract*/) throws JSONException {
+        List<ContractBaseInfo> list = tradeService.queryContractList(contractParam);
         //List<ContractBaseInfo> list = contractRepository.queryContractList('%'+externalContract+'%');
         JSONObject result = new JSONObject();
         result.put("total",list.size());
