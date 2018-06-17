@@ -199,36 +199,23 @@ var ButtonInit = function () {
             }
         });
         $("#save_cargo").click(function(){
-            //todo 保存商品信息
             var cargo = {};
-            if($("#contractId").val() != "") {
-                cargo.contractId = $("#contractId").val();//合同序号
-            }else {
-                cargo.contractId = -1;//合同序号
-            }
-            if($("#externalCompany").val() == "") {
-                $("#externalCompany").parent().addClass("has-error");
-                return;
-            }
-            cargo.externalCompany = $("#externalCompany").val();//外商
-            cargo.cargoNo = $("#cargoNo").val();//库号
+            cargo.cargoId = $("#cargoId").val();
+            cargo.contractId = $("#contractId").val();//合同序号
             if($("#cargoName").val() == "") {
                 $("#cargoName").parent().addClass("has-error");
                 return;
             }
             cargo.cargoName = $("#cargoName").val();//产品名称
-            cargo.amount = $("#amount").val() == "" ? 0:$("#amount").val();//数量
+            cargo.level = $("#level").val();//级别
+            cargo.specification = $("#specification").val();//规格
+            cargo.cargoNo = $("#cargoNo").val();//库号
+            cargo.boxes = $("#boxes").val() == "" ? 0:$("#boxes").val();//箱数(小计)
             cargo.unitPrice = $("#unitPrice").val() == "" ? 0:$("#unitPrice").val();//单价
-            cargo.contractValue = $("#contractValue").val() == "" ? 0:$("#contractValue").val();//合同金额
-            cargo.saleCustomer = $("#saleCustomer").val();//销售客户
-            cargo.unitPrePayAmount = $("#unitPrePayAmount").val() == "" ? 0:$("#unitPrePayAmount").val();//来款金额
-            cargo.unitPrePayDate = $("#unitPrePayDate").val();//来款日期
-            cargo.unitFinalPayAmount = $("#unitFinalPayAmount").val() == "" ? 0:$("#unitFinalPayAmount").val();//尾款金额
-            cargo.unitFinalPayDate = $("#unitFinalPayDate").val();//来款日期
-            cargo.invoiceNumber = $("#invoiceNumber").val() == "" ? 0:$("#invoiceNumber").val();//发票数量
-            cargo.invoiceValue = $("#invoiceValue").val() == "" ? 0:$("#invoiceValue").val();//发票金额
-            cargo.elecSendDate = $("#elecSendDate").val();//电子版发送日期
-            cargo.hystereticFee = $("#hystereticFee").val() == "" ? 0:$("#hystereticFee").val();//滞报费
+            cargo.contractAmount = $("#contractAmount").val() == "" ? 0:$("#contractAmount").val();//合同数量(小计)
+            cargo.contractMoney = $("#contractMoney").val() == "" ? 0:$("#contractMoney").val();//合同金额(小计:元)
+            cargo.invoiceAmount = $("#invoiceAmount").val() == "" ? 0:$("#invoiceAmount").val();//发票数量(小计)
+            cargo.invoiceMoney = $("#invoiceMoney").val() == "" ? 0:$("#invoiceMoney").val();//发票金额(小计:元)
 
             $.ajax({
                 url:"/trade/cargo/add",
@@ -252,24 +239,17 @@ function resetForm(formId){
     $("#"+formId+" input[type=text]").val('');
 }
 function setFormData(data){
-//todo 整改
-    $("#id").val(data.id);
     $("#cargoId").val(data.cargoId);
-    $("#externalCompany").val(data.externalCompany);
     $("#cargoNo").val(data.cargoNo);
     $("#cargoName").val(data.cargoName);
-    $("#amount").val(data.amount);
+    $("#level").val(data.level);
+    $("#specification").val(data.specification);
     $("#unitPrice").val(data.unitPrice);
-    $("#contractValue").val(data.contractValue);
-    $("#saleCustomer").val(data.saleCustomer);
-    $("#unitPrePayAmount").val(data.unitPrePayAmount);
-    $("#unitPrePayDate").val(data.unitPrePayDate);
-    $("#unitFinalPayAmount").val(data.unitFinalPayAmount);
-    $("#unitFinalPayDate").val(data.unitFinalPayDate);
-    $("#invoiceNumber").val(data.invoiceNumber);
-    $("#invoiceValue").val(data.invoiceValue);
-    $("#hystereticFee").val(data.hystereticFee);
-    $("#elecSendDate").val(data.elecSendDate);
+    $("#boxes").val(data.boxes);
+    $("#contractAmount").val(data.contractAmount);
+    $("#contractMoney").val(data.contractMoney);
+    $("#invoiceAmount").val(data.invoiceAmount);
+    $("#invoiceMoney").val(data.invoiceMoney);
 }
 
 function saveContract(){
@@ -278,9 +258,21 @@ function saveContract(){
     var contract = {};
     contract.id = $("#id").val();
     contract.contractId = $("#contractId").val();
+    if($("#externalContract").val() == "") {
+        $("#externalContract").parent().addClass("has-error");
+        return;
+    }
     contract.externalContract = $("#externalContract").val();
+    if($("#insideContract").val() == "") {
+        $("#insideContract").parent().addClass("has-error");
+        return;
+    }
     contract.insideContract = $("#insideContract").val();
     contract.contractDate = $("#contractDate").val();
+    if($("#externalCompany").val() == "") {
+        $("#externalCompany").parent().addClass("has-error");
+        return;
+    }
     contract.externalCompany = $("#externalCompany").val();
     contract.originCountry = $("#originCountry").val();
     contract.companyNo = $("#companyNo").val();
