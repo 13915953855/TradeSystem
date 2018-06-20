@@ -41,8 +41,40 @@ $(function () {
             $("#baoxianDiv").hide();
         }
     });
-});
 
+    $("#unitPrice").blur(function(){
+        var contractMoney = 0;
+        var invoiceMoney = 0;
+        var unitPrice = $("#unitPrice").val();
+        var contractAmount = $("#contractAmount").val();
+        var invoiceAmount = $("#invoiceAmount").val();
+        contractMoney = toFloat(unitPrice * contractAmount);
+        invoiceMoney = toFloat(unitPrice * invoiceAmount);
+        $("#contractMoney").val(contractMoney);
+        $("#invoiceMoney").val(invoiceMoney);
+    });
+    $("#contractAmount").blur(function(){
+        var contractMoney = 0;
+        var unitPrice = $("#unitPrice").val();
+        var contractAmount = $("#contractAmount").val();
+        contractMoney = toFloat(unitPrice * contractAmount);
+        $("#contractMoney").val(contractMoney);
+    });
+    $("#invoiceAmount").blur(function(){
+        var invoiceMoney = 0;
+        var unitPrice = $("#unitPrice").val();
+        var invoiceAmount = $("#invoiceAmount").val();
+        invoiceMoney = toFloat(unitPrice * invoiceAmount);
+        $("#invoiceMoney").val(invoiceMoney);
+    });
+});
+var toFloat = function (value) {
+    value = Math.round(parseFloat(value) * 100) / 100;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".00";
+    }
+    return value;
+}
 function payTypeChange(){
     var type = $("#payType").val();
     if(type == "L/C"){
@@ -266,17 +298,20 @@ function saveContract(){
     contract.contractId = $("#contractId").val();
     if($("#externalContract").val() == "") {
         $("#externalContract").parent().addClass("has-error");
+        $btn.button('reset');
         return;
     }
     contract.externalContract = $("#externalContract").val();
     if($("#insideContract").val() == "") {
         $("#insideContract").parent().addClass("has-error");
+        $btn.button('reset');
         return;
     }
     contract.insideContract = $("#insideContract").val();
     contract.contractDate = $("#contractDate").val();
     if($("#externalCompany").val() == "") {
         $("#externalCompany").parent().addClass("has-error");
+        $btn.button('reset');
         return;
     }
     contract.externalCompany = $("#externalCompany").val();
@@ -341,6 +376,9 @@ function saveContract(){
     contract.storeDate = $("#storeDate").val();
     contract.delayFee = $("#delayFee").val() == "" ? 0:$("#delayFee").val();
     contract.remark = $("#remark").val();
+    contract.tariffRate = $("#tariffRate").val() == "" ? 0:$("#tariffRate").val();
+    contract.taxRate = $("#taxRate").val() == "" ? 0:$("#taxRate").val();
+    contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:$("#exchangeRate").val();
 
     var a = $("#tb_cargo").bootstrapTable("getData");
     var cargoIds = "";
@@ -361,9 +399,11 @@ function saveContract(){
             if(res.status == "1"){
                 alert("保存成功");
                 window.location.href = "/trade/contract";
-            }else{
-
+            }else if(res.status == "-2"){
+                alert("此合同已被他人编辑过，请刷新页面后重新编辑再保存。");
             }
+            $btn.button('reset');
+        },error:function(){
             $btn.button('reset');
         }
     });

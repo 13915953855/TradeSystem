@@ -45,15 +45,8 @@ public class TradeController {
     private TradeService tradeService;
 
     @RequestMapping(value = "/list")
-    public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam
-                               /*@RequestParam("externalContract") String externalContract,
-                               @RequestParam("contractStartDate") String contractStartDate,
-                               @RequestParam("contractEndDate") String contractEndDate,
-                               @RequestParam("businessMode") String businessMode,
-                               @RequestParam("externalCompany") String externalCompany,
-                               @RequestParam("insideContract") String insideContract*/) throws JSONException {
+    public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
         List<ContractBaseInfo> list = tradeService.queryContractList(contractParam);
-        //List<ContractBaseInfo> list = contractRepository.queryContractList('%'+externalContract+'%');
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -87,6 +80,21 @@ public class TradeController {
 
     @PostMapping(value="/contract/update")
     public String contractUpdate(ContractBaseInfo contractBaseInfo, HttpSession session){
+        Integer currentVersion = contractRepository.findOne(contractBaseInfo.getId()).getVersion();
+        if(currentVersion > contractBaseInfo.getVersion()){
+            return GlobalConst.MODIFIED;
+        }
+
+        if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
+            contractBaseInfo.setStatus(GlobalConst.SHIPPED);
+        }
+        if(StringUtils.isNotBlank(contractBaseInfo.getETA())){
+            contractBaseInfo.setStatus(GlobalConst.ARRIVED);
+        }
+        if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
+            contractBaseInfo.setStatus(GlobalConst.STORED);
+        }
+        contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
         contractRepository.save(contractBaseInfo);
         return GlobalConst.SUCCESS;
     }

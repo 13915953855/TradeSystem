@@ -138,6 +138,7 @@
                                 <div class="panel-heading">基本信息</div>
                                 <div class="panel-body">
                                     <form class="form-horizontal">
+                                        <input type="hidden" id="version" th:value="${contract.version}"/>
                                         <input type="hidden" id="id" th:value="${contract.id}"/>
                                         <input type="hidden" id="contractId" th:value="${contract.contractId}"/>
                                         <div class="form-group" style="">
@@ -235,6 +236,22 @@
                                             <label class="control-label col-sm-3">发票总金额(元)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalInvoiceMoney" th:value="${contract.totalInvoiceMoney}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">关税税率(%)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariffRate" th:value="${contract.tariffRate}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">汇率(%)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="exchangeRate" th:value="${contract.exchangeRate}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">增值税率(%)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="taxRate" th:value="${contract.taxRate}"/>
                                             </div>
                                         </div>
                                     </form>
@@ -383,7 +400,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">付汇汇率</label>
+                                            <label class="control-label col-sm-2">付汇汇率(%)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="remittanceRate" th:value="${contract.remittanceRate}" />
                                             </div>
@@ -553,11 +570,11 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">关税</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff" th:value="${contract.tariff}"/>
+                                                <input type="text" class="form-control" id="tariff" th:value="${contract.tariff}" style="background-color:#fdf59a"/>
                                             </div>
                                             <label class="control-label col-sm-3">增值税</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax" th:value="${contract.addedValueTax}"/>
+                                                <input type="text" class="form-control" id="addedValueTax" th:value="${contract.addedValueTax}" style="background-color:#fdf59a"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">

@@ -29,6 +29,16 @@ public class TradeService {
     @Transactional
     public void saveContract(ContractBaseInfo contractBaseInfo, String cargoId){
         contractBaseInfo.setStatus(GlobalConst.ENABLE);
+        if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
+            contractBaseInfo.setStatus(GlobalConst.SHIPPED);
+        }
+        if(StringUtils.isNotBlank(contractBaseInfo.getETA())){
+            contractBaseInfo.setStatus(GlobalConst.ARRIVED);
+        }
+        if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
+            contractBaseInfo.setStatus(GlobalConst.STORED);
+        }
+
         contractRepository.save(contractBaseInfo);
         if(StringUtils.isNotBlank(cargoId)) {
             String[] arr = cargoId.split(",");

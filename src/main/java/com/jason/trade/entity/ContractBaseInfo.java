@@ -31,6 +31,9 @@ public class ContractBaseInfo implements Serializable {
     private double totalInvoiceAmount;//发票总数量
     private double totalInvoiceMoney;//发票总金额
     private Integer totalBoxes;//箱数总计
+    private double tariffRate;//关税税率
+    private double exchangeRate;//汇率
+    private double taxRate;//增值税率
 
     /**
      * 付款信息（L/C）
@@ -81,10 +84,43 @@ public class ContractBaseInfo implements Serializable {
     private String warehouse;//仓库
     private String storeDate;//入库日期
     private double delayFee;//滞箱滞报费
-    private String status;//状态
+    private String status;//状态  0-作废，1-已下单，2-已装船，3-已到港，4-已入库
     private String remark;//备注
+    private Integer version;
 
     public ContractBaseInfo(){}
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public double getTariffRate() {
+        return tariffRate;
+    }
+
+    public void setTariffRate(double tariffRate) {
+        this.tariffRate = tariffRate;
+    }
+
+    public double getExchangeRate() {
+        return exchangeRate;
+    }
+
+    public void setExchangeRate(double exchangeRate) {
+        this.exchangeRate = exchangeRate;
+    }
+
+    public double getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(double taxRate) {
+        this.taxRate = taxRate;
+    }
 
     public Integer getId() {
         return id;

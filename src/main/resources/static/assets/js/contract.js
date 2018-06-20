@@ -72,10 +72,22 @@ var TableInit = function () {
                 title: '厂号'
             }, {
                 field: 'contractDate',
-                title: '合同日期',
-                //sortable: true,
-                formatter: function(value, row, index){
-                    return value;
+                title: '合同日期'
+            }, {
+                field: 'status',
+                title: '状态',
+                formatter: function(value, row, index){//0-作废，1-已下单，2-已装船，3-已到港，4-已入库
+                    if(value == "1"){
+                        return "已下单";
+                    }else if(value == "2"){
+                        return "已装船";
+                    }else if(value == "3"){
+                        return "已到港";
+                    }else if(value == "4"){
+                        return "已入库";
+                    }else{
+                        return "-";
+                    }
                 }
             }, {
                  field: 'id',

@@ -7,7 +7,12 @@ public class GlobalConst {
     public static Map<String,Object> globalElement = new HashMap<>();
     public static final String SUCCESS = "{\"status\":1}";
     public static final String FAILURE = "{\"status\":-1}";
+    public static final String MODIFIED = "{\"status\":-2}";
+    //0-作废，1-已下单，2-已装船，3-已到港，4-已入库
     public static final String ENABLE = "1";
+    public static final String SHIPPED = "2";
+    public static final String ARRIVED = "3";
+    public static final String STORED = "4";
     public static final String DISABLE = "0";
     public static final String[] FIRST_HEAD_ARRAY  = new String[]{"","采购信息","","","","","","","","","","","","","","","","预付款","","","","尾款","","","","","","","","","","","船期","","外商单据","","","","","柜号","提单号","报关报检","","","","税款","","","","","入库","","备注"};
     public static final short[] FIRST_HEAD_COLOR  = new short[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,44,44,44,44,44,44,44,44,44,44,44,44,44,47,47,47,47,47,47,47,47,47,47,47,47,47,47,48,44,44,44,44,44,44,44,1};
