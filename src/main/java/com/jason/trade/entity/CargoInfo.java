@@ -17,14 +17,95 @@ public class CargoInfo implements Serializable{
     private String level;//级别
     private String specification;//规格
     private double unitPrice;//单价
+    private double costPrice;//成本单价
     private double contractAmount;//合同数量
     private double contractMoney;//合同金额
     private double invoiceAmount;//发票数量
     private double invoiceMoney;//发票金额
     private Integer boxes;//箱数
     private String status;
+    private String createUser;
+    private String createDateTime;
+    private double expectStoreWeight;//预库存重量
+    private Integer expectStoreBoxes;//预库存箱数
+    private double realStoreWeight;//目前实际库存重量
+    private double realStoreMoney;//库存成本
+    private Integer realStoreBoxes;//目前实际库存箱数
+    private String baozhuang;
 
     public CargoInfo(){}
+
+    public String getBaozhuang() {
+        return baozhuang;
+    }
+
+    public void setBaozhuang(String baozhuang) {
+        this.baozhuang = baozhuang;
+    }
+
+    public double getRealStoreMoney() {
+        return realStoreMoney;
+    }
+
+    public void setRealStoreMoney(double realStoreMoney) {
+        this.realStoreMoney = realStoreMoney;
+    }
+
+    public double getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(double costPrice) {
+        this.costPrice = costPrice;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(String createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public double getExpectStoreWeight() {
+        return expectStoreWeight;
+    }
+
+    public void setExpectStoreWeight(double expectStoreWeight) {
+        this.expectStoreWeight = expectStoreWeight;
+    }
+
+    public Integer getExpectStoreBoxes() {
+        return expectStoreBoxes;
+    }
+
+    public void setExpectStoreBoxes(Integer expectStoreBoxes) {
+        this.expectStoreBoxes = expectStoreBoxes;
+    }
+
+    public double getRealStoreWeight() {
+        return realStoreWeight;
+    }
+
+    public void setRealStoreWeight(double realStoreWeight) {
+        this.realStoreWeight = realStoreWeight;
+    }
+
+    public Integer getRealStoreBoxes() {
+        return realStoreBoxes;
+    }
+
+    public void setRealStoreBoxes(Integer realStoreBoxes) {
+        this.realStoreBoxes = realStoreBoxes;
+    }
 
     public Integer getId() {
         return id;

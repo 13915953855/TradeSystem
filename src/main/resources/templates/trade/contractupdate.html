@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/vendor/select2/css/select2.min.css"/>
     <link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/assets/vendor/linearicons/style.css"/>
     <link rel="stylesheet" href="/assets/vendor/chartist/css/chartist-custom.css"/>
@@ -24,6 +25,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon.png"/>
     <!-- Javascript -->
     <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/select2/js/select2.min.js"></script>
     <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="/assets/scripts/bootstrapValidator.min.js"></script>
@@ -48,7 +50,7 @@
             var isNeedInsurance = /*[[${contract.isNeedInsurance}]]*/;
             var isCheckElec = /*[[${contract.isCheckElec}]]*/;
 
-            $("#currency").val(currency);
+            $("#currency").val(currency).trigger("change");
             $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());
             if(isNeedInsurance == 1){
                 $("#isNeedInsurance").attr("checked","checked");
@@ -63,6 +65,13 @@
                 $("#cancel").removeAttr("disabled");
                 $("#cancel").html("关闭");
             }
+            $("#businessMode").val(/*[[${contract.businessMode}]]*/).trigger("change");
+            $("#externalCompany").val(/*[[${contract.externalCompany}]]*/).trigger("change");
+            $("#originCountry").val(/*[[${contract.originCountry}]]*/).trigger("change");
+            $("#destinationPort").val(/*[[${contract.destinationPort}]]*/).trigger("change");
+            $("#priceCondition").val(/*[[${contract.priceCondition}]]*/).trigger("change");
+            $("#payType").val(/*[[${contract.payType}]]*/).trigger("change");
+            $("#containerSize").val(/*[[${contract.containerSize}]]*/).trigger("change");
             /*]]>*/
         }
     </script>
@@ -73,8 +82,8 @@
 <div id="wrapper">
     <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="brand">
-            <a href="index.html"><img src="/assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"/></a>
+        <div class="brand" style="padding:15px 20px;">
+            <a href="index.html"><img src="../assets/img/joc-icon.png" style="height:50px;"/></a>
         </div>
         <div class="container-fluid">
             <div class="navbar-btn">
@@ -161,13 +170,13 @@
                                             </div>
                                             <label class="control-label col-sm-3">外商</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="externalCompany" th:value="${contract.externalCompany}"/>
+                                                <select class="form-control select2" id="externalCompany" th:value="${contract.externalCompany}"></select>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">原产地</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="originCountry" th:value="${contract.originCountry}"/>
+                                                <select class="form-control select2" id="originCountry" th:value="${contract.originCountry}"></select>
                                             </div>
                                             <label class="control-label col-sm-3">厂号</label>
                                             <div class="col-sm-3">
@@ -181,17 +190,26 @@
                                             </div>
                                             <label class="control-label col-sm-3">目的港</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="destinationPort" th:value="${contract.destinationPort}"/>
+                                                <select class="form-control select2" id="destinationPort" th:value="${contract.destinationPort}">
+                                                    <option>上海</option>
+                                                    <option>天津</option>
+                                                    <option>深圳</option>
+                                                    <option>连云港</option>
+                                                    <option>张家港</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">价格条件</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="priceCondition" th:value="${contract.priceCondition}"/>
+                                                <select class="form-control select2" id="priceCondition" th:value="${contract.priceCondition}">
+                                                    <option>CIF</option>
+                                                    <option>CFR</option>
+                                                </select>
                                             </div>
                                             <label class="control-label col-sm-3">付款方式</label>
                                             <div class="col-sm-3">
-                                                <select class="form-control" id="payType" onchange="payTypeChange()" th:value="${contract.payType}">
+                                                <select class="form-control select2" id="payType" onchange="payTypeChange()" th:value="${contract.payType}">
                                                     <option>L/C</option>
                                                     <option>TT</option>
                                                 </select>
@@ -200,7 +218,9 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">币种</label>
                                             <div class="col-sm-3">
-                                                <select class="form-control" id="currency" th:value="${contract.currency}">
+                                                <select class="form-control select2" id="currency" th:value="${contract.currency}">
+                                                    <option>RMB</option>
+                                                    <option>USD</option>
                                                 </select>
                                             </div>
                                             <label class="control-label col-sm-3">预计船期</label>
@@ -211,7 +231,11 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">业务模式</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="businessMode" th:value="${contract.businessMode}"/>
+                                                <select class="form-control select2" id="businessMode" th:value="${contract.businessMode}">
+                                                    <option>自营</option>
+                                                    <option>定向</option>
+                                                    <option>代理</option>
+                                                </select>
                                             </div>
                                             <label class="control-label col-sm-3">箱数总计</label>
                                             <div class="col-sm-3">
@@ -290,11 +314,20 @@
                                                             <div class="form-group" style="">
                                                                 <label class="control-label col-sm-2">产品名称</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="cargoName" />
+                                                                    <select class="form-control select2" id="cargoName"></select>
                                                                 </div>
                                                                 <label class="control-label col-sm-3">级别</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="level" />
+                                                                    <select class="form-control" id="level">
+                                                                        <option>A</option>
+                                                                        <option>B</option>
+                                                                        <option>S</option>
+                                                                        <option>YP</option>
+                                                                        <option>YG</option>
+                                                                        <option>GF S</option>
+                                                                        <option>GF S ANGUS</option>
+                                                                        <option>无</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
@@ -308,7 +341,18 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">单价</label>
+                                                                <label class="control-label col-sm-2">包装</label>
+                                                                <div class="col-sm-3">
+                                                                    <select class="form-control" id="baozhuang">
+                                                                        <option>IW/VAC</option>
+                                                                        <option>MW/VAC</option>
+                                                                        <option>LP</option>
+                                                                        <option>TP/VAC</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">采购单价(/KG)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="unitPrice" />
                                                                 </div>
@@ -473,7 +517,10 @@
                                             </div>
                                             <label class="control-label col-sm-3">货柜尺寸</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="containerSize" th:value="${contract.containerSize}"/>
+                                                <select class="form-control" id="containerSize" th:value="${contract.containerSize}">
+                                                    <option>20 GP</option>
+                                                    <option>40 GP</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">

@@ -1,5 +1,8 @@
 package com.jason.trade.entity;
 
+/**
+ * 查询Bean
+ */
 public class ContractParam {
     private String externalContract;
     private String insideContract;

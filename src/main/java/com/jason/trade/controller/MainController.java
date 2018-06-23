@@ -6,8 +6,10 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import com.jason.trade.entity.CargoInfo;
 import com.jason.trade.entity.ContractBaseInfo;
 import com.jason.trade.entity.UserInfo;
+import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.UserRepository;
 import com.jason.trade.util.WebSecurityConfig;
@@ -22,6 +24,8 @@ public class MainController {
     private UserRepository userRepository;
     @Autowired
     private ContractRepository contractRepository;
+    @Autowired
+    private CargoRepository cargoRepository;
 
     @GetMapping("/")
     public String index(@SessionAttribute(WebSecurityConfig.SESSION_KEY) String account, Model model, HttpSession session) {
@@ -84,6 +88,15 @@ public class MainController {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
         return "/trade/cargoadd";
+    }
+    @GetMapping("/trade/cargo/view")
+    public String cargoview(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        CargoInfo cargoInfo = cargoRepository.findOne(id);
+        model.addAttribute("cargo",cargoInfo);
+        model.addAttribute("action","view");
+        return "/trade/cargosaleview";
     }
     @GetMapping("/trade/agent")
     public String agent(Model model, HttpSession session) {

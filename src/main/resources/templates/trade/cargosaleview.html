@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>商品销售</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/vendor/linearicons/style.css"/>
+    <link rel="stylesheet" href="/assets/vendor/chartist/css/chartist-custom.css"/>
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css"/>
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="/assets/css/demo.css"/>
+    <!-- GOOGLE FONTS -->
+    <link rel="stylesheet" href="/assets/css/googlefont.css"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap-datetimepicker.min.css"/>
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png"/>
+    <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon.png"/>
+    <!-- Javascript -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/scripts/bootstrap-table.js"></script>
+    <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="/assets/scripts/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="/assets/scripts/klorofil-common.js"></script>
+    <script src="/assets/js/cargosale.js"></script>
+    <script>
+        $(function(){
+            //获取警示数目
+            getNoticeNum();
+        });
+        var getNoticeNum = function(){
+            $("#noticeNum").html("");
+        }
+    </script>
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand" style="padding:15px 20px;">
+            <a href="index.html"><img src="../../assets/img/joc-icon.png" style="height:50px;"/></a>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+            </div>
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                            <i class="lnr lnr-alarm"></i>
+                            <span class="badge bg-danger" id="noticeNum"></span>
+                        </a>
+                        <ul class="dropdown-menu notifications">
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="/assets/img/user.png" class="img-circle" alt="Avatar"/>
+                            <span th:text="${user.name}"></span> <i class="icon-submenu lnr lnr-chevron-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+                            <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+                            <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+                            <li><a href="/logout"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="/index"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-file-empty"></i> <span>贸易台账管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages" class="collapse in">
+                            <ul class="nav">
+                                <li><a href="/trade/contract">台账</a></li>
+                                <li><a href="/trade/cargomanage" class="active">进销存</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="main">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="" style="padding-bottom:0px;">
+                    <div class="panel panel-default" style="margin-bottom:10px;">
+                        <div class="panel-heading" style="padding-top:10px;padding-bottom:10px;text-align:center;font-size:24px;">商品信息</div>
+                        <div class="panel-body" style="padding-top:10px;padding-bottom:0;">
+                            <div class="panel panel-default" id="cargoDiv">
+                                <div class="panel-heading">基本信息</div>
+                                <div class="panel-body">
+                                    <form class="form-horizontal" id="cargoForm">
+                                        <input type="hidden" id="cargoId" th:value="${cargo.cargoId}"/>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">产品名称</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="cargoName" th:value="${cargo.cargoName}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">级别</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="level" th:value="${cargo.level}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">规格</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="specification" th:value="${cargo.specification}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">库号</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="cargoNo" th:value="${cargo.cargoNo}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">采购单价(/KG)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="unitPrice" th:value="${cargo.unitPrice}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">箱数(小计)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="boxes" th:value="${cargo.boxes}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">合同数量(小计)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="contractAmount" th:value="${cargo.contractAmount}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">合同金额(小计:元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="contractMoney" th:value="${cargo.contractMoney}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">发票数量(小计)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="invoiceAmount" th:value="${cargo.invoiceAmount}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">发票金额(小计:元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="invoiceMoney" th:value="${cargo.invoiceMoney}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">当前库存重量</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="realStoreWeight" th:value="${cargo.realStoreWeight}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">当前库存箱数</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="realStoreBoxes" th:value="${cargo.realStoreBoxes}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">预库存重量</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="expectStoreWeight" th:value="${cargo.expectStoreWeight}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">预库存箱数</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="expectStoreBoxes" th:value="${cargo.expectStoreBoxes}"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span>销售记录列表</span>
+                                    <button id="btn_add" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
+                                        <i class="fa fa-plus-square"></i>新增
+                                    </button>
+                                    <button id="btn_edit" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
+                                        <i class="fa fa-plus-square"></i>修改
+                                    </button>
+                                    <button id="btn_del" type="button" class="btn btn-default" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
+                                        <i class="fa fa-plus-square"></i>删除
+                                    </button>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">新增销售记录</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">提货信息</div>
+                                                    <div class="panel-body">
+                                                        <form class="form-horizontal">
+                                                            <input type="hidden" id="saleId" value=""/>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">提货重量(kg)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="pickupWeight" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">提货箱数</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="pickupBoxes" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">提货时间</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-append date form-date">
+                                                                        <input class="form-control" size="16" id="pickupDate" type="text" readonly="readonly"/>
+                                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                                <label class="control-label col-sm-3">提货人</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="pickupUser" />
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">预售信息</div>
+                                                    <div class="panel-body">
+                                                        <form class="form-horizontal" id="expectForm">
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">销售合同编号</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="saleContractNo" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">客户名称</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="customerName" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">预售重量(kg)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="expectSaleWeight" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">预售金额(元)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="expectSaleMoney" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">预售箱数</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="expectSaleBoxes" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">预出库时间</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-append date form-date">
+                                                                        <input class="form-control" size="16" id="expectSaleDate" type="text" readonly="readonly"/>
+                                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">实售信息</div>
+                                                    <div class="panel-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">实售重量(kg)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="realSaleWeight" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">实售箱数</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="realSaleBoxes" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">实售金额(元)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="realSaleMoney" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">出库单时间</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-append date form-date">
+                                                                        <input class="form-control" size="16" id="realSaleDate" type="text" readonly="readonly"/>
+                                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">客户来款时间</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-append date form-date">
+                                                                        <input class="form-control" size="16" id="customerPayDate" type="text" readonly="readonly"/>
+                                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                                <label class="control-label col-sm-3">客户来款金额(元)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="customerPayMoney" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <div id="deviationNotice" class="col-sm-12" style="display:none;">
+                                                                    <span style="color:red;">提醒：客户来款金额所填数额与实际销售金额有偏差，请确认！</span>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="button" class="btn btn-primary" id="save_sale">保存</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body" style="overflow:auto;">
+                                    <table id="tb_sale" class="table table-striped"></table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div style="text-align:center;">
+                                <button type="button" class="btn btn-default" id="cancel">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Copyright &copy; 2018 All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+<!-- END WRAPPER -->
+</body>
+
+</html>

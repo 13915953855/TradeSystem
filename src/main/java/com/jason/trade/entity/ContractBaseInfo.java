@@ -87,8 +87,26 @@ public class ContractBaseInfo implements Serializable {
     private String status;//状态  0-作废，1-已下单，2-已装船，3-已到港，4-已入库
     private String remark;//备注
     private Integer version;
+    private String createUser;
+    private String createDateTime;
 
     public ContractBaseInfo(){}
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(String createDateTime) {
+        this.createDateTime = createDateTime;
+    }
 
     public Integer getVersion() {
         return version;

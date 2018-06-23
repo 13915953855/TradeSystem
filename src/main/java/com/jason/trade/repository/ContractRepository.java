@@ -9,8 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integer>,JpaSpecificationExecutor<ContractBaseInfo> {
-    ContractBaseInfo findByExternalContract(String externalContract);
+    ContractBaseInfo findByExternalContractAndStatus(String externalContract, String status);
+    ContractBaseInfo findByContractId(String contractId);
     List<ContractBaseInfo> findByStatus(String status);
-    /*@Query(value = "select a from contract_base_info a where a.status='1' and a.external_contract like ?1")
-    List<ContractBaseInfo> queryContractList(String externalContract);*/
 }

@@ -17,9 +17,14 @@ $(function () {
         language: 'zh-CN'
     });
 
-    var currencySelector = $("#currency").editableSelect();
-    currencySelector.addOption("RMB");
-    currencySelector.addOption("USD");
+    $("select").select2({
+        tags: true
+    });
+
+    initCargoList();
+    initOriginCountry();
+    initExternalCompany();
+
     $("#currency").blur(function(){
         $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());
     });
@@ -153,6 +158,13 @@ var TableInit = function () {
             }, {
                 field: 'invoiceMoney',
                 title: '发票金额(小计:元)'
+            }, {
+                field: 'id',
+                title: '操作',
+                formatter: function(value, row, index){
+                    var s = '<a href="/trade/cargo/view?id='+value+'">查看销售记录</a>';
+                    return s;
+                }
             } ]
         });
     };
@@ -279,8 +291,9 @@ function setFormData(data){
     $("#_id").val(data.id);
     $("#cargoId").val(data.cargoId);
     $("#cargoNo").val(data.cargoNo);
-    $("#cargoName").val(data.cargoName);
-    $("#level").val(data.level);
+    $("#cargoName").val(data.cargoName).trigger("change");
+    $("#baozhuang").val(data.baozhuang).trigger("change");
+    $("#level").val(data.level).trigger("change");
     $("#specification").val(data.specification);
     $("#unitPrice").val(data.unitPrice);
     $("#boxes").val(data.boxes);
@@ -407,4 +420,102 @@ function saveContract(){
             $btn.button('reset');
         }
     });
+}
+
+function initCargoList(){
+    var cargoList = "<optgroup label='去骨'>";
+    cargoList += "<option>前胸</option>";
+    cargoList += "<option>后胸</option>";
+    cargoList += "<option>肋条肉</option>";
+    cargoList += "<option>肋排边</option>";
+    cargoList += "<option>内裙肉</option>";
+    cargoList += "<option>外裙肉</option>";
+    cargoList += "<option>薄裙肉</option>";
+    cargoList += "<option>厚裙肉</option>";
+    cargoList += "<option>嫩肩</option>";
+    cargoList += "<option>台规腱</option>";
+    cargoList += "<option>前后腱</option>";
+    cargoList += "<option>牛霖</option>";
+    cargoList += "<option>牛柳</option>";
+    cargoList += "<option>牛腩</option>";
+    cargoList += "<option>牛腩排</option>";
+    cargoList += "<option>前胸盖</option>";
+    cargoList += "<option>三角肩肉</option>";
+    cargoList += "<option>后三角肉</option>";
+    cargoList += "<option>上脑心</option>";
+    cargoList += "<option>上脑</option>";
+    cargoList += "<option>臀肉</option>";
+    cargoList += "<option>臀腰肉心</option>";
+    cargoList += "<option>西冷</option>";
+    cargoList += "<option>眼肉</option>";
+    cargoList += "<option>小米龙</option>";
+    cargoList += "<option>大米龙</option>";
+    cargoList += "<option>翼板肉</option>";
+    cargoList += "<option>板腱</option>";
+    cargoList += "<option>保乐肩</option>";
+    cargoList += "<option>方切肩</option>";
+    cargoList += "<option>腹肉心</option>";
+    cargoList += "<option>牛小排</option>";
+    cargoList += "<option>50CL碎肉</option>";
+    cargoList += "<option>65CL碎肉</option>";
+    cargoList += "</optgroup>";
+    cargoList += "<optgroup label='带骨'>";
+    cargoList += "<option>肩胛骨</option>";
+    cargoList += "<option>肩胛仔骨</option>";
+    cargoList += "<option>仔骨</option>";
+    cargoList += "<option>战斧</option>";
+    cargoList += "<option>胸排</option>";
+    cargoList += "<option>椎骨</option>";
+    cargoList += "<option>脊骨</option>";
+    cargoList += "<option>腿骨</option>";
+    cargoList += "<option>窝骨</option>";
+    cargoList += "<option>脖骨</option>";
+    cargoList += "<option>肩脊骨</option>";
+    cargoList += "</optgroup>";
+    cargoList += "<optgroup label='牛副'>";
+    cargoList += "<option>腩筋</option>";
+    cargoList += "<option>腿筋</option>";
+    cargoList += "<option>板筋</option>";
+    cargoList += "<option>隔膜</option>";
+    cargoList += "<option>牛心</option>";
+    cargoList += "<option>牛肾</option>";
+    cargoList += "<option>牛尾</option>";
+    cargoList += "</optgroup>";
+    cargoList += "<optgroup label='脂肪'>";
+    cargoList += "<option>胸口油</option>";
+    cargoList += "<option>热切脂肪</option>";
+    cargoList += "<option>冷切脂肪</option>";
+    cargoList += "</optgroup>";
+    $("#cargoName").append(cargoList);
+}
+
+function initOriginCountry(){
+    var opts = "";
+    opts += "<option>AU-澳大利亚</option>";
+    opts += "<option>UY-乌拉圭</option>";
+    opts += "<option>BR-巴西</option>";
+    opts += "<option>CA-加拿大</option>";
+    opts += "<option>US-美国</option>";
+    opts += "<option>AR-阿根廷</option>";
+    opts += "<option>BY-白俄罗斯</option>";
+    opts += "<option>ZA-南非</option>";
+    opts += "<option>CR-哥斯达黎加</option>";
+    opts += "<option>NZ-新西兰</option>";
+    $("#originCountry").append(opts);
+}
+
+function initExternalCompany(){
+    var opts = "";
+    opts += "<option>JOC AUS</option>";
+    opts += "<option>KPC HK</option>";
+    opts += "<option>STANBROKE</option>";
+    opts += "<option>JBS AUS</option>";
+    opts += "<option>HARBEY</option>";
+    opts += "<option>TEYS AUS</option>";
+    opts += "<option>NH AUS</option>";
+    opts += "<option>TIF</option>";
+    opts += "<option>SANGER</option>";
+    opts += "<option>MARFRIG</option>";
+    opts += "<option>AACO</option>";
+    $("#externalCompany").append(opts);
 }
