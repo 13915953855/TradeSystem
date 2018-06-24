@@ -5,6 +5,7 @@ import com.jason.trade.entity.*;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.SaleRepository;
+import com.jason.trade.repository.SysLogRepository;
 import com.jason.trade.service.TradeService;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.RespUtil;
@@ -20,6 +21,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,13 +46,12 @@ public class TradeController {
     private SaleRepository saleRepository;
     @Autowired
     private TradeService tradeService;
+    @Autowired
+    private SysLogRepository sysLogRepository;
 
     @RequestMapping(value = "/list")
     public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
-        List<ContractBaseInfo> list = tradeService.queryContractList(contractParam);
-        JSONObject result = new JSONObject();
-        result.put("total",list.size());
-        result.put("rows",list);
+        JSONObject result = tradeService.queryContractList(contractParam,limit,offset);
         return result.toString();
     }
 
@@ -62,18 +65,25 @@ public class TradeController {
     }
 
     @RequestMapping(value = "/cargo/all")
-    public String getCargoAllList(@RequestParam("contractNo") String contractNo) throws JSONException {
+    public String getCargoAllList(@RequestParam("limit") int limit, @RequestParam("offset") int offset,@RequestParam("contractNo") String contractNo) throws JSONException {
+        Pageable pageable = new PageRequest(offset/limit, limit);
         ContractBaseInfo contract = contractRepository.findByExternalContractAndStatus(contractNo,GlobalConst.ENABLE);
         JSONObject result = new JSONObject();
-        if(contract != null) {
-            List<CargoInfo> list = cargoRepository.findByContractIdAndStatus(contract.getContractId(), GlobalConst.ENABLE);
-            result.put("total",list.size());
-            result.put("rows",list);
+        Page<CargoInfo> pages = null;
+        if(StringUtils.isNotBlank(contractNo)) {
+            String contractId = contract == null?"":contract.getContractId();
+            pages = cargoRepository.findByContractIdAndStatus(contractId, GlobalConst.ENABLE,pageable);
         }else{
-            List<CargoInfo> list = cargoRepository.findByStatus(GlobalConst.ENABLE);
-            result.put("total",list.size());
-            result.put("rows",list);
+            pages = cargoRepository.findByStatus(GlobalConst.ENABLE,pageable);
         }
+        Iterator<CargoInfo> it = pages.iterator();
+        List<CargoInfo> list = new ArrayList<>();
+        while(it.hasNext()){
+            list.add(it.next());
+        }
+        result.put("total",pages.getTotalElements());
+        result.put("rows",list);
+
         return result.toString();
     }
 
@@ -92,7 +102,15 @@ public class TradeController {
         String now = DateUtil.DateTimeToString(new Date());
         contractBaseInfo.setCreateUser(userInfo.getName());
         contractBaseInfo.setCreateDateTime(now);
-        tradeService.saveContract(contractBaseInfo,cargoId);
+        ContractBaseInfo record = tradeService.saveContract(contractBaseInfo,cargoId);
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("新增合同"+record.getContractId());
+        sysLog.setOperation("新增");
+        sysLog.setUser(userInfo.getName());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+
         return GlobalConst.SUCCESS;
     }
 
@@ -111,7 +129,7 @@ public class TradeController {
         cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
         cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
         //成本单价=采购单价*汇率*（1+关税税率）*（1+增值税率）+运费+冷藏+货代费
-        String contractId = cargoInfo.getContractId();
+        /*String contractId = cargoInfo.getContractId();
         ContractBaseInfo contract = contractRepository.findByContractId(contractId);
         double tariffRate = contract.getTariffRate();//关税税率
         double exchangeRate = contract.getExchangeRate();//汇率
@@ -122,28 +140,44 @@ public class TradeController {
 
         //库存成本=库存*成本单价
         double realStoreMoney = costPrice * cargoInfo.getInvoiceAmount();
-        cargoInfo.setRealStoreMoney(realStoreMoney);
+        cargoInfo.setRealStoreMoney(realStoreMoney);*/
         CargoInfo data = cargoRepository.save(cargoInfo);
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("新增商品"+data.getCargoId());
+        sysLog.setOperation("新增");
+        sysLog.setUser(userInfo.getName());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+
         return RespUtil.respSuccess(data);
     }
 
     @PostMapping(value="/sale/add")
     public String saleAdd(SaleInfo saleInfo, HttpSession session){
         saleInfo.setStatus(GlobalConst.ENABLE);
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         if(saleInfo.getSaleId() == null) {//新增
-            UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
             String now = DateUtil.DateTimeToString(new Date());
             saleInfo.setCreateUser(userInfo.getName());
             saleInfo.setCreateDateTime(now);
         }
 
         SaleInfo data = tradeService.saveSale(saleInfo);
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("新增销售记录"+data.getSaleId());
+        sysLog.setOperation("新增");
+        sysLog.setUser(userInfo.getName());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
         return RespUtil.respSuccess(data);
     }
 
     @PostMapping(value="/contract/update")
     public String contractUpdate(ContractBaseInfo contractBaseInfo, HttpSession session){
         Integer currentVersion = contractRepository.findOne(contractBaseInfo.getId()).getVersion();
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         if(currentVersion > contractBaseInfo.getVersion()){
             return GlobalConst.MODIFIED;
         }
@@ -159,38 +193,72 @@ public class TradeController {
         }
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
         contractRepository.save(contractBaseInfo);
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("更新合同"+contractBaseInfo.getContractId());
+        sysLog.setOperation("更新");
+        sysLog.setUser(userInfo.getName());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+
         return GlobalConst.SUCCESS;
     }
 
     @PostMapping(value="/contract/delete")
     public String contractDel(@RequestParam("ids") String ids, HttpSession session){
         String idArr[] = ids.split(",");
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractBaseInfo contractBaseInfo = new ContractBaseInfo();
         for (int i = 0; i < idArr.length; i++) {
             contractBaseInfo.setId(Integer.valueOf(idArr[i]));
             contractBaseInfo.setStatus(GlobalConst.DISABLE);
             contractRepository.save(contractBaseInfo);
         }
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("删除合同"+ids);
+        sysLog.setOperation("删除");
+        sysLog.setUser(userInfo.getName());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
         return GlobalConst.SUCCESS;
     }
 
     @PostMapping(value="/cargo/delete")
     public String cargoDel(@RequestParam("ids") String ids, HttpSession session){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+
         tradeService.updateCargoStatus(ids,GlobalConst.DISABLE);
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("删除商品"+ids);
+        sysLog.setOperation("删除");
+        sysLog.setUser(userInfo.getName());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
         return GlobalConst.SUCCESS;
     }
 
     @PostMapping(value="/sale/delete")
     public String saleDel(@RequestParam("ids") String ids, HttpSession session){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+
         tradeService.updateSaleStatus(ids,GlobalConst.DISABLE);
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("删除销售记录"+ids);
+        sysLog.setOperation("删除");
+        sysLog.setUser(userInfo.getName());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
         return GlobalConst.SUCCESS;
     }
 
-    @PostMapping(value="/contract/output")
+    /*@PostMapping(value="/contract/output")
     public String output(){
         List<ContractBaseInfo> data = contractRepository.findAll();
         String fileName = "业务台账"+DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
-        tradeService.writeExcel(data,fileName);
-        return GlobalConst.SUCCESS;
-    }
+        tradeService.writeExcel(data);
+        JSONObject result = new JSONObject();
+        result.put("filePath",new File(fileName).getPath());
+        result.put("fileName",fileName);
+        return RespUtil.respSuccess(result);
+    }*/
 }

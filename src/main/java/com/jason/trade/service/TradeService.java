@@ -8,6 +8,7 @@ import com.jason.trade.repository.SaleRepository;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.SetStyleUtils;
 import com.jason.trade.util.WebSecurityConfig;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -16,6 +17,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +31,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TradeService {
@@ -42,7 +43,7 @@ public class TradeService {
     private SaleRepository saleRepository;
 
     @Transactional
-    public void saveContract(ContractBaseInfo contractBaseInfo, String cargoId){
+    public ContractBaseInfo saveContract(ContractBaseInfo contractBaseInfo, String cargoId){
         contractBaseInfo.setStatus(GlobalConst.ENABLE);
         if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
             contractBaseInfo.setStatus(GlobalConst.SHIPPED);
@@ -54,12 +55,13 @@ public class TradeService {
             contractBaseInfo.setStatus(GlobalConst.STORED);
         }
 
-        contractRepository.save(contractBaseInfo);
+        ContractBaseInfo record = contractRepository.save(contractBaseInfo);
         if(StringUtils.isNotBlank(cargoId)) {
             String[] arr = cargoId.split(",");
             List<String> cargoIdList = Arrays.asList(arr);
             cargoRepository.updateStatus(cargoIdList,GlobalConst.ENABLE);
         }
+        return record;
     }
 
     @Transactional
@@ -127,7 +129,7 @@ public class TradeService {
         }
     }
 
-    public List<ContractBaseInfo> queryContractList(ContractParam contractParam){
+    public JSONObject queryContractList(ContractParam contractParam, int limit, int offset){
         /**root ：我们要查询的类型
          * query：添加查询条件
          * cb: 构建条件
@@ -137,7 +139,16 @@ public class TradeService {
             @Override
             public Predicate toPredicate(Root<ContractBaseInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<Predicate>();
-                predicates.add(cb.like(root.get("status"),GlobalConst.ENABLE));
+                if(StringUtils.isNotBlank(contractParam.getStatus())){
+                    String status = contractParam.getStatus();
+                    switch (status){//0-作废，1-已下单，2-已装船，3-已到港，4-已入库
+                        case "已下单":predicates.add(cb.equal(root.get("status"),GlobalConst.ENABLE));break;
+                        case "已装船":predicates.add(cb.equal(root.get("status"),GlobalConst.SHIPPED));break;
+                        case "已到港":predicates.add(cb.equal(root.get("status"),GlobalConst.ARRIVED));break;
+                        case "已入库":predicates.add(cb.equal(root.get("status"),GlobalConst.STORED));break;
+                    }
+                }
+                predicates.add(cb.notEqual(root.get("status"),GlobalConst.DISABLE));
                 if(StringUtils.isNotBlank(contractParam.getExternalContract())){
                     /** cb.equal（）相当于判断后面两个参数是否一致
                      *root相当于我们的实体类的一个路径，使用get可以获取到我们的字段，因为我的cityid为Long类型
@@ -168,90 +179,268 @@ public class TradeService {
                 return query.where(predicates.toArray(pre)).getRestriction();
             }
         };
-        List<ContractBaseInfo> list= contractRepository.findAll(specification);
-        return list;
+        JSONObject result = new JSONObject();
+        Pageable pageable = new PageRequest(offset/limit, limit);
+        Page<ContractBaseInfo> pages = contractRepository.findAll(specification,pageable);
+        Iterator<ContractBaseInfo> it = pages.iterator();
+        List<ContractBaseInfo> list = new ArrayList<>();
+        while(it.hasNext()){
+            list.add(it.next());
+        }
+        result.put("total",pages.getTotalElements());
+        result.put("rows",list);
+        return result;
     }
 
-    public void writeExcel(List<ContractBaseInfo> data, String fileName) {
+    public XSSFWorkbook writeExcel(List<ContractBaseInfo> data) {
         //创建工作簿
         XSSFWorkbook workBook = new XSSFWorkbook();
         //创建工作表
-        XSSFSheet sheet = workBook.createSheet("自营");
+        XSSFSheet sheet = workBook.createSheet();
         //创建头
         writeExcelHeadZiYing(workBook,sheet);
-        int rowNum = 2;
+        int saleStart = 1;
+        int saleEnd = 1;
         for (int i = 0,len = data.size(); i < len; i++) {
+            saleStart = saleEnd;
             ContractBaseInfo baseInfo = data.get(i);
+            List<String> contractList = convertContractList(baseInfo,i);
+            //获取单个合同的多个商品
             List<CargoInfo> cargoData = cargoRepository.findByContractIdAndStatus(baseInfo.getContractId(),GlobalConst.ENABLE);
-            //拼接商品详情，组成多条记录
-            List<List<String>> list = convertBeanToList(baseInfo,cargoData);
-            int start = rowNum;
-            for (List<String> rowData : list) {
+            if(cargoData.size()>0) {
+                //获取单个商品的多个销售记录
+                for (int j = 0; j < cargoData.size(); j++) {
+                    CargoInfo cargoInfo = cargoData.get(j);
+                    List<String> cargoList = convertCargoList(cargoInfo);
+                    List<SaleInfo> saleData = saleRepository.findByCargoIdAndStatus(cargoInfo.getCargoId(), GlobalConst.ENABLE);
+                    int cargoMergeStart = 0;
+                    int cargoMergeEnd = 1;
+                    if (saleData.size() > 0) {
+                        List<List<String>> saleList = convertCargoSaleList(cargoInfo, saleData);
+                        //写入销售数据
+                        for (List<String> saleRowData : saleList) {
+                            //创建行
+                            XSSFRow row = sheet.createRow(saleEnd++);
+                            //创建单元格
+                            XSSFCell cell = null;
+                            //写入多条销售记录
+                            for (int k = 0; k < GlobalConst.HEAD_SALE_ARRAY.length; k++) {
+                                cell = row.createCell(GlobalConst.HEAD_CONTRACT_CELL_SIZE + GlobalConst.HEAD_CARGO_CELL_SIZE + k, CellType.STRING);//从销售的单元格开始写，下标是65
+                                cell.setCellValue(saleRowData.get(k));
+                            }
+                            for (int k = 0; k < GlobalConst.HEAD_CARGO_ARRAY.length; k++) {
+                                //重复写入单条商品信息
+                                cell = row.createCell(GlobalConst.HEAD_CONTRACT_CELL_SIZE + k, CellType.STRING);//从商品的单元格开始写，下标是50
+                                cell.setCellValue(cargoList.get(k));
+                            }
+
+                        }
+                    } else {
+                        //创建行
+                        XSSFRow row = sheet.createRow(saleEnd++);
+                        //创建单元格
+                        XSSFCell cell = null;
+                        for (int k = 0; k < GlobalConst.HEAD_CARGO_ARRAY.length; k++) {
+                            //重复写入单条商品信息
+                            cell = row.createCell(GlobalConst.HEAD_CONTRACT_CELL_SIZE + k, CellType.STRING);//从商品的单元格开始写，下标是50
+                            cell.setCellValue(cargoList.get(k));
+                        }
+                    }
+                    //合并单个商品的单元行
+                    //mergeCargoRow(start,end);
+                }
+                //重复写入单个合同信息
+                for (int j = saleStart; j < saleEnd; j++) {
+                    //创建行
+                    XSSFRow row = sheet.getRow(j);
+                    //获取单元格
+                    XSSFCell cell = null;
+                    for (int k = 0; k < GlobalConst.HEAD_CONTRACT_ARRAY.length; k++) {
+                        //重复写入单条商品信息
+                        cell = row.createCell(k,CellType.STRING);
+                        cell.setCellValue(contractList.get(k));
+                    }
+                }
+            }else{
                 //创建行
-                XSSFRow row = sheet.createRow(rowNum++);
-                //创建单元格
+                XSSFRow row = sheet.createRow(saleStart);
+                //获取单元格
                 XSSFCell cell = null;
-                for (int j = 0; j < GlobalConst.BODY_COLOR.length - 1; j++) {//-1是因为有个备注
-                    cell = row.createCell(j, CellType.STRING);
-                    cell.setCellValue(rowData.get(j));
-                    cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
+                for (int k = 0; k < GlobalConst.HEAD_CONTRACT_ARRAY.length; k++) {
+                    //重复写入单条商品信息
+                    cell = row.createCell(k,CellType.STRING);
+                    cell.setCellValue(contractList.get(k));
                 }
             }
-            int end = rowNum;
-            MergeRow(sheet,start,end - 1);
+
+            //合并单个合同的单元行
+            //mergeContractRow(start,end);
         }
 
-        FileOutputStream outputStream = null;
-        try {
-            outputStream = new FileOutputStream(new File(fileName));
-            workBook.write(outputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                outputStream.close();
-                workBook.close();//记得关闭工作簿
-            } catch (IOException e) {
-                e.printStackTrace();
+        for (int i = 0; i < saleEnd; i++) {
+            //创建行
+            XSSFRow row = sheet.getRow(i);
+            //创建单元格
+            XSSFCell cell = null;
+            int total = GlobalConst.HEAD_CONTRACT_CELL_SIZE + GlobalConst.HEAD_CARGO_CELL_SIZE + GlobalConst.HEAD_SALE_ARRAY.length;
+            for (int k = 0; k < total; k++) {
+                cell = row.getCell(k);
+                if(cell == null){
+                    cell = row.createCell(k);
+                    cell.setCellValue("");
+                }
+                cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
             }
         }
+
+        return workBook;
+    }
+
+    private List<String> convertContractList(ContractBaseInfo baseInfo,Integer index) {
+        List<String> list = new ArrayList<>();
+        list.add(String.valueOf(index+1));//序号
+        list.add(baseInfo.getExternalContract());//外合同编号
+        list.add(baseInfo.getInsideContract());//内合同编号
+        list.add(baseInfo.getContractDate());//合同日期
+        list.add(baseInfo.getExternalCompany());//外商
+        list.add(baseInfo.getOriginCountry());//原产地
+        list.add(baseInfo.getCompanyNo());//厂号
+        list.add(baseInfo.getShipmentPort());//起运港
+        list.add(baseInfo.getDestinationPort());//目的港
+        list.add(baseInfo.getPriceCondition());//价格条件
+        list.add(baseInfo.getPayType());//付款方式
+        list.add(baseInfo.getBillSignDate());//币种
+        list.add(baseInfo.getExpectSailingDate());//预计船期
+        list.add(baseInfo.getBusinessMode());//业务模式
+        list.add(baseInfo.getTotalBoxes()+"");//箱数总计
+        list.add(baseInfo.getTotalContractAmount()+"");//合同总数量
+        list.add(baseInfo.getTotalContractMoney()+"");//合同总金额(元)
+        list.add(baseInfo.getTotalInvoiceAmount()+"");//发票总数量
+        list.add(baseInfo.getTotalInvoiceMoney()+"");//发票总金额(元)
+        list.add(baseInfo.getTariffRate()+"");//关税税率(%)
+        list.add(baseInfo.getExchangeRate()+"");//汇率(%)
+        list.add(baseInfo.getTaxRate()+"");//增值税率(%)
+        list.add(baseInfo.getIssuingBank());//开证行
+        list.add(baseInfo.getIssuingDate());//开证日期
+        list.add(baseInfo.getLCNo());//LC NO.
+        list.add(baseInfo.getBankDaodanDate());//银行到单日
+        list.add(baseInfo.getRemittanceDate());//付汇日
+        list.add(baseInfo.getYahuidaoqiDate());//押汇到期日
+        list.add(baseInfo.getRemittanceRate()+"");//付汇汇率(%)
+        list.add(baseInfo.getPrePayment()+"");//付款金额
+        list.add(baseInfo.getPrePaymentDate()+"");//付款日期
+        list.add(baseInfo.getPreRate()+"");//汇率
+        list.add(baseInfo.getFinalPayment()+"");//付款金额
+        list.add(baseInfo.getFinalPaymentDate()+"");//付款日期
+        list.add(baseInfo.getFinalRate()+"");//汇率
+        list.add(baseInfo.getContainerNo());//柜号
+        list.add(baseInfo.getLadingbillNo());//提单号
+        list.add(baseInfo.getShipCompany());//船公司名称
+        list.add(baseInfo.getContainerSize());//货柜尺寸
+        list.add(baseInfo.getIsNeedInsurance() == 0?"是":"否");//需要购买保险
+        list.add(baseInfo.getInsuranceBuyDate());//保险购买日期
+        list.add(baseInfo.getInsuranceMoney()+"");//保险费用
+        list.add(baseInfo.getInsuranceCompany());//保险公司
+        list.add(baseInfo.getETD());//ETD
+        list.add(baseInfo.getETA());//ETA
+        list.add(baseInfo.getIsCheckElec()==0?"是":"否");//已核对电子版
+        list.add(baseInfo.getElecSendDate());//电子版发送日期
+        list.add(baseInfo.getExCompanySendBillDate());//外商邮寄正本单据日期
+        list.add(baseInfo.getBillSignDate());//正本单据签收日期
+        list.add(baseInfo.getAgent());//货代
+        list.add(baseInfo.getAgentSendDate());//单据寄给货代日期
+        list.add(baseInfo.getTariff()+"");//关税
+        list.add(baseInfo.getAddedValueTax()+"");//增值税
+        list.add(baseInfo.getTaxPayDate());//付税日期
+        list.add(baseInfo.getTaxSignDate());//税票签收日期
+        list.add(baseInfo.getTaxDeductibleParty());//税票抵扣方
+        list.add(baseInfo.getAgentPassDate());//放行日期
+        list.add(baseInfo.getWarehouse());//仓库
+        list.add(baseInfo.getStoreDate());//入库日期
+        list.add(baseInfo.getDelayFee()+"");//滞箱滞报费
+        list.add(baseInfo.getRemark());//备注
+        return list;
+    }
+
+    private List<String> convertCargoList(CargoInfo cargoInfo) {
+        List<String> list = new ArrayList<>();
+        list.add(cargoInfo.getCargoName());//产品名称
+        list.add(cargoInfo.getLevel());//级别
+        list.add(cargoInfo.getSpecification());//规格
+        list.add(cargoInfo.getCargoNo());//库号
+        list.add(cargoInfo.getBaozhuang());//包装
+        list.add(cargoInfo.getUnitPrice()+"");//采购单价(/KG)
+        list.add(cargoInfo.getBoxes()+"");//箱数(小计)
+        list.add(cargoInfo.getContractAmount()+"");//合同数量(小计)
+        list.add(cargoInfo.getContractMoney()+"");//合同金额(小计:元)
+        list.add(cargoInfo.getInvoiceAmount()+"");//发票数量(小计)
+        list.add(cargoInfo.getInvoiceMoney()+"");//发票金额(小计:元)
+        list.add(cargoInfo.getCostPrice()+"");//成本单价(/KG)
+        list.add(cargoInfo.getRealStoreMoney()+"");//库存成本
+        return list;
+    }
+
+    private List<List<String>> convertCargoSaleList(CargoInfo cargoInfo, List<SaleInfo> saleData) {
+        List<List<String>> result = new ArrayList<>();
+        for (SaleInfo saleInfo : saleData) {
+            List<String> list = new ArrayList<>();
+            list.add(""+saleInfo.getPickupWeight());//提货重量(kg)
+            list.add(saleInfo.getPickupBoxes()+"");//提货箱数
+            list.add(saleInfo.getPickupDate());//提货时间
+            list.add(saleInfo.getPickupUser());//提货人
+            list.add(saleInfo.getSaleContractNo());//销售合同编号
+            list.add(saleInfo.getCustomerName());//客户名称
+            list.add(saleInfo.getExpectSaleWeight()+"");//预售重量(kg)
+            list.add(saleInfo.getExpectSaleMoney()+"");//预售金额(元)
+            list.add(saleInfo.getExpectSaleBoxes()+"");//预售箱数
+            list.add(saleInfo.getExpectSaleDate()+"");//预出库时间
+            list.add(saleInfo.getRealSaleWeight()+"");//实售重量(kg)
+            list.add(saleInfo.getRealSaleBoxes()+"");//实售箱数
+            list.add(saleInfo.getRealSaleMoney()+"");//实售金额(元)
+            list.add(saleInfo.getRealSaleDate());//出库单时间
+            list.add(saleInfo.getCustomerPayDate());//客户来款时间
+            list.add(saleInfo.getCustomerPayMoney()+"");//客户来款金额(元)
+            result.add(list);
+        }
+        return result;
     }
 
     private void writeExcelHeadZiYing(XSSFWorkbook workBook,XSSFSheet sheet){
         //合并单元格
-        MergeCell(sheet);
+        //MergeCell(sheet);
         //创建第一行
         XSSFRow row = sheet.createRow(0);
         //创建单元格
         XSSFCell cell = null;
         //创建单元格
-        for (int i = 0; i < GlobalConst.FIRST_HEAD_ARRAY.length; i++) {
+        for (int i = 0; i < GlobalConst.HEAD_CONTRACT_ARRAY.length; i++) {
             cell = row.createCell(i, CellType.STRING);
-            cell.setCellValue(GlobalConst.FIRST_HEAD_ARRAY[i]);
+            cell.setCellValue(GlobalConst.HEAD_CONTRACT_ARRAY[i]);
             cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
         }
-        //创建第二行
-        row = sheet.createRow(1);
-        //创建单元格
-        for (int i = 0; i < GlobalConst.SECOND_HEAD_ARRAY.length; i++) {
-            cell = row.createCell(i, CellType.STRING);
-            cell.setCellValue(GlobalConst.SECOND_HEAD_ARRAY[i]);
+        for (int i = 0; i < GlobalConst.HEAD_CARGO_ARRAY.length; i++) {
+            cell = row.createCell(i+GlobalConst.HEAD_CONTRACT_ARRAY.length, CellType.STRING);
+            cell.setCellValue(GlobalConst.HEAD_CARGO_ARRAY[i]);
+            cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
+        }
+        for (int i = 0; i < GlobalConst.HEAD_SALE_ARRAY.length; i++) {
+            cell = row.createCell(i+GlobalConst.HEAD_CONTRACT_ARRAY.length+GlobalConst.HEAD_CARGO_ARRAY.length, CellType.STRING);
+            cell.setCellValue(GlobalConst.HEAD_SALE_ARRAY[i]);
             cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
         }
     }
 
     private void MergeRow(XSSFSheet sheet,Integer start,Integer end) {
         CellRangeAddress cellRangeAddress = null;
-        for (int i = 0; i < GlobalConst.NEED_MERGE_CELL.length; i++) {
+        /*for (int i = 0; i < GlobalConst.NEED_MERGE_CELL.length; i++) {
             cellRangeAddress = new CellRangeAddress(start, end, GlobalConst.NEED_MERGE_CELL[i], GlobalConst.NEED_MERGE_CELL[i]);
             sheet.addMergedRegion(cellRangeAddress);
-        }
+        }*/
     }
     /**
      * 合并单元格--头部信息
-     * @param sheet
      */
-    private void MergeCell(XSSFSheet sheet) {
+    /*private void MergeCell(XSSFSheet sheet) {
         CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 0, 1, 16);
         sheet.addMergedRegion(cellRangeAddress);
         cellRangeAddress = new CellRangeAddress(0, 0, 17, 20);
@@ -272,66 +461,17 @@ public class TradeService {
         sheet.addMergedRegion(cellRangeAddress);
         cellRangeAddress = new CellRangeAddress(0, 0, 50, 51);
         sheet.addMergedRegion(cellRangeAddress);
-    }
+    }*/
 
     private List<List<String>> convertBeanToList(ContractBaseInfo baseInfo,List<CargoInfo> cargoData){
         List<List<String>> result = new ArrayList<>();
-        /*for (CargoInfo cargoInfo : cargoData) {
+        for (CargoInfo cargoInfo : cargoData) {
+            //List<SaleInfo> saleData = saleRepository.findByCargoIdAndStatus(cargoInfo.getCargoId(),GlobalConst.ENABLE);
+            //List<List<String>> list = convertCargoSaleList(cargoInfo,saleData);
             List<String> list = new ArrayList<>();
-            list.add(String.valueOf(cargoInfo.getId()));//序号//
-            list.add(baseInfo.getContractDate());//合同日期//
-            list.add(cargoInfo.getExternalCompany());//外商//
-            list.add(baseInfo.getExternalContract());//外合同//
-            list.add(baseInfo.getInsideContract());//内合同//
-            list.add(baseInfo.getBusinessMode());//业务模式//
-            list.add(baseInfo.getCompanyNo());//厂号//
-            list.add(cargoInfo.getCargoNo());//库号//
-            list.add(cargoInfo.getCargoName());//产品//
-            list.add(baseInfo.getSpecification());//规格//
-            list.add(baseInfo.getOriginCountry());//原产地//
-            list.add(baseInfo.getPriceCondition());//价格条件//
-            list.add(baseInfo.getShipmentPort());//起运港//
-            list.add(baseInfo.getDestinationPort());//目的港//
-            list.add(String.valueOf(cargoInfo.getAmount()));//数量(kg)//
-            list.add(String.valueOf(cargoInfo.getUnitPrice()));//单价(USD)//
-            list.add(String.valueOf(cargoInfo.getContractValue()));//合同金额(USD)//
-            list.add(String.valueOf(baseInfo.getPrePayment()));//付款金额(USD)//
-            list.add(baseInfo.getPrePaymentDate());//付款日期//
-            list.add(String.valueOf(baseInfo.getPreRate()));//汇率//
-            list.add(String.valueOf(baseInfo.getPrePaymentRMB()));//小计(CNY)//
-            list.add(String.valueOf(baseInfo.getFinalPayment()));//付款金额//
-            list.add(baseInfo.getFinalPaymentDate());//付款日期//
-            list.add(String.valueOf(baseInfo.getFinalRate()));//汇率//
-            list.add(String.valueOf(baseInfo.getFinalPaymentRMB()));//小计(CNY)//
-            list.add(cargoInfo.getSaleCustomer());//销售客户//
-            list.add(String.valueOf(cargoInfo.getUnitPrePayAmount()));//来款金额//
-            list.add(cargoInfo.getUnitPrePayDate());//来款日期//
-            list.add(String.valueOf(cargoInfo.getUnitFinalPayAmount()));//尾款金额//
-            list.add(cargoInfo.getUnitFinalPayDate());//来款日期//
-            list.add(String.valueOf(cargoInfo.getInvoiceNumber()));//发票数量(kg)//
-            list.add(String.valueOf(cargoInfo.getInvoiceValue()));//发票金额(USD)//
-            list.add(baseInfo.getEtd());//ETD//
-            list.add(baseInfo.getEta());//ETA//
-            list.add(cargoInfo.getElecSendDate());//电子版发送日期//
-            list.add(String.valueOf(baseInfo.getIsCheckElec()));//是否已核对电子版//
-            list.add(baseInfo.getInsuranceBuyDate());//保险购买日期//
-            list.add(baseInfo.getInsuranceSendDate());//寄出日期//
-            list.add(baseInfo.getInsuranceSignDate());//签收日期//
-            list.add(baseInfo.getContainerNo());//柜号//
-            list.add(baseInfo.getLadingbillNo());//提单号//
-            list.add(baseInfo.getAgent());//货代//
-            list.add(baseInfo.getAgentSendDate());//单据寄给货代日期//
-            list.add(baseInfo.getAgentPassDate());//放行日期//
-            list.add(baseInfo.getTaxDeductibleParty());//税票抵扣方//
-            list.add(String.valueOf(baseInfo.getTariff()));//关税//
-            list.add(String.valueOf(baseInfo.getAddedValueTax()));//增值税//
-            list.add(String.valueOf(cargoInfo.getHystereticFee()));//滞报费//
-            list.add(baseInfo.getTaxPayDate());//付税日期//
-            list.add(baseInfo.getTaxSignDate());//税票签收日期//
-            list.add(baseInfo.getWarehouse());//仓库//
-            list.add(baseInfo.getStoreDate());//入库日期//
+
             result.add(list);
-        }*/
+        }
         return result;
     }
 }

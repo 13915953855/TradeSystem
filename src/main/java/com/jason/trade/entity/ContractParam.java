@@ -10,6 +10,15 @@ public class ContractParam {
     private String contractStartDate;
     private String contractEndDate;
     private String externalCompany;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getExternalContract() {
         return externalContract;

@@ -25,12 +25,17 @@
     <!-- Javascript -->
     <script src="/assets/vendor/jquery/jquery.min.js"></script>
     <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/vendor/select2/css/select2.min.css"/>
+    <script src="/assets/vendor/select2/js/select2.min.js"></script>
+    <link rel="stylesheet" href="/assets/vendor/toastr/toastr.min.css"/>
+    <script src="/assets/vendor/toastr/toastr.min.js"></script>
     <script src="/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="/assets/scripts/bootstrap-table.js"></script>
     <script src="/assets/scripts/bootstrap-datetimepicker.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
+    <script src="/assets/js/common.js"></script>
     <script src="/assets/js/contract.js"></script>
     <script>
         $(function(){
@@ -47,41 +52,7 @@
 <!-- WRAPPER -->
 <div id="wrapper">
     <!-- NAVBAR -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="brand" style="padding:15px 20px;">
-            <a href="index.html"><img src="../assets/img/joc-icon.png" style="height:50px;"/></a>
-        </div>
-        <div class="container-fluid">
-            <div class="navbar-btn">
-                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
-            </div>
-            <div id="navbar-menu">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                            <i class="lnr lnr-alarm"></i>
-                            <span class="badge bg-danger" id="noticeNum"></span>
-                        </a>
-                        <ul class="dropdown-menu notifications">
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="/assets/img/user.png" class="img-circle" alt="Avatar"/>
-                            <span th:text="${user.name}"></span> <i class="icon-submenu lnr lnr-chevron-down"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-                            <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-                            <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-                            <li><a href="/logout"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div th:include="common::nav"></div>
     <!-- END NAVBAR -->
     <!-- LEFT SIDEBAR -->
     <div id="sidebar-nav" class="sidebar">
@@ -116,24 +87,39 @@
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
                                     <label class="control-label col-sm-2" for="externalContract">外合同编号</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <input type="text" class="form-control" id="externalContract"/>
                                     </div>
                                     <label class="control-label col-sm-2">内合同编号</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <input type="text" class="form-control" id="insideContract"/>
+                                    </div>
+                                    <label class="control-label col-sm-2" for="externalContract">业务模式</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="businessMode">
+                                            <option>全部</option>
+                                            <option>自营</option>
+                                            <option>定向</option>
+                                            <option>代理</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group" style="">
+                                    <label class="control-label col-sm-2">外商</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="externalCompany">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
                                     <label class="control-label col-sm-2" for="externalContract">合同日期大于:</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
                                             <input size="16" type="text" value="" id="contractStartDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
                                     <label class="control-label col-sm-2">合同日期小于:</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
                                             <input size="16" type="text" value="" id="contractEndDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
@@ -141,17 +127,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-2" for="externalContract">业务模式</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="businessMode"/>
+                                    <label class="control-label col-sm-2">状态</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" id="status">
+                                            <option>全部</option>
+                                            <option>已下单</option>
+                                            <option>已装船</option>
+                                            <option>已到港</option>
+                                            <option>已入库</option>
+                                        </select>
                                     </div>
-                                    <label class="control-label col-sm-2">外商</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="externalCompany"/>
-                                    </div>
+
                                 </div>
                                 <div class="form-group" style="">
-                                    <div class="col-sm-4" style="text-align:left;">
+                                    <div class="col-sm-12" style="text-align:right;">
                                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                                     </div>
                                 </div>

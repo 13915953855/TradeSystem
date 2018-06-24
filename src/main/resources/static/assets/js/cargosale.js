@@ -147,10 +147,10 @@ var ButtonInit = function () {
                 $("#myModal").modal('hide');
                 setFormData(data[0]);
             }else if(data.length > 1){
-                alert("只能选择一项进行编辑");
+                toastr.warning("只能选择一项进行编辑");
                 $("#myModal").modal('show');
             }else {
-                alert("请选中一行！");
+                toastr.warning("请选中一行！");
                 $("#myModal").modal('show');
             }
         });
@@ -171,11 +171,11 @@ var ButtonInit = function () {
                     data:{"ids":ids},
                     success:function(res){
                         if(res.status == "1"){
-                            alert("删除成功");
+                            toastr.success("删除成功");
                         }else{
-                            alert("删除失败");
+                            toastr.error("删除失败");
                         }
-                        window.location.href = window.location.href;
+                        setTimeout(function(){window.location.href = window.location.href;},2000);
                     }
                 });
             }

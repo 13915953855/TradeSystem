@@ -17,8 +17,27 @@ $(function () {
         todayHighlight: true,
         language: 'zh-CN'
     });
-});
 
+    $("select").on("change",function(){
+        $("#btn_query").click();
+    });
+    initExternalCompany();
+});
+function initExternalCompany(){
+    var opts = "";
+    opts += "<option>JOC AUS</option>";
+    opts += "<option>KPC HK</option>";
+    opts += "<option>STANBROKE</option>";
+    opts += "<option>JBS AUS</option>";
+    opts += "<option>HARBEY</option>";
+    opts += "<option>TEYS AUS</option>";
+    opts += "<option>NH AUS</option>";
+    opts += "<option>TIF</option>";
+    opts += "<option>SANGER</option>";
+    opts += "<option>MARFRIG</option>";
+    opts += "<option>AACO</option>";
+    $("#externalCompany").append(opts);
+}
 
 var TableInit = function () {
     var oTableInit = new Object();
@@ -109,8 +128,9 @@ var TableInit = function () {
             insideContract: $("#insideContract").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
-            businessMode: $("#businessMode").val(),
-            externalCompany: $("#externalCompany").val()
+            businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
+            externalCompany: $("#externalCompany").val() == "全部"?"":$("#externalCompany").val(),
+            status: $("#status").val() == "全部"?"":$("#status").val(),
         };
         return temp;
     };
@@ -136,9 +156,9 @@ var ButtonInit = function () {
                  var id = a[0].id;
                  window.location.href="/trade/contract/update?id="+id;
             }else if(a.length > 1){
-                alert("仅支持编辑一行！");
+                toastr.warning("仅支持编辑一行！");
             }else{
-                alert("请选中一行！");
+                toastr.warning("请选中一行！");
             }
         });
         $("#btn_delete").click(function(){
@@ -155,9 +175,9 @@ var ButtonInit = function () {
                     data:{"ids":ids},
                     success:function(res){
                         if(res.status == "1"){
-                            alert("删除成功");
+                            toastr.success("删除成功");
                         }else{
-                            alert("删除失败");
+                            toastr.error("删除失败");
                         }
                         $("#tb_contract").bootstrapTable("refresh");
                     }
@@ -165,19 +185,8 @@ var ButtonInit = function () {
             }
         });
         $("#btn_output").click(function(){
-            $.ajax({
-                url:"/trade/contract/output",
-                type:"POST",
-                dataType:"json",
-                data:{},
-                success:function(res){
-                    if(res.status == "1"){
-                        alert("下载成功");
-                    }else{
-                        alert("下载失败");
-                    }
-                }
-            });
+        	var url = "/trade/contract/output";
+        	window.open(url);
         });
     };
 

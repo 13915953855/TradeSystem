@@ -17,10 +17,6 @@ $(function () {
         language: 'zh-CN'
     });
 
-    $("select").select2({
-        tags: true
-    });
-
     initCargoList();
     initOriginCountry();
     initExternalCompany();
@@ -192,10 +188,10 @@ var ButtonInit = function () {
                 $("#myModal").modal('show');
                 setFormData(data[0]);
             }else if(data.length > 1){
-                alert("只能选择一项进行编辑");
+                toastr.warning("只能选择一项进行编辑");
                 $("#myModal").modal('hide');
             }else {
-                alert("请选中一行！");
+                toastr.warning("请选中一行！");
                 $("#myModal").modal('hide');
             }
         });
@@ -216,9 +212,9 @@ var ButtonInit = function () {
                     data:{"ids":ids},
                     success:function(res){
                         if(res.status == "1"){
-                            alert("删除成功");
+                            toastr.success("删除成功");
                         }else{
-                            alert("删除失败");
+                            toastr.error("删除失败");
                         }
                         $("#tb_cargo").bootstrapTable("refresh");
                     }
@@ -410,10 +406,11 @@ function saveContract(){
         data:contract,
         success:function(res){
             if(res.status == "1"){
-                alert("保存成功");
+                toastr.success("保存成功");
+
                 window.location.href = "/trade/contract";
             }else if(res.status == "-2"){
-                alert("此合同已被他人编辑过，请刷新页面后重新编辑再保存。");
+                toastr.warning("此合同已被他人编辑过，请刷新页面后重新编辑再保存。");
             }
             $btn.button('reset');
         },error:function(){
