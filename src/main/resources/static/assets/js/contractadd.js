@@ -252,6 +252,8 @@ var ButtonInit = function () {
                         $("#tb_cargo").bootstrapTable("refresh");
                         resetForm("cargoForm");
                     }
+                },error:function(){
+                    window.location.href="/login";
                 }
             });
         });
