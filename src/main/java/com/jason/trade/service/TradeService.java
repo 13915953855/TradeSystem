@@ -213,10 +213,9 @@ public class TradeService {
                     CargoInfo cargoInfo = cargoData.get(j);
                     List<String> cargoList = convertCargoList(cargoInfo);
                     List<SaleInfo> saleData = saleRepository.findByCargoIdAndStatus(cargoInfo.getCargoId(), GlobalConst.ENABLE);
-                    int cargoMergeStart = 0;
-                    int cargoMergeEnd = 1;
                     if (saleData.size() > 0) {
                         List<List<String>> saleList = convertCargoSaleList(cargoInfo, saleData);
+                        int start = saleEnd;
                         //写入销售数据
                         for (List<String> saleRowData : saleList) {
                             //创建行
@@ -233,7 +232,10 @@ public class TradeService {
                                 cell = row.createCell(GlobalConst.HEAD_CONTRACT_CELL_SIZE + k, CellType.STRING);//从商品的单元格开始写，下标是50
                                 cell.setCellValue(cargoList.get(k));
                             }
-
+                        }
+                        //合并单个商品的单元行
+                        if(saleEnd-1 > saleStart) {
+                            mergeCargoRow(sheet, start, saleEnd);
                         }
                     } else {
                         //创建行
@@ -246,8 +248,6 @@ public class TradeService {
                             cell.setCellValue(cargoList.get(k));
                         }
                     }
-                    //合并单个商品的单元行
-                    //mergeCargoRow(start,end);
                 }
                 //重复写入单个合同信息
                 for (int j = saleStart; j < saleEnd; j++) {
@@ -263,7 +263,7 @@ public class TradeService {
                 }
             }else{
                 //创建行
-                XSSFRow row = sheet.createRow(saleStart);
+                XSSFRow row = sheet.createRow(saleEnd++);
                 //获取单元格
                 XSSFCell cell = null;
                 for (int k = 0; k < GlobalConst.HEAD_CONTRACT_ARRAY.length; k++) {
@@ -274,7 +274,9 @@ public class TradeService {
             }
 
             //合并单个合同的单元行
-            //mergeContractRow(start,end);
+            if(saleEnd-1 > saleStart) {
+                mergeContractRow(sheet, saleStart, saleEnd - 1);
+            }
         }
 
         for (int i = 0; i < saleEnd; i++) {
@@ -294,6 +296,20 @@ public class TradeService {
         }
 
         return workBook;
+    }
+
+    private void mergeContractRow(XSSFSheet sheet, int contractMergeStart, int contractMergeEnd) {
+        for (int i = 0; i < 61; i++) {
+            CellRangeAddress cellRangeAddress = new CellRangeAddress(contractMergeStart, contractMergeEnd, i, i);
+            sheet.addMergedRegion(cellRangeAddress);
+        }
+    }
+
+    private void mergeCargoRow(XSSFSheet sheet, int saleStart, int saleEnd) {
+        for (int i = 61; i < 61+13; i++) {
+            CellRangeAddress cellRangeAddress = new CellRangeAddress(saleStart, saleEnd, i, i);
+            sheet.addMergedRegion(cellRangeAddress);
+        }
     }
 
     private List<String> convertContractList(ContractBaseInfo baseInfo,Integer index) {
@@ -430,13 +446,13 @@ public class TradeService {
         }
     }
 
-    private void MergeRow(XSSFSheet sheet,Integer start,Integer end) {
+    /*private void MergeRow(XSSFSheet sheet,Integer start,Integer end) {
         CellRangeAddress cellRangeAddress = null;
-        /*for (int i = 0; i < GlobalConst.NEED_MERGE_CELL.length; i++) {
+        for (int i = 0; i < GlobalConst.NEED_MERGE_CELL.length; i++) {
             cellRangeAddress = new CellRangeAddress(start, end, GlobalConst.NEED_MERGE_CELL[i], GlobalConst.NEED_MERGE_CELL[i]);
             sheet.addMergedRegion(cellRangeAddress);
-        }*/
-    }
+        }
+    }*/
     /**
      * 合并单元格--头部信息
      */
@@ -462,16 +478,4 @@ public class TradeService {
         cellRangeAddress = new CellRangeAddress(0, 0, 50, 51);
         sheet.addMergedRegion(cellRangeAddress);
     }*/
-
-    private List<List<String>> convertBeanToList(ContractBaseInfo baseInfo,List<CargoInfo> cargoData){
-        List<List<String>> result = new ArrayList<>();
-        for (CargoInfo cargoInfo : cargoData) {
-            //List<SaleInfo> saleData = saleRepository.findByCargoIdAndStatus(cargoInfo.getCargoId(),GlobalConst.ENABLE);
-            //List<List<String>> list = convertCargoSaleList(cargoInfo,saleData);
-            List<String> list = new ArrayList<>();
-
-            result.add(list);
-        }
-        return result;
-    }
 }
