@@ -235,7 +235,7 @@ public class TradeService {
                         }
                         //合并单个商品的单元行
                         if(saleEnd-1 > saleStart) {
-                            mergeCargoRow(sheet, start, saleEnd);
+                            mergeCargoRow(sheet, start, saleEnd-1);
                         }
                     } else {
                         //创建行
@@ -299,14 +299,14 @@ public class TradeService {
     }
 
     private void mergeContractRow(XSSFSheet sheet, int contractMergeStart, int contractMergeEnd) {
-        for (int i = 0; i < 61; i++) {
+        for (int i = 0; i < GlobalConst.HEAD_CONTRACT_CELL_SIZE; i++) {
             CellRangeAddress cellRangeAddress = new CellRangeAddress(contractMergeStart, contractMergeEnd, i, i);
             sheet.addMergedRegion(cellRangeAddress);
         }
     }
 
     private void mergeCargoRow(XSSFSheet sheet, int saleStart, int saleEnd) {
-        for (int i = 61; i < 61+13; i++) {
+        for (int i = GlobalConst.HEAD_CONTRACT_CELL_SIZE; i < GlobalConst.HEAD_CONTRACT_CELL_SIZE+GlobalConst.HEAD_CARGO_CELL_SIZE; i++) {
             CellRangeAddress cellRangeAddress = new CellRangeAddress(saleStart, saleEnd, i, i);
             sheet.addMergedRegion(cellRangeAddress);
         }
@@ -321,11 +321,10 @@ public class TradeService {
         list.add(baseInfo.getExternalCompany());//外商
         list.add(baseInfo.getOriginCountry());//原产地
         list.add(baseInfo.getCompanyNo());//厂号
-        list.add(baseInfo.getShipmentPort());//起运港
         list.add(baseInfo.getDestinationPort());//目的港
         list.add(baseInfo.getPriceCondition());//价格条件
         list.add(baseInfo.getPayType());//付款方式
-        list.add(baseInfo.getBillSignDate());//币种
+        list.add(baseInfo.getCurrency());//币种
         list.add(baseInfo.getExpectSailingDate());//预计船期
         list.add(baseInfo.getBusinessMode());//业务模式
         list.add(baseInfo.getTotalBoxes()+"");//箱数总计
@@ -333,9 +332,6 @@ public class TradeService {
         list.add(baseInfo.getTotalContractMoney()+"");//合同总金额(元)
         list.add(baseInfo.getTotalInvoiceAmount()+"");//发票总数量
         list.add(baseInfo.getTotalInvoiceMoney()+"");//发票总金额(元)
-        list.add(baseInfo.getTariffRate()+"");//关税税率(%)
-        list.add(baseInfo.getExchangeRate()+"");//汇率(%)
-        list.add(baseInfo.getTaxRate()+"");//增值税率(%)
         list.add(baseInfo.getIssuingBank());//开证行
         list.add(baseInfo.getIssuingDate());//开证日期
         list.add(baseInfo.getLCNo());//LC NO.
@@ -351,7 +347,6 @@ public class TradeService {
         list.add(baseInfo.getFinalRate()+"");//汇率
         list.add(baseInfo.getContainerNo());//柜号
         list.add(baseInfo.getLadingbillNo());//提单号
-        list.add(baseInfo.getShipCompany());//船公司名称
         list.add(baseInfo.getContainerSize());//货柜尺寸
         list.add(baseInfo.getIsNeedInsurance() == 0?"是":"否");//需要购买保险
         list.add(baseInfo.getInsuranceBuyDate());//保险购买日期
@@ -360,20 +355,14 @@ public class TradeService {
         list.add(baseInfo.getETD());//ETD
         list.add(baseInfo.getETA());//ETA
         list.add(baseInfo.getIsCheckElec()==0?"是":"否");//已核对电子版
-        list.add(baseInfo.getElecSendDate());//电子版发送日期
-        list.add(baseInfo.getExCompanySendBillDate());//外商邮寄正本单据日期
-        list.add(baseInfo.getBillSignDate());//正本单据签收日期
         list.add(baseInfo.getAgent());//货代
         list.add(baseInfo.getAgentSendDate());//单据寄给货代日期
         list.add(baseInfo.getTariff()+"");//关税
         list.add(baseInfo.getAddedValueTax()+"");//增值税
         list.add(baseInfo.getTaxPayDate());//付税日期
-        list.add(baseInfo.getTaxSignDate());//税票签收日期
-        list.add(baseInfo.getTaxDeductibleParty());//税票抵扣方
         list.add(baseInfo.getAgentPassDate());//放行日期
         list.add(baseInfo.getWarehouse());//仓库
         list.add(baseInfo.getStoreDate());//入库日期
-        list.add(baseInfo.getDelayFee()+"");//滞箱滞报费
         list.add(baseInfo.getRemark());//备注
         return list;
     }
@@ -382,9 +371,7 @@ public class TradeService {
         List<String> list = new ArrayList<>();
         list.add(cargoInfo.getCargoName());//产品名称
         list.add(cargoInfo.getLevel());//级别
-        list.add(cargoInfo.getSpecification());//规格
         list.add(cargoInfo.getCargoNo());//库号
-        list.add(cargoInfo.getBaozhuang());//包装
         list.add(cargoInfo.getUnitPrice()+"");//采购单价(/KG)
         list.add(cargoInfo.getBoxes()+"");//箱数(小计)
         list.add(cargoInfo.getContractAmount()+"");//合同数量(小计)
@@ -400,22 +387,25 @@ public class TradeService {
         List<List<String>> result = new ArrayList<>();
         for (SaleInfo saleInfo : saleData) {
             List<String> list = new ArrayList<>();
-            list.add(""+saleInfo.getPickupWeight());//提货重量(kg)
-            list.add(saleInfo.getPickupBoxes()+"");//提货箱数
             list.add(saleInfo.getPickupDate());//提货时间
-            list.add(saleInfo.getPickupUser());//提货人
+            list.add(saleInfo.getPickupUser());//销售经理
             list.add(saleInfo.getSaleContractNo());//销售合同编号
             list.add(saleInfo.getCustomerName());//客户名称
+            list.add(saleInfo.getExpectSaleUnitPrice()+"");//预售单价(元/kg)
             list.add(saleInfo.getExpectSaleWeight()+"");//预售重量(kg)
             list.add(saleInfo.getExpectSaleMoney()+"");//预售金额(元)
             list.add(saleInfo.getExpectSaleBoxes()+"");//预售箱数
             list.add(saleInfo.getExpectSaleDate()+"");//预出库时间
+            list.add(saleInfo.getRealSaleUnitPrice()+"");//实售单价(元/kg)
             list.add(saleInfo.getRealSaleWeight()+"");//实售重量(kg)
             list.add(saleInfo.getRealSaleBoxes()+"");//实售箱数
             list.add(saleInfo.getRealSaleMoney()+"");//实售金额(元)
             list.add(saleInfo.getRealSaleDate());//出库单时间
             list.add(saleInfo.getCustomerPayDate());//客户来款时间
             list.add(saleInfo.getCustomerPayMoney()+"");//客户来款金额(元)
+            list.add(saleInfo.getPaymentDiff()+"");//货款差额
+            list.add(saleInfo.getMoneyClear());//是否已结清
+            list.add(saleInfo.getRemark());//备注
             result.add(list);
         }
         return result;

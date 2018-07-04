@@ -18,6 +18,19 @@ $(function () {
     });
 
     $("#cargoDiv input[type=text]").attr('disabled','disabled');
+
+    $("#expectSaleUnitPrice").blur(function(){
+        autoSetExpectSaleMoney();
+    });
+    $("#expectSaleWeight").blur(function(){
+        autoSetExpectSaleMoney();
+    });
+    $("#realSaleUnitPrice").blur(function(){
+        autoSetRealSaleMoney();
+    });
+    $("#realSaleWeight").blur(function(){
+        autoSetRealSaleMoney();
+    });
     $("#realSaleMoney").blur(function(){
         var realSaleMoney = $("#realSaleMoney").val();
         var customerPayMoney = $("#customerPayMoney").val();
@@ -37,6 +50,20 @@ $(function () {
         }
     });
 });
+function autoSetExpectSaleMoney(){
+    var expectSaleMoney = 0;
+    var expectSaleWeight = $("#expectSaleWeight").val() == ""?0:$("#expectSaleWeight").val();
+    var expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == ""?0:$("#expectSaleUnitPrice").val();
+    expectSaleMoney = toFloat(expectSaleWeight * expectSaleUnitPrice);
+    $("#expectSaleMoney").val(expectSaleMoney);
+}
+function autoSetRealSaleMoney(){
+    var realSaleMoney = 0;
+    var realSaleWeight = $("#realSaleWeight").val() == ""?0:$("#realSaleWeight").val();
+    var realSaleUnitPrice = $("#realSaleUnitPrice").val() == ""?0:$("#realSaleUnitPrice").val();
+    realSaleMoney = toFloat(realSaleWeight * realSaleUnitPrice);
+    $("#realSaleMoney").val(realSaleMoney);
+}
 var toFloat = function (value) {
     value = Math.round(parseFloat(value) * 100) / 100;
     if (value.toString().indexOf(".") < 0) {
@@ -80,26 +107,20 @@ var TableInit = function () {
                 title: '商品序号',
                 visible: false
             }, {
-                field: 'pickupWeight',
-                title: '提货重量(kg)'
-            }, {
-                field: 'pickupBoxes',
-                title: '提货箱数'
-            }, {
-                field: 'pickupDate',
-                title: '提货时间'
-            }, {
-                field: 'pickupUser',
-                title: '提货人'
-            }, {
                 field: 'saleContractNo',
-                title: '销售合同号'
+                title: '购销合同/订单号'
             }, {
+                 field: 'pickupUser',
+                 title: '销售经理'
+             }, {
                 field: 'customerName',
                 title: '客户名称'
             }, {
                 field: 'expectSaleWeight',
                 title: '预销售重量(kg)'
+            }, {
+                field: 'expectSaleUnitPrice',
+                title: '预销售单价(元/KG)'
             }, {
                 field: 'expectSaleMoney',
                 title: '预销售金额(元)'
@@ -113,6 +134,9 @@ var TableInit = function () {
                 field: 'realSaleBoxes',
                 title: '实际销售箱数'
             }, {
+                field: 'realSaleUnitPrice',
+                title: '实际销售单价(元/KG)'
+            }, {
                 field: 'realSaleMoney',
                 title: '实际销售金额(元)'
             }, {
@@ -124,6 +148,26 @@ var TableInit = function () {
             }, {
                 field: 'customerPayMoney',
                 title: '客户来款金额(元)'
+            }, {
+                field: 'paymentDiff',
+                title: '货款差额(元)'
+            }, {
+                field: 'profit',
+                title: '利润(元)'
+            }, {
+                field: 'moneyClear',
+                title: '是否已结清',
+                formatter:function(value, row, index){
+                    if(value == "1") return "是";
+                    else return "否";
+                }
+            }, {
+                 field: 'pickupDate',
+                 title: '提货时间'
+             } , {
+                field: 'remark',
+                title: '备注',
+                visible:false
             } ]
         });
     };
@@ -155,29 +199,31 @@ var ButtonInit = function () {
             }
         });
         $("#btn_del").click(function(){
-            var a = $('#tb_sale').bootstrapTable('getSelections');
-            var ids = "";
-            for(var i=0;i<a.length;i++) {
-                ids += a[i].saleId;
-                if(i<a.length-1){
-                    ids += ",";
-                }
-            }
-            if(ids != ""){
-                $.ajax({
-                    url:"/trade/sale/delete",
-                    type:"POST",
-                    dataType:"json",
-                    data:{"ids":ids},
-                    success:function(res){
-                        if(res.status == "1"){
-                            toastr.success("删除成功");
-                        }else{
-                            toastr.error("删除失败");
-                        }
-                        setTimeout(function(){window.location.href = window.location.href;},2000);
+            if(confirm("确认删除吗？")){
+                var a = $('#tb_sale').bootstrapTable('getSelections');
+                var ids = "";
+                for(var i=0;i<a.length;i++) {
+                    ids += a[i].saleId;
+                    if(i<a.length-1){
+                        ids += ",";
                     }
-                });
+                }
+                if(ids != ""){
+                    $.ajax({
+                        url:"/trade/sale/delete",
+                        type:"POST",
+                        dataType:"json",
+                        data:{"ids":ids},
+                        success:function(res){
+                            if(res.status == "1"){
+                                toastr.success("删除成功");
+                            }else{
+                                toastr.error("删除失败");
+                            }
+                            setTimeout(function(){window.location.href = window.location.href;},2000);
+                        }
+                    });
+                }
             }
         });
         $("#save_sale").click(function(){
@@ -188,22 +234,30 @@ var ButtonInit = function () {
             }
             sale.saleId = $("#saleId").val();
             sale.cargoId = $("#cargoId").val();
-            sale.pickupWeight = $("#pickupWeight").val() == "" ? 0:$("#pickupWeight").val();
-            sale.pickupBoxes = $("#pickupBoxes").val() == "" ? 0:$("#pickupBoxes").val();
             sale.pickupDate = $("#pickupDate").val();
             sale.pickupUser = $("#pickupUser").val();
             sale.saleContractNo = $("#saleContractNo").val();//合同序号
             sale.customerName = $("#customerName").val();
+            sale.expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == "" ? 0:$("#expectSaleUnitPrice").val();
             sale.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:$("#expectSaleWeight").val();
             sale.expectSaleBoxes = $("#expectSaleBoxes").val() == "" ? 0:$("#expectSaleBoxes").val();
             sale.expectSaleMoney = $("#expectSaleMoney").val() == "" ? 0:$("#expectSaleMoney").val();
             sale.expectSaleDate = $("#expectSaleDate").val();
+            sale.realSaleUnitPrice = $("#realSaleUnitPrice").val() == "" ? 0:$("#realSaleUnitPrice").val();
             sale.realSaleWeight = $("#realSaleWeight").val() == "" ? 0:$("#realSaleWeight").val();
             sale.realSaleBoxes = $("#realSaleBoxes").val() == "" ? 0:$("#realSaleBoxes").val();
             sale.realSaleMoney = $("#realSaleMoney").val() == "" ? 0:$("#realSaleMoney").val();
             sale.realSaleDate = $("#realSaleDate").val();
             sale.customerPayDate = $("#customerPayDate").val();
+            sale.remark = $("#remark").val();
+            if($("#moneyClear").is(':checked')){
+                    sale.moneyClear = "1";
+                }else{
+                    sale.moneyClear = "0";
+                }
             sale.customerPayMoney = $("#customerPayMoney").val() == "" ? 0:$("#customerPayMoney").val();
+            sale.paymentDiff = $("#paymentDiff").val() == "" ? 0:$("#paymentDiff").val();
+            sale.profit = $("#profit").val() == "" ? 0:$("#profit").val();
 
             $.ajax({
                 url:"/trade/sale/add",
@@ -237,14 +291,22 @@ function setFormData(data){
     $("#pickupUser").val(data.pickupUser);
     $("#saleContractNo").val(data.saleContractNo);
     $("#customerName").val(data.customerName);
+    $("#expectSaleUnitPrice").val(data.expectSaleUnitPrice);
     $("#expectSaleWeight").val(data.expectSaleWeight);
     $("#expectSaleBoxes").val(data.expectSaleBoxes);
     $("#expectSaleMoney").val(data.expectSaleMoney);
     $("#expectSaleDate").val(data.expectSaleDate);
+    $("#realSaleUnitPrice").val(data.realSaleUnitPrice);
     $("#realSaleWeight").val(data.realSaleWeight);
     $("#realSaleBoxes").val(data.realSaleBoxes);
     $("#realSaleMoney").val(data.realSaleMoney);
     $("#realSaleDate").val(data.realSaleDate);
     $("#customerPayDate").val(data.customerPayDate);
     $("#customerPayMoney").val(data.customerPayMoney);
+    $("#profit").val(data.profit);
+    $("#paymentDiff").val(data.paymentDiff);
+    $("#remark").html(data.remark);
+    if(data.moneyClear == 1){
+        $("#moneyClear").attr("checked","checked");
+    }
 }

@@ -15,7 +15,6 @@ public class CargoInfo implements Serializable{
     private String cargoNo;//库号
     private String cargoName;//产品名称
     private String level;//级别
-    private String specification;//规格
     private double unitPrice;//单价
     private double costPrice;//成本单价
     private double contractAmount;//合同数量
@@ -31,17 +30,8 @@ public class CargoInfo implements Serializable{
     private double realStoreWeight;//目前实际库存重量
     private double realStoreMoney;//库存成本
     private Integer realStoreBoxes;//目前实际库存箱数
-    private String baozhuang;
 
     public CargoInfo(){}
-
-    public String getBaozhuang() {
-        return baozhuang;
-    }
-
-    public void setBaozhuang(String baozhuang) {
-        this.baozhuang = baozhuang;
-    }
 
     public double getRealStoreMoney() {
         return realStoreMoney;
@@ -153,14 +143,6 @@ public class CargoInfo implements Serializable{
 
     public void setLevel(String level) {
         this.level = level;
-    }
-
-    public String getSpecification() {
-        return specification;
-    }
-
-    public void setSpecification(String specification) {
-        this.specification = specification;
     }
 
     public double getUnitPrice() {

@@ -130,13 +130,13 @@ public class TradeController {
         cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
         cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
         cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
-        //成本单价=采购单价*汇率*（1+关税税率）*（1+增值税率）+运费+冷藏+货代费
+        //成本单价=采购单价*汇率*（1+关税税率）*（1+增值税率）+(运费+冷藏+货代费 == 2)
         /*String contractId = cargoInfo.getContractId();
         ContractBaseInfo contract = contractRepository.findByContractId(contractId);
         double tariffRate = contract.getTariffRate();//关税税率
         double exchangeRate = contract.getExchangeRate();//汇率
         double taxRate = contract.getTaxRate();//增值税率
-        double costPrice = cargoInfo.getUnitPrice()*exchangeRate*(1+tariffRate)*(1+taxRate);
+        double costPrice = cargoInfo.getUnitPrice()*exchangeRate*(1+tariffRate)*(1+taxRate) + 2;
 
         cargoInfo.setCostPrice(costPrice);
 

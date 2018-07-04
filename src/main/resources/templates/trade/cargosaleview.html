@@ -33,7 +33,7 @@
     <script src="/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="/assets/scripts/bootstrap-table.js"></script>
-    <script src="/assets/scripts/bootstrap-datetimepicker.js"></script>
+    <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/cargosale.js"></script>
@@ -96,43 +96,24 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">规格</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="specification" th:value="${cargo.specification}"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">库号</label>
+                                            <label class="control-label col-sm-2">库号</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="cargoNo" th:value="${cargo.cargoNo}"/>
                                             </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">采购单价(/KG)</label>
+                                            <label class="control-label col-sm-3">成本单价(元/KG)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="unitPrice" th:value="${cargo.unitPrice}"/>
                                             </div>
-                                            <label class="control-label col-sm-3">箱数(小计)</label>
+
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">发票箱数(小计)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="boxes" th:value="${cargo.boxes}"/>
                                             </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">合同数量(小计)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="contractAmount" th:value="${cargo.contractAmount}"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">合同金额(小计:元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="contractMoney" th:value="${cargo.contractMoney}"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">发票数量(小计)</label>
+                                            <label class="control-label col-sm-3">发票数量(小计)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="invoiceAmount" th:value="${cargo.invoiceAmount}"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">发票金额(小计:元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="invoiceMoney" th:value="${cargo.invoiceMoney}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
@@ -166,7 +147,7 @@
                                         <i class="fa fa-plus-square"></i>新增
                                     </button>
                                     <button id="btn_edit" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
-                                        <i class="fa fa-plus-square"></i>修改
+                                        <i class="fa fa-plus-square"></i>编辑
                                     </button>
                                     <button id="btn_del" type="button" class="btn btn-default" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
                                         <i class="fa fa-plus-square"></i>删除
@@ -181,49 +162,19 @@
                                                 <h4 class="modal-title" id="myModalLabel">新增销售记录</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">提货信息</div>
-                                                    <div class="panel-body">
-                                                        <form class="form-horizontal">
-                                                            <input type="hidden" id="saleId" value=""/>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">提货重量(kg)</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="pickupWeight" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">提货箱数</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="pickupBoxes" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">提货时间</label>
-                                                                <div class="col-sm-3">
-                                                                    <div class="input-append date form-date">
-                                                                        <input class="form-control" size="16" id="pickupDate" type="text" readonly="readonly"/>
-                                                                        <span class="add-on"><i class="icon-th"></i></span>
-                                                                    </div>
-                                                                </div>
-                                                                <label class="control-label col-sm-3">提货人</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="pickupUser" />
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
+                                                <input type="hidden" id="saleId" value=""/>
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">预售信息</div>
                                                     <div class="panel-body">
                                                         <form class="form-horizontal" id="expectForm">
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">销售合同编号</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="saleContractNo" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">客户名称</label>
+                                                                <label class="control-label col-sm-2">客户名称</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="customerName" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">预售单价(元/KG)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="expectSaleUnitPrice" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
@@ -256,6 +207,16 @@
                                                     <div class="panel-heading">实售信息</div>
                                                     <div class="panel-body">
                                                         <form class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2">购销合同/订单号</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="saleContractNo" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">销售经理</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="pickupUser" th:value="${user.name}" />
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group" style="">
                                                                 <label class="control-label col-sm-2">实售重量(kg)</label>
                                                                 <div class="col-sm-3">
@@ -267,17 +228,15 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">实售金额(元)</label>
+                                                                <label class="control-label col-sm-2">实售单价(元/KG)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="realSaleUnitPrice" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">实售金额(元)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="realSaleMoney" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">出库单时间</label>
-                                                                <div class="col-sm-3">
-                                                                    <div class="input-append date form-date">
-                                                                        <input class="form-control" size="16" id="realSaleDate" type="text" readonly="readonly"/>
-                                                                        <span class="add-on"><i class="icon-th"></i></span>
-                                                                    </div>
-                                                                </div>
+
                                                             </div>
                                                             <div class="form-group" style="">
                                                                 <label class="control-label col-sm-2">客户来款时间</label>
@@ -293,8 +252,44 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">货款差额(元)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="paymentDiff" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">利润(元)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="profit" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">提货时间</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-append date form-date">
+                                                                        <input class="form-control" size="16" id="pickupDate" type="text" readonly="readonly"/>
+                                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                                <label class="control-label col-sm-3">出库单时间</label>
+                                                                <div class="col-sm-3">
+                                                                    <div class="input-append date form-date">
+                                                                        <input class="form-control" size="16" id="realSaleDate" type="text" readonly="readonly"/>
+                                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">是否已结清</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="checkbox" id="moneyClear" />
+                                                                </div>
                                                                 <div id="deviationNotice" class="col-sm-12" style="display:none;">
                                                                     <span style="color:red;">提醒：客户来款金额所填数额与实际销售金额有偏差，请确认！</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">备注</label>
+                                                                <div class="col-sm-9">
+                                                                    <textarea class="form-control" rows="3" id="remark"></textarea>
                                                                 </div>
                                                             </div>
                                                         </form>

@@ -19,7 +19,7 @@ public class ContractBaseInfo implements Serializable {
     private String externalCompany;//外商
     private String originCountry;//原产地
     private String companyNo;//厂号
-    private String shipmentPort;//起运港
+    //private String shipmentPort;//起运港
     private String destinationPort;//目的港
     private String priceCondition;//价格条件
     private String payType;//付款方式
@@ -31,9 +31,9 @@ public class ContractBaseInfo implements Serializable {
     private double totalInvoiceAmount;//发票总数量
     private double totalInvoiceMoney;//发票总金额
     private Integer totalBoxes;//箱数总计
-    private double tariffRate;//关税税率
+    /*private double tariffRate;//关税税率
     private double exchangeRate;//汇率
-    private double taxRate;//增值税率
+    private double taxRate;//增值税率*/
 
     /**
      * 付款信息（L/C）
@@ -61,7 +61,7 @@ public class ContractBaseInfo implements Serializable {
      */
     private String containerNo;//柜号
     private String ladingbillNo;//提单号
-    private String shipCompany;//船公司
+    //private String shipCompany;//船公司
     private String containerSize;//货柜尺寸
     private Integer isNeedInsurance;//是否需要购买保险：0-是，1-否
     private String insuranceBuyDate;//保险购买日期
@@ -70,20 +70,21 @@ public class ContractBaseInfo implements Serializable {
     private String ETD;
     private String ETA;
     private Integer isCheckElec;//是否已核对电子版：0-是，1-否
-    private String elecSendDate;//电子版发送日期
-    private String exCompanySendBillDate;//外商邮寄正本单据日期
-    private String billSignDate;//正本单据签收日期
+    //private String elecSendDate;//电子版发送日期
+    //private String exCompanySendBillDate;//外商邮寄正本单据日期
+    //private String billSignDate;//正本单据签收日期
     private String agent;//货代
     private String agentSendDate;//单据寄给货代日期
     private double tariff;//关税
     private double addedValueTax;//增值税
+    private String tariffNo;//报关单号
     private String taxPayDate;//付税日期
-    private String taxSignDate;//税票签收日期
-    private String taxDeductibleParty;//税票抵扣方
+    //private String taxSignDate;//税票签收日期
+    //private String taxDeductibleParty;//税票抵扣方
     private String agentPassDate;//放行日期
     private String warehouse;//仓库
     private String storeDate;//入库日期
-    private double delayFee;//滞箱滞报费
+    //private double delayFee;//滞箱滞报费
     private String status;//状态  0-作废，1-已下单，2-已装船，3-已到港，4-已入库
     private String remark;//备注
     private Integer version;
@@ -91,6 +92,14 @@ public class ContractBaseInfo implements Serializable {
     private String createDateTime;
 
     public ContractBaseInfo(){}
+
+    public String getTariffNo() {
+        return tariffNo;
+    }
+
+    public void setTariffNo(String tariffNo) {
+        this.tariffNo = tariffNo;
+    }
 
     public String getCreateUser() {
         return createUser;
@@ -116,7 +125,7 @@ public class ContractBaseInfo implements Serializable {
         this.version = version;
     }
 
-    public double getTariffRate() {
+    /*public double getTariffRate() {
         return tariffRate;
     }
 
@@ -138,7 +147,7 @@ public class ContractBaseInfo implements Serializable {
 
     public void setTaxRate(double taxRate) {
         this.taxRate = taxRate;
-    }
+    }*/
 
     public Integer getId() {
         return id;
@@ -202,14 +211,6 @@ public class ContractBaseInfo implements Serializable {
 
     public void setCompanyNo(String companyNo) {
         this.companyNo = companyNo;
-    }
-
-    public String getShipmentPort() {
-        return shipmentPort;
-    }
-
-    public void setShipmentPort(String shipmentPort) {
-        this.shipmentPort = shipmentPort;
     }
 
     public String getDestinationPort() {
@@ -420,14 +421,6 @@ public class ContractBaseInfo implements Serializable {
         this.ladingbillNo = ladingbillNo;
     }
 
-    public String getShipCompany() {
-        return shipCompany;
-    }
-
-    public void setShipCompany(String shipCompany) {
-        this.shipCompany = shipCompany;
-    }
-
     public String getContainerSize() {
         return containerSize;
     }
@@ -492,30 +485,6 @@ public class ContractBaseInfo implements Serializable {
         this.isCheckElec = isCheckElec;
     }
 
-    public String getElecSendDate() {
-        return elecSendDate;
-    }
-
-    public void setElecSendDate(String elecSendDate) {
-        this.elecSendDate = elecSendDate;
-    }
-
-    public String getExCompanySendBillDate() {
-        return exCompanySendBillDate;
-    }
-
-    public void setExCompanySendBillDate(String exCompanySendBillDate) {
-        this.exCompanySendBillDate = exCompanySendBillDate;
-    }
-
-    public String getBillSignDate() {
-        return billSignDate;
-    }
-
-    public void setBillSignDate(String billSignDate) {
-        this.billSignDate = billSignDate;
-    }
-
     public String getAgent() {
         return agent;
     }
@@ -556,22 +525,6 @@ public class ContractBaseInfo implements Serializable {
         this.taxPayDate = taxPayDate;
     }
 
-    public String getTaxSignDate() {
-        return taxSignDate;
-    }
-
-    public void setTaxSignDate(String taxSignDate) {
-        this.taxSignDate = taxSignDate;
-    }
-
-    public String getTaxDeductibleParty() {
-        return taxDeductibleParty;
-    }
-
-    public void setTaxDeductibleParty(String taxDeductibleParty) {
-        this.taxDeductibleParty = taxDeductibleParty;
-    }
-
     public String getAgentPassDate() {
         return agentPassDate;
     }
@@ -594,14 +547,6 @@ public class ContractBaseInfo implements Serializable {
 
     public void setStoreDate(String storeDate) {
         this.storeDate = storeDate;
-    }
-
-    public double getDelayFee() {
-        return delayFee;
-    }
-
-    public void setDelayFee(double delayFee) {
-        this.delayFee = delayFee;
     }
 
     public String getStatus() {

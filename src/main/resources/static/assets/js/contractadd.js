@@ -7,16 +7,6 @@ $(function () {
     var oTable = new TableInit();
     oTable.Init();
 
-    $(".form-date").datetimepicker({
-        format: "yyyy-mm-dd",
-        autoclose: true,
-        todayBtn: true,
-        minView: 2,
-        maxView: 4,
-        todayHighlight: true,
-        language: 'zh-CN'
-    });
-
     initCargoList();
     initOriginCountry();
     initExternalCompany();
@@ -68,6 +58,16 @@ $(function () {
         invoiceMoney = toFloat(unitPrice * invoiceAmount);
         $("#invoiceMoney").val(invoiceMoney);
     });
+
+    $(".form-date").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            minView: 2,
+            maxView: 4,
+            todayHighlight: true,
+            language: 'zh-CN'
+        });
 });
 var toFloat = function (value) {
     value = Math.round(parseFloat(value) * 100) / 100;
@@ -131,9 +131,6 @@ var TableInit = function () {
                 field: 'level',
                 title: '级别'
             }, {
-                field: 'specification',
-                title: '规格'
-            }, {
                 field: 'cargoNo',
                 title: '库号'
             }, {
@@ -196,29 +193,31 @@ var ButtonInit = function () {
             }
         });
         $("#btn_del").click(function(){
-            var a = $('#tb_cargo').bootstrapTable('getSelections');
-            var ids = "";
-            for(var i=0;i<a.length;i++) {
-                ids += a[i].id;
-                if(i<a.length-1){
-                    ids += ",";
-                }
-            }
-            if(ids != ""){
-                $.ajax({
-                    url:"/trade/cargo/delete",
-                    type:"POST",
-                    dataType:"json",
-                    data:{"ids":ids},
-                    success:function(res){
-                        if(res.status == "1"){
-                            toastr.success("删除成功");
-                        }else{
-                            toastr.error("删除失败");
-                        }
-                        $("#tb_cargo").bootstrapTable("refresh");
+            if(confirm("确认删除吗？")){
+                var a = $('#tb_cargo').bootstrapTable('getSelections');
+                var ids = "";
+                for(var i=0;i<a.length;i++) {
+                    ids += a[i].id;
+                    if(i<a.length-1){
+                        ids += ",";
                     }
-                });
+                }
+                if(ids != ""){
+                    $.ajax({
+                        url:"/trade/cargo/delete",
+                        type:"POST",
+                        dataType:"json",
+                        data:{"ids":ids},
+                        success:function(res){
+                            if(res.status == "1"){
+                                toastr.success("删除成功");
+                            }else{
+                                toastr.error("删除失败");
+                            }
+                            $("#tb_cargo").bootstrapTable("refresh");
+                        }
+                    });
+                }
             }
         });
         $("#save_cargo").click(function(){
@@ -232,7 +231,6 @@ var ButtonInit = function () {
             }
             cargo.cargoName = $("#cargoName").val();//产品名称
             cargo.level = $("#level").val();//级别
-            cargo.specification = $("#specification").val();//规格
             cargo.cargoNo = $("#cargoNo").val();//库号
             cargo.boxes = $("#boxes").val() == "" ? 0:$("#boxes").val();//箱数(小计)
             cargo.unitPrice = $("#unitPrice").val() == "" ? 0:$("#unitPrice").val();//单价
@@ -290,15 +288,15 @@ function setFormData(data){
     $("#cargoId").val(data.cargoId);
     $("#cargoNo").val(data.cargoNo);
     $("#cargoName").val(data.cargoName).trigger("change");
-    $("#baozhuang").val(data.baozhuang).trigger("change");
     $("#level").val(data.level).trigger("change");
-    $("#specification").val(data.specification);
     $("#unitPrice").val(data.unitPrice);
     $("#boxes").val(data.boxes);
     $("#contractAmount").val(data.contractAmount);
     $("#contractMoney").val(data.contractMoney);
     $("#invoiceAmount").val(data.invoiceAmount);
     $("#invoiceMoney").val(data.invoiceMoney);
+    $("#costPrice").val(data.costPrice);
+    $("#costMoney").val(data.costMoney);
 }
 
 function saveContract(){
@@ -328,7 +326,7 @@ function saveContract(){
     contract.externalCompany = $("#externalCompany").val();
     contract.originCountry = $("#originCountry").val();
     contract.companyNo = $("#companyNo").val();
-    contract.shipmentPort = $("#shipmentPort").val();
+    //contract.shipmentPort = $("#shipmentPort").val();
     contract.destinationPort = $("#destinationPort").val();
     contract.priceCondition = $("#priceCondition").val();
     contract.payType = $("#payType").val();
@@ -355,7 +353,7 @@ function saveContract(){
     contract.finalRate = $("#finalRate").val() == "" ? 0:$("#finalRate").val();
     contract.containerNo = $("#containerNo").val();
     contract.ladingbillNo = $("#ladingbillNo").val();
-    contract.shipCompany = $("#shipCompany").val();
+    //contract.shipCompany = $("#shipCompany").val();
     contract.containerSize = $("#containerSize").val();
     if($("#isNeedInsurance").is(':checked')){
         contract.isNeedInsurance = "1";
@@ -372,12 +370,13 @@ function saveContract(){
     }else{
         contract.isCheckElec = "0";
     }
-    contract.elecSendDate = $("#elecSendDate").val();
-    contract.exCompanySendBillDate = $("#exCompanySendBillDate").val();
-    contract.billSignDate = $("#billSignDate").val();
+    //contract.elecSendDate = $("#elecSendDate").val();
+    //contract.exCompanySendBillDate = $("#exCompanySendBillDate").val();
+    //contract.billSignDate = $("#billSignDate").val();
     contract.agent = $("#agent").val();
     contract.agentSendDate = $("#agentSendDate").val();
     contract.tariff = $("#tariff").val() == "" ? 0:$("#tariff").val();
+    contract.tariffNo = $("#tariffNo").val();
     contract.addedValueTax = $("#addedValueTax").val() == "" ? 0:$("#addedValueTax").val();
     contract.taxPayDate = $("#taxPayDate").val();
     contract.taxSignDate = $("#taxSignDate").val();
@@ -385,11 +384,10 @@ function saveContract(){
     contract.agentPassDate = $("#agentPassDate").val();
     contract.warehouse = $("#warehouse").val();
     contract.storeDate = $("#storeDate").val();
-    contract.delayFee = $("#delayFee").val() == "" ? 0:$("#delayFee").val();
     contract.remark = $("#remark").val();
-    contract.tariffRate = $("#tariffRate").val() == "" ? 0:$("#tariffRate").val();
+    /*contract.tariffRate = $("#tariffRate").val() == "" ? 0:$("#tariffRate").val();
     contract.taxRate = $("#taxRate").val() == "" ? 0:$("#taxRate").val();
-    contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:$("#exchangeRate").val();
+    contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:$("#exchangeRate").val();*/
 
     var a = $("#tb_cargo").bootstrapTable("getData");
     var cargoIds = "";
@@ -490,16 +488,16 @@ function initCargoList(){
 
 function initOriginCountry(){
     var opts = "";
-    opts += "<option>AU-澳大利亚</option>";
-    opts += "<option>UY-乌拉圭</option>";
-    opts += "<option>BR-巴西</option>";
-    opts += "<option>CA-加拿大</option>";
-    opts += "<option>US-美国</option>";
-    opts += "<option>AR-阿根廷</option>";
-    opts += "<option>BY-白俄罗斯</option>";
-    opts += "<option>ZA-南非</option>";
-    opts += "<option>CR-哥斯达黎加</option>";
-    opts += "<option>NZ-新西兰</option>";
+    opts += "<option>澳大利亚</option>";
+    opts += "<option>乌拉圭</option>";
+    opts += "<option>巴西</option>";
+    opts += "<option>加拿大</option>";
+    opts += "<option>美国</option>";
+    opts += "<option>阿根廷</option>";
+    opts += "<option>白俄罗斯</option>";
+    opts += "<option>南非</option>";
+    opts += "<option>哥斯达黎加</option>";
+    opts += "<option>新西兰</option>";
     $("#originCountry").append(opts);
 }
 

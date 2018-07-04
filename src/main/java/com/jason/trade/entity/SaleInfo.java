@@ -12,16 +12,18 @@ public class SaleInfo implements Serializable{
     @GeneratedValue
     private Integer saleId;
     private String cargoId;
-    private double pickupWeight;
-    private Integer pickupBoxes;
+    //private double pickupWeight;
+    //private Integer pickupBoxes;
     private String pickupDate;
-    private String pickupUser;
+    private String pickupUser;//销售经理
     private String saleContractNo;
     private String customerName;
+    private double expectSaleUnitPrice;
     private double expectSaleWeight;
     private Integer expectSaleBoxes;
     private double expectSaleMoney;
     private String expectSaleDate;
+    private double realSaleUnitPrice;//实际销售单价
     private double realSaleWeight;
     private Integer realSaleBoxes;
     private double realSaleMoney;
@@ -31,8 +33,60 @@ public class SaleInfo implements Serializable{
     private String createUser;
     private String createDateTime;
     private String status;
+    private double paymentDiff;//货款差额
+    private String moneyClear;//货款是否已结清
+    private double profit;//利润
+    private String remark;
 
     public SaleInfo(){}
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
+    }
+
+    public double getRealSaleUnitPrice() {
+        return realSaleUnitPrice;
+    }
+
+    public void setRealSaleUnitPrice(double realSaleUnitPrice) {
+        this.realSaleUnitPrice = realSaleUnitPrice;
+    }
+
+    public double getPaymentDiff() {
+        return paymentDiff;
+    }
+
+    public void setPaymentDiff(double paymentDiff) {
+        this.paymentDiff = paymentDiff;
+    }
+
+    public String getMoneyClear() {
+        return moneyClear;
+    }
+
+    public void setMoneyClear(String moneyClear) {
+        this.moneyClear = moneyClear;
+    }
+
+    public double getExpectSaleUnitPrice() {
+        return expectSaleUnitPrice;
+    }
+
+    public void setExpectSaleUnitPrice(double expectSaleUnitPrice) {
+        this.expectSaleUnitPrice = expectSaleUnitPrice;
+    }
 
     public Integer getExpectSaleBoxes() {
         return expectSaleBoxes;
@@ -56,22 +110,6 @@ public class SaleInfo implements Serializable{
 
     public void setCargoId(String cargoId) {
         this.cargoId = cargoId;
-    }
-
-    public double getPickupWeight() {
-        return pickupWeight;
-    }
-
-    public void setPickupWeight(double pickupWeight) {
-        this.pickupWeight = pickupWeight;
-    }
-
-    public Integer getPickupBoxes() {
-        return pickupBoxes;
-    }
-
-    public void setPickupBoxes(Integer pickupBoxes) {
-        this.pickupBoxes = pickupBoxes;
     }
 
     public String getPickupDate() {

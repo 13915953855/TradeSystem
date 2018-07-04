@@ -162,26 +162,28 @@ var ButtonInit = function () {
             }
         });
         $("#btn_delete").click(function(){
-            var a = $('#tb_contract').bootstrapTable('getSelections');
-            var ids = "";
-            for(var i=0;i<a.length;i++) {
-                ids += a[i].id+",";
-            }
-            if(ids != ""){
-                $.ajax({
-                    url:"/trade/contract/delete",
-                    type:"POST",
-                    dataType:"json",
-                    data:{"ids":ids},
-                    success:function(res){
-                        if(res.status == "1"){
-                            toastr.success("删除成功");
-                        }else{
-                            toastr.error("删除失败");
+            if(confirm("确认删除吗？")){
+                var a = $('#tb_contract').bootstrapTable('getSelections');
+                var ids = "";
+                for(var i=0;i<a.length;i++) {
+                    ids += a[i].id+",";
+                }
+                if(ids != ""){
+                    $.ajax({
+                        url:"/trade/contract/delete",
+                        type:"POST",
+                        dataType:"json",
+                        data:{"ids":ids},
+                        success:function(res){
+                            if(res.status == "1"){
+                                toastr.success("删除成功");
+                            }else{
+                                toastr.error("删除失败");
+                            }
+                            $("#tb_contract").bootstrapTable("refresh");
                         }
-                        $("#tb_contract").bootstrapTable("refresh");
-                    }
-                });
+                    });
+                }
             }
         });
         $("#btn_output").click(function(){

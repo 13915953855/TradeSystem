@@ -33,7 +33,7 @@
     <script src="/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="/assets/scripts/bootstrap-table.js"></script>
-    <script src="/assets/scripts/bootstrap-datetimepicker.js"></script>
+    <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/contractadd.js"></script>
@@ -120,9 +120,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">起运港</label>
+                                            <label class="control-label col-sm-2">价格条件</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="shipmentPort" />
+                                                <select class="form-control select2" id="priceCondition">
+                                                    <option>CIF</option>
+                                                    <option>CFR</option>
+                                                </select>
                                             </div>
                                             <label class="control-label col-sm-3">目的港</label>
                                             <div class="col-sm-3">
@@ -136,22 +139,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">价格条件</label>
-                                            <div class="col-sm-3">
-                                                <select class="form-control select2" id="priceCondition">
-                                                    <option>CIF</option>
-                                                    <option>CFR</option>
-                                                </select>
-                                            </div>
-                                            <label class="control-label col-sm-3">付款方式</label>
-                                            <div class="col-sm-3">
-                                                <select class="form-control select2" id="payType" onchange="payTypeChange()">
-                                                    <option>L/C</option>
-                                                    <option>TT</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
                                             <label class="control-label col-sm-2">币种</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="currency">
@@ -159,59 +146,71 @@
                                                     <option>USD</option>
                                                 </select>
                                             </div>
-                                            <label class="control-label col-sm-3">预计船期</label>
+                                            <label class="control-label col-sm-3">付款方式</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="expectSailingDate" />
+                                                <select class="form-control select2" id="payType" onchange="payTypeChange()">
+                                                    <option>TT</option>
+                                                    <option>L/C</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">业务模式</label>
+                                            <label class="control-label col-sm-2">预计船期</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="expectSailingDate" />
+                                            </div>
+                                            <label class="control-label col-sm-3">业务模式</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="businessMode">
                                                     <option>自营</option>
                                                     <option>定向</option>
                                                     <option>代理</option>
+                                                    <option>HDL</option>
+                                                    <option>MJ</option>
+                                                    <option>WP</option>
                                                 </select>
                                             </div>
-                                            <label class="control-label col-sm-3">箱数总计</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalBoxes" />
-                                            </div>
                                         </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">合同总数量</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalContractAmount" />
-                                            </div>
-                                            <label class="control-label col-sm-3">合同总金额(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalContractMoney" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">发票总数量</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalInvoiceAmount" />
-                                            </div>
-                                            <label class="control-label col-sm-3">发票总金额(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalInvoiceMoney" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税税率(%)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariffRate" />
-                                            </div>
-                                            <label class="control-label col-sm-3">汇率(%)</label>
+                                        <!--<div class="form-group" style="">
+
+                                            <label class="control-label col-sm-2">汇率(%)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="exchangeRate" />
                                             </div>
-                                        </div>
+                                            <label class="control-label col-sm-3">关税税率(%)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariffRate" />
+                                            </div>
+                                        </div>-->
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">增值税率(%)</label>
+
+                                            <!--<label class="control-label col-sm-2">增值税率(%)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="taxRate" />
+                                            </div>-->
+                                            <label class="control-label col-sm-2">箱数总计</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalBoxes"  disabled="disabled"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">合同总数量(KG)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalContractAmount"  disabled="disabled"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">合同总金额(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalContractMoney"  disabled="disabled"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">发票总数量(KG)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalInvoiceAmount"  disabled="disabled"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">发票总金额(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="totalInvoiceMoney" disabled="disabled"/>
                                             </div>
                                         </div>
                                     </form>
@@ -225,7 +224,7 @@
                                         <i class="fa fa-plus-square"></i>新增
                                     </button>
                                     <button id="btn_edit" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
-                                        <i class="fa fa-plus-square"></i>修改
+                                        <i class="fa fa-plus-square"></i>编辑
                                     </button>
                                     <button id="btn_del" type="button" class="btn btn-default" style="padding:6px 22px 6px 22px;margin-top:-6px;margin-left:20px;">
                                         <i class="fa fa-plus-square"></i>删除
@@ -266,34 +265,20 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">规格</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="specification" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">库号</label>
+                                                                <label class="control-label col-sm-2">库号</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="cargoNo" />
                                                                 </div>
+
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">包装</label>
-                                                                <div class="col-sm-3">
-                                                                    <select class="form-control" id="baozhuang">
-                                                                        <option>IW/VAC</option>
-                                                                        <option>MW/VAC</option>
-                                                                        <option>LP</option>
-                                                                        <option>TP/VAC</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">采购单价(/KG)</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="unitPrice" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">箱数(小计)</label>
+                                                                <label class="control-label col-sm-2">箱数(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="boxes" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">采购单价(元/KG)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="unitPrice" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
@@ -317,13 +302,13 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">成本单价(/KG)</label>
+                                                                <label class="control-label col-sm-2">成本单价(元/KG)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="costPrice" />
+                                                                    <input type="text" class="form-control" id="costPrice" disabled="disabled"/>
                                                                 </div>
-                                                                <label class="control-label col-sm-3">库存成本</label>
+                                                                <label class="control-label col-sm-3">库存金额(元)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="costMoney" />
+                                                                    <input type="text" class="form-control" id="costMoney" disabled="disabled" />
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -428,11 +413,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">预付款汇率</label>
+                                            <label class="control-label col-sm-2">预付款汇率(%)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="preRate" />
                                             </div>
-                                            <label class="control-label col-sm-3">尾款汇率</label>
+                                            <label class="control-label col-sm-3">尾款汇率(%)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="finalRate" />
                                             </div>
@@ -456,16 +441,16 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">船公司名称</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="shipCompany" />
-                                            </div>
-                                            <label class="control-label col-sm-3">货柜尺寸</label>
+                                            <label class="control-label col-sm-2">货柜尺寸</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control" id="containerSize">
                                                     <option>20 GP</option>
                                                     <option>40 GP</option>
                                                 </select>
+                                            </div>
+                                            <label class="control-label col-sm-3">报关单号</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariffNo"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
@@ -522,29 +507,6 @@
                                                     <span></span>
                                                 </label>
                                             </div>
-                                            <label class="control-label col-sm-3">电子版发送日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="elecSendDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">外商邮寄正本单据日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="exCompanySendBillDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                            <label class="control-label col-sm-3">正本单据签收日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="billSignDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">货代</label>
@@ -560,13 +522,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税</label>
+                                            <label class="control-label col-sm-2">关税(元)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff" style="background-color:#fdf59a"/>
+                                                <input type="text" class="form-control" id="tariff"/>
                                             </div>
-                                            <label class="control-label col-sm-3">增值税</label>
+                                            <label class="control-label col-sm-3">增值税(元)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax" style="background-color:#fdf59a"/>
+                                                <input type="text" class="form-control" id="addedValueTax"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
@@ -576,19 +538,6 @@
                                                     <input class="form-control" size="16" id="taxPayDate" type="text" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
-                                            </div>
-                                            <label class="control-label col-sm-3">税票签收日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="taxSignDate" type="text" readonly="readonly"/>
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">税票抵扣方</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="taxDeductibleParty" />
                                             </div>
                                             <label class="control-label col-sm-3">放行日期</label>
                                             <div class="col-sm-3">
@@ -609,12 +558,6 @@
                                                     <input class="form-control" size="16" id="storeDate" type="text" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">滞箱滞报费</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="delayFee" />
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
