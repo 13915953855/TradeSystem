@@ -34,7 +34,7 @@ public class SaleInfo implements Serializable{
     private String createDateTime;
     private String status;
     private double paymentDiff;//货款差额
-    private String moneyClear;//货款是否已结清
+    private Integer moneyClear;//货款是否已结清
     private double profit;//利润
     private String remark;
 
@@ -72,11 +72,11 @@ public class SaleInfo implements Serializable{
         this.paymentDiff = paymentDiff;
     }
 
-    public String getMoneyClear() {
+    public Integer getMoneyClear() {
         return moneyClear;
     }
 
-    public void setMoneyClear(String moneyClear) {
+    public void setMoneyClear(Integer moneyClear) {
         this.moneyClear = moneyClear;
     }
 

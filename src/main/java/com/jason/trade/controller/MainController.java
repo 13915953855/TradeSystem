@@ -67,7 +67,7 @@ public class MainController {
     public String contract(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        return "/trade/contract";
+        return "trade/contract";
     }
     @GetMapping("/trade/contract/add")
     public String contractadd(Model model, HttpSession session) {
@@ -75,7 +75,7 @@ public class MainController {
         model.addAttribute("user", userInfo);
         String uuid = UUID.randomUUID().toString();
         model.addAttribute("contractId",uuid);
-        return "/trade/contractadd";
+        return "trade/contractadd";
     }
     @GetMapping("/trade/contract/update")
     public String contractupdate(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
@@ -84,7 +84,7 @@ public class MainController {
         ContractBaseInfo contract = contractRepository.findOne(id);
         model.addAttribute("contract",contract);
         model.addAttribute("action","update");
-        return "/trade/contractupdate";
+        return "trade/contractupdate";
     }
     @GetMapping("/trade/contract/view")
     public String contractview(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
@@ -93,13 +93,13 @@ public class MainController {
         ContractBaseInfo contract = contractRepository.findOne(id);
         model.addAttribute("contract",contract);
         model.addAttribute("action","view");
-        return "/trade/contractupdate";
+        return "trade/contractupdate";
     }
     @GetMapping("/trade/cargomanage")
     public String inout(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        return "/trade/cargomanage";
+        return "trade/cargomanage";
     }
     @GetMapping("/trade/cargo/view")
     public String cargoview(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
@@ -108,13 +108,13 @@ public class MainController {
         CargoInfo cargoInfo = cargoRepository.findOne(id);
         model.addAttribute("cargo",cargoInfo);
         model.addAttribute("action","view");
-        return "/trade/cargosaleview";
+        return "trade/cargosaleview";
     }
     @GetMapping("/trade/agent")
     public String agent(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        return "/trade/agent";
+        return "trade/agent";
     }
     @PostMapping("/login")
     public @ResponseBody Map<String, Object> loginPost(String username, String password, HttpSession session) {
@@ -150,7 +150,7 @@ public class MainController {
 
     @GetMapping("/register")
     public String register() {
-        return "/register";
+        return "register";
     }
 
     @PostMapping(value="/register")

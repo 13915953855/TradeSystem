@@ -224,12 +224,12 @@ public class TradeService {
                             XSSFCell cell = null;
                             //写入多条销售记录
                             for (int k = 0; k < GlobalConst.HEAD_SALE_ARRAY.length; k++) {
-                                cell = row.createCell(GlobalConst.HEAD_CONTRACT_CELL_SIZE + GlobalConst.HEAD_CARGO_CELL_SIZE + k, CellType.STRING);//从销售的单元格开始写，下标是65
+                                cell = row.createCell(GlobalConst.HEAD_CONTRACT_ARRAY.length + GlobalConst.HEAD_CARGO_ARRAY.length + k, CellType.STRING);//从销售的单元格开始写，下标是65
                                 cell.setCellValue(saleRowData.get(k));
                             }
                             for (int k = 0; k < GlobalConst.HEAD_CARGO_ARRAY.length; k++) {
                                 //重复写入单条商品信息
-                                cell = row.createCell(GlobalConst.HEAD_CONTRACT_CELL_SIZE + k, CellType.STRING);//从商品的单元格开始写，下标是50
+                                cell = row.createCell(GlobalConst.HEAD_CONTRACT_ARRAY.length + k, CellType.STRING);//从商品的单元格开始写，下标是50
                                 cell.setCellValue(cargoList.get(k));
                             }
                         }
@@ -244,7 +244,7 @@ public class TradeService {
                         XSSFCell cell = null;
                         for (int k = 0; k < GlobalConst.HEAD_CARGO_ARRAY.length; k++) {
                             //重复写入单条商品信息
-                            cell = row.createCell(GlobalConst.HEAD_CONTRACT_CELL_SIZE + k, CellType.STRING);//从商品的单元格开始写，下标是50
+                            cell = row.createCell(GlobalConst.HEAD_CONTRACT_ARRAY.length + k, CellType.STRING);//从商品的单元格开始写，下标是50
                             cell.setCellValue(cargoList.get(k));
                         }
                     }
@@ -284,7 +284,7 @@ public class TradeService {
             XSSFRow row = sheet.getRow(i);
             //创建单元格
             XSSFCell cell = null;
-            int total = GlobalConst.HEAD_CONTRACT_CELL_SIZE + GlobalConst.HEAD_CARGO_CELL_SIZE + GlobalConst.HEAD_SALE_ARRAY.length;
+            int total = GlobalConst.HEAD_CONTRACT_ARRAY.length + GlobalConst.HEAD_CARGO_ARRAY.length + GlobalConst.HEAD_SALE_ARRAY.length;
             for (int k = 0; k < total; k++) {
                 cell = row.getCell(k);
                 if(cell == null){
@@ -299,14 +299,14 @@ public class TradeService {
     }
 
     private void mergeContractRow(XSSFSheet sheet, int contractMergeStart, int contractMergeEnd) {
-        for (int i = 0; i < GlobalConst.HEAD_CONTRACT_CELL_SIZE; i++) {
+        for (int i = 0; i < GlobalConst.HEAD_CONTRACT_ARRAY.length; i++) {
             CellRangeAddress cellRangeAddress = new CellRangeAddress(contractMergeStart, contractMergeEnd, i, i);
             sheet.addMergedRegion(cellRangeAddress);
         }
     }
 
     private void mergeCargoRow(XSSFSheet sheet, int saleStart, int saleEnd) {
-        for (int i = GlobalConst.HEAD_CONTRACT_CELL_SIZE; i < GlobalConst.HEAD_CONTRACT_CELL_SIZE+GlobalConst.HEAD_CARGO_CELL_SIZE; i++) {
+        for (int i = GlobalConst.HEAD_CONTRACT_ARRAY.length; i < GlobalConst.HEAD_CONTRACT_ARRAY.length+GlobalConst.HEAD_CARGO_ARRAY.length; i++) {
             CellRangeAddress cellRangeAddress = new CellRangeAddress(saleStart, saleEnd, i, i);
             sheet.addMergedRegion(cellRangeAddress);
         }
@@ -348,13 +348,14 @@ public class TradeService {
         list.add(baseInfo.getContainerNo());//柜号
         list.add(baseInfo.getLadingbillNo());//提单号
         list.add(baseInfo.getContainerSize());//货柜尺寸
-        list.add(baseInfo.getIsNeedInsurance() == 0?"是":"否");//需要购买保险
+        list.add(baseInfo.getIsNeedInsurance() == 1?"是":"否");//需要购买保险
         list.add(baseInfo.getInsuranceBuyDate());//保险购买日期
         list.add(baseInfo.getInsuranceMoney()+"");//保险费用
         list.add(baseInfo.getInsuranceCompany());//保险公司
         list.add(baseInfo.getETD());//ETD
         list.add(baseInfo.getETA());//ETA
-        list.add(baseInfo.getIsCheckElec()==0?"是":"否");//已核对电子版
+        list.add(baseInfo.getIsCheckElec()==1?"是":"否");//已核对电子版
+        list.add(baseInfo.getQACertificate()==1?"是":"否");//检疫证
         list.add(baseInfo.getAgent());//货代
         list.add(baseInfo.getAgentSendDate());//单据寄给货代日期
         list.add(baseInfo.getTariff()+"");//关税
@@ -404,7 +405,7 @@ public class TradeService {
             list.add(saleInfo.getCustomerPayDate());//客户来款时间
             list.add(saleInfo.getCustomerPayMoney()+"");//客户来款金额(元)
             list.add(saleInfo.getPaymentDiff()+"");//货款差额
-            list.add(saleInfo.getMoneyClear());//是否已结清
+            list.add(saleInfo.getMoneyClear()==1?"是":"否");//是否已结清
             list.add(saleInfo.getRemark());//备注
             result.add(list);
         }

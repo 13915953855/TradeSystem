@@ -69,10 +69,8 @@ public class ContractBaseInfo implements Serializable {
     private String insuranceCompany;//保险公司
     private String ETD;
     private String ETA;
-    private Integer isCheckElec;//是否已核对电子版：0-是，1-否
-    //private String elecSendDate;//电子版发送日期
-    //private String exCompanySendBillDate;//外商邮寄正本单据日期
-    //private String billSignDate;//正本单据签收日期
+    private Integer isCheckElec;//是否已核对电子版：1-是，0-否
+    private Integer QACertificate;//检疫证：1-是，0-否
     private String agent;//货代
     private String agentSendDate;//单据寄给货代日期
     private double tariff;//关税
@@ -92,6 +90,14 @@ public class ContractBaseInfo implements Serializable {
     private String createDateTime;
 
     public ContractBaseInfo(){}
+
+    public Integer getQACertificate() {
+        return QACertificate;
+    }
+
+    public void setQACertificate(Integer QACertificate) {
+        this.QACertificate = QACertificate;
+    }
 
     public String getTariffNo() {
         return tariffNo;

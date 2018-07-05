@@ -53,6 +53,7 @@
             $("#remark").html(remark);
             var isNeedInsurance = /*[[${contract.isNeedInsurance}]]*/;
             var isCheckElec = /*[[${contract.isCheckElec}]]*/;
+            var QACertificate = /*[[${contract.QACertificate}]]*/;
 
             $("#currency").val(currency).trigger("change");
             $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());
@@ -63,21 +64,45 @@
             if(isCheckElec == 1){
                 $("#isCheckElec").attr("checked","checked");
             }
+            if(QACertificate == 1){
+                $("#QACertificate").attr("checked","checked");
+            }
             var action = /*[[${action}]]*/;
             if(action == "view"){
                 $("button").attr("disabled","disabled");
                 $("#cancel").removeAttr("disabled");
                 $("#cancel").html("关闭");
             }
-            $("#businessMode").val(/*[[${contract.businessMode}]]*/).trigger("change");
-            $("#externalCompany").val(/*[[${contract.externalCompany}]]*/).trigger("change");
-            $("#originCountry").val(/*[[${contract.originCountry}]]*/).trigger("change");
-            $("#destinationPort").val(/*[[${contract.destinationPort}]]*/).trigger("change");
-            $("#priceCondition").val(/*[[${contract.priceCondition}]]*/).trigger("change");
-            $("#payType").val(/*[[${contract.payType}]]*/).trigger("change");
-            $("#containerSize").val(/*[[${contract.containerSize}]]*/).trigger("change");
+            var businessMode = /*[[${contract.businessMode}]]*/;
+            checkSelectOptionExist("businessMode",businessMode);
+            $("#businessMode").val(businessMode).trigger("change");
+
+            var externalCompany = /*[[${contract.externalCompany}]]*/;
+            checkSelectOptionExist("externalCompany",externalCompany);
+            $("#externalCompany").val(externalCompany).trigger("change");
+
+            var originCountry = /*[[${contract.originCountry}]]*/;
+            checkSelectOptionExist("originCountry",originCountry);
+            $("#originCountry").val(originCountry).trigger("change");
+
+            var destinationPort = /*[[${contract.destinationPort}]]*/;
+            checkSelectOptionExist("destinationPort",destinationPort);
+            $("#destinationPort").val(destinationPort).trigger("change");
+
+            var priceCondition = /*[[${contract.priceCondition}]]*/;
+            checkSelectOptionExist("priceCondition",priceCondition);
+            $("#priceCondition").val(priceCondition).trigger("change");
+
+            var payType = /*[[${contract.payType}]]*/;
+            checkSelectOptionExist("payType",payType);
+            $("#payType").val(payType).trigger("change");
+
+            var containerSize = /*[[${contract.containerSize}]]*/;
+            checkSelectOptionExist("containerSize",containerSize);
+            $("#containerSize").val(containerSize).trigger("change");
             /*]]>*/
         }
+
     </script>
 </head>
 
@@ -157,6 +182,7 @@
                                             <label class="control-label col-sm-2">价格条件</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="priceCondition" th:value="${contract.priceCondition}">
+                                                    <option></option>
                                                     <option>CIF</option>
                                                     <option>CFR</option>
                                                 </select>
@@ -164,6 +190,7 @@
                                             <label class="control-label col-sm-3">目的港</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="destinationPort" th:value="${contract.destinationPort}">
+                                                    <option></option>
                                                     <option>上海</option>
                                                     <option>天津</option>
                                                     <option>深圳</option>
@@ -176,26 +203,32 @@
                                             <label class="control-label col-sm-2">币种</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="currency" th:value="${contract.currency}">
-                                                    <option>RMB</option>
+                                                    <option></option>
+                                                    <option>CNY</option>
                                                     <option>USD</option>
                                                 </select>
                                             </div>
                                             <label class="control-label col-sm-3">付款方式</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="payType" onchange="payTypeChange()" th:value="${contract.payType}">
-                                                    <option>L/C</option>
+                                                    <option></option>
                                                     <option>TT</option>
+                                                    <option>L/C</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">预计船期</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="expectSailingDate" th:value="${contract.expectSailingDate}"/>
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="expectSailingDate" th:value="${contract.expectSailingDate}" type="text" readonly="readonly"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
                                             </div>
                                             <label class="control-label col-sm-3">业务模式</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="businessMode" th:value="${contract.businessMode}">
+                                                    <option></option>
                                                     <option>自营</option>
                                                     <option>定向</option>
                                                     <option>代理</option>
@@ -205,21 +238,9 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--<div class="form-group" style="">
-
-                                            <label class="control-label col-sm-2">汇率(%)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="exchangeRate" th:value="${contract.exchangeRate}"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">关税税率(%)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariffRate" th:value="${contract.tariffRate}"/>
-                                            </div>
-
-                                        </div>-->
                                         <div class="form-group" style="">
 
-                                            <!--<label class="control-label col-sm-2">增值税率(%)</label>
+                                            <!--<label class="control-label col-sm-2">增值税率</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="taxRate" th:value="${contract.taxRate}"/>
                                             </div>-->
@@ -233,7 +254,7 @@
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalContractAmount" th:value="${contract.totalContractAmount}"/>
                                             </div>
-                                            <label class="control-label col-sm-3">合同总金额(元)</label>
+                                            <label class="control-label col-sm-3">合同总金额</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalContractMoney" th:value="${contract.totalContractMoney}"/>
                                             </div>
@@ -243,7 +264,7 @@
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalInvoiceAmount" th:value="${contract.totalInvoiceAmount}"/>
                                             </div>
-                                            <label class="control-label col-sm-3">发票总金额(元)</label>
+                                            <label class="control-label col-sm-3">发票总金额</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalInvoiceMoney" th:value="${contract.totalInvoiceMoney}"/>
                                             </div>
@@ -314,37 +335,37 @@
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="boxes" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">采购单价(元/KG)</label>
+                                                                <label class="control-label col-sm-3">采购单价(/KG)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="unitPrice" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">合同数量(小计)</label>
+                                                                <label class="control-label col-sm-2">合同重量(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="contractAmount" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">合同金额(小计:元)</label>
+                                                                <label class="control-label col-sm-3">合同金额(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="contractMoney" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">发票数量(小计)</label>
+                                                                <label class="control-label col-sm-2">发票重量(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="invoiceAmount" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">发票金额(小计:元)</label>
+                                                                <label class="control-label col-sm-3">发票金额(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="invoiceMoney" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">成本单价(元/KG)</label>
+                                                                <label class="control-label col-sm-2">成本单价(CNY/KG)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="costPrice" disabled="disabled"/>
+                                                                    <input type="text" class="form-control" id="costPrice"/>
                                                                 </div>
-                                                                <label class="control-label col-sm-3">库存金额(元)</label>
+                                                                <label class="control-label col-sm-3">库存金额</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="costMoney" disabled="disabled" />
                                                                 </div>
@@ -412,7 +433,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">付汇汇率(%)</label>
+                                            <label class="control-label col-sm-2">付汇汇率</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="remittanceRate" th:value="${contract.remittanceRate}" />
                                             </div>
@@ -451,11 +472,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">预付款汇率(%)</label>
+                                            <label class="control-label col-sm-2">预付款汇率</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="preRate" th:value="${contract.preRate}" />
                                             </div>
-                                            <label class="control-label col-sm-3">尾款汇率(%)</label>
+                                            <label class="control-label col-sm-3">尾款汇率</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="finalRate" th:value="${contract.finalRate}"/>
                                             </div>
@@ -542,6 +563,13 @@
                                             <div class="col-sm-3">
                                                 <label class="fancy-checkbox" style="padding-top:5px;">
                                                     <input type="checkbox" id="isCheckElec" th:value="${contract.isCheckElec}"/>
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                            <label class="control-label col-sm-3">已出检疫证</label>
+                                            <div class="col-sm-3">
+                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="QACertificate" th:value="${contract.QACertificate}"/>
                                                     <span></span>
                                                 </label>
                                             </div>

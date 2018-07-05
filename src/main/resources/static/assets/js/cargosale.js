@@ -32,6 +32,19 @@ $(function () {
         autoSetRealSaleMoney();
     });
     $("#realSaleMoney").blur(function(){
+        autoSetCustomerMoney();
+    });
+    $("#customerPayMoney").blur(function(){
+        autoSetCustomerMoney();
+    });
+
+    $("#realSaleUnitPrice").blur(function(){
+        autoSetProfit();
+    });
+    $("#realSaleWeight").blur(function(){
+        autoSetProfit();
+    });
+    $("#realSaleMoney").blur(function(){
         var realSaleMoney = $("#realSaleMoney").val();
         var customerPayMoney = $("#customerPayMoney").val();
         if(customerPayMoney > 0 && realSaleMoney != customerPayMoney){
@@ -50,6 +63,21 @@ $(function () {
         }
     });
 });
+function autoSetProfit(){
+    var profit = 0;
+    var realSaleUnitPrice = $("#realSaleUnitPrice").val() == ""?0:$("#realSaleUnitPrice").val();
+    var realSaleWeight = $("#realSaleWeight").val() == ""?0:$("#realSaleWeight").val();
+    var unitPrice = $("#unitPrice").val() == ""?0:$("#unitPrice").val();
+    profit = toFloat((realSaleUnitPrice - unitPrice)*realSaleWeight);
+    $("#profit").val(profit);
+}
+function autoSetCustomerMoney(){
+    var paymentDiff = 0;
+    var customerPayMoney = $("#customerPayMoney").val() == ""?0:$("#customerPayMoney").val();
+    var realSaleMoney = $("#realSaleMoney").val() == ""?0:$("#realSaleMoney").val();
+    paymentDiff = toFloat(customerPayMoney - realSaleMoney);
+    $("#paymentDiff").val(paymentDiff);
+}
 function autoSetExpectSaleMoney(){
     var expectSaleMoney = 0;
     var expectSaleWeight = $("#expectSaleWeight").val() == ""?0:$("#expectSaleWeight").val();
@@ -117,28 +145,28 @@ var TableInit = function () {
                 title: '客户名称'
             }, {
                 field: 'expectSaleWeight',
-                title: '预销售重量(kg)'
+                title: '预销售重量(KG)'
             }, {
                 field: 'expectSaleUnitPrice',
-                title: '预销售单价(元/KG)'
+                title: '预销售单价(CNY/KG)'
             }, {
                 field: 'expectSaleMoney',
-                title: '预销售金额(元)'
+                title: '预销售金额'
             }, {
                 field: 'expectSaleDate',
                 title: '预出库时间'
             }, {
                 field: 'realSaleWeight',
-                title: '实际销售重量(kg)'
+                title: '实际销售重量(KG)'
             }, {
                 field: 'realSaleBoxes',
                 title: '实际销售箱数'
             }, {
                 field: 'realSaleUnitPrice',
-                title: '实际销售单价(元/KG)'
+                title: '实际销售单价(CNY/KG)'
             }, {
                 field: 'realSaleMoney',
-                title: '实际销售金额(元)'
+                title: '实际销售金额'
             }, {
                 field: 'realSaleDate',
                 title: '出库单时间'
@@ -147,13 +175,13 @@ var TableInit = function () {
                 title: '客户来款时间'
             }, {
                 field: 'customerPayMoney',
-                title: '客户来款金额(元)'
+                title: '客户来款金额'
             }, {
                 field: 'paymentDiff',
-                title: '货款差额(元)'
+                title: '货款差额'
             }, {
                 field: 'profit',
-                title: '利润(元)'
+                title: '利润'
             }, {
                 field: 'moneyClear',
                 title: '是否已结清',
@@ -188,14 +216,14 @@ var ButtonInit = function () {
         $("#btn_edit").click(function(){
             var data = $("#tb_sale").bootstrapTable("getSelections");
             if(data.length == 1){
-                $("#myModal").modal('hide');
+                $("#myModal").modal('show');
                 setFormData(data[0]);
             }else if(data.length > 1){
+                $("#myModal").modal('hide');
                 toastr.warning("只能选择一项进行编辑");
-                $("#myModal").modal('show');
             }else {
+                $("#myModal").modal('hide');
                 toastr.warning("请选中一行！");
-                $("#myModal").modal('show');
             }
         });
         $("#btn_del").click(function(){

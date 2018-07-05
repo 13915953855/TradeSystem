@@ -130,19 +130,6 @@ public class TradeController {
         cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
         cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
         cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
-        //成本单价=采购单价*汇率*（1+关税税率）*（1+增值税率）+(运费+冷藏+货代费 == 2)
-        /*String contractId = cargoInfo.getContractId();
-        ContractBaseInfo contract = contractRepository.findByContractId(contractId);
-        double tariffRate = contract.getTariffRate();//关税税率
-        double exchangeRate = contract.getExchangeRate();//汇率
-        double taxRate = contract.getTaxRate();//增值税率
-        double costPrice = cargoInfo.getUnitPrice()*exchangeRate*(1+tariffRate)*(1+taxRate) + 2;
-
-        cargoInfo.setCostPrice(costPrice);
-
-        //库存成本=库存*成本单价
-        double realStoreMoney = costPrice * cargoInfo.getInvoiceAmount();
-        cargoInfo.setRealStoreMoney(realStoreMoney);*/
         CargoInfo data = cargoRepository.save(cargoInfo);
 
         SysLog sysLog = new SysLog();
@@ -214,8 +201,12 @@ public class TradeController {
         for (int i = 0; i < idArr.length; i++) {
             contractBaseInfo.setId(Integer.valueOf(idArr[i]));
             contractBaseInfo.setStatus(GlobalConst.DISABLE);
-            contractRepository.save(contractBaseInfo);
+            ContractBaseInfo result = contractRepository.save(contractBaseInfo);
+            //将商品和销售记录置为不可用状态
+            //List<CargoInfo> cargoInfoList = cargoRepository.findByContractIdAndStatus(result.getContractId(),GlobalConst.ENABLE);
+
         }
+
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除合同"+ids);
         sysLog.setOperation("删除");
@@ -253,14 +244,4 @@ public class TradeController {
         return GlobalConst.SUCCESS;
     }
 
-    /*@PostMapping(value="/contract/output")
-    public String output(){
-        List<ContractBaseInfo> data = contractRepository.findAll();
-        String fileName = "业务台账"+DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
-        tradeService.writeExcel(data);
-        JSONObject result = new JSONObject();
-        result.put("filePath",new File(fileName).getPath());
-        result.put("fileName",fileName);
-        return RespUtil.respSuccess(result);
-    }*/
 }

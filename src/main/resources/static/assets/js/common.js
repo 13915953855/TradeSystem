@@ -39,3 +39,18 @@ $(function(){
                     }
                 });
 });
+
+function checkSelectOptionExist(id,val){
+    var flag = false;
+    $("#"+id+" option").each(function(){
+          //遍历所有option
+          var value = $(this).val();   //获取option值
+          var text = $(this).text();
+          if(value == val){
+              flag = true;
+          }
+    });
+    if(!flag){
+        $("#"+id).append("<option>"+val+"</option>");
+    }
+}

@@ -47,9 +47,6 @@ var TableInit = function () {
                 field: 'level',
                 title: '级别'
             }, {
-                field: 'specification',
-                title: '规格'
-            }, {
                 field: 'cargoNo',
                 title: '库号'
             }, {

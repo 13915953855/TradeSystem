@@ -141,16 +141,16 @@ var TableInit = function () {
                 title: '单价'
             }, {
                 field: 'contractAmount',
-                title: '合同数量(小计)'
+                title: '合同重量(小计)'
             }, {
                 field: 'contractMoney',
-                title: '合同金额(小计:元)'
+                title: '合同金额(小计)'
             }, {
                 field: 'invoiceAmount',
-                title: '发票数量(小计)'
+                title: '发票重量(小计)'
             }, {
                 field: 'invoiceMoney',
-                title: '发票金额(小计:元)'
+                title: '发票金额(小计)'
             }, {
                 field: 'id',
                 title: '操作',
@@ -235,9 +235,9 @@ var ButtonInit = function () {
             cargo.boxes = $("#boxes").val() == "" ? 0:$("#boxes").val();//箱数(小计)
             cargo.unitPrice = $("#unitPrice").val() == "" ? 0:$("#unitPrice").val();//单价
             cargo.contractAmount = $("#contractAmount").val() == "" ? 0:$("#contractAmount").val();//合同数量(小计)
-            cargo.contractMoney = $("#contractMoney").val() == "" ? 0:$("#contractMoney").val();//合同金额(小计:元)
+            cargo.contractMoney = $("#contractMoney").val() == "" ? 0:$("#contractMoney").val();//合同金额(小计)
             cargo.invoiceAmount = $("#invoiceAmount").val() == "" ? 0:$("#invoiceAmount").val();//发票数量(小计)
-            cargo.invoiceMoney = $("#invoiceMoney").val() == "" ? 0:$("#invoiceMoney").val();//发票金额(小计:元)
+            cargo.invoiceMoney = $("#invoiceMoney").val() == "" ? 0:$("#invoiceMoney").val();//发票金额(小计)
 
             $.ajax({
                 url:"/trade/cargo/add",
@@ -370,6 +370,11 @@ function saveContract(){
     }else{
         contract.isCheckElec = "0";
     }
+    if($("#QACertificate").is(':checked')){
+        contract.QACertificate = "1";
+    }else{
+        contract.QACertificate = "0";
+    }
     //contract.elecSendDate = $("#elecSendDate").val();
     //contract.exCompanySendBillDate = $("#exCompanySendBillDate").val();
     //contract.billSignDate = $("#billSignDate").val();
@@ -421,6 +426,7 @@ function saveContract(){
 
 function initCargoList(){
     var cargoList = "<optgroup label='去骨'>";
+    cargoList += "<option></option>";
     cargoList += "<option>前胸</option>";
     cargoList += "<option>后胸</option>";
     cargoList += "<option>肋条肉</option>";
@@ -488,6 +494,7 @@ function initCargoList(){
 
 function initOriginCountry(){
     var opts = "";
+    opts += "<option></option>";
     opts += "<option>澳大利亚</option>";
     opts += "<option>乌拉圭</option>";
     opts += "<option>巴西</option>";
@@ -503,6 +510,7 @@ function initOriginCountry(){
 
 function initExternalCompany(){
     var opts = "";
+    opts += "<option></option>";
     opts += "<option>JOC AUS</option>";
     opts += "<option>KPC HK</option>";
     opts += "<option>STANBROKE</option>";
