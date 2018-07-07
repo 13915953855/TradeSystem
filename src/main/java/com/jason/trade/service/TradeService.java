@@ -93,6 +93,17 @@ public class TradeService {
     }
 
     @Transactional
+    public void updateContractStatus(String ids,String status){
+        if(StringUtils.isNotBlank(ids)) {
+            String[] arr = ids.split(",");
+            List<String> idList = Arrays.asList(arr);
+            contractRepository.updateStatus(idList,status);
+            cargoRepository.deleteByContract(idList);
+            saleRepository.deleteByContract(idList);
+        }
+    }
+
+    @Transactional
     public void updateCargoStatus(String cargoId,String status){
         if(StringUtils.isNotBlank(cargoId)) {
             String[] arr = cargoId.split(",");
@@ -156,16 +167,31 @@ public class TradeService {
                      *如果为Int,就是as(Integer.class) 第二个参数为前台传过来的参数，这句话就相当于
                      * 数据库字段的值cityid = 前台传过来的值schoolParam.getCityId()
                      */
-                    predicates.add(cb.like(root.get("externalContract"),"%"+contractParam.getExternalContract()+"%"));
+                    predicates.add(cb.like(root.get("externalContract"),contractParam.getExternalContract()+"%"));
                 }
                 if(StringUtils.isNotBlank(contractParam.getInsideContract())){
-                    predicates.add(cb.like(root.get("insideContract"),"%"+contractParam.getInsideContract()+"%"));
+                    predicates.add(cb.like(root.get("insideContract"),contractParam.getInsideContract()+"%"));
                 }
                 if(StringUtils.isNotBlank(contractParam.getBusinessMode())){
                     predicates.add(cb.equal(root.get("businessMode"),contractParam.getBusinessMode()));
                 }
                 if(StringUtils.isNotBlank(contractParam.getExternalCompany())){
-                    predicates.add(cb.like(root.get("externalCompany"),contractParam.getExternalCompany()));
+                    predicates.add(cb.equal(root.get("externalCompany"),contractParam.getExternalCompany()));
+                }
+                if(StringUtils.isNotBlank(contractParam.getDestinationPort())){
+                    predicates.add(cb.equal(root.get("destinationPort"),contractParam.getDestinationPort()));
+                }
+                if(StringUtils.isNotBlank(contractParam.getAgent())){
+                    predicates.add(cb.like(root.get("agent"),contractParam.getAgent()+"%"));
+                }
+                if(StringUtils.isNotBlank(contractParam.getContainerNo())){
+                    predicates.add(cb.like(root.get("containerNo"),contractParam.getContainerNo()+"%"));
+                }
+                if(StringUtils.isNotBlank(contractParam.getCompanyNo())){
+                    predicates.add(cb.like(root.get("companyNo"),contractParam.getCompanyNo()+"%"));
+                }
+                if(StringUtils.isNotBlank(contractParam.getLadingbillNo())){
+                    predicates.add(cb.like(root.get("ladingbillNo"),contractParam.getLadingbillNo()+"%"));
                 }
                 if(StringUtils.isNotBlank(contractParam.getContractStartDate())){
                     predicates.add(cb.greaterThan(root.get("contractDate"),contractParam.getContractStartDate()));
@@ -184,6 +210,58 @@ public class TradeService {
         Page<ContractBaseInfo> pages = contractRepository.findAll(specification,pageable);
         Iterator<ContractBaseInfo> it = pages.iterator();
         List<ContractBaseInfo> list = new ArrayList<>();
+        while(it.hasNext()){
+            list.add(it.next());
+        }
+        result.put("total",pages.getTotalElements());
+        result.put("rows",list);
+        return result;
+    }
+
+    public JSONObject queryCargoList(CargoParam cargoParam, int limit, int offset){
+        /**root ：我们要查询的类型
+         * query：添加查询条件
+         * cb: 构建条件
+         * specification为一个匿名内部类
+         */
+        Specification<CargoInfo> specification = new Specification<CargoInfo>() {
+            @Override
+            public Predicate toPredicate(Root<CargoInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<Predicate>();
+                predicates.add(cb.notEqual(root.get("status"),GlobalConst.DISABLE));
+
+                if(StringUtils.isNotBlank(cargoParam.getContractNo())){
+                    /** cb.equal（）相当于判断后面两个参数是否一致
+                     *root相当于我们的实体类的一个路径，使用get可以获取到我们的字段，因为我的cityid为Long类型
+                     * 所以是as(Long.class)
+                     *如果为Int,就是as(Integer.class) 第二个参数为前台传过来的参数，这句话就相当于
+                     * 数据库字段的值cityid = 前台传过来的值schoolParam.getCityId()
+                     */
+                    predicates.add(cb.like(root.get("contractNo"),cargoParam.getContractNo()+"%"));
+                }
+                if(StringUtils.isNotBlank(cargoParam.getInsideContract())){
+                    predicates.add(cb.like(root.get("insideContract"),cargoParam.getInsideContract()+"%"));
+                }
+                if(StringUtils.isNotBlank(cargoParam.getLevel())){
+                    predicates.add(cb.equal(root.get("level"),cargoParam.getLevel()));
+                }
+                if(StringUtils.isNotBlank(cargoParam.getCargoName())){
+                    predicates.add(cb.equal(root.get("cargoName"),cargoParam.getCargoName()));
+                }
+                if(StringUtils.isNotBlank(cargoParam.getCargoNo())){
+                    predicates.add(cb.like(root.get("cargoNo"),cargoParam.getCargoNo()+"%"));
+                }
+                //创建一个条件的集合，长度为上面满足条件的个数
+                Predicate[] pre = new Predicate[predicates.size()];
+                //这句大概意思就是将上面拼接好的条件返回去
+                return query.where(predicates.toArray(pre)).getRestriction();
+            }
+        };
+        JSONObject result = new JSONObject();
+        Pageable pageable = new PageRequest(offset/limit, limit);
+        Page<CargoInfo> pages = cargoRepository.findAll(specification,pageable);
+        Iterator<CargoInfo> it = pages.iterator();
+        List<CargoInfo> list = new ArrayList<>();
         while(it.hasNext()){
             list.add(it.next());
         }
@@ -214,7 +292,7 @@ public class TradeService {
                     List<String> cargoList = convertCargoList(cargoInfo);
                     List<SaleInfo> saleData = saleRepository.findByCargoIdAndStatus(cargoInfo.getCargoId(), GlobalConst.ENABLE);
                     if (saleData.size() > 0) {
-                        List<List<String>> saleList = convertCargoSaleList(cargoInfo, saleData);
+                        List<List<String>> saleList = convertCargoSaleList(saleData);
                         int start = saleEnd;
                         //写入销售数据
                         for (List<String> saleRowData : saleList) {
@@ -384,7 +462,7 @@ public class TradeService {
         return list;
     }
 
-    private List<List<String>> convertCargoSaleList(CargoInfo cargoInfo, List<SaleInfo> saleData) {
+    private List<List<String>> convertCargoSaleList(List<SaleInfo> saleData) {
         List<List<String>> result = new ArrayList<>();
         for (SaleInfo saleInfo : saleData) {
             List<String> list = new ArrayList<>();
@@ -436,37 +514,4 @@ public class TradeService {
             cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
         }
     }
-
-    /*private void MergeRow(XSSFSheet sheet,Integer start,Integer end) {
-        CellRangeAddress cellRangeAddress = null;
-        for (int i = 0; i < GlobalConst.NEED_MERGE_CELL.length; i++) {
-            cellRangeAddress = new CellRangeAddress(start, end, GlobalConst.NEED_MERGE_CELL[i], GlobalConst.NEED_MERGE_CELL[i]);
-            sheet.addMergedRegion(cellRangeAddress);
-        }
-    }*/
-    /**
-     * 合并单元格--头部信息
-     */
-    /*private void MergeCell(XSSFSheet sheet) {
-        CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 0, 1, 16);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 0, 17, 20);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 0, 21, 24);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 0, 32, 33);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 0, 34, 38);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 1, 39, 39);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 1, 40, 40);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 0, 41, 43);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 0, 45, 49);
-        sheet.addMergedRegion(cellRangeAddress);
-        cellRangeAddress = new CellRangeAddress(0, 0, 50, 51);
-        sheet.addMergedRegion(cellRangeAddress);
-    }*/
 }

@@ -59,7 +59,7 @@ public class TradeController {
 
     @RequestMapping(value = "/cargo/list")
     public String getCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        List<CargoInfo> list = cargoRepository.findByContractIdAndStatus(contractId,GlobalConst.ENABLE);
+        List<CargoInfo> list = cargoRepository.findByContractIdAndStatusNot(contractId,GlobalConst.DISABLE);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -67,25 +67,8 @@ public class TradeController {
     }
 
     @RequestMapping(value = "/cargo/all")
-    public String getCargoAllList(@RequestParam("limit") int limit, @RequestParam("offset") int offset,@RequestParam("contractNo") String contractNo) throws JSONException {
-        Pageable pageable = new PageRequest(offset/limit, limit);
-        ContractBaseInfo contract = contractRepository.findByExternalContractAndStatus(contractNo,GlobalConst.ENABLE);
-        JSONObject result = new JSONObject();
-        Page<CargoInfo> pages = null;
-        if(StringUtils.isNotBlank(contractNo)) {
-            String contractId = contract == null?"":contract.getContractId();
-            pages = cargoRepository.findByContractIdAndStatus(contractId, GlobalConst.ENABLE,pageable);
-        }else{
-            pages = cargoRepository.findByStatus(GlobalConst.ENABLE,pageable);
-        }
-        Iterator<CargoInfo> it = pages.iterator();
-        List<CargoInfo> list = new ArrayList<>();
-        while(it.hasNext()){
-            list.add(it.next());
-        }
-        result.put("total",pages.getTotalElements());
-        result.put("rows",list);
-
+    public String getCargoAllList(@RequestParam("limit") int limit, @RequestParam("offset") int offset,CargoParam cargoParam) throws JSONException {
+        JSONObject result = tradeService.queryCargoList(cargoParam,limit,offset);
         return result.toString();
     }
 
@@ -118,7 +101,7 @@ public class TradeController {
 
     @PostMapping(value="/cargo/add")
     public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
-        cargoInfo.setStatus(GlobalConst.ENABLE);
+        cargoInfo.setStatus(GlobalConst.PREADD);
         if(StringUtils.isBlank(cargoInfo.getCargoId())) {
             cargoInfo.setCargoId(UUID.randomUUID().toString());
         }
@@ -175,7 +158,9 @@ public class TradeController {
             contractBaseInfo.setStatus(GlobalConst.SHIPPED);
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getETA())){
-            contractBaseInfo.setStatus(GlobalConst.ARRIVED);
+            if(contractBaseInfo.getETA().compareTo(DateUtil.DateToString(new Date())) <= 0){
+                contractBaseInfo.setStatus(GlobalConst.ARRIVED);
+            }
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
             contractBaseInfo.setStatus(GlobalConst.STORED);
@@ -195,17 +180,8 @@ public class TradeController {
 
     @PostMapping(value="/contract/delete")
     public String contractDel(@RequestParam("ids") String ids, HttpSession session){
-        String idArr[] = ids.split(",");
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
-        ContractBaseInfo contractBaseInfo = new ContractBaseInfo();
-        for (int i = 0; i < idArr.length; i++) {
-            contractBaseInfo.setId(Integer.valueOf(idArr[i]));
-            contractBaseInfo.setStatus(GlobalConst.DISABLE);
-            ContractBaseInfo result = contractRepository.save(contractBaseInfo);
-            //将商品和销售记录置为不可用状态
-            //List<CargoInfo> cargoInfoList = cargoRepository.findByContractIdAndStatus(result.getContractId(),GlobalConst.ENABLE);
-
-        }
+        tradeService.updateContractStatus(ids,GlobalConst.DISABLE);
 
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除合同"+ids);

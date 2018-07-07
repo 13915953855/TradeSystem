@@ -22,6 +22,7 @@ $(function () {
         $("#btn_query").click();
     });
     initExternalCompany();
+    initCargoList();
 });
 function initExternalCompany(){
     var opts = "";
@@ -128,6 +129,13 @@ var TableInit = function () {
             insideContract: $("#insideContract").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
+            //cargoName: $("#cargoName").val(),
+            //level: $("#level").val(),
+            agent: $("#agent").val(),
+            containerNo: $("#containerNo").val(),
+            companyNo: $("#companyNo").val(),
+            ladingbillNo: $("#ladingbillNo").val(),
+            destinationPort: $("#destinationPort").val() == "全部"?"":$("#destinationPort").val(),
             businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
             externalCompany: $("#externalCompany").val() == "全部"?"":$("#externalCompany").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),

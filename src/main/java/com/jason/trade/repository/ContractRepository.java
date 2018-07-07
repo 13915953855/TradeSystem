@@ -12,4 +12,8 @@ public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integ
     ContractBaseInfo findByExternalContractAndStatus(String externalContract, String status);
     ContractBaseInfo findByContractId(String contractId);
     List<ContractBaseInfo> findByStatusNot(String status);
+
+    @Query(value = "update contract_base_info set status=?2 where id in (?1) ", nativeQuery = true)
+    @Modifying
+    void updateStatus(List<String> id,String status);
 }
