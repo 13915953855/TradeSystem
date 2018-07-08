@@ -42,6 +42,12 @@ var TableInit = function () {
             columns: [{
                 checkbox: true
             },{
+                field: 'contractNo',
+                title: '外合同编号'
+            },{
+                field: 'insideContract',
+                title: '内合同编号'
+            },{
                 field: 'cargoName',
                 title: '产品名称'
             }, {

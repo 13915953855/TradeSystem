@@ -14,7 +14,7 @@ public class GlobalConst {
     public static final String ARRIVED = "3";
     public static final String STORED = "4";
     public static final String DISABLE = "0";
-    public static final String PREADD = "9";
+    public static final String EDITING = "9";
 
     //size
     public static final String[] HEAD_CONTRACT_ARRAY = new String[]{"序号","外合同编号","内合同编号","合同日期","外商","原产地","厂号","目的港","价格条件","付款方式","币种","预计船期","业务模式","箱数总计","合同总数量(KG)","合同总金额(元)","发票总数量(KG)","发票总金额(元)","开证行","开证日期","LC NO.","银行到单日","付汇日","押汇到期日","付汇汇率(%)","付款金额","付款日期","汇率","付款金额","付款日期","汇率","柜号","提单号","货柜尺寸","需要购买保险","保险购买日期","保险费用","保险公司","ETD","ETA","已核对电子版","检疫证","货代","单据寄给货代日期","关税","增值税","付税日期","放行日期","仓库","入库日期","备注"};

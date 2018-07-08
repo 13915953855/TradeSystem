@@ -101,7 +101,7 @@ public class TradeController {
 
     @PostMapping(value="/cargo/add")
     public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
-        cargoInfo.setStatus(GlobalConst.PREADD);
+        cargoInfo.setStatus(GlobalConst.EDITING);
         if(StringUtils.isBlank(cargoInfo.getCargoId())) {
             cargoInfo.setCargoId(UUID.randomUUID().toString());
         }

@@ -57,6 +57,18 @@ $(function () {
         var invoiceAmount = $("#invoiceAmount").val();
         invoiceMoney = toFloat(unitPrice * invoiceAmount);
         $("#invoiceMoney").val(invoiceMoney);
+        var realStoreMoney = 0;
+        var costPrice = $("#costPrice").val();
+        realStoreMoney = toFloat(costPrice * invoiceAmount);
+        $("#realStoreMoney").val(realStoreMoney);
+    });
+
+    $("#costPrice").blur(function(){
+        var realStoreMoney = 0;
+        var costPrice = $("#costPrice").val();
+        var invoiceAmount = $("#invoiceAmount").val();
+        realStoreMoney = toFloat(costPrice * invoiceAmount);
+        $("#realStoreMoney").val(realStoreMoney);
     });
 
     $(".form-date").datetimepicker({
@@ -152,6 +164,24 @@ var TableInit = function () {
                 field: 'invoiceMoney',
                 title: '发票金额(小计)'
             }, {
+                field: 'costPrice',
+                title: '成本单价(CNY/KG)'
+            }, {
+                field: 'realStoreMoney',
+                title: '库存金额'
+            }, {
+                field: 'status',
+                title: '状态',
+                formatter: function(value, row, index){
+                    if(value == 1) {
+                        $(this).parent("tr").css("color","red");
+                        return "已保存";
+                    }else if(value == 9) {
+                        $(this).parent("tr").css("color","red");
+                        return "编辑中";
+                    }
+                }
+            }, {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
@@ -238,6 +268,8 @@ var ButtonInit = function () {
             cargo.contractMoney = $("#contractMoney").val() == "" ? 0:$("#contractMoney").val();//合同金额(小计)
             cargo.invoiceAmount = $("#invoiceAmount").val() == "" ? 0:$("#invoiceAmount").val();//发票数量(小计)
             cargo.invoiceMoney = $("#invoiceMoney").val() == "" ? 0:$("#invoiceMoney").val();//发票金额(小计)
+            cargo.costPrice = $("#costPrice").val() == "" ? 0:$("#costPrice").val();
+            cargo.realStoreMoney = $("#realStoreMoney").val() == "" ? 0:$("#realStoreMoney").val();
 
             $.ajax({
                 url:"/trade/cargo/add",
@@ -296,7 +328,7 @@ function setFormData(data){
     $("#invoiceAmount").val(data.invoiceAmount);
     $("#invoiceMoney").val(data.invoiceMoney);
     $("#costPrice").val(data.costPrice);
-    $("#costMoney").val(data.costMoney);
+    $("#realStoreMoney").val(data.realStoreMoney);
 }
 
 function saveContract(){

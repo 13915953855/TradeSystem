@@ -1,6 +1,7 @@
 package com.jason.trade.repository;
 
 import com.jason.trade.entity.CargoInfo;
+import com.jason.trade.entity.CargoManageInfo;
 import com.jason.trade.entity.ContractBaseInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
