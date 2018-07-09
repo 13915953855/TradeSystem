@@ -1,19 +1,17 @@
 package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
-import com.jason.trade.entity.CargoInfo;
-import com.jason.trade.entity.ContractBaseInfo;
-import com.jason.trade.entity.SysLog;
-import com.jason.trade.entity.UserInfo;
+import com.jason.trade.model.CargoInfo;
+import com.jason.trade.model.ContractBaseInfo;
+import com.jason.trade.model.SysLog;
+import com.jason.trade.model.UserInfo;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.SysLogRepository;
 import com.jason.trade.repository.UserRepository;
 import com.jason.trade.service.TradeService;
 import com.jason.trade.util.DateUtil;
-import com.jason.trade.util.RespUtil;
 import com.jason.trade.util.WebSecurityConfig;
-import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;

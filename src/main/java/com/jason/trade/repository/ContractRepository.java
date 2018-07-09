@@ -1,6 +1,6 @@
 package com.jason.trade.repository;
 
-import com.jason.trade.entity.ContractBaseInfo;
+import com.jason.trade.model.ContractBaseInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;

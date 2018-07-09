@@ -1,6 +1,6 @@
 package com.jason.trade.repository;
 
-import com.jason.trade.entity.UserInfo;
+import com.jason.trade.model.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<UserInfo,Integer> {

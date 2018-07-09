@@ -1,8 +1,10 @@
 package com.jason.trade.entity;
 
-public class CargoManageInfo extends CargoInfo{
+import com.jason.trade.model.CargoInfo;
+
+public class CargoManageInfo extends CargoInfo {
     private String contractNo;
-    private String insideContrade;
+    private String insideContract;
 
     public String getContractNo() {
         return contractNo;
@@ -12,11 +14,11 @@ public class CargoManageInfo extends CargoInfo{
         this.contractNo = contractNo;
     }
 
-    public String getInsideContrade() {
-        return insideContrade;
+    public String getInsideContract() {
+        return insideContract;
     }
 
-    public void setInsideContrade(String insideContrade) {
-        this.insideContrade = insideContrade;
+    public void setInsideContract(String insideContract) {
+        this.insideContract = insideContract;
     }
 }

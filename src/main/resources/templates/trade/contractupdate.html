@@ -53,7 +53,7 @@
             $("#remark").html(remark);
             var isNeedInsurance = /*[[${contract.isNeedInsurance}]]*/;
             var isCheckElec = /*[[${contract.isCheckElec}]]*/;
-            var QACertificate = /*[[${contract.QACertificate}]]*/;
+            var qacertificate = /*[[${contract.qacertificate}]]*/;
 
             $("#currency").val(currency).trigger("change");
             $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());
@@ -64,8 +64,8 @@
             if(isCheckElec == 1){
                 $("#isCheckElec").attr("checked","checked");
             }
-            if(QACertificate == 1){
-                $("#QACertificate").attr("checked","checked");
+            if(qacertificate == 1){
+                $("#qacertificate").attr("checked","checked");
             }
             var action = /*[[${action}]]*/;
             if(action == "view"){
@@ -239,12 +239,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-
-                                            <!--<label class="control-label col-sm-2">增值税率</label>
+                                            <label class="control-label col-sm-2">汇率</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="taxRate" th:value="${contract.taxRate}"/>
-                                            </div>-->
-                                            <label class="control-label col-sm-2">箱数总计</label>
+                                                <input type="text" class="form-control" id="exchangeRate" th:value="${contract.exchangeRate}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">箱数总计</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalBoxes" th:value="${contract.totalBoxes}"/>
                                             </div>
@@ -406,7 +405,7 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">LC NO.</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="LCNo" th:value="${contract.LCNo}"/>
+                                                <input type="text" class="form-control" id="lcno" th:value="${contract.lcno}"/>
                                             </div>
                                             <label class="control-label col-sm-3">银行到单日</label>
                                             <div class="col-sm-3">
@@ -546,14 +545,14 @@
                                             <label class="control-label col-sm-2">ETD</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="etd" th:value="${contract.ETD}" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="etd" th:value="${contract.etd}" type="text" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
-                                            <label class="control-label col-sm-3">ETA</label>
+                                            <label class="control-label col-sm-3">eta</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="eta" th:value="${contract.ETA}" type="text" readonly="readonly"/>
+                                                    <input class="form-control" size="16" id="eta" th:value="${contract.eta}" type="text" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -569,7 +568,7 @@
                                             <label class="control-label col-sm-3">已出检疫证</label>
                                             <div class="col-sm-3">
                                                 <label class="fancy-checkbox" style="padding-top:5px;">
-                                                    <input type="checkbox" id="QACertificate" th:value="${contract.QACertificate}"/>
+                                                    <input type="checkbox" id="qacertificate" th:value="${contract.qacertificate}"/>
                                                     <span></span>
                                                 </label>
                                             </div>

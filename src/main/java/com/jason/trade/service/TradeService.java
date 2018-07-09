@@ -1,7 +1,12 @@
 package com.jason.trade.service;
 
+import com.github.pagehelper.PageHelper;
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
+import com.jason.trade.mapper.CargoInfoMapper;
+import com.jason.trade.model.CargoInfo;
+import com.jason.trade.model.ContractBaseInfo;
+import com.jason.trade.model.SaleInfo;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.SaleRepository;
@@ -41,6 +46,8 @@ public class TradeService {
     private CargoRepository cargoRepository;
     @Autowired
     private SaleRepository saleRepository;
+    @Autowired
+    private CargoInfoMapper cargoInfoMapper;
 
     @Transactional
     public ContractBaseInfo saveContract(ContractBaseInfo contractBaseInfo, String cargoId){
@@ -48,7 +55,7 @@ public class TradeService {
         if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
             contractBaseInfo.setStatus(GlobalConst.SHIPPED);
         }
-        if(StringUtils.isNotBlank(contractBaseInfo.getETA())){
+        if(StringUtils.isNotBlank(contractBaseInfo.getEta())){
             contractBaseInfo.setStatus(GlobalConst.ARRIVED);
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
@@ -167,10 +174,10 @@ public class TradeService {
                      *如果为Int,就是as(Integer.class) 第二个参数为前台传过来的参数，这句话就相当于
                      * 数据库字段的值cityid = 前台传过来的值schoolParam.getCityId()
                      */
-                    predicates.add(cb.like(root.get("externalContract"),contractParam.getExternalContract()+"%"));
+                    predicates.add(cb.like(root.get("externalContract"),"%"+contractParam.getExternalContract()+"%"));
                 }
                 if(StringUtils.isNotBlank(contractParam.getInsideContract())){
-                    predicates.add(cb.like(root.get("insideContract"),contractParam.getInsideContract()+"%"));
+                    predicates.add(cb.like(root.get("insideContract"),"%"+contractParam.getInsideContract()+"%"));
                 }
                 if(StringUtils.isNotBlank(contractParam.getBusinessMode())){
                     predicates.add(cb.equal(root.get("businessMode"),contractParam.getBusinessMode()));
@@ -202,7 +209,10 @@ public class TradeService {
                 //创建一个条件的集合，长度为上面满足条件的个数
                 Predicate[] pre = new Predicate[predicates.size()];
                 //这句大概意思就是将上面拼接好的条件返回去
-                return query.where(predicates.toArray(pre)).getRestriction();
+                query.where(predicates.toArray(pre));
+                //添加排序的功能
+                query.orderBy(cb.desc(root.get("id").as(Integer.class)));
+                return query.getRestriction();
             }
         };
         JSONObject result = new JSONObject();
@@ -218,6 +228,14 @@ public class TradeService {
         return result;
     }
 
+    public JSONObject queryAllCargoList(CargoParam cargoParam){
+        List<CargoManageInfo> list = cargoInfoMapper.selectByExample(cargoParam);
+        Integer count = cargoInfoMapper.selectCountByExample(cargoParam);
+        JSONObject result = new JSONObject();
+        result.put("total",count);
+        result.put("rows",list);
+        return result;
+    }
     public JSONObject queryCargoList(CargoParam cargoParam, int limit, int offset){
         /**root ：我们要查询的类型
          * query：添加查询条件
@@ -254,7 +272,10 @@ public class TradeService {
                 //创建一个条件的集合，长度为上面满足条件的个数
                 Predicate[] pre = new Predicate[predicates.size()];
                 //这句大概意思就是将上面拼接好的条件返回去
-                return query.where(predicates.toArray(pre)).getRestriction();
+                query.where(predicates.toArray(pre));
+                //添加排序的功能
+                query.orderBy(cb.desc(root.get("id").as(Integer.class)));
+                return query.getRestriction();
             }
         };
         JSONObject result = new JSONObject();
@@ -405,6 +426,7 @@ public class TradeService {
         list.add(baseInfo.getCurrency());//币种
         list.add(baseInfo.getExpectSailingDate());//预计船期
         list.add(baseInfo.getBusinessMode());//业务模式
+        list.add(baseInfo.getExchangeRate()+"");//汇率
         list.add(baseInfo.getTotalBoxes()+"");//箱数总计
         list.add(baseInfo.getTotalContractAmount()+"");//合同总数量
         list.add(baseInfo.getTotalContractMoney()+"");//合同总金额(元)
@@ -412,7 +434,7 @@ public class TradeService {
         list.add(baseInfo.getTotalInvoiceMoney()+"");//发票总金额(元)
         list.add(baseInfo.getIssuingBank());//开证行
         list.add(baseInfo.getIssuingDate());//开证日期
-        list.add(baseInfo.getLCNo());//LC NO.
+        list.add(baseInfo.getLcno());//LC NO.
         list.add(baseInfo.getBankDaodanDate());//银行到单日
         list.add(baseInfo.getRemittanceDate());//付汇日
         list.add(baseInfo.getYahuidaoqiDate());//押汇到期日
@@ -430,10 +452,10 @@ public class TradeService {
         list.add(baseInfo.getInsuranceBuyDate());//保险购买日期
         list.add(baseInfo.getInsuranceMoney()+"");//保险费用
         list.add(baseInfo.getInsuranceCompany());//保险公司
-        list.add(baseInfo.getETD());//ETD
-        list.add(baseInfo.getETA());//ETA
+        list.add(baseInfo.getEtd());//ETD
+        list.add(baseInfo.getEta());//ETA
         list.add(baseInfo.getIsCheckElec()==1?"是":"否");//已核对电子版
-        list.add(baseInfo.getQACertificate()==1?"是":"否");//检疫证
+        list.add(baseInfo.getQacertificate()==1?"是":"否");//检疫证
         list.add(baseInfo.getAgent());//货代
         list.add(baseInfo.getAgentSendDate());//单据寄给货代日期
         list.add(baseInfo.getTariff()+"");//关税

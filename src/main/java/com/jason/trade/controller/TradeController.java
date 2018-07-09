@@ -2,6 +2,7 @@ package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
+import com.jason.trade.model.*;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.SaleRepository;
@@ -68,7 +69,10 @@ public class TradeController {
 
     @RequestMapping(value = "/cargo/all")
     public String getCargoAllList(@RequestParam("limit") int limit, @RequestParam("offset") int offset,CargoParam cargoParam) throws JSONException {
-        JSONObject result = tradeService.queryCargoList(cargoParam,limit,offset);
+        //JSONObject result = tradeService.queryCargoList(cargoParam,limit,offset);
+        cargoParam.setStart(offset);
+        cargoParam.setLimit(limit);
+        JSONObject result = tradeService.queryAllCargoList(cargoParam);
         return result.toString();
     }
 
@@ -157,8 +161,8 @@ public class TradeController {
         if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
             contractBaseInfo.setStatus(GlobalConst.SHIPPED);
         }
-        if(StringUtils.isNotBlank(contractBaseInfo.getETA())){
-            if(contractBaseInfo.getETA().compareTo(DateUtil.DateToString(new Date())) <= 0){
+        if(StringUtils.isNotBlank(contractBaseInfo.getEta())){
+            if(contractBaseInfo.getEta().compareTo(DateUtil.DateToString(new Date())) <= 0){
                 contractBaseInfo.setStatus(GlobalConst.ARRIVED);
             }
         }

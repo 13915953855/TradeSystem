@@ -1,6 +1,6 @@
 package com.jason.trade.repository;
 
-import com.jason.trade.entity.SaleInfo;
+import com.jason.trade.model.SaleInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

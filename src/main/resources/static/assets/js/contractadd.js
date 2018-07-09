@@ -365,6 +365,7 @@ function saveContract(){
     contract.currency = $("#currency").val();
     contract.expectSailingDate = $("#expectSailingDate").val();
     contract.businessMode = $("#businessMode").val();
+    contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:$("#exchangeRate").val();
     contract.totalContractAmount = $("#totalContractAmount").val() == "" ? 0:$("#totalContractAmount").val();
     contract.totalContractMoney = $("#totalContractMoney").val() == "" ? 0:$("#totalContractMoney").val();
     contract.totalInvoiceAmount = $("#totalInvoiceAmount").val() == "" ? 0:$("#totalInvoiceAmount").val();
@@ -372,7 +373,7 @@ function saveContract(){
     contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:$("#totalBoxes").val();
     contract.issuingBank = $("#issuingBank").val();
     contract.issuingDate = $("#issuingDate").val();
-    contract.LCNo = $("#LCNo").val();
+    contract.lcno = $("#lcno").val();
     contract.bankDaodanDate = $("#bankDaodanDate").val();
     contract.remittanceDate = $("#remittanceDate").val();
     contract.yahuidaoqiDate = $("#yahuidaoqiDate").val();
@@ -395,17 +396,17 @@ function saveContract(){
     contract.insuranceBuyDate = $("#insuranceBuyDate").val();
     contract.insuranceMoney = $("#insuranceMoney").val() == "" ? 0:$("#insuranceMoney").val();
     contract.insuranceCompany = $("#insuranceCompany").val();
-    contract.ETD = $("#etd").val();
-    contract.ETA = $("#eta").val();
+    contract.etd = $("#etd").val();
+    contract.eta = $("#eta").val();
     if($("#isCheckElec").is(':checked')){
         contract.isCheckElec = "1";
     }else{
         contract.isCheckElec = "0";
     }
-    if($("#QACertificate").is(':checked')){
-        contract.QACertificate = "1";
+    if($("#qacertificate").is(':checked')){
+        contract.qacertificate = "1";
     }else{
-        contract.QACertificate = "0";
+        contract.qacertificate = "0";
     }
     //contract.elecSendDate = $("#elecSendDate").val();
     //contract.exCompanySendBillDate = $("#exCompanySendBillDate").val();
