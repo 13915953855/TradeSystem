@@ -177,6 +177,12 @@ var TableInit = function () {
                 field: 'customerPayMoney',
                 title: '客户来款金额'
             }, {
+                field: 'depositDate',
+                title: '定金时间'
+            }, {
+                field: 'deposit',
+                title: '定金'
+            }, {
                 field: 'paymentDiff',
                 title: '货款差额'
             }, {
@@ -256,10 +262,10 @@ var ButtonInit = function () {
         });
         $("#save_sale").click(function(){
             var sale = {};
-            if($("#saleContractNo").val() == "") {
+            /*if($("#saleContractNo").val() == "") {
                 $("#saleContractNo").parent().addClass("has-error");
                 return;
-            }
+            }*/
             sale.saleId = $("#saleId").val();
             sale.cargoId = $("#cargoId").val();
             sale.pickupDate = $("#pickupDate").val();
@@ -277,6 +283,7 @@ var ButtonInit = function () {
             sale.realSaleMoney = $("#realSaleMoney").val() == "" ? 0:$("#realSaleMoney").val();
             sale.realSaleDate = $("#realSaleDate").val();
             sale.customerPayDate = $("#customerPayDate").val();
+            sale.depositDate = $("#depositDate").val();
             sale.remark = $("#remark").val();
             if($("#moneyClear").is(':checked')){
                     sale.moneyClear = "1";
@@ -284,6 +291,7 @@ var ButtonInit = function () {
                     sale.moneyClear = "0";
                 }
             sale.customerPayMoney = $("#customerPayMoney").val() == "" ? 0:$("#customerPayMoney").val();
+            sale.deposit = $("#deposit").val() == "" ? 0:$("#deposit").val();
             sale.paymentDiff = $("#paymentDiff").val() == "" ? 0:$("#paymentDiff").val();
             sale.profit = $("#profit").val() == "" ? 0:$("#profit").val();
 
@@ -330,6 +338,8 @@ function setFormData(data){
     $("#realSaleMoney").val(data.realSaleMoney);
     $("#realSaleDate").val(data.realSaleDate);
     $("#customerPayDate").val(data.customerPayDate);
+    $("#depositDate").val(data.depositDate);
+    $("#deposit").val(data.deposit);
     $("#customerPayMoney").val(data.customerPayMoney);
     $("#profit").val(data.profit);
     $("#paymentDiff").val(data.paymentDiff);

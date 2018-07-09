@@ -82,9 +82,6 @@ var TableInit = function () {
                 field: 'insideContract',
                 title: '内合同编号'
             }, {
-                field: 'businessMode',
-                title: '业务模式'
-            }, {
                 field: 'externalCompany',
                 title: '外商'
             }, {
@@ -153,7 +150,10 @@ var ButtonInit = function () {
     oInit.Init = function () {
         //初始化页面上面的按钮事件
         $("#btn_query").click(function(){
-            $('#tb_contract').bootstrapTable("refresh");
+            $('#tb_contract').bootstrapTable("refresh",{pageNumber:1});
+        });
+        $("#btn_reset").click(function(){
+            resetQuery();
         });
         $("#btn_add").click(function(){
             window.location.href="/trade/contract/add";
@@ -188,7 +188,7 @@ var ButtonInit = function () {
                             }else{
                                 toastr.error("删除失败");
                             }
-                            $("#tb_contract").bootstrapTable("refresh");
+                            $("#tb_contract").bootstrapTable("refresh",{pageNumber:1});
                         }
                     });
                 }
@@ -202,3 +202,17 @@ var ButtonInit = function () {
 
     return oInit;
 };
+
+function resetQuery(){
+    $("#externalContract").val("");
+    $("#insideContract").val("");
+    $("#contractStartDate").val("");
+    $("#contractEndDate").val("");
+    $("#containerNo").val("");
+    $("#ladingbillNo").val("");
+    $("#agent").val("");
+    $("#companyNo").val("");
+    $("#destinationPort").val("全部").trigger("change");
+    $("#status").val("全部").trigger("change");
+    $("#externalCompany").val("全部").trigger("change");
+}

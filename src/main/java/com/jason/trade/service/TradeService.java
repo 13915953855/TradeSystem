@@ -425,7 +425,6 @@ public class TradeService {
         list.add(baseInfo.getPayType());//付款方式
         list.add(baseInfo.getCurrency());//币种
         list.add(baseInfo.getExpectSailingDate());//预计船期
-        list.add(baseInfo.getBusinessMode());//业务模式
         list.add(baseInfo.getExchangeRate()+"");//汇率
         list.add(baseInfo.getTotalBoxes()+"");//箱数总计
         list.add(baseInfo.getTotalContractAmount()+"");//合同总数量
@@ -439,6 +438,7 @@ public class TradeService {
         list.add(baseInfo.getRemittanceDate());//付汇日
         list.add(baseInfo.getYahuidaoqiDate());//押汇到期日
         list.add(baseInfo.getRemittanceRate()+"");//付汇汇率(%)
+        list.add(baseInfo.getYahuiRate()+"");//押汇汇率(%)
         list.add(baseInfo.getPrePayment()+"");//付款金额
         list.add(baseInfo.getPrePaymentDate()+"");//付款日期
         list.add(baseInfo.getPreRate()+"");//汇率
@@ -473,6 +473,7 @@ public class TradeService {
         list.add(cargoInfo.getCargoName());//产品名称
         list.add(cargoInfo.getLevel());//级别
         list.add(cargoInfo.getCargoNo());//库号
+        list.add(cargoInfo.getBusinessMode());//业务模式
         list.add(cargoInfo.getUnitPrice()+"");//采购单价(/KG)
         list.add(cargoInfo.getBoxes()+"");//箱数(小计)
         list.add(cargoInfo.getContractAmount()+"");//合同数量(小计)
@@ -502,6 +503,8 @@ public class TradeService {
             list.add(saleInfo.getRealSaleBoxes()+"");//实售箱数
             list.add(saleInfo.getRealSaleMoney()+"");//实售金额(元)
             list.add(saleInfo.getRealSaleDate());//出库单时间
+            list.add(saleInfo.getDepositDate());//定金时间
+            list.add(saleInfo.getDeposit()+"");//定金(元)
             list.add(saleInfo.getCustomerPayDate());//客户来款时间
             list.add(saleInfo.getCustomerPayMoney()+"");//客户来款金额(元)
             list.add(saleInfo.getPaymentDiff()+"");//货款差额

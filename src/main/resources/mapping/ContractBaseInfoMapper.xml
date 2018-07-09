@@ -60,6 +60,7 @@
     <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
     <result column="yahuidaoqi_date" property="yahuidaoqiDate" jdbcType="VARCHAR" />
     <result column="exchange_rate" property="exchangeRate" jdbcType="DOUBLE" />
+    <result column="yahui_rate" property="yahuiRate" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, eta, etd, lcno, qacertificate, added_value_tax, agent, agent_pass_date, agent_send_date, 

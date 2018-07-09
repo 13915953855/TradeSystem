@@ -8,6 +8,18 @@ $(function () {
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
 
+    $(".form_datetime").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        minView: 2,
+        maxView: 4,
+        todayHighlight: true,
+        language: 'zh-CN'
+    });
+    $("select").on("change",function(){
+        $("#btn_query").click();
+    });
     initCargoList();
 });
 
@@ -57,8 +69,20 @@ var TableInit = function () {
                 field: 'cargoNo',
                 title: '库号'
             }, {
-                field: 'boxes',
-                title: '箱数(小计)'
+                field: 'businessMode',
+                title: '业务模式'
+            }, {
+                field: 'warehouse',
+                title: '仓库'
+            }, {
+                field: 'storeDate',
+                title: '入库日期'
+            }, {
+                field: 'realStoreWeight',
+                title: '当前库存重量'
+            }, {
+                field: 'realStoreBoxes',
+                title: '当前库存箱数'
             }, {
                 field: 'id',
                 title: '操作',
@@ -76,6 +100,9 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             contractNo: $("#contractNo").val(),
+            warehouse: $("#warehouse").val(),
+            storeStartDate: $("#storeStartDate").val(),
+            storeEndDate: $("#storeEndDate").val(),
             insideContract: $("#insideContract").val(),
             level: $("#level").val() == "全部"?"":$("#level").val(),
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
@@ -94,9 +121,23 @@ var ButtonInit = function () {
     oInit.Init = function () {
         //初始化页面上面的按钮事件
         $("#btn_query").click(function(){
-            $('#tb_cargo').bootstrapTable("refresh");
+            $('#tb_cargo').bootstrapTable("refresh",{pageNumber:1});
+        });
+        $("#btn_reset").click(function(){
+            resetQuery();
         });
     };
 
     return oInit;
 };
+
+function resetQuery(){
+    $("#contractNo").val("");
+    $("#insideContract").val("");
+    $("#cargoNo").val("");
+    $("#warehouse").val("");
+    $("#cargoName").val("全部").trigger("change");
+    $("#level").val("全部").trigger("change");
+    $("#storeStartDate").val("");
+    $("#storeEndDate").val("");
+}

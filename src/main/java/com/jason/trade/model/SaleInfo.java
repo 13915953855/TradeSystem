@@ -57,6 +57,26 @@ public class SaleInfo {
     private String saleContractNo;
     @Column(name="status")
     private String status;
+    @Column(name="deposit_date")
+    private String depositDate;
+    @Column(name="deposit")
+    private Double deposit;
+
+    public String getDepositDate() {
+        return depositDate;
+    }
+
+    public void setDepositDate(String depositDate) {
+        this.depositDate = depositDate;
+    }
+
+    public Double getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Double deposit) {
+        this.deposit = deposit;
+    }
 
     public Integer getSaleId() {
         return saleId;

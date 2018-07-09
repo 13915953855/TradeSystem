@@ -146,6 +146,9 @@ var TableInit = function () {
                 field: 'cargoNo',
                 title: '库号'
             }, {
+                field: 'businessMode',
+                title: '业务模式'
+            }, {
                 field: 'boxes',
                 title: '箱数(小计)'
             }, {
@@ -262,6 +265,7 @@ var ButtonInit = function () {
             cargo.cargoName = $("#cargoName").val();//产品名称
             cargo.level = $("#level").val();//级别
             cargo.cargoNo = $("#cargoNo").val();//库号
+            cargo.businessMode = $("#businessMode").val();
             cargo.boxes = $("#boxes").val() == "" ? 0:$("#boxes").val();//箱数(小计)
             cargo.unitPrice = $("#unitPrice").val() == "" ? 0:$("#unitPrice").val();//单价
             cargo.contractAmount = $("#contractAmount").val() == "" ? 0:$("#contractAmount").val();//合同数量(小计)
@@ -319,8 +323,12 @@ function setFormData(data){
     $("#_id").val(data.id);
     $("#cargoId").val(data.cargoId);
     $("#cargoNo").val(data.cargoNo);
+    checkSelectOptionExist("cargoName",data.cargoName);
     $("#cargoName").val(data.cargoName).trigger("change");
+    checkSelectOptionExist("level",data.level);
     $("#level").val(data.level).trigger("change");
+    checkSelectOptionExist("businessMode",data.businessMode);
+    $("#businessMode").val(data.businessMode).trigger("change");
     $("#unitPrice").val(data.unitPrice);
     $("#boxes").val(data.boxes);
     $("#contractAmount").val(data.contractAmount);
@@ -364,7 +372,7 @@ function saveContract(){
     contract.payType = $("#payType").val();
     contract.currency = $("#currency").val();
     contract.expectSailingDate = $("#expectSailingDate").val();
-    contract.businessMode = $("#businessMode").val();
+
     contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:$("#exchangeRate").val();
     contract.totalContractAmount = $("#totalContractAmount").val() == "" ? 0:$("#totalContractAmount").val();
     contract.totalContractMoney = $("#totalContractMoney").val() == "" ? 0:$("#totalContractMoney").val();
@@ -378,6 +386,7 @@ function saveContract(){
     contract.remittanceDate = $("#remittanceDate").val();
     contract.yahuidaoqiDate = $("#yahuidaoqiDate").val();
     contract.remittanceRate = $("#remittanceRate").val() == "" ? 0:$("#remittanceRate").val();
+    contract.yahuiRate = $("#yahuiRate").val() == "" ? 0:$("#yahuiRate").val();
     contract.prePayment = $("#prePayment").val() == "" ? 0:$("#prePayment").val();
     contract.prePaymentDate = $("#prePaymentDate").val();
     contract.preRate = $("#preRate").val() == "" ? 0:$("#preRate").val();

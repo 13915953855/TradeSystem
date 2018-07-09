@@ -123,6 +123,20 @@ public class ContractBaseInfo {
     private String yahuidaoqiDate;
     @Column(name="exchange_rate")
     private Double exchangeRate;
+    @Column(name="yahui_rate")
+    private Double yahuiRate;
+
+    public Double getYahuiRate() {
+        return yahuiRate;
+    }
+
+    public void setYahuiRate(Double yahuiRate) {
+        if(yahuiRate == null){
+            this.yahuiRate = 0.0;
+        }else{
+            this.yahuiRate = yahuiRate;
+        }
+    }
 
     public Double getExchangeRate() {
         return exchangeRate;

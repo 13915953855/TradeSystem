@@ -27,13 +27,15 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="sale_contract_no" property="saleContractNo" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="deposit_date" property="depositDate" jdbcType="VARCHAR" />
+    <result column="deposit" property="deposit" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
     sale_id, cargo_id, create_date_time, create_user, customer_name, customer_pay_date, 
     customer_pay_money, expect_sale_boxes, expect_sale_date, expect_sale_money, expect_sale_unit_price, 
     expect_sale_weight, money_clear, payment_diff, pickup_date, pickup_user, profit, 
     real_sale_boxes, real_sale_date, real_sale_money, real_sale_unit_price, real_sale_weight, 
-    remark, sale_contract_no, status
+    remark, sale_contract_no, status, deposit_date, deposit
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -53,7 +55,7 @@
       money_clear, payment_diff, pickup_date, 
       pickup_user, profit, real_sale_boxes, 
       real_sale_date, real_sale_money, real_sale_unit_price, 
-      real_sale_weight, remark, sale_contract_no, 
+      real_sale_weight, remark, sale_contract_no, deposit_date, deposit
       status)
     values (#{saleId,jdbcType=INTEGER}, #{cargoId,jdbcType=VARCHAR}, #{createDateTime,jdbcType=VARCHAR}, 
       #{createUser,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerPayDate,jdbcType=VARCHAR}, 
@@ -62,7 +64,8 @@
       #{moneyClear,jdbcType=INTEGER}, #{paymentDiff,jdbcType=DOUBLE}, #{pickupDate,jdbcType=VARCHAR}, 
       #{pickupUser,jdbcType=VARCHAR}, #{profit,jdbcType=DOUBLE}, #{realSaleBoxes,jdbcType=INTEGER}, 
       #{realSaleDate,jdbcType=VARCHAR}, #{realSaleMoney,jdbcType=DOUBLE}, #{realSaleUnitPrice,jdbcType=DOUBLE}, 
-      #{realSaleWeight,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR}, #{saleContractNo,jdbcType=VARCHAR}, 
+      #{realSaleWeight,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR}, #{saleContractNo,jdbcType=VARCHAR},
+      #{depositDate,jdbcType=VARCHAR}, #{deposit,jdbcType=DOUBLE},
       #{status,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jason.trade.model.SaleInfo" >
@@ -143,6 +146,12 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="depositDate != null" >
+        deposit_date,
+      </if>
+      <if test="deposit != null" >
+        deposit,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="saleId != null" >
@@ -219,6 +228,12 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="depositDate != null" >
+        #{depositDate,jdbcType=VARCHAR},
+      </if>
+      <if test="deposit != null" >
+        #{deposit,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -297,6 +312,12 @@
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="depositDate != null" >
+        deposit_date = #{depositDate,jdbcType=VARCHAR},
+      </if>
+      <if test="deposit != null" >
+        deposit = #{deposit,jdbcType=DOUBLE},
+      </if>
     </set>
     where sale_id = #{saleId,jdbcType=INTEGER}
   </update>
@@ -325,6 +346,8 @@
       real_sale_weight = #{realSaleWeight,jdbcType=DOUBLE},
       remark = #{remark,jdbcType=VARCHAR},
       sale_contract_no = #{saleContractNo,jdbcType=VARCHAR},
+      depositDate = #{depositDate,jdbcType=VARCHAR},
+      deposit = #{deposit,jdbcType=DOUBLE},
       status = #{status,jdbcType=VARCHAR}
     where sale_id = #{saleId,jdbcType=INTEGER}
   </update>

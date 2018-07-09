@@ -48,12 +48,15 @@
     <result column="external_contract" property="contractNo" jdbcType="VARCHAR" />
     <result column="inside_contract" property="insideContract" jdbcType="VARCHAR" />
     <result column="unit_price" property="unitPrice" jdbcType="DOUBLE" />
+    <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="store_date" property="storeDate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, boxes, cargo_id, cargo_name, cargo_no, contract_amount, contract_id, contract_money, 
     cost_price, create_date_time, create_user, expect_store_boxes, expect_store_weight, 
     invoice_amount, invoice_money, level, real_store_boxes, real_store_money, real_store_weight, 
-    status, unit_price
+    status, unit_price, business_mode
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -62,29 +65,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
-    select a.*,b.external_contract,b.inside_contract
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
-    where a.status = '1'
-    <if test="contractNo != null" >
-      and b.external_contract like '${contractNo}%'
-    </if>
-    <if test="insideContract != null" >
-      and b.inside_contract like '${insideContract}%'
-    </if>
-    <if test="level != null and level != ''" >
-      and a.level = '${level}'
-    </if>
-    <if test="cargoName != null and cargoName != ''" >
-      and a.cargo_name = '${cargoName}'
-    </if>
-    <if test="cargoNo != null" >
-      and a.cargo_no like '${cargoNo}%'
-    </if>
-    order by a.id desc
-    limit ${start},${limit}
-  </select>
-  <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
-    select count(1)
+    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date
     from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
     where a.status = '1'
     <if test="contractNo != null" >
@@ -93,6 +74,15 @@
     <if test="insideContract != null" >
       and b.inside_contract like '%${insideContract}%'
     </if>
+    <if test="warehouse != null" >
+      and b.warehouse like '%${warehouse}%'
+    </if>
+    <if test="storeStartDate != null" >
+      and b.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null" >
+      and b.store_date &lt;= '${storeEndDate}'
+    </if>
     <if test="level != null and level != ''" >
       and a.level = '${level}'
     </if>
@@ -100,7 +90,38 @@
       and a.cargo_name = '${cargoName}'
     </if>
     <if test="cargoNo != null" >
-      and a.cargo_no like '${cargoNo}%'
+      and a.cargo_no like '%${cargoNo}%'
+    </if>
+    order by a.id desc
+    limit ${start},${limit}
+  </select>
+  <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
+    select count(1)
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
+    where a.status = '1'
+    <if test="contractNo != null and contractNo != ''" >
+      and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="insideContract != null and insideContract != ''" >
+      and b.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and b.warehouse like '%${warehouse}%'
+    </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and b.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and b.store_date &lt;= '${storeEndDate}'
+    </if>
+    <if test="level != null and level != ''" >
+      and a.level = '${level}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and a.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and a.cargo_no like '%${cargoNo}%'
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

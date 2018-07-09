@@ -69,7 +69,6 @@ public class TradeController {
 
     @RequestMapping(value = "/cargo/all")
     public String getCargoAllList(@RequestParam("limit") int limit, @RequestParam("offset") int offset,CargoParam cargoParam) throws JSONException {
-        //JSONObject result = tradeService.queryCargoList(cargoParam,limit,offset);
         cargoParam.setStart(offset);
         cargoParam.setLimit(limit);
         JSONObject result = tradeService.queryAllCargoList(cargoParam);

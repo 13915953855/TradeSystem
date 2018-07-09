@@ -9,8 +9,35 @@ public class CargoParam {
     private String level;
     private String cargoName;
     private String cargoNo;
+    private String warehouse;
+    private String storeStartDate;
+    private String storeEndDate;
     private int start;
     private int limit;
+
+    public String getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(String warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public String getStoreStartDate() {
+        return storeStartDate;
+    }
+
+    public void setStoreStartDate(String storeStartDate) {
+        this.storeStartDate = storeStartDate;
+    }
+
+    public String getStoreEndDate() {
+        return storeEndDate;
+    }
+
+    public void setStoreEndDate(String storeEndDate) {
+        this.storeEndDate = storeEndDate;
+    }
 
     public int getStart() {
         return start;

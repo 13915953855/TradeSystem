@@ -49,6 +49,16 @@ public class CargoInfo {
     private String status;
     @Column(name="unit_price")
     private Double unitPrice;
+    @Column(name="business_mode")
+    private String businessMode;
+
+    public String getBusinessMode() {
+        return businessMode;
+    }
+
+    public void setBusinessMode(String businessMode) {
+        this.businessMode = businessMode;
+    }
 
     public Integer getId() {
         return id;
