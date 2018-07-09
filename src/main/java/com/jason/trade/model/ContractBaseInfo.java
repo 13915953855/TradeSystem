@@ -1,0 +1,594 @@
+package com.jason.trade.model;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="contract_base_info")
+public class ContractBaseInfo {
+    @Id
+    @GeneratedValue
+    @Column(name="id")
+    private Integer id;
+    @Column(name="eta")
+    private String eta;
+    @Column(name="etd")
+    private String etd;
+    @Column(name="lcno")
+    private String lcno;
+    @Column(name="qacertificate")
+    private Integer qacertificate;
+    @Column(name="added_value_tax")
+    private Double addedValueTax;
+    @Column(name="agent")
+    private String agent;
+    @Column(name="agent_pass_date")
+    private String agentPassDate;
+    @Column(name="agent_send_date")
+    private String agentSendDate;
+    @Column(name="bank_daodan_date")
+    private String bankDaodanDate;
+    @Column(name="business_mode")
+    private String businessMode;
+    @Column(name="company_no")
+    private String companyNo;
+    @Column(name="container_no")
+    private String containerNo;
+    @Column(name="container_size")
+    private String containerSize;
+    @Column(name="contract_date")
+    private String contractDate;
+    @Column(name="contract_id")
+    private String contractId;
+    @Column(name="create_date_time")
+    private String createDateTime;
+    @Column(name="create_user")
+    private String createUser;
+    @Column(name="currency")
+    private String currency;
+    @Column(name="destination_port")
+    private String destinationPort;
+    @Column(name="expect_sailing_date")
+    private String expectSailingDate;
+    @Column(name="external_company")
+    private String externalCompany;
+    @Column(name="external_contract")
+    private String externalContract;
+    @Column(name="final_payment")
+    private Double finalPayment;
+    @Column(name="final_payment_date")
+    private String finalPaymentDate;
+    @Column(name="final_rate")
+    private Float finalRate;
+    @Column(name="inside_contract")
+    private String insideContract;
+    @Column(name="insurance_buy_date")
+    private String insuranceBuyDate;
+    @Column(name="insurance_company")
+    private String insuranceCompany;
+    @Column(name="insurance_money")
+    private Double insuranceMoney;
+    @Column(name="is_check_elec")
+    private Integer isCheckElec;
+    @Column(name="is_need_insurance")
+    private Integer isNeedInsurance;
+    @Column(name="issuing_bank")
+    private String issuingBank;
+    @Column(name="issuing_date")
+    private String issuingDate;
+    @Column(name="ladingbill_no")
+    private String ladingbillNo;
+    @Column(name="origin_country")
+    private String originCountry;
+    @Column(name="pay_type")
+    private String payType;
+    @Column(name="pre_payment")
+    private Double prePayment;
+    @Column(name="pre_payment_date")
+    private String prePaymentDate;
+    @Column(name="pre_rate")
+    private Float preRate;
+    @Column(name="price_condition")
+    private String priceCondition;
+    @Column(name="remark")
+    private String remark;
+    @Column(name="remittance_date")
+    private String remittanceDate;
+    @Column(name="remittance_rate")
+    private Double remittanceRate;
+    @Column(name="status")
+    private String status;
+    @Column(name="store_date")
+    private String storeDate;
+    @Column(name="tariff")
+    private Double tariff;
+    @Column(name="tariff_no")
+    private String tariffNo;
+    @Column(name="tax_pay_date")
+    private String taxPayDate;
+    @Column(name="total_boxes")
+    private Integer totalBoxes;
+    @Column(name="total_contract_amount")
+    private Double totalContractAmount;
+    @Column(name="total_contract_money")
+    private Double totalContractMoney;
+    @Column(name="total_invoice_amount")
+    private Double totalInvoiceAmount;
+    @Column(name="total_invoice_money")
+    private Double totalInvoiceMoney;
+    @Column(name="version")
+    private Integer version;
+    @Column(name="warehouse")
+    private String warehouse;
+    @Column(name="yahuidaoqi_date")
+    private String yahuidaoqiDate;
+    @Column(name="exchange_rate")
+    private Double exchangeRate;
+
+    public Double getExchangeRate() {
+        return exchangeRate;
+    }
+
+    public void setExchangeRate(Double exchangeRate) {
+        if(exchangeRate == null){
+            this.exchangeRate = 0.0;
+        }else{
+            this.exchangeRate = exchangeRate;
+        }
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getEta() {
+        return eta;
+    }
+
+    public void setEta(String eta) {
+        this.eta = eta == null ? null : eta.trim();
+    }
+
+    public String getEtd() {
+        return etd;
+    }
+
+    public void setEtd(String etd) {
+        this.etd = etd == null ? null : etd.trim();
+    }
+
+    public String getLcno() {
+        return lcno;
+    }
+
+    public void setLcno(String lcno) {
+        this.lcno = lcno == null ? null : lcno.trim();
+    }
+
+    public Integer getQacertificate() {
+        return qacertificate;
+    }
+
+    public void setQacertificate(Integer qacertificate) {
+        this.qacertificate = qacertificate;
+    }
+
+    public Double getAddedValueTax() {
+        return addedValueTax;
+    }
+
+    public void setAddedValueTax(Double addedValueTax) {
+        this.addedValueTax = addedValueTax;
+    }
+
+    public String getAgent() {
+        return agent;
+    }
+
+    public void setAgent(String agent) {
+        this.agent = agent == null ? null : agent.trim();
+    }
+
+    public String getAgentPassDate() {
+        return agentPassDate;
+    }
+
+    public void setAgentPassDate(String agentPassDate) {
+        this.agentPassDate = agentPassDate == null ? null : agentPassDate.trim();
+    }
+
+    public String getAgentSendDate() {
+        return agentSendDate;
+    }
+
+    public void setAgentSendDate(String agentSendDate) {
+        this.agentSendDate = agentSendDate == null ? null : agentSendDate.trim();
+    }
+
+    public String getBankDaodanDate() {
+        return bankDaodanDate;
+    }
+
+    public void setBankDaodanDate(String bankDaodanDate) {
+        this.bankDaodanDate = bankDaodanDate == null ? null : bankDaodanDate.trim();
+    }
+
+    public String getBusinessMode() {
+        return businessMode;
+    }
+
+    public void setBusinessMode(String businessMode) {
+        this.businessMode = businessMode == null ? null : businessMode.trim();
+    }
+
+    public String getCompanyNo() {
+        return companyNo;
+    }
+
+    public void setCompanyNo(String companyNo) {
+        this.companyNo = companyNo == null ? null : companyNo.trim();
+    }
+
+    public String getContainerNo() {
+        return containerNo;
+    }
+
+    public void setContainerNo(String containerNo) {
+        this.containerNo = containerNo == null ? null : containerNo.trim();
+    }
+
+    public String getContainerSize() {
+        return containerSize;
+    }
+
+    public void setContainerSize(String containerSize) {
+        this.containerSize = containerSize == null ? null : containerSize.trim();
+    }
+
+    public String getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(String contractDate) {
+        this.contractDate = contractDate == null ? null : contractDate.trim();
+    }
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId == null ? null : contractId.trim();
+    }
+
+    public String getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(String createDateTime) {
+        this.createDateTime = createDateTime == null ? null : createDateTime.trim();
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser == null ? null : createUser.trim();
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency == null ? null : currency.trim();
+    }
+
+    public String getDestinationPort() {
+        return destinationPort;
+    }
+
+    public void setDestinationPort(String destinationPort) {
+        this.destinationPort = destinationPort == null ? null : destinationPort.trim();
+    }
+
+    public String getExpectSailingDate() {
+        return expectSailingDate;
+    }
+
+    public void setExpectSailingDate(String expectSailingDate) {
+        this.expectSailingDate = expectSailingDate == null ? null : expectSailingDate.trim();
+    }
+
+    public String getExternalCompany() {
+        return externalCompany;
+    }
+
+    public void setExternalCompany(String externalCompany) {
+        this.externalCompany = externalCompany == null ? null : externalCompany.trim();
+    }
+
+    public String getExternalContract() {
+        return externalContract;
+    }
+
+    public void setExternalContract(String externalContract) {
+        this.externalContract = externalContract == null ? null : externalContract.trim();
+    }
+
+    public Double getFinalPayment() {
+        return finalPayment;
+    }
+
+    public void setFinalPayment(Double finalPayment) {
+        this.finalPayment = finalPayment;
+    }
+
+    public String getFinalPaymentDate() {
+        return finalPaymentDate;
+    }
+
+    public void setFinalPaymentDate(String finalPaymentDate) {
+        this.finalPaymentDate = finalPaymentDate == null ? null : finalPaymentDate.trim();
+    }
+
+    public Float getFinalRate() {
+        return finalRate;
+    }
+
+    public void setFinalRate(Float finalRate) {
+        this.finalRate = finalRate;
+    }
+
+    public String getInsideContract() {
+        return insideContract;
+    }
+
+    public void setInsideContract(String insideContract) {
+        this.insideContract = insideContract == null ? null : insideContract.trim();
+    }
+
+    public String getInsuranceBuyDate() {
+        return insuranceBuyDate;
+    }
+
+    public void setInsuranceBuyDate(String insuranceBuyDate) {
+        this.insuranceBuyDate = insuranceBuyDate == null ? null : insuranceBuyDate.trim();
+    }
+
+    public String getInsuranceCompany() {
+        return insuranceCompany;
+    }
+
+    public void setInsuranceCompany(String insuranceCompany) {
+        this.insuranceCompany = insuranceCompany == null ? null : insuranceCompany.trim();
+    }
+
+    public Double getInsuranceMoney() {
+        return insuranceMoney;
+    }
+
+    public void setInsuranceMoney(Double insuranceMoney) {
+        this.insuranceMoney = insuranceMoney;
+    }
+
+    public Integer getIsCheckElec() {
+        return isCheckElec;
+    }
+
+    public void setIsCheckElec(Integer isCheckElec) {
+        this.isCheckElec = isCheckElec;
+    }
+
+    public Integer getIsNeedInsurance() {
+        return isNeedInsurance;
+    }
+
+    public void setIsNeedInsurance(Integer isNeedInsurance) {
+        this.isNeedInsurance = isNeedInsurance;
+    }
+
+    public String getIssuingBank() {
+        return issuingBank;
+    }
+
+    public void setIssuingBank(String issuingBank) {
+        this.issuingBank = issuingBank == null ? null : issuingBank.trim();
+    }
+
+    public String getIssuingDate() {
+        return issuingDate;
+    }
+
+    public void setIssuingDate(String issuingDate) {
+        this.issuingDate = issuingDate == null ? null : issuingDate.trim();
+    }
+
+    public String getLadingbillNo() {
+        return ladingbillNo;
+    }
+
+    public void setLadingbillNo(String ladingbillNo) {
+        this.ladingbillNo = ladingbillNo == null ? null : ladingbillNo.trim();
+    }
+
+    public String getOriginCountry() {
+        return originCountry;
+    }
+
+    public void setOriginCountry(String originCountry) {
+        this.originCountry = originCountry == null ? null : originCountry.trim();
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType == null ? null : payType.trim();
+    }
+
+    public Double getPrePayment() {
+        return prePayment;
+    }
+
+    public void setPrePayment(Double prePayment) {
+        this.prePayment = prePayment;
+    }
+
+    public String getPrePaymentDate() {
+        return prePaymentDate;
+    }
+
+    public void setPrePaymentDate(String prePaymentDate) {
+        this.prePaymentDate = prePaymentDate == null ? null : prePaymentDate.trim();
+    }
+
+    public Float getPreRate() {
+        return preRate;
+    }
+
+    public void setPreRate(Float preRate) {
+        this.preRate = preRate;
+    }
+
+    public String getPriceCondition() {
+        return priceCondition;
+    }
+
+    public void setPriceCondition(String priceCondition) {
+        this.priceCondition = priceCondition == null ? null : priceCondition.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getRemittanceDate() {
+        return remittanceDate;
+    }
+
+    public void setRemittanceDate(String remittanceDate) {
+        this.remittanceDate = remittanceDate == null ? null : remittanceDate.trim();
+    }
+
+    public Double getRemittanceRate() {
+        return remittanceRate;
+    }
+
+    public void setRemittanceRate(Double remittanceRate) {
+        this.remittanceRate = remittanceRate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getStoreDate() {
+        return storeDate;
+    }
+
+    public void setStoreDate(String storeDate) {
+        this.storeDate = storeDate == null ? null : storeDate.trim();
+    }
+
+    public Double getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(Double tariff) {
+        this.tariff = tariff;
+    }
+
+    public String getTariffNo() {
+        return tariffNo;
+    }
+
+    public void setTariffNo(String tariffNo) {
+        this.tariffNo = tariffNo == null ? null : tariffNo.trim();
+    }
+
+    public String getTaxPayDate() {
+        return taxPayDate;
+    }
+
+    public void setTaxPayDate(String taxPayDate) {
+        this.taxPayDate = taxPayDate == null ? null : taxPayDate.trim();
+    }
+
+    public Integer getTotalBoxes() {
+        return totalBoxes;
+    }
+
+    public void setTotalBoxes(Integer totalBoxes) {
+        this.totalBoxes = totalBoxes;
+    }
+
+    public Double getTotalContractAmount() {
+        return totalContractAmount;
+    }
+
+    public void setTotalContractAmount(Double totalContractAmount) {
+        this.totalContractAmount = totalContractAmount;
+    }
+
+    public Double getTotalContractMoney() {
+        return totalContractMoney;
+    }
+
+    public void setTotalContractMoney(Double totalContractMoney) {
+        this.totalContractMoney = totalContractMoney;
+    }
+
+    public Double getTotalInvoiceAmount() {
+        return totalInvoiceAmount;
+    }
+
+    public void setTotalInvoiceAmount(Double totalInvoiceAmount) {
+        this.totalInvoiceAmount = totalInvoiceAmount;
+    }
+
+    public Double getTotalInvoiceMoney() {
+        return totalInvoiceMoney;
+    }
+
+    public void setTotalInvoiceMoney(Double totalInvoiceMoney) {
+        this.totalInvoiceMoney = totalInvoiceMoney;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public String getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(String warehouse) {
+        this.warehouse = warehouse == null ? null : warehouse.trim();
+    }
+
+    public String getYahuidaoqiDate() {
+        return yahuidaoqiDate;
+    }
+
+    public void setYahuidaoqiDate(String yahuidaoqiDate) {
+        this.yahuidaoqiDate = yahuidaoqiDate == null ? null : yahuidaoqiDate.trim();
+    }
+}

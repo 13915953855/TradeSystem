@@ -333,7 +333,7 @@ public class TradeService {
                             }
                         }
                         //合并单个商品的单元行
-                        if(saleEnd-1 > saleStart) {
+                        if(saleEnd-1 > start) {
                             mergeCargoRow(sheet, start, saleEnd-1);
                         }
                     } else {

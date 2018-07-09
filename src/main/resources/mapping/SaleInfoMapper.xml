@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.trade.mapper.SaleInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jason.trade.model.SaleInfo" >
+    <id column="sale_id" property="saleId" jdbcType="INTEGER" />
+    <result column="cargo_id" property="cargoId" jdbcType="VARCHAR" />
+    <result column="create_date_time" property="createDateTime" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_pay_date" property="customerPayDate" jdbcType="VARCHAR" />
+    <result column="customer_pay_money" property="customerPayMoney" jdbcType="DOUBLE" />
+    <result column="expect_sale_boxes" property="expectSaleBoxes" jdbcType="INTEGER" />
+    <result column="expect_sale_date" property="expectSaleDate" jdbcType="VARCHAR" />
+    <result column="expect_sale_money" property="expectSaleMoney" jdbcType="DOUBLE" />
+    <result column="expect_sale_unit_price" property="expectSaleUnitPrice" jdbcType="DOUBLE" />
+    <result column="expect_sale_weight" property="expectSaleWeight" jdbcType="DOUBLE" />
+    <result column="money_clear" property="moneyClear" jdbcType="INTEGER" />
+    <result column="payment_diff" property="paymentDiff" jdbcType="DOUBLE" />
+    <result column="pickup_date" property="pickupDate" jdbcType="VARCHAR" />
+    <result column="pickup_user" property="pickupUser" jdbcType="VARCHAR" />
+    <result column="profit" property="profit" jdbcType="DOUBLE" />
+    <result column="real_sale_boxes" property="realSaleBoxes" jdbcType="INTEGER" />
+    <result column="real_sale_date" property="realSaleDate" jdbcType="VARCHAR" />
+    <result column="real_sale_money" property="realSaleMoney" jdbcType="DOUBLE" />
+    <result column="real_sale_unit_price" property="realSaleUnitPrice" jdbcType="DOUBLE" />
+    <result column="real_sale_weight" property="realSaleWeight" jdbcType="DOUBLE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="sale_contract_no" property="saleContractNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sale_id, cargo_id, create_date_time, create_user, customer_name, customer_pay_date, 
+    customer_pay_money, expect_sale_boxes, expect_sale_date, expect_sale_money, expect_sale_unit_price, 
+    expect_sale_weight, money_clear, payment_diff, pickup_date, pickup_user, profit, 
+    real_sale_boxes, real_sale_date, real_sale_money, real_sale_unit_price, real_sale_weight, 
+    remark, sale_contract_no, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sale_info
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sale_info
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jason.trade.model.SaleInfo" >
+    insert into sale_info (sale_id, cargo_id, create_date_time, 
+      create_user, customer_name, customer_pay_date, 
+      customer_pay_money, expect_sale_boxes, expect_sale_date, 
+      expect_sale_money, expect_sale_unit_price, expect_sale_weight, 
+      money_clear, payment_diff, pickup_date, 
+      pickup_user, profit, real_sale_boxes, 
+      real_sale_date, real_sale_money, real_sale_unit_price, 
+      real_sale_weight, remark, sale_contract_no, 
+      status)
+    values (#{saleId,jdbcType=INTEGER}, #{cargoId,jdbcType=VARCHAR}, #{createDateTime,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerPayDate,jdbcType=VARCHAR}, 
+      #{customerPayMoney,jdbcType=DOUBLE}, #{expectSaleBoxes,jdbcType=INTEGER}, #{expectSaleDate,jdbcType=VARCHAR}, 
+      #{expectSaleMoney,jdbcType=DOUBLE}, #{expectSaleUnitPrice,jdbcType=DOUBLE}, #{expectSaleWeight,jdbcType=DOUBLE}, 
+      #{moneyClear,jdbcType=INTEGER}, #{paymentDiff,jdbcType=DOUBLE}, #{pickupDate,jdbcType=VARCHAR}, 
+      #{pickupUser,jdbcType=VARCHAR}, #{profit,jdbcType=DOUBLE}, #{realSaleBoxes,jdbcType=INTEGER}, 
+      #{realSaleDate,jdbcType=VARCHAR}, #{realSaleMoney,jdbcType=DOUBLE}, #{realSaleUnitPrice,jdbcType=DOUBLE}, 
+      #{realSaleWeight,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR}, #{saleContractNo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jason.trade.model.SaleInfo" >
+    insert into sale_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="cargoId != null" >
+        cargo_id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerPayDate != null" >
+        customer_pay_date,
+      </if>
+      <if test="customerPayMoney != null" >
+        customer_pay_money,
+      </if>
+      <if test="expectSaleBoxes != null" >
+        expect_sale_boxes,
+      </if>
+      <if test="expectSaleDate != null" >
+        expect_sale_date,
+      </if>
+      <if test="expectSaleMoney != null" >
+        expect_sale_money,
+      </if>
+      <if test="expectSaleUnitPrice != null" >
+        expect_sale_unit_price,
+      </if>
+      <if test="expectSaleWeight != null" >
+        expect_sale_weight,
+      </if>
+      <if test="moneyClear != null" >
+        money_clear,
+      </if>
+      <if test="paymentDiff != null" >
+        payment_diff,
+      </if>
+      <if test="pickupDate != null" >
+        pickup_date,
+      </if>
+      <if test="pickupUser != null" >
+        pickup_user,
+      </if>
+      <if test="profit != null" >
+        profit,
+      </if>
+      <if test="realSaleBoxes != null" >
+        real_sale_boxes,
+      </if>
+      <if test="realSaleDate != null" >
+        real_sale_date,
+      </if>
+      <if test="realSaleMoney != null" >
+        real_sale_money,
+      </if>
+      <if test="realSaleUnitPrice != null" >
+        real_sale_unit_price,
+      </if>
+      <if test="realSaleWeight != null" >
+        real_sale_weight,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="saleContractNo != null" >
+        sale_contract_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="saleId != null" >
+        #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="cargoId != null" >
+        #{cargoId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayDate != null" >
+        #{customerPayDate,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney != null" >
+        #{customerPayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="expectSaleBoxes != null" >
+        #{expectSaleBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="expectSaleDate != null" >
+        #{expectSaleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSaleMoney != null" >
+        #{expectSaleMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="expectSaleUnitPrice != null" >
+        #{expectSaleUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="expectSaleWeight != null" >
+        #{expectSaleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="moneyClear != null" >
+        #{moneyClear,jdbcType=INTEGER},
+      </if>
+      <if test="paymentDiff != null" >
+        #{paymentDiff,jdbcType=DOUBLE},
+      </if>
+      <if test="pickupDate != null" >
+        #{pickupDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupUser != null" >
+        #{pickupUser,jdbcType=VARCHAR},
+      </if>
+      <if test="profit != null" >
+        #{profit,jdbcType=DOUBLE},
+      </if>
+      <if test="realSaleBoxes != null" >
+        #{realSaleBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="realSaleDate != null" >
+        #{realSaleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="realSaleMoney != null" >
+        #{realSaleMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="realSaleUnitPrice != null" >
+        #{realSaleUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="realSaleWeight != null" >
+        #{realSaleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="saleContractNo != null" >
+        #{saleContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.SaleInfo" >
+    update sale_info
+    <set >
+      <if test="cargoId != null" >
+        cargo_id = #{cargoId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayDate != null" >
+        customer_pay_date = #{customerPayDate,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney != null" >
+        customer_pay_money = #{customerPayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="expectSaleBoxes != null" >
+        expect_sale_boxes = #{expectSaleBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="expectSaleDate != null" >
+        expect_sale_date = #{expectSaleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSaleMoney != null" >
+        expect_sale_money = #{expectSaleMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="expectSaleUnitPrice != null" >
+        expect_sale_unit_price = #{expectSaleUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="expectSaleWeight != null" >
+        expect_sale_weight = #{expectSaleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="moneyClear != null" >
+        money_clear = #{moneyClear,jdbcType=INTEGER},
+      </if>
+      <if test="paymentDiff != null" >
+        payment_diff = #{paymentDiff,jdbcType=DOUBLE},
+      </if>
+      <if test="pickupDate != null" >
+        pickup_date = #{pickupDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupUser != null" >
+        pickup_user = #{pickupUser,jdbcType=VARCHAR},
+      </if>
+      <if test="profit != null" >
+        profit = #{profit,jdbcType=DOUBLE},
+      </if>
+      <if test="realSaleBoxes != null" >
+        real_sale_boxes = #{realSaleBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="realSaleDate != null" >
+        real_sale_date = #{realSaleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="realSaleMoney != null" >
+        real_sale_money = #{realSaleMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="realSaleUnitPrice != null" >
+        real_sale_unit_price = #{realSaleUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="realSaleWeight != null" >
+        real_sale_weight = #{realSaleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="saleContractNo != null" >
+        sale_contract_no = #{saleContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jason.trade.model.SaleInfo" >
+    update sale_info
+    set cargo_id = #{cargoId,jdbcType=VARCHAR},
+      create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_pay_date = #{customerPayDate,jdbcType=VARCHAR},
+      customer_pay_money = #{customerPayMoney,jdbcType=DOUBLE},
+      expect_sale_boxes = #{expectSaleBoxes,jdbcType=INTEGER},
+      expect_sale_date = #{expectSaleDate,jdbcType=VARCHAR},
+      expect_sale_money = #{expectSaleMoney,jdbcType=DOUBLE},
+      expect_sale_unit_price = #{expectSaleUnitPrice,jdbcType=DOUBLE},
+      expect_sale_weight = #{expectSaleWeight,jdbcType=DOUBLE},
+      money_clear = #{moneyClear,jdbcType=INTEGER},
+      payment_diff = #{paymentDiff,jdbcType=DOUBLE},
+      pickup_date = #{pickupDate,jdbcType=VARCHAR},
+      pickup_user = #{pickupUser,jdbcType=VARCHAR},
+      profit = #{profit,jdbcType=DOUBLE},
+      real_sale_boxes = #{realSaleBoxes,jdbcType=INTEGER},
+      real_sale_date = #{realSaleDate,jdbcType=VARCHAR},
+      real_sale_money = #{realSaleMoney,jdbcType=DOUBLE},
+      real_sale_unit_price = #{realSaleUnitPrice,jdbcType=DOUBLE},
+      real_sale_weight = #{realSaleWeight,jdbcType=DOUBLE},
+      remark = #{remark,jdbcType=VARCHAR},
+      sale_contract_no = #{saleContractNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </update>
+</mapper>

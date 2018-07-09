@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.trade.mapper.ContractBaseInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jason.trade.model.ContractBaseInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="eta" property="eta" jdbcType="VARCHAR" />
+    <result column="etd" property="etd" jdbcType="VARCHAR" />
+    <result column="lcno" property="lcno" jdbcType="VARCHAR" />
+    <result column="qacertificate" property="qacertificate" jdbcType="INTEGER" />
+    <result column="added_value_tax" property="addedValueTax" jdbcType="DOUBLE" />
+    <result column="agent" property="agent" jdbcType="VARCHAR" />
+    <result column="agent_pass_date" property="agentPassDate" jdbcType="VARCHAR" />
+    <result column="agent_send_date" property="agentSendDate" jdbcType="VARCHAR" />
+    <result column="bank_daodan_date" property="bankDaodanDate" jdbcType="VARCHAR" />
+    <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
+    <result column="company_no" property="companyNo" jdbcType="VARCHAR" />
+    <result column="container_no" property="containerNo" jdbcType="VARCHAR" />
+    <result column="container_size" property="containerSize" jdbcType="VARCHAR" />
+    <result column="contract_date" property="contractDate" jdbcType="VARCHAR" />
+    <result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+    <result column="create_date_time" property="createDateTime" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="destination_port" property="destinationPort" jdbcType="VARCHAR" />
+    <result column="expect_sailing_date" property="expectSailingDate" jdbcType="VARCHAR" />
+    <result column="external_company" property="externalCompany" jdbcType="VARCHAR" />
+    <result column="external_contract" property="externalContract" jdbcType="VARCHAR" />
+    <result column="final_payment" property="finalPayment" jdbcType="DOUBLE" />
+    <result column="final_payment_date" property="finalPaymentDate" jdbcType="VARCHAR" />
+    <result column="final_rate" property="finalRate" jdbcType="REAL" />
+    <result column="inside_contract" property="insideContract" jdbcType="VARCHAR" />
+    <result column="insurance_buy_date" property="insuranceBuyDate" jdbcType="VARCHAR" />
+    <result column="insurance_company" property="insuranceCompany" jdbcType="VARCHAR" />
+    <result column="insurance_money" property="insuranceMoney" jdbcType="DOUBLE" />
+    <result column="is_check_elec" property="isCheckElec" jdbcType="INTEGER" />
+    <result column="is_need_insurance" property="isNeedInsurance" jdbcType="INTEGER" />
+    <result column="issuing_bank" property="issuingBank" jdbcType="VARCHAR" />
+    <result column="issuing_date" property="issuingDate" jdbcType="VARCHAR" />
+    <result column="ladingbill_no" property="ladingbillNo" jdbcType="VARCHAR" />
+    <result column="origin_country" property="originCountry" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="pre_payment" property="prePayment" jdbcType="DOUBLE" />
+    <result column="pre_payment_date" property="prePaymentDate" jdbcType="VARCHAR" />
+    <result column="pre_rate" property="preRate" jdbcType="REAL" />
+    <result column="price_condition" property="priceCondition" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="remittance_date" property="remittanceDate" jdbcType="VARCHAR" />
+    <result column="remittance_rate" property="remittanceRate" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="store_date" property="storeDate" jdbcType="VARCHAR" />
+    <result column="tariff" property="tariff" jdbcType="DOUBLE" />
+    <result column="tariff_no" property="tariffNo" jdbcType="VARCHAR" />
+    <result column="tax_pay_date" property="taxPayDate" jdbcType="VARCHAR" />
+    <result column="total_boxes" property="totalBoxes" jdbcType="INTEGER" />
+    <result column="total_contract_amount" property="totalContractAmount" jdbcType="DOUBLE" />
+    <result column="total_contract_money" property="totalContractMoney" jdbcType="DOUBLE" />
+    <result column="total_invoice_amount" property="totalInvoiceAmount" jdbcType="DOUBLE" />
+    <result column="total_invoice_money" property="totalInvoiceMoney" jdbcType="DOUBLE" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="yahuidaoqi_date" property="yahuidaoqiDate" jdbcType="VARCHAR" />
+    <result column="exchange_rate" property="exchangeRate" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, eta, etd, lcno, qacertificate, added_value_tax, agent, agent_pass_date, agent_send_date, 
+    bank_daodan_date, business_mode, company_no, container_no, container_size, contract_date, 
+    contract_id, create_date_time, create_user, currency, destination_port, expect_sailing_date, 
+    external_company, external_contract, final_payment, final_payment_date, final_rate, 
+    inside_contract, insurance_buy_date, insurance_company, insurance_money, is_check_elec, 
+    is_need_insurance, issuing_bank, issuing_date, ladingbill_no, origin_country, pay_type, 
+    pre_payment, pre_payment_date, pre_rate, price_condition, remark, remittance_date, 
+    remittance_rate, status, store_date, tariff, tariff_no, tax_pay_date, total_boxes, 
+    total_contract_amount, total_contract_money, total_invoice_amount, total_invoice_money, 
+    version, warehouse, yahuidaoqi_date, exchange_rate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_base_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contract_base_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jason.trade.model.ContractBaseInfo" >
+    insert into contract_base_info (id, eta, etd, 
+      lcno, qacertificate, added_value_tax, 
+      agent, agent_pass_date, agent_send_date, 
+      bank_daodan_date, business_mode, company_no, 
+      container_no, container_size, contract_date, 
+      contract_id, create_date_time, create_user, 
+      currency, destination_port, expect_sailing_date, 
+      external_company, external_contract, final_payment, 
+      final_payment_date, final_rate, inside_contract, 
+      insurance_buy_date, insurance_company, insurance_money, 
+      is_check_elec, is_need_insurance, issuing_bank, 
+      issuing_date, ladingbill_no, origin_country, 
+      pay_type, pre_payment, pre_payment_date, 
+      pre_rate, price_condition, remark, 
+      remittance_date, remittance_rate, status, 
+      store_date, tariff, tariff_no, 
+      tax_pay_date, total_boxes, total_contract_amount, 
+      total_contract_money, total_invoice_amount, total_invoice_money, 
+      version, warehouse, yahuidaoqi_date, exchange_rate
+      )
+    values (#{id,jdbcType=INTEGER}, #{eta,jdbcType=VARCHAR}, #{etd,jdbcType=VARCHAR}, 
+      #{lcno,jdbcType=VARCHAR}, #{qacertificate,jdbcType=INTEGER}, #{addedValueTax,jdbcType=DOUBLE}, 
+      #{agent,jdbcType=VARCHAR}, #{agentPassDate,jdbcType=VARCHAR}, #{agentSendDate,jdbcType=VARCHAR}, 
+      #{bankDaodanDate,jdbcType=VARCHAR}, #{businessMode,jdbcType=VARCHAR}, #{companyNo,jdbcType=VARCHAR}, 
+      #{containerNo,jdbcType=VARCHAR}, #{containerSize,jdbcType=VARCHAR}, #{contractDate,jdbcType=VARCHAR}, 
+      #{contractId,jdbcType=VARCHAR}, #{createDateTime,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{currency,jdbcType=VARCHAR}, #{destinationPort,jdbcType=VARCHAR}, #{expectSailingDate,jdbcType=VARCHAR}, 
+      #{externalCompany,jdbcType=VARCHAR}, #{externalContract,jdbcType=VARCHAR}, #{finalPayment,jdbcType=DOUBLE}, 
+      #{finalPaymentDate,jdbcType=VARCHAR}, #{finalRate,jdbcType=REAL}, #{insideContract,jdbcType=VARCHAR}, 
+      #{insuranceBuyDate,jdbcType=VARCHAR}, #{insuranceCompany,jdbcType=VARCHAR}, #{insuranceMoney,jdbcType=DOUBLE}, 
+      #{isCheckElec,jdbcType=INTEGER}, #{isNeedInsurance,jdbcType=INTEGER}, #{issuingBank,jdbcType=VARCHAR}, 
+      #{issuingDate,jdbcType=VARCHAR}, #{ladingbillNo,jdbcType=VARCHAR}, #{originCountry,jdbcType=VARCHAR}, 
+      #{payType,jdbcType=VARCHAR}, #{prePayment,jdbcType=DOUBLE}, #{prePaymentDate,jdbcType=VARCHAR}, 
+      #{preRate,jdbcType=REAL}, #{priceCondition,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{remittanceDate,jdbcType=VARCHAR}, #{remittanceRate,jdbcType=DOUBLE}, #{status,jdbcType=VARCHAR}, 
+      #{storeDate,jdbcType=VARCHAR}, #{tariff,jdbcType=DOUBLE}, #{tariffNo,jdbcType=VARCHAR}, 
+      #{taxPayDate,jdbcType=VARCHAR}, #{totalBoxes,jdbcType=INTEGER}, #{totalContractAmount,jdbcType=DOUBLE}, 
+      #{totalContractMoney,jdbcType=DOUBLE}, #{totalInvoiceAmount,jdbcType=DOUBLE}, #{totalInvoiceMoney,jdbcType=DOUBLE}, 
+      #{version,jdbcType=INTEGER}, #{warehouse,jdbcType=VARCHAR}, #{yahuidaoqiDate,jdbcType=VARCHAR}, #{exchangeRate,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
+    insert into contract_base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="eta != null" >
+        eta,
+      </if>
+      <if test="etd != null" >
+        etd,
+      </if>
+      <if test="lcno != null" >
+        lcno,
+      </if>
+      <if test="qacertificate != null" >
+        qacertificate,
+      </if>
+      <if test="addedValueTax != null" >
+        added_value_tax,
+      </if>
+      <if test="agent != null" >
+        agent,
+      </if>
+      <if test="agentPassDate != null" >
+        agent_pass_date,
+      </if>
+      <if test="agentSendDate != null" >
+        agent_send_date,
+      </if>
+      <if test="bankDaodanDate != null" >
+        bank_daodan_date,
+      </if>
+      <if test="businessMode != null" >
+        business_mode,
+      </if>
+      <if test="companyNo != null" >
+        company_no,
+      </if>
+      <if test="containerNo != null" >
+        container_no,
+      </if>
+      <if test="containerSize != null" >
+        container_size,
+      </if>
+      <if test="contractDate != null" >
+        contract_date,
+      </if>
+      <if test="contractId != null" >
+        contract_id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="destinationPort != null" >
+        destination_port,
+      </if>
+      <if test="expectSailingDate != null" >
+        expect_sailing_date,
+      </if>
+      <if test="externalCompany != null" >
+        external_company,
+      </if>
+      <if test="externalContract != null" >
+        external_contract,
+      </if>
+      <if test="finalPayment != null" >
+        final_payment,
+      </if>
+      <if test="finalPaymentDate != null" >
+        final_payment_date,
+      </if>
+      <if test="finalRate != null" >
+        final_rate,
+      </if>
+      <if test="insideContract != null" >
+        inside_contract,
+      </if>
+      <if test="insuranceBuyDate != null" >
+        insurance_buy_date,
+      </if>
+      <if test="insuranceCompany != null" >
+        insurance_company,
+      </if>
+      <if test="insuranceMoney != null" >
+        insurance_money,
+      </if>
+      <if test="isCheckElec != null" >
+        is_check_elec,
+      </if>
+      <if test="isNeedInsurance != null" >
+        is_need_insurance,
+      </if>
+      <if test="issuingBank != null" >
+        issuing_bank,
+      </if>
+      <if test="issuingDate != null" >
+        issuing_date,
+      </if>
+      <if test="ladingbillNo != null" >
+        ladingbill_no,
+      </if>
+      <if test="originCountry != null" >
+        origin_country,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="prePayment != null" >
+        pre_payment,
+      </if>
+      <if test="prePaymentDate != null" >
+        pre_payment_date,
+      </if>
+      <if test="preRate != null" >
+        pre_rate,
+      </if>
+      <if test="priceCondition != null" >
+        price_condition,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="remittanceDate != null" >
+        remittance_date,
+      </if>
+      <if test="remittanceRate != null" >
+        remittance_rate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="storeDate != null" >
+        store_date,
+      </if>
+      <if test="tariff != null" >
+        tariff,
+      </if>
+      <if test="tariffNo != null" >
+        tariff_no,
+      </if>
+      <if test="taxPayDate != null" >
+        tax_pay_date,
+      </if>
+      <if test="totalBoxes != null" >
+        total_boxes,
+      </if>
+      <if test="totalContractAmount != null" >
+        total_contract_amount,
+      </if>
+      <if test="totalContractMoney != null" >
+        total_contract_money,
+      </if>
+      <if test="totalInvoiceAmount != null" >
+        total_invoice_amount,
+      </if>
+      <if test="totalInvoiceMoney != null" >
+        total_invoice_money,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="warehouse != null" >
+        warehouse,
+      </if>
+      <if test="yahuidaoqiDate != null" >
+        yahuidaoqi_date,
+      </if>
+      <if test="exchangeRate != null" >
+        exchange_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="eta != null" >
+        #{eta,jdbcType=VARCHAR},
+      </if>
+      <if test="etd != null" >
+        #{etd,jdbcType=VARCHAR},
+      </if>
+      <if test="lcno != null" >
+        #{lcno,jdbcType=VARCHAR},
+      </if>
+      <if test="qacertificate != null" >
+        #{qacertificate,jdbcType=INTEGER},
+      </if>
+      <if test="addedValueTax != null" >
+        #{addedValueTax,jdbcType=DOUBLE},
+      </if>
+      <if test="agent != null" >
+        #{agent,jdbcType=VARCHAR},
+      </if>
+      <if test="agentPassDate != null" >
+        #{agentPassDate,jdbcType=VARCHAR},
+      </if>
+      <if test="agentSendDate != null" >
+        #{agentSendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDaodanDate != null" >
+        #{bankDaodanDate,jdbcType=VARCHAR},
+      </if>
+      <if test="businessMode != null" >
+        #{businessMode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNo != null" >
+        #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="containerNo != null" >
+        #{containerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="containerSize != null" >
+        #{containerSize,jdbcType=VARCHAR},
+      </if>
+      <if test="contractDate != null" >
+        #{contractDate,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="destinationPort != null" >
+        #{destinationPort,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSailingDate != null" >
+        #{expectSailingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="externalCompany != null" >
+        #{externalCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="externalContract != null" >
+        #{externalContract,jdbcType=VARCHAR},
+      </if>
+      <if test="finalPayment != null" >
+        #{finalPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="finalPaymentDate != null" >
+        #{finalPaymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="finalRate != null" >
+        #{finalRate,jdbcType=REAL},
+      </if>
+      <if test="insideContract != null" >
+        #{insideContract,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceBuyDate != null" >
+        #{insuranceBuyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceCompany != null" >
+        #{insuranceCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceMoney != null" >
+        #{insuranceMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="isCheckElec != null" >
+        #{isCheckElec,jdbcType=INTEGER},
+      </if>
+      <if test="isNeedInsurance != null" >
+        #{isNeedInsurance,jdbcType=INTEGER},
+      </if>
+      <if test="issuingBank != null" >
+        #{issuingBank,jdbcType=VARCHAR},
+      </if>
+      <if test="issuingDate != null" >
+        #{issuingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="ladingbillNo != null" >
+        #{ladingbillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="originCountry != null" >
+        #{originCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="prePayment != null" >
+        #{prePayment,jdbcType=DOUBLE},
+      </if>
+      <if test="prePaymentDate != null" >
+        #{prePaymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="preRate != null" >
+        #{preRate,jdbcType=REAL},
+      </if>
+      <if test="priceCondition != null" >
+        #{priceCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remittanceDate != null" >
+        #{remittanceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="remittanceRate != null" >
+        #{remittanceRate,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="storeDate != null" >
+        #{storeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tariff != null" >
+        #{tariff,jdbcType=DOUBLE},
+      </if>
+      <if test="tariffNo != null" >
+        #{tariffNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taxPayDate != null" >
+        #{taxPayDate,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBoxes != null" >
+        #{totalBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="totalContractAmount != null" >
+        #{totalContractAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="totalContractMoney != null" >
+        #{totalContractMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="totalInvoiceAmount != null" >
+        #{totalInvoiceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="totalInvoiceMoney != null" >
+        #{totalInvoiceMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="warehouse != null" >
+        #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="yahuidaoqiDate != null" >
+        #{yahuidaoqiDate,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeRate != null" >
+        #{exchangeRate,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
+    update contract_base_info
+    <set >
+      <if test="eta != null" >
+        eta = #{eta,jdbcType=VARCHAR},
+      </if>
+      <if test="etd != null" >
+        etd = #{etd,jdbcType=VARCHAR},
+      </if>
+      <if test="lcno != null" >
+        lcno = #{lcno,jdbcType=VARCHAR},
+      </if>
+      <if test="qacertificate != null" >
+        qacertificate = #{qacertificate,jdbcType=INTEGER},
+      </if>
+      <if test="addedValueTax != null" >
+        added_value_tax = #{addedValueTax,jdbcType=DOUBLE},
+      </if>
+      <if test="agent != null" >
+        agent = #{agent,jdbcType=VARCHAR},
+      </if>
+      <if test="agentPassDate != null" >
+        agent_pass_date = #{agentPassDate,jdbcType=VARCHAR},
+      </if>
+      <if test="agentSendDate != null" >
+        agent_send_date = #{agentSendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDaodanDate != null" >
+        bank_daodan_date = #{bankDaodanDate,jdbcType=VARCHAR},
+      </if>
+      <if test="businessMode != null" >
+        business_mode = #{businessMode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNo != null" >
+        company_no = #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="containerNo != null" >
+        container_no = #{containerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="containerSize != null" >
+        container_size = #{containerSize,jdbcType=VARCHAR},
+      </if>
+      <if test="contractDate != null" >
+        contract_date = #{contractDate,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="destinationPort != null" >
+        destination_port = #{destinationPort,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSailingDate != null" >
+        expect_sailing_date = #{expectSailingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="externalCompany != null" >
+        external_company = #{externalCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="externalContract != null" >
+        external_contract = #{externalContract,jdbcType=VARCHAR},
+      </if>
+      <if test="finalPayment != null" >
+        final_payment = #{finalPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="finalPaymentDate != null" >
+        final_payment_date = #{finalPaymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="finalRate != null" >
+        final_rate = #{finalRate,jdbcType=REAL},
+      </if>
+      <if test="insideContract != null" >
+        inside_contract = #{insideContract,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceBuyDate != null" >
+        insurance_buy_date = #{insuranceBuyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceCompany != null" >
+        insurance_company = #{insuranceCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceMoney != null" >
+        insurance_money = #{insuranceMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="isCheckElec != null" >
+        is_check_elec = #{isCheckElec,jdbcType=INTEGER},
+      </if>
+      <if test="isNeedInsurance != null" >
+        is_need_insurance = #{isNeedInsurance,jdbcType=INTEGER},
+      </if>
+      <if test="issuingBank != null" >
+        issuing_bank = #{issuingBank,jdbcType=VARCHAR},
+      </if>
+      <if test="issuingDate != null" >
+        issuing_date = #{issuingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="ladingbillNo != null" >
+        ladingbill_no = #{ladingbillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="originCountry != null" >
+        origin_country = #{originCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="prePayment != null" >
+        pre_payment = #{prePayment,jdbcType=DOUBLE},
+      </if>
+      <if test="prePaymentDate != null" >
+        pre_payment_date = #{prePaymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="preRate != null" >
+        pre_rate = #{preRate,jdbcType=REAL},
+      </if>
+      <if test="priceCondition != null" >
+        price_condition = #{priceCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="remittanceDate != null" >
+        remittance_date = #{remittanceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="remittanceRate != null" >
+        remittance_rate = #{remittanceRate,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="storeDate != null" >
+        store_date = #{storeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tariff != null" >
+        tariff = #{tariff,jdbcType=DOUBLE},
+      </if>
+      <if test="tariffNo != null" >
+        tariff_no = #{tariffNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taxPayDate != null" >
+        tax_pay_date = #{taxPayDate,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBoxes != null" >
+        total_boxes = #{totalBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="totalContractAmount != null" >
+        total_contract_amount = #{totalContractAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="totalContractMoney != null" >
+        total_contract_money = #{totalContractMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="totalInvoiceAmount != null" >
+        total_invoice_amount = #{totalInvoiceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="totalInvoiceMoney != null" >
+        total_invoice_money = #{totalInvoiceMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="warehouse != null" >
+        warehouse = #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="yahuidaoqiDate != null" >
+        yahuidaoqi_date = #{yahuidaoqiDate,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeRate != null" >
+        exchange_rate = #{exchangeRate,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jason.trade.model.ContractBaseInfo" >
+    update contract_base_info
+    set eta = #{eta,jdbcType=VARCHAR},
+      etd = #{etd,jdbcType=VARCHAR},
+      lcno = #{lcno,jdbcType=VARCHAR},
+      qacertificate = #{qacertificate,jdbcType=INTEGER},
+      added_value_tax = #{addedValueTax,jdbcType=DOUBLE},
+      agent = #{agent,jdbcType=VARCHAR},
+      agent_pass_date = #{agentPassDate,jdbcType=VARCHAR},
+      agent_send_date = #{agentSendDate,jdbcType=VARCHAR},
+      bank_daodan_date = #{bankDaodanDate,jdbcType=VARCHAR},
+      business_mode = #{businessMode,jdbcType=VARCHAR},
+      company_no = #{companyNo,jdbcType=VARCHAR},
+      container_no = #{containerNo,jdbcType=VARCHAR},
+      container_size = #{containerSize,jdbcType=VARCHAR},
+      contract_date = #{contractDate,jdbcType=VARCHAR},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      destination_port = #{destinationPort,jdbcType=VARCHAR},
+      expect_sailing_date = #{expectSailingDate,jdbcType=VARCHAR},
+      external_company = #{externalCompany,jdbcType=VARCHAR},
+      external_contract = #{externalContract,jdbcType=VARCHAR},
+      final_payment = #{finalPayment,jdbcType=DOUBLE},
+      final_payment_date = #{finalPaymentDate,jdbcType=VARCHAR},
+      final_rate = #{finalRate,jdbcType=REAL},
+      inside_contract = #{insideContract,jdbcType=VARCHAR},
+      insurance_buy_date = #{insuranceBuyDate,jdbcType=VARCHAR},
+      insurance_company = #{insuranceCompany,jdbcType=VARCHAR},
+      insurance_money = #{insuranceMoney,jdbcType=DOUBLE},
+      is_check_elec = #{isCheckElec,jdbcType=INTEGER},
+      is_need_insurance = #{isNeedInsurance,jdbcType=INTEGER},
+      issuing_bank = #{issuingBank,jdbcType=VARCHAR},
+      issuing_date = #{issuingDate,jdbcType=VARCHAR},
+      ladingbill_no = #{ladingbillNo,jdbcType=VARCHAR},
+      origin_country = #{originCountry,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      pre_payment = #{prePayment,jdbcType=DOUBLE},
+      pre_payment_date = #{prePaymentDate,jdbcType=VARCHAR},
+      pre_rate = #{preRate,jdbcType=REAL},
+      price_condition = #{priceCondition,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      remittance_date = #{remittanceDate,jdbcType=VARCHAR},
+      remittance_rate = #{remittanceRate,jdbcType=DOUBLE},
+      status = #{status,jdbcType=VARCHAR},
+      store_date = #{storeDate,jdbcType=VARCHAR},
+      tariff = #{tariff,jdbcType=DOUBLE},
+      tariff_no = #{tariffNo,jdbcType=VARCHAR},
+      tax_pay_date = #{taxPayDate,jdbcType=VARCHAR},
+      total_boxes = #{totalBoxes,jdbcType=INTEGER},
+      total_contract_amount = #{totalContractAmount,jdbcType=DOUBLE},
+      total_contract_money = #{totalContractMoney,jdbcType=DOUBLE},
+      total_invoice_amount = #{totalInvoiceAmount,jdbcType=DOUBLE},
+      total_invoice_money = #{totalInvoiceMoney,jdbcType=DOUBLE},
+      version = #{version,jdbcType=INTEGER},
+      warehouse = #{warehouse,jdbcType=VARCHAR},
+      yahuidaoqi_date = #{yahuidaoqiDate,jdbcType=VARCHAR},
+      exchange_rate = #{exchangeRate,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

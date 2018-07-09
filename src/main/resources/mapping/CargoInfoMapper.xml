@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.trade.mapper.CargoInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jason.trade.model.CargoInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="boxes" property="boxes" jdbcType="INTEGER" />
+    <result column="cargo_id" property="cargoId" jdbcType="VARCHAR" />
+    <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
+    <result column="cargo_no" property="cargoNo" jdbcType="VARCHAR" />
+    <result column="contract_amount" property="contractAmount" jdbcType="DOUBLE" />
+    <result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+    <result column="contract_money" property="contractMoney" jdbcType="DOUBLE" />
+    <result column="cost_price" property="costPrice" jdbcType="DOUBLE" />
+    <result column="create_date_time" property="createDateTime" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="expect_store_boxes" property="expectStoreBoxes" jdbcType="INTEGER" />
+    <result column="expect_store_weight" property="expectStoreWeight" jdbcType="DOUBLE" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="DOUBLE" />
+    <result column="invoice_money" property="invoiceMoney" jdbcType="DOUBLE" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="real_store_boxes" property="realStoreBoxes" jdbcType="INTEGER" />
+    <result column="real_store_money" property="realStoreMoney" jdbcType="DOUBLE" />
+    <result column="real_store_weight" property="realStoreWeight" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.jason.trade.entity.CargoManageInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="boxes" property="boxes" jdbcType="INTEGER" />
+    <result column="cargo_id" property="cargoId" jdbcType="VARCHAR" />
+    <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
+    <result column="cargo_no" property="cargoNo" jdbcType="VARCHAR" />
+    <result column="contract_amount" property="contractAmount" jdbcType="DOUBLE" />
+    <result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+    <result column="contract_money" property="contractMoney" jdbcType="DOUBLE" />
+    <result column="cost_price" property="costPrice" jdbcType="DOUBLE" />
+    <result column="create_date_time" property="createDateTime" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="expect_store_boxes" property="expectStoreBoxes" jdbcType="INTEGER" />
+    <result column="expect_store_weight" property="expectStoreWeight" jdbcType="DOUBLE" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="DOUBLE" />
+    <result column="invoice_money" property="invoiceMoney" jdbcType="DOUBLE" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="real_store_boxes" property="realStoreBoxes" jdbcType="INTEGER" />
+    <result column="real_store_money" property="realStoreMoney" jdbcType="DOUBLE" />
+    <result column="real_store_weight" property="realStoreWeight" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="external_contract" property="contractNo" jdbcType="VARCHAR" />
+    <result column="inside_contract" property="insideContract" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, boxes, cargo_id, cargo_name, cargo_no, contract_amount, contract_id, contract_money, 
+    cost_price, create_date_time, create_user, expect_store_boxes, expect_store_weight, 
+    invoice_amount, invoice_money, level, real_store_boxes, real_store_money, real_store_weight, 
+    status, unit_price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cargo_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
+    select a.*,b.external_contract,b.inside_contract
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
+    where a.status = '1'
+    <if test="contractNo != null" >
+      and b.external_contract like '${contractNo}%'
+    </if>
+    <if test="insideContract != null" >
+      and b.inside_contract like '${insideContract}%'
+    </if>
+    <if test="level != null and level != ''" >
+      and a.level = '${level}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and a.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and a.cargo_no like '${cargoNo}%'
+    </if>
+    order by a.id desc
+    limit ${start},${limit}
+  </select>
+  <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
+    select count(1)
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
+    where a.status = '1'
+    <if test="contractNo != null" >
+      and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="insideContract != null" >
+      and b.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="level != null and level != ''" >
+      and a.level = '${level}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and a.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and a.cargo_no like '${cargoNo}%'
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cargo_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jason.trade.model.CargoInfo" >
+    insert into cargo_info (id, boxes, cargo_id, 
+      cargo_name, cargo_no, contract_amount, 
+      contract_id, contract_money, cost_price, 
+      create_date_time, create_user, expect_store_boxes, 
+      expect_store_weight, invoice_amount, invoice_money, 
+      level, real_store_boxes, real_store_money, 
+      real_store_weight, status, unit_price
+      )
+    values (#{id,jdbcType=INTEGER}, #{boxes,jdbcType=INTEGER}, #{cargoId,jdbcType=VARCHAR}, 
+      #{cargoName,jdbcType=VARCHAR}, #{cargoNo,jdbcType=VARCHAR}, #{contractAmount,jdbcType=DOUBLE}, 
+      #{contractId,jdbcType=VARCHAR}, #{contractMoney,jdbcType=DOUBLE}, #{costPrice,jdbcType=DOUBLE}, 
+      #{createDateTime,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{expectStoreBoxes,jdbcType=INTEGER}, 
+      #{expectStoreWeight,jdbcType=DOUBLE}, #{invoiceAmount,jdbcType=DOUBLE}, #{invoiceMoney,jdbcType=DOUBLE}, 
+      #{level,jdbcType=VARCHAR}, #{realStoreBoxes,jdbcType=INTEGER}, #{realStoreMoney,jdbcType=DOUBLE}, 
+      #{realStoreWeight,jdbcType=DOUBLE}, #{status,jdbcType=VARCHAR}, #{unitPrice,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jason.trade.model.CargoInfo" >
+    insert into cargo_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="boxes != null" >
+        boxes,
+      </if>
+      <if test="cargoId != null" >
+        cargo_id,
+      </if>
+      <if test="cargoName != null" >
+        cargo_name,
+      </if>
+      <if test="cargoNo != null" >
+        cargo_no,
+      </if>
+      <if test="contractAmount != null" >
+        contract_amount,
+      </if>
+      <if test="contractId != null" >
+        contract_id,
+      </if>
+      <if test="contractMoney != null" >
+        contract_money,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="expectStoreBoxes != null" >
+        expect_store_boxes,
+      </if>
+      <if test="expectStoreWeight != null" >
+        expect_store_weight,
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount,
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="realStoreBoxes != null" >
+        real_store_boxes,
+      </if>
+      <if test="realStoreMoney != null" >
+        real_store_money,
+      </if>
+      <if test="realStoreWeight != null" >
+        real_store_weight,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="boxes != null" >
+        #{boxes,jdbcType=INTEGER},
+      </if>
+      <if test="cargoId != null" >
+        #{cargoId,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoName != null" >
+        #{cargoName,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoNo != null" >
+        #{cargoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractAmount != null" >
+        #{contractAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="contractId != null" >
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractMoney != null" >
+        #{contractMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="expectStoreBoxes != null" >
+        #{expectStoreBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="expectStoreWeight != null" >
+        #{expectStoreWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="invoiceAmount != null" >
+        #{invoiceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="invoiceMoney != null" >
+        #{invoiceMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="realStoreBoxes != null" >
+        #{realStoreBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="realStoreMoney != null" >
+        #{realStoreMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="realStoreWeight != null" >
+        #{realStoreWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.CargoInfo" >
+    update cargo_info
+    <set >
+      <if test="boxes != null" >
+        boxes = #{boxes,jdbcType=INTEGER},
+      </if>
+      <if test="cargoId != null" >
+        cargo_id = #{cargoId,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoName != null" >
+        cargo_name = #{cargoName,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoNo != null" >
+        cargo_no = #{cargoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractAmount != null" >
+        contract_amount = #{contractAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="contractId != null" >
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractMoney != null" >
+        contract_money = #{contractMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="expectStoreBoxes != null" >
+        expect_store_boxes = #{expectStoreBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="expectStoreWeight != null" >
+        expect_store_weight = #{expectStoreWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount = #{invoiceAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money = #{invoiceMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="realStoreBoxes != null" >
+        real_store_boxes = #{realStoreBoxes,jdbcType=INTEGER},
+      </if>
+      <if test="realStoreMoney != null" >
+        real_store_money = #{realStoreMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="realStoreWeight != null" >
+        real_store_weight = #{realStoreWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jason.trade.model.CargoInfo" >
+    update cargo_info
+    set boxes = #{boxes,jdbcType=INTEGER},
+      cargo_id = #{cargoId,jdbcType=VARCHAR},
+      cargo_name = #{cargoName,jdbcType=VARCHAR},
+      cargo_no = #{cargoNo,jdbcType=VARCHAR},
+      contract_amount = #{contractAmount,jdbcType=DOUBLE},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      contract_money = #{contractMoney,jdbcType=DOUBLE},
+      cost_price = #{costPrice,jdbcType=DOUBLE},
+      create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      expect_store_boxes = #{expectStoreBoxes,jdbcType=INTEGER},
+      expect_store_weight = #{expectStoreWeight,jdbcType=DOUBLE},
+      invoice_amount = #{invoiceAmount,jdbcType=DOUBLE},
+      invoice_money = #{invoiceMoney,jdbcType=DOUBLE},
+      level = #{level,jdbcType=VARCHAR},
+      real_store_boxes = #{realStoreBoxes,jdbcType=INTEGER},
+      real_store_money = #{realStoreMoney,jdbcType=DOUBLE},
+      real_store_weight = #{realStoreWeight,jdbcType=DOUBLE},
+      status = #{status,jdbcType=VARCHAR},
+      unit_price = #{unitPrice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
