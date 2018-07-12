@@ -7,6 +7,24 @@ public class CargoManageInfo extends CargoInfo {
     private String insideContract;
     private String warehouse;
     private String storeDate;
+    private String containerNo;
+    private String ladingbillNo;
+
+    public String getContainerNo() {
+        return containerNo;
+    }
+
+    public void setContainerNo(String containerNo) {
+        this.containerNo = containerNo;
+    }
+
+    public String getLadingbillNo() {
+        return ladingbillNo;
+    }
+
+    public void setLadingbillNo(String ladingbillNo) {
+        this.ladingbillNo = ladingbillNo;
+    }
 
     public String getWarehouse() {
         return warehouse;

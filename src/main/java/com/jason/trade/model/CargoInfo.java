@@ -51,6 +51,8 @@ public class CargoInfo {
     private Double unitPrice;
     @Column(name="business_mode")
     private String businessMode;
+    @Column(name="company_no")
+    private String companyNo;
 
     public String getBusinessMode() {
         return businessMode;
@@ -66,6 +68,14 @@ public class CargoInfo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCompanyNo() {
+        return companyNo;
+    }
+
+    public void setCompanyNo(String companyNo) {
+        this.companyNo = companyNo == null ? null : companyNo.trim();
     }
 
     public Integer getBoxes() {

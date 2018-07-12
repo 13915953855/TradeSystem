@@ -114,10 +114,7 @@
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="originCountry"></select>
                                             </div>
-                                            <label class="control-label col-sm-3">厂号</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="companyNo" />
-                                            </div>
+
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">价格条件</label>
@@ -265,6 +262,12 @@
                                                                         <option>MJ</option>
                                                                         <option>WP</option>
                                                                     </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-sm-2">厂号</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="companyNo" />
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
@@ -466,7 +469,10 @@
                                             <div class="form-group" style="">
                                                 <label class="control-label col-sm-2">保险公司名称</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="insuranceCompany" />
+                                                    <select class="form-control" id="insuranceCompany">
+                                                        <option></option>
+                                                        <option>平安保险</option>
+                                                    </select>
                                                 </div>
                                                 <label class="control-label col-sm-3">保险购买日期</label>
                                                 <div class="col-sm-3">
@@ -516,9 +522,25 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">已出报关单</label>
+                                            <div class="col-sm-3">
+                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="hasbaoguan"/>
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
                                             <label class="control-label col-sm-2">货代</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="agent"/>
+                                                <select class="form-control" id="agent">
+                                                    <option></option>
+                                                    <option>佳克</option>
+                                                    <option>欧恒</option>
+                                                    <option>捷嘉</option>
+                                                    <option>源丰祥</option>
+                                                    <option>同华</option>
+                                                </select>
                                             </div>
                                             <label class="control-label col-sm-3">单据寄给货代日期</label>
                                             <div class="col-sm-3">
@@ -557,7 +579,19 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">仓库</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="warehouse" />
+                                                <select class="form-control" id="warehouse">
+                                                    <option></option>
+                                                    <option>名联</option>
+                                                    <option>领升</option>
+                                                    <option>普菲斯（外高桥）</option>
+                                                    <option>普菲斯（洋山）</option>
+                                                    <option>太古</option>
+                                                    <option>保翔</option>
+                                                    <option>大宛</option>
+                                                    <option>鑫汇洋</option>
+                                                    <option>瑞源</option>
+                                                    <option>库外</option>
+                                                </select>
                                             </div>
                                             <label class="control-label col-sm-3">入库日期</label>
                                             <div class="col-sm-3">
@@ -565,6 +599,16 @@
                                                     <input class="form-control" size="16" id="storeDate" type="text" readonly="readonly"/>
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">滞箱费</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="zhixiangfei" />
+                                            </div>
+                                            <label class="control-label col-sm-3">滞港费</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="zhigangfei" />
                                             </div>
                                         </div>
                                         <div class="form-group" style="">

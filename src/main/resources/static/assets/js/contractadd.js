@@ -149,6 +149,9 @@ var TableInit = function () {
                 field: 'businessMode',
                 title: '业务模式'
             }, {
+                field: 'companyNo',
+                title: '厂号'
+            }, {
                 field: 'boxes',
                 title: '箱数(小计)'
             }, {
@@ -188,6 +191,8 @@ var TableInit = function () {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
+                    var status = row.status;
+                    if(status == 9) return '';
                     var s = '<a href="/trade/cargo/view?id='+value+'">查看销售记录</a>';
                     return s;
                 }
@@ -266,14 +271,15 @@ var ButtonInit = function () {
             cargo.level = $("#level").val();//级别
             cargo.cargoNo = $("#cargoNo").val();//库号
             cargo.businessMode = $("#businessMode").val();
-            cargo.boxes = $("#boxes").val() == "" ? 0:$("#boxes").val();//箱数(小计)
-            cargo.unitPrice = $("#unitPrice").val() == "" ? 0:$("#unitPrice").val();//单价
-            cargo.contractAmount = $("#contractAmount").val() == "" ? 0:$("#contractAmount").val();//合同数量(小计)
-            cargo.contractMoney = $("#contractMoney").val() == "" ? 0:$("#contractMoney").val();//合同金额(小计)
-            cargo.invoiceAmount = $("#invoiceAmount").val() == "" ? 0:$("#invoiceAmount").val();//发票数量(小计)
-            cargo.invoiceMoney = $("#invoiceMoney").val() == "" ? 0:$("#invoiceMoney").val();//发票金额(小计)
-            cargo.costPrice = $("#costPrice").val() == "" ? 0:$("#costPrice").val();
-            cargo.realStoreMoney = $("#realStoreMoney").val() == "" ? 0:$("#realStoreMoney").val();
+            cargo.companyNo = $("#companyNo").val();
+            cargo.boxes = $("#boxes").val() == "" ? 0:parseInt($("#boxes").val());//箱数(小计)
+            cargo.unitPrice = $("#unitPrice").val() == "" ? 0:toFloat($("#unitPrice").val());//单价
+            cargo.contractAmount = $("#contractAmount").val() == "" ? 0:toFloat($("#contractAmount").val());//合同数量(小计)
+            cargo.contractMoney = $("#contractMoney").val() == "" ? 0:toFloat($("#contractMoney").val());//合同金额(小计)
+            cargo.invoiceAmount = $("#invoiceAmount").val() == "" ? 0:toFloat($("#invoiceAmount").val());//发票数量(小计)
+            cargo.invoiceMoney = $("#invoiceMoney").val() == "" ? 0:toFloat($("#invoiceMoney").val());//发票金额(小计)
+            cargo.costPrice = $("#costPrice").val() == "" ? 0:toFloat($("#costPrice").val());
+            cargo.realStoreMoney = $("#realStoreMoney").val() == "" ? 0:toFloat($("#realStoreMoney").val());
 
             $.ajax({
                 url:"/trade/cargo/add",
@@ -313,11 +319,11 @@ function autoSetTotalMoney(){
         totalContractMoney += all[i].contractMoney;
         totalContractAmount += all[i].contractAmount;
     }
-    $("#totalBoxes").val(totalBoxes);
-    $("#totalInvoiceMoney").val(totalInvoiceMoney);
-    $("#totalInvoiceAmount").val(totalInvoiceAmount);
-    $("#totalContractMoney").val(totalContractMoney);
-    $("#totalContractAmount").val(totalContractAmount);
+    $("#totalBoxes").val(parseInt(totalBoxes));
+    $("#totalInvoiceMoney").val(toFloat(totalInvoiceMoney));
+    $("#totalInvoiceAmount").val(toFloat(totalInvoiceAmount));
+    $("#totalContractMoney").val(toFloat(totalContractMoney));
+    $("#totalContractAmount").val(toFloat(totalContractAmount));
 }
 function setFormData(data){
     $("#_id").val(data.id);
@@ -329,6 +335,7 @@ function setFormData(data){
     $("#level").val(data.level).trigger("change");
     checkSelectOptionExist("businessMode",data.businessMode);
     $("#businessMode").val(data.businessMode).trigger("change");
+    $("#companyNo").val(data.companyNo);
     $("#unitPrice").val(data.unitPrice);
     $("#boxes").val(data.boxes);
     $("#contractAmount").val(data.contractAmount);
@@ -350,6 +357,7 @@ function saveContract(){
         $btn.button('reset');
         return;
     }
+
     contract.externalContract = $("#externalContract").val();
     if($("#insideContract").val() == "") {
         $("#insideContract").parent().addClass("has-error");
@@ -365,7 +373,6 @@ function saveContract(){
     }
     contract.externalCompany = $("#externalCompany").val();
     contract.originCountry = $("#originCountry").val();
-    contract.companyNo = $("#companyNo").val();
     //contract.shipmentPort = $("#shipmentPort").val();
     contract.destinationPort = $("#destinationPort").val();
     contract.priceCondition = $("#priceCondition").val();
@@ -373,26 +380,26 @@ function saveContract(){
     contract.currency = $("#currency").val();
     contract.expectSailingDate = $("#expectSailingDate").val();
 
-    contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:$("#exchangeRate").val();
-    contract.totalContractAmount = $("#totalContractAmount").val() == "" ? 0:$("#totalContractAmount").val();
-    contract.totalContractMoney = $("#totalContractMoney").val() == "" ? 0:$("#totalContractMoney").val();
-    contract.totalInvoiceAmount = $("#totalInvoiceAmount").val() == "" ? 0:$("#totalInvoiceAmount").val();
-    contract.totalInvoiceMoney = $("#totalInvoiceMoney").val() == "" ? 0:$("#totalInvoiceMoney").val();
-    contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:$("#totalBoxes").val();
+    contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:toFloat($("#exchangeRate").val());
+    contract.totalContractAmount = $("#totalContractAmount").val() == "" ? 0:toFloat($("#totalContractAmount").val());
+    contract.totalContractMoney = $("#totalContractMoney").val() == "" ? 0:toFloat($("#totalContractMoney").val());
+    contract.totalInvoiceAmount = $("#totalInvoiceAmount").val() == "" ? 0:toFloat($("#totalInvoiceAmount").val());
+    contract.totalInvoiceMoney = $("#totalInvoiceMoney").val() == "" ? 0:toFloat($("#totalInvoiceMoney").val());
+    contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:parseInt($("#totalBoxes").val());
     contract.issuingBank = $("#issuingBank").val();
     contract.issuingDate = $("#issuingDate").val();
     contract.lcno = $("#lcno").val();
     contract.bankDaodanDate = $("#bankDaodanDate").val();
     contract.remittanceDate = $("#remittanceDate").val();
     contract.yahuidaoqiDate = $("#yahuidaoqiDate").val();
-    contract.remittanceRate = $("#remittanceRate").val() == "" ? 0:$("#remittanceRate").val();
-    contract.yahuiRate = $("#yahuiRate").val() == "" ? 0:$("#yahuiRate").val();
-    contract.prePayment = $("#prePayment").val() == "" ? 0:$("#prePayment").val();
+    contract.remittanceRate = $("#remittanceRate").val() == "" ? 0:toFloat($("#remittanceRate").val());
+    contract.yahuiRate = $("#yahuiRate").val() == "" ? 0:toFloat($("#yahuiRate").val());
+    contract.prePayment = $("#prePayment").val() == "" ? 0:toFloat($("#prePayment").val());
     contract.prePaymentDate = $("#prePaymentDate").val();
-    contract.preRate = $("#preRate").val() == "" ? 0:$("#preRate").val();
-    contract.finalPayment = $("#finalPayment").val() == "" ? 0:$("#finalPayment").val();
+    contract.preRate = $("#preRate").val() == "" ? 0:toFloat($("#preRate").val());
+    contract.finalPayment = $("#finalPayment").val() == "" ? 0:toFloat($("#finalPayment").val());
     contract.finalPaymentDate = $("#finalPaymentDate").val();
-    contract.finalRate = $("#finalRate").val() == "" ? 0:$("#finalRate").val();
+    contract.finalRate = $("#finalRate").val() == "" ? 0:toFloat($("#finalRate").val());
     contract.containerNo = $("#containerNo").val();
     contract.ladingbillNo = $("#ladingbillNo").val();
     //contract.shipCompany = $("#shipCompany").val();
@@ -403,7 +410,7 @@ function saveContract(){
         contract.isNeedInsurance = "0";
     }
     contract.insuranceBuyDate = $("#insuranceBuyDate").val();
-    contract.insuranceMoney = $("#insuranceMoney").val() == "" ? 0:$("#insuranceMoney").val();
+    contract.insuranceMoney = $("#insuranceMoney").val() == "" ? 0:toFloat($("#insuranceMoney").val());
     contract.insuranceCompany = $("#insuranceCompany").val();
     contract.etd = $("#etd").val();
     contract.eta = $("#eta").val();
@@ -417,14 +424,19 @@ function saveContract(){
     }else{
         contract.qacertificate = "0";
     }
+    if($("#hasbaoguan").is(':checked')){
+        contract.hasbaoguan = "1";
+    }else{
+        contract.hasbaoguan = "0";
+    }
     //contract.elecSendDate = $("#elecSendDate").val();
     //contract.exCompanySendBillDate = $("#exCompanySendBillDate").val();
     //contract.billSignDate = $("#billSignDate").val();
     contract.agent = $("#agent").val();
     contract.agentSendDate = $("#agentSendDate").val();
-    contract.tariff = $("#tariff").val() == "" ? 0:$("#tariff").val();
+    contract.tariff = $("#tariff").val() == "" ? 0:toFloat($("#tariff").val());
     contract.tariffNo = $("#tariffNo").val();
-    contract.addedValueTax = $("#addedValueTax").val() == "" ? 0:$("#addedValueTax").val();
+    contract.addedValueTax = $("#addedValueTax").val() == "" ? 0:toFloat($("#addedValueTax").val());
     contract.taxPayDate = $("#taxPayDate").val();
     contract.taxSignDate = $("#taxSignDate").val();
     contract.taxDeductibleParty = $("#taxDeductibleParty").val();
@@ -432,9 +444,8 @@ function saveContract(){
     contract.warehouse = $("#warehouse").val();
     contract.storeDate = $("#storeDate").val();
     contract.remark = $("#remark").val();
-    /*contract.tariffRate = $("#tariffRate").val() == "" ? 0:$("#tariffRate").val();
-    contract.taxRate = $("#taxRate").val() == "" ? 0:$("#taxRate").val();
-    contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:$("#exchangeRate").val();*/
+    contract.zhixiangfei = $("#zhixiangfei").val() == "" ? 0:toFloat($("#zhixiangfei").val());
+    contract.zhigangfei = $("#zhigangfei").val() == "" ? 0:toFloat($("#zhigangfei").val());
 
     var a = $("#tb_cargo").bootstrapTable("getData");
     var cargoIds = "";
@@ -446,8 +457,13 @@ function saveContract(){
     }
     contract.cargoId = cargoIds;
 
+    var url = "/trade/contract/add";
+    if($("#version").val() != undefined){
+        contract.version = $("#version").val();
+        url = "/trade/contract/update";
+    }
     $.ajax({
-        url:"/trade/contract/add",
+        url:url,
         type:"POST",
         dataType:"json",
         data:contract,

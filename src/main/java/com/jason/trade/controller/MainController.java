@@ -1,6 +1,7 @@
 package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
+import com.jason.trade.entity.ContractParam;
 import com.jason.trade.model.CargoInfo;
 import com.jason.trade.model.ContractBaseInfo;
 import com.jason.trade.model.SysLog;
@@ -93,6 +94,15 @@ public class MainController {
         model.addAttribute("action","view");
         return "trade/contractupdate";
     }
+    @GetMapping("/trade/contract/viewByEC")
+    public String contractview(@RequestParam(value="externalContract") String externalContract, Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        ContractBaseInfo contract = contractRepository.findByExternalContractAndStatusNot(externalContract,GlobalConst.DISABLE);
+        model.addAttribute("contract",contract);
+        model.addAttribute("action","view");
+        return "trade/contractupdate";
+    }
     @GetMapping("/trade/cargomanage")
     public String inout(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -100,12 +110,13 @@ public class MainController {
         return "trade/cargomanage";
     }
     @GetMapping("/trade/cargo/view")
-    public String cargoview(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
+    public String cargoview(@RequestParam(value="id") Integer id,@RequestParam(value="externalContract") String externalContract, Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
         CargoInfo cargoInfo = cargoRepository.findOne(id);
         model.addAttribute("cargo",cargoInfo);
         model.addAttribute("action","view");
+        model.addAttribute("externalContract",externalContract);
         return "trade/cargosaleview";
     }
     @GetMapping("/trade/agent")
@@ -158,11 +169,36 @@ public class MainController {
     }
 
     @GetMapping(value="/trade/contract/output")
-    public ResponseEntity<Resource> output(HttpSession session){
+    public ResponseEntity<Resource> output(HttpSession session,@RequestParam(value="externalContract") String externalContract,
+               @RequestParam(value="insideContract") String insideContract,@RequestParam(value="contractStartDate") String contractStartDate,
+               @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="agent") String agent,
+               @RequestParam(value="ladingbillNo") String ladingbillNo,@RequestParam(value="destinationPort") String destinationPort,
+               @RequestParam(value="businessMode") String businessMode,@RequestParam(value="externalCompany") String externalCompany,
+               @RequestParam(value="status") String status,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="level") String level,
+               @RequestParam(value="containerNo") String containerNo,@RequestParam(value="companyNo") String companyNo,
+               @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        ContractParam contractParam = new ContractParam();
+        contractParam.setExternalContract(externalContract);
+        contractParam.setInsideContract(insideContract);
+        contractParam.setContractStartDate(contractStartDate);
+        contractParam.setContractEndDate(contractEndDate);
+        contractParam.setLadingbillNo(ladingbillNo);
+        contractParam.setDestinationPort(destinationPort);
+        contractParam.setBusinessMode(businessMode);
+        contractParam.setExternalCompany(externalCompany);
+        contractParam.setStatus(status);
+        contractParam.setContainerNo(containerNo);
+        contractParam.setCompanyNo(companyNo);
+        contractParam.setCargoName(cargoName);
+        contractParam.setLevel(level);
+        contractParam.setAgent(agent);
+        contractParam.setLadingbillNo(ladingbillNo);
+        contractParam.setEtaStartDate(etaStartDate);
+        contractParam.setEtaEndDate(etaEndDate);
 
         ByteArrayOutputStream bos = null;
-        List<ContractBaseInfo> data = contractRepository.findByStatusNot(GlobalConst.DISABLE);
+        List<ContractBaseInfo> data = tradeService.getContractBaseInfoList(contractParam);
         String fileName = "业务台账"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
         try {
             Workbook workbook = tradeService.writeExcel(data);

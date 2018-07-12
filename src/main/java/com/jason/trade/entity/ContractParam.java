@@ -9,8 +9,11 @@ public class ContractParam {
     private String businessMode;
     private String contractStartDate;
     private String contractEndDate;
+    private String etaStartDate;
+    private String etaEndDate;
     private String externalCompany;
     private String cargoName;
+    private String cargoNo;
     private String level;
     private String agent;
     private String containerNo;
@@ -18,6 +21,48 @@ public class ContractParam {
     private String ladingbillNo;
     private String destinationPort;
     private String status;
+    private Integer start;
+    private Integer limit;
+
+    public String getCargoNo() {
+        return cargoNo;
+    }
+
+    public void setCargoNo(String cargoNo) {
+        this.cargoNo = cargoNo;
+    }
+
+    public String getEtaStartDate() {
+        return etaStartDate;
+    }
+
+    public void setEtaStartDate(String etaStartDate) {
+        this.etaStartDate = etaStartDate;
+    }
+
+    public String getEtaEndDate() {
+        return etaEndDate;
+    }
+
+    public void setEtaEndDate(String etaEndDate) {
+        this.etaEndDate = etaEndDate;
+    }
+
+    public Integer getStart() {
+        return start;
+    }
+
+    public void setStart(Integer start) {
+        this.start = start;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
 
     public String getCargoName() {
         return cargoName;

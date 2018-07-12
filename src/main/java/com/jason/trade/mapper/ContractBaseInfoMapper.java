@@ -1,19 +1,16 @@
 package com.jason.trade.mapper;
 
+import com.jason.trade.entity.CargoManageInfo;
+import com.jason.trade.entity.CargoParam;
+import com.jason.trade.entity.ContractParam;
 import com.jason.trade.model.ContractBaseInfo;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface ContractBaseInfoMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(ContractBaseInfo record);
-
-    int insertSelective(ContractBaseInfo record);
-
-    ContractBaseInfo selectByPrimaryKey(Integer id);
-
     int updateByPrimaryKeySelective(ContractBaseInfo record);
-
-    int updateByPrimaryKey(ContractBaseInfo record);
+    List<ContractBaseInfo> selectByExample(ContractParam contractParam);
+    Integer selectCountByExample(ContractParam contractParam);
 }

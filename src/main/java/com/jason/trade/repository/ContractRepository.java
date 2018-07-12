@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integer>,JpaSpecificationExecutor<ContractBaseInfo> {
     ContractBaseInfo findByExternalContractAndStatus(String externalContract, String status);
+    ContractBaseInfo findByExternalContractAndStatusNot(String externalContract, String status);
     ContractBaseInfo findByContractId(String contractId);
     List<ContractBaseInfo> findByStatusNot(String status);
 

@@ -51,14 +51,27 @@ var TableInit = function () {
             uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
             showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
+            onLoadSuccess:function(data){
+                getTotalStore();
+            },
             columns: [{
                 checkbox: true
             },{
                 field: 'contractNo',
-                title: '外合同编号'
+                title: '外合同编号',
+                formatter: function(value,row,index){
+                    var s = '<a href="/trade/contract/viewByEC?externalContract='+value+'">'+value+'</a>';
+                    return s;
+                }
             },{
                 field: 'insideContract',
                 title: '内合同编号'
+            },{
+                field: 'containerNo',
+                title: '柜号'
+            },{
+                field: 'ladingbillNo',
+                title: '提单号'
             },{
                 field: 'cargoName',
                 title: '产品名称'
@@ -87,7 +100,7 @@ var TableInit = function () {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
-                    var s = '<a href="/trade/cargo/view?id='+value+'">查看</a>';
+                    var s = '<a href="/trade/cargo/view?id='+value+'&externalContract='+row.contractNo+'">查看</a>';
                     return s;
                 }
             }]
@@ -100,19 +113,49 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             contractNo: $("#contractNo").val(),
-            warehouse: $("#warehouse").val(),
+            warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
             storeStartDate: $("#storeStartDate").val(),
             storeEndDate: $("#storeEndDate").val(),
             insideContract: $("#insideContract").val(),
             level: $("#level").val() == "全部"?"":$("#level").val(),
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
-            cargoNo: $("#cargoNo").val()
+            cargoNo: $("#cargoNo").val(),
+            customerName: $("#customerName").val(),
+            containerNo: $("#containerNo").val(),
+            ladingbillNo: $("#ladingbillNo").val()
         };
         return temp;
     };
     return oTableInit;
 };
 
+function getTotalStore(){
+    var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+        contractNo: $("#contractNo").val(),
+        warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
+        storeStartDate: $("#storeStartDate").val(),
+        storeEndDate: $("#storeEndDate").val(),
+        insideContract: $("#insideContract").val(),
+        level: $("#level").val() == "全部"?"":$("#level").val(),
+        cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
+        cargoNo: $("#cargoNo").val(),
+        customerName: $("#customerName").val(),
+        containerNo: $("#containerNo").val(),
+        ladingbillNo: $("#ladingbillNo").val()
+    };
+    $.ajax({
+        url:"/trade/cargo/getTotalStore",
+        type:"POST",
+        dataType:"json",
+        data:queryParams,
+        success:function(res){
+            if(res.status == "1"){
+                $("#totalStoreWeight").val(res.totalStoreWeight);
+                $("#totalStoreBoxes").val(res.totalStoreBoxes);
+            }
+        }
+    });
+}
 
 var ButtonInit = function () {
     var oInit = new Object();
@@ -135,7 +178,7 @@ function resetQuery(){
     $("#contractNo").val("");
     $("#insideContract").val("");
     $("#cargoNo").val("");
-    $("#warehouse").val("");
+    $("#warehouse").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#storeStartDate").val("");

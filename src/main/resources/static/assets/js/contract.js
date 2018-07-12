@@ -30,7 +30,7 @@ function initExternalCompany(){
     opts += "<option>KPC HK</option>";
     opts += "<option>STANBROKE</option>";
     opts += "<option>JBS AUS</option>";
-    opts += "<option>HARBEY</option>";
+    opts += "<option>HARVEY</option>";
     opts += "<option>TEYS AUS</option>";
     opts += "<option>NH AUS</option>";
     opts += "<option>TIF</option>";
@@ -126,9 +126,12 @@ var TableInit = function () {
             insideContract: $("#insideContract").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
-            //cargoName: $("#cargoName").val(),
-            //level: $("#level").val(),
-            agent: $("#agent").val(),
+            etaStartDate: $("#etaStartDate").val(),
+            etaEndDate: $("#etaEndDate").val(),
+            cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
+            cargoNo: $("#cargoNo").val(),
+            level: $("#level").val() == "全部"?"":$("#level").val(),
+            agent: $("#agent").val() == "全部"?"":$("#agent").val(),
             containerNo: $("#containerNo").val(),
             companyNo: $("#companyNo").val(),
             ladingbillNo: $("#ladingbillNo").val(),
@@ -195,7 +198,41 @@ var ButtonInit = function () {
             }
         });
         $("#btn_output").click(function(){
-        	var url = "/trade/contract/output";
+            var externalContract = $("#externalContract").val();
+            var insideContract=$("#insideContract").val();
+            var contractStartDate= $("#contractStartDate").val();
+            var contractEndDate= $("#contractEndDate").val();
+            var etaStartDate= $("#etaStartDate").val();
+            var etaEndDate= $("#etaEndDate").val();
+            var cargoName= $("#cargoName").val() == "全部"?"":$("#cargoName").val();
+            var level= $("#level").val() == "全部"?"":$("#level").val();
+            var agent= $("#agent").val() == "全部"?"":$("#agent").val();
+            var containerNo=$("#containerNo").val();
+            var cargoNo=$("#cargoNo").val();
+            var companyNo= $("#companyNo").val();
+            var ladingbillNo= $("#ladingbillNo").val();
+            var destinationPort= $("#destinationPort").val() == "全部"?"":$("#destinationPort").val();
+            var businessMode= $("#businessMode").val() == "全部"?"":$("#businessMode").val();
+            var externalCompany=$("#externalCompany").val() == "全部"?"":$("#externalCompany").val();
+            var status=$("#status").val() == "全部"?"":$("#status").val();
+            var params = "?externalContract="+externalContract;
+            params += "&insideContract="+insideContract;
+            params += "&contractStartDate="+contractStartDate;
+            params += "&contractEndDate="+contractEndDate;
+            params += "&etaStartDate="+etaStartDate;
+            params += "&etaEndDate="+etaEndDate;
+            params += "&cargoName="+cargoName;
+            params += "&level="+level;
+            params += "&agent="+agent;
+            params += "&containerNo="+containerNo;
+            params += "&cargoNo="+cargoNo;
+            params += "&companyNo="+companyNo;
+            params += "&ladingbillNo="+ladingbillNo;
+            params += "&destinationPort="+destinationPort;
+            params += "&businessMode="+businessMode;
+            params += "&externalCompany="+externalCompany;
+            params += "&status="+status;
+        	var url = "/trade/contract/output"+params;
         	window.open(url);
         });
     };
@@ -210,9 +247,15 @@ function resetQuery(){
     $("#contractEndDate").val("");
     $("#containerNo").val("");
     $("#ladingbillNo").val("");
-    $("#agent").val("");
+    $("#agent").val("全部").trigger("change");
     $("#companyNo").val("");
     $("#destinationPort").val("全部").trigger("change");
+    $("#businessMode").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
     $("#externalCompany").val("全部").trigger("change");
+    $("#level").val("全部").trigger("change");
+    $("#cargoName").val("全部").trigger("change");
+    $("#etaStartDate").val("");
+    $("#etaEndDate").val("");
+    $("#cargoNo").val("");
 }

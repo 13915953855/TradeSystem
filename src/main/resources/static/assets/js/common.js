@@ -23,6 +23,13 @@ $(function(){
         return value;
     }
 
+//解决页面拉伸后，表格列不对齐的问题。
+    $("#arrow").click(function(){
+        setTimeout(function(){
+            $("table").bootstrapTable("resetView");
+        },300);
+    });
+
     $("select").select2({
         tags: true
     });
@@ -148,7 +155,7 @@ function initExternalCompany(){
     opts += "<option>KPC HK</option>";
     opts += "<option>STANBROKE</option>";
     opts += "<option>JBS AUS</option>";
-    opts += "<option>HARBEY</option>";
+    opts += "<option>HARVEY</option>";
     opts += "<option>TEYS AUS</option>";
     opts += "<option>NH AUS</option>";
     opts += "<option>TIF</option>";

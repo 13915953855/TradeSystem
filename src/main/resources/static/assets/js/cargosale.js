@@ -45,8 +45,8 @@ $(function () {
         autoSetProfit();
     });
     $("#realSaleMoney").blur(function(){
-        var realSaleMoney = $("#realSaleMoney").val();
-        var customerPayMoney = $("#customerPayMoney").val();
+        var realSaleMoney = toFloat($("#realSaleMoney").val());
+        var customerPayMoney = toFloat($("#customerPayMoney").val());
         if(customerPayMoney > 0 && realSaleMoney != customerPayMoney){
             $("#deviationNotice").show();
         }else{
@@ -54,8 +54,8 @@ $(function () {
         }
     });
     $("#customerPayMoney").blur(function(){
-        var realSaleMoney = $("#realSaleMoney").val();
-        var customerPayMoney = $("#customerPayMoney").val();
+        var realSaleMoney = toFloat($("#realSaleMoney").val());
+        var customerPayMoney = toFloat($("#customerPayMoney").val());
         if(realSaleMoney > 0 && realSaleMoney != customerPayMoney){
             $("#deviationNotice").show();
         }else{
@@ -67,8 +67,8 @@ function autoSetProfit(){
     var profit = 0;
     var realSaleUnitPrice = $("#realSaleUnitPrice").val() == ""?0:$("#realSaleUnitPrice").val();
     var realSaleWeight = $("#realSaleWeight").val() == ""?0:$("#realSaleWeight").val();
-    var unitPrice = $("#unitPrice").val() == ""?0:$("#unitPrice").val();
-    profit = toFloat((realSaleUnitPrice - unitPrice)*realSaleWeight);
+    var costPrice = $("#costPrice").val() == ""?0:$("#costPrice").val();
+    profit = toFloat((realSaleUnitPrice - costPrice)*realSaleWeight);
     $("#profit").val(profit);
 }
 function autoSetCustomerMoney(){
@@ -91,13 +91,6 @@ function autoSetRealSaleMoney(){
     var realSaleUnitPrice = $("#realSaleUnitPrice").val() == ""?0:$("#realSaleUnitPrice").val();
     realSaleMoney = toFloat(realSaleWeight * realSaleUnitPrice);
     $("#realSaleMoney").val(realSaleMoney);
-}
-var toFloat = function (value) {
-    value = Math.round(parseFloat(value) * 100) / 100;
-    if (value.toString().indexOf(".") < 0) {
-        value = value.toString() + ".00";
-    }
-    return value;
 }
 
 var TableInit = function () {
@@ -272,15 +265,15 @@ var ButtonInit = function () {
             sale.pickupUser = $("#pickupUser").val();
             sale.saleContractNo = $("#saleContractNo").val();//合同序号
             sale.customerName = $("#customerName").val();
-            sale.expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == "" ? 0:$("#expectSaleUnitPrice").val();
-            sale.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:$("#expectSaleWeight").val();
-            sale.expectSaleBoxes = $("#expectSaleBoxes").val() == "" ? 0:$("#expectSaleBoxes").val();
-            sale.expectSaleMoney = $("#expectSaleMoney").val() == "" ? 0:$("#expectSaleMoney").val();
+            sale.expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == "" ? 0:toFloat($("#expectSaleUnitPrice").val());
+            sale.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:toFloat($("#expectSaleWeight").val());
+            sale.expectSaleBoxes = $("#expectSaleBoxes").val() == "" ? 0:parseInt($("#expectSaleBoxes").val());
+            sale.expectSaleMoney = $("#expectSaleMoney").val() == "" ? 0:toFloat($("#expectSaleMoney").val());
             sale.expectSaleDate = $("#expectSaleDate").val();
-            sale.realSaleUnitPrice = $("#realSaleUnitPrice").val() == "" ? 0:$("#realSaleUnitPrice").val();
-            sale.realSaleWeight = $("#realSaleWeight").val() == "" ? 0:$("#realSaleWeight").val();
-            sale.realSaleBoxes = $("#realSaleBoxes").val() == "" ? 0:$("#realSaleBoxes").val();
-            sale.realSaleMoney = $("#realSaleMoney").val() == "" ? 0:$("#realSaleMoney").val();
+            sale.realSaleUnitPrice = $("#realSaleUnitPrice").val() == "" ? 0:toFloat($("#realSaleUnitPrice").val());
+            sale.realSaleWeight = $("#realSaleWeight").val() == "" ? 0:toFloat($("#realSaleWeight").val());
+            sale.realSaleBoxes = $("#realSaleBoxes").val() == "" ? 0:parseInt($("#realSaleBoxes").val());
+            sale.realSaleMoney = $("#realSaleMoney").val() == "" ? 0:toFloat($("#realSaleMoney").val());
             sale.realSaleDate = $("#realSaleDate").val();
             sale.customerPayDate = $("#customerPayDate").val();
             sale.depositDate = $("#depositDate").val();
@@ -290,10 +283,10 @@ var ButtonInit = function () {
                 }else{
                     sale.moneyClear = "0";
                 }
-            sale.customerPayMoney = $("#customerPayMoney").val() == "" ? 0:$("#customerPayMoney").val();
-            sale.deposit = $("#deposit").val() == "" ? 0:$("#deposit").val();
-            sale.paymentDiff = $("#paymentDiff").val() == "" ? 0:$("#paymentDiff").val();
-            sale.profit = $("#profit").val() == "" ? 0:$("#profit").val();
+            sale.customerPayMoney = $("#customerPayMoney").val() == "" ? 0:toFloat($("#customerPayMoney").val());
+            sale.deposit = $("#deposit").val() == "" ? 0:toFloat($("#deposit").val());
+            sale.paymentDiff = $("#paymentDiff").val() == "" ? 0:toFloat($("#paymentDiff").val());
+            sale.profit = $("#profit").val() == "" ? 0:toFloat($("#profit").val());
 
             $.ajax({
                 url:"/trade/sale/add",
@@ -314,6 +307,15 @@ var ButtonInit = function () {
 
     return oInit;
 };
+
+var toFloat = function (value) {
+    value = Math.round(parseFloat(value) * 100) / 100;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".00";
+    }
+    return value;
+}
+
 function resetForm(formId){
     $("#"+formId+" input[type=text]").val('');
 }

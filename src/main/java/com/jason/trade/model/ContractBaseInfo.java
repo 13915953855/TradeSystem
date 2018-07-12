@@ -27,10 +27,6 @@ public class ContractBaseInfo {
     private String agentSendDate;
     @Column(name="bank_daodan_date")
     private String bankDaodanDate;
-    @Column(name="business_mode")
-    private String businessMode;
-    @Column(name="company_no")
-    private String companyNo;
     @Column(name="container_no")
     private String containerNo;
     @Column(name="container_size")
@@ -125,9 +121,39 @@ public class ContractBaseInfo {
     private Double exchangeRate;
     @Column(name="yahui_rate")
     private Double yahuiRate;
+    @Column(name="hasbaoguan")
+    private Integer hasbaoguan;
+    @Column(name="zhixiangfei")
+    private Double zhixiangfei;
+    @Column(name="zhigangfei")
+    private Double zhigangfei;
+
+    public Double getZhixiangfei() {
+        return zhixiangfei == null ? 0.0 : zhixiangfei;
+    }
+
+    public void setZhixiangfei(Double zhixiangfei) {
+        this.zhixiangfei = zhixiangfei;
+    }
+
+    public Double getZhigangfei() {
+        return zhigangfei == null ? 0.0 : zhigangfei;
+    }
+
+    public void setZhigangfei(Double zhigangfei) {
+        this.zhigangfei = zhigangfei;
+    }
+
+    public Integer getHasbaoguan() {
+        return hasbaoguan == null ? 0 : hasbaoguan;
+    }
+
+    public void setHasbaoguan(Integer hasbaoguan) {
+        this.hasbaoguan = hasbaoguan;
+    }
 
     public Double getYahuiRate() {
-        return yahuiRate;
+        return yahuiRate == null ? 0.0 : yahuiRate;
     }
 
     public void setYahuiRate(Double yahuiRate) {
@@ -139,7 +165,7 @@ public class ContractBaseInfo {
     }
 
     public Double getExchangeRate() {
-        return exchangeRate;
+        return exchangeRate == null ? 0.0 : exchangeRate;
     }
 
     public void setExchangeRate(Double exchangeRate) {
@@ -183,7 +209,7 @@ public class ContractBaseInfo {
     }
 
     public Integer getQacertificate() {
-        return qacertificate;
+        return qacertificate == null ? 0 : qacertificate;
     }
 
     public void setQacertificate(Integer qacertificate) {
@@ -191,7 +217,7 @@ public class ContractBaseInfo {
     }
 
     public Double getAddedValueTax() {
-        return addedValueTax;
+        return addedValueTax == null ? 0.0 : addedValueTax;
     }
 
     public void setAddedValueTax(Double addedValueTax) {
@@ -228,22 +254,6 @@ public class ContractBaseInfo {
 
     public void setBankDaodanDate(String bankDaodanDate) {
         this.bankDaodanDate = bankDaodanDate == null ? null : bankDaodanDate.trim();
-    }
-
-    public String getBusinessMode() {
-        return businessMode;
-    }
-
-    public void setBusinessMode(String businessMode) {
-        this.businessMode = businessMode == null ? null : businessMode.trim();
-    }
-
-    public String getCompanyNo() {
-        return companyNo;
-    }
-
-    public void setCompanyNo(String companyNo) {
-        this.companyNo = companyNo == null ? null : companyNo.trim();
     }
 
     public String getContainerNo() {
@@ -335,7 +345,7 @@ public class ContractBaseInfo {
     }
 
     public Double getFinalPayment() {
-        return finalPayment;
+        return finalPayment == null ? 0 : finalPayment;
     }
 
     public void setFinalPayment(Double finalPayment) {
@@ -351,7 +361,7 @@ public class ContractBaseInfo {
     }
 
     public Float getFinalRate() {
-        return finalRate;
+        return finalRate == null ? 0 : finalRate;
     }
 
     public void setFinalRate(Float finalRate) {
@@ -383,7 +393,7 @@ public class ContractBaseInfo {
     }
 
     public Double getInsuranceMoney() {
-        return insuranceMoney;
+        return insuranceMoney == null ? 0.0 : insuranceMoney;
     }
 
     public void setInsuranceMoney(Double insuranceMoney) {
@@ -391,7 +401,7 @@ public class ContractBaseInfo {
     }
 
     public Integer getIsCheckElec() {
-        return isCheckElec;
+        return isCheckElec == null ? 0 : isCheckElec;
     }
 
     public void setIsCheckElec(Integer isCheckElec) {
@@ -399,7 +409,7 @@ public class ContractBaseInfo {
     }
 
     public Integer getIsNeedInsurance() {
-        return isNeedInsurance;
+        return isNeedInsurance == null ? 0 : isNeedInsurance;
     }
 
     public void setIsNeedInsurance(Integer isNeedInsurance) {
@@ -447,7 +457,7 @@ public class ContractBaseInfo {
     }
 
     public Double getPrePayment() {
-        return prePayment;
+        return prePayment == null ? 0.0 : prePayment;
     }
 
     public void setPrePayment(Double prePayment) {
@@ -463,7 +473,7 @@ public class ContractBaseInfo {
     }
 
     public Float getPreRate() {
-        return preRate;
+        return preRate == null ? 0 : preRate;
     }
 
     public void setPreRate(Float preRate) {
@@ -495,7 +505,7 @@ public class ContractBaseInfo {
     }
 
     public Double getRemittanceRate() {
-        return remittanceRate;
+        return remittanceRate == null ? 0.0 : remittanceRate;
     }
 
     public void setRemittanceRate(Double remittanceRate) {
@@ -519,7 +529,7 @@ public class ContractBaseInfo {
     }
 
     public Double getTariff() {
-        return tariff;
+        return tariff == null ? 0.0 : tariff;
     }
 
     public void setTariff(Double tariff) {
@@ -543,7 +553,7 @@ public class ContractBaseInfo {
     }
 
     public Integer getTotalBoxes() {
-        return totalBoxes;
+        return totalBoxes == null ? 0 : totalBoxes;
     }
 
     public void setTotalBoxes(Integer totalBoxes) {
@@ -551,7 +561,7 @@ public class ContractBaseInfo {
     }
 
     public Double getTotalContractAmount() {
-        return totalContractAmount;
+        return totalContractAmount == null ? 0.0 : totalContractAmount;
     }
 
     public void setTotalContractAmount(Double totalContractAmount) {
@@ -559,7 +569,7 @@ public class ContractBaseInfo {
     }
 
     public Double getTotalContractMoney() {
-        return totalContractMoney;
+        return totalContractMoney == null ? 0.0 : totalContractMoney;
     }
 
     public void setTotalContractMoney(Double totalContractMoney) {
@@ -567,7 +577,7 @@ public class ContractBaseInfo {
     }
 
     public Double getTotalInvoiceAmount() {
-        return totalInvoiceAmount;
+        return totalInvoiceAmount == null ? 0.0 : totalInvoiceAmount;
     }
 
     public void setTotalInvoiceAmount(Double totalInvoiceAmount) {
@@ -575,7 +585,7 @@ public class ContractBaseInfo {
     }
 
     public Double getTotalInvoiceMoney() {
-        return totalInvoiceMoney;
+        return totalInvoiceMoney == null ? 0.0 : totalInvoiceMoney;
     }
 
     public void setTotalInvoiceMoney(Double totalInvoiceMoney) {
@@ -583,7 +593,7 @@ public class ContractBaseInfo {
     }
 
     public Integer getVersion() {
-        return version;
+        return version == null ? 0 : version;
     }
 
     public void setVersion(Integer version) {

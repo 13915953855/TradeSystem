@@ -12,8 +12,35 @@ public class CargoParam {
     private String warehouse;
     private String storeStartDate;
     private String storeEndDate;
+    private String customerName;
+    private String containerNo;
+    private String ladingbillNo;
     private int start;
     private int limit;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getContainerNo() {
+        return containerNo;
+    }
+
+    public void setContainerNo(String containerNo) {
+        this.containerNo = containerNo;
+    }
+
+    public String getLadingbillNo() {
+        return ladingbillNo;
+    }
+
+    public void setLadingbillNo(String ladingbillNo) {
+        this.ladingbillNo = ladingbillNo;
+    }
 
     public String getWarehouse() {
         return warehouse;

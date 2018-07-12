@@ -2,6 +2,7 @@ package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
+import com.jason.trade.mapper.ContractBaseInfoMapper;
 import com.jason.trade.model.*;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
@@ -51,10 +52,14 @@ public class TradeController {
     private TradeService tradeService;
     @Autowired
     private SysLogRepository sysLogRepository;
+    @Autowired
+    private ContractBaseInfoMapper contractBaseInfoMapper;
 
     @RequestMapping(value = "/list")
-    public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam, HttpServletRequest request) throws JSONException {
-        JSONObject result = tradeService.queryContractList(contractParam,limit,offset);
+    public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
+        contractParam.setStart(offset);
+        contractParam.setLimit(limit);
+        JSONObject result = tradeService.queryContractListByMapper(contractParam);
         return result.toString();
     }
 
@@ -75,6 +80,12 @@ public class TradeController {
         return result.toString();
     }
 
+    @RequestMapping(value = "/cargo/getTotalStore")
+    public String getTotalStore(CargoParam cargoParam) throws JSONException {
+        JSONObject result = tradeService.getTotalStore(cargoParam);
+        return result.toString();
+    }
+
     @RequestMapping(value = "/sale/list")
     public String getSaleList(@RequestParam("cargoId") String cargoId) throws JSONException {
         List<SaleInfo> list = saleRepository.findByCargoIdAndStatus(cargoId,GlobalConst.ENABLE);
@@ -90,6 +101,7 @@ public class TradeController {
         String now = DateUtil.DateTimeToString(new Date());
         contractBaseInfo.setCreateUser(userInfo.getName());
         contractBaseInfo.setCreateDateTime(now);
+        contractBaseInfo.setVersion(1);
         ContractBaseInfo record = tradeService.saveContract(contractBaseInfo,cargoId);
 
         SysLog sysLog = new SysLog();
@@ -157,8 +169,10 @@ public class TradeController {
             return GlobalConst.MODIFIED;
         }
 
-        if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
-            contractBaseInfo.setStatus(GlobalConst.SHIPPED);
+        if(StringUtils.isNotBlank(contractBaseInfo.getEtd())){
+            if(contractBaseInfo.getEtd().compareTo(DateUtil.DateToString(new Date())) <= 0){
+                contractBaseInfo.setStatus(GlobalConst.SHIPPED);
+            }
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getEta())){
             if(contractBaseInfo.getEta().compareTo(DateUtil.DateToString(new Date())) <= 0){
@@ -169,7 +183,8 @@ public class TradeController {
             contractBaseInfo.setStatus(GlobalConst.STORED);
         }
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
-        contractRepository.save(contractBaseInfo);
+        //contractRepository.save(contractBaseInfo);
+        contractBaseInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
 
         SysLog sysLog = new SysLog();
         sysLog.setDetail("更新合同"+contractBaseInfo.getContractId());
