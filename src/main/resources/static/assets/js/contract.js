@@ -85,9 +85,6 @@ var TableInit = function () {
                 field: 'externalCompany',
                 title: '外商'
             }, {
-                field: 'companyNo',
-                title: '厂号'
-            }, {
                 field: 'contractDate',
                 title: '合同日期'
             }, {

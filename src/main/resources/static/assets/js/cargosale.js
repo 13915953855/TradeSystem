@@ -75,7 +75,8 @@ function autoSetCustomerMoney(){
     var paymentDiff = 0;
     var customerPayMoney = $("#customerPayMoney").val() == ""?0:$("#customerPayMoney").val();
     var realSaleMoney = $("#realSaleMoney").val() == ""?0:$("#realSaleMoney").val();
-    paymentDiff = toFloat(customerPayMoney - realSaleMoney);
+    var deposit = $("#deposit").val() == ""?0:$("#deposit").val();
+    paymentDiff = toFloat(parseFloat(customerPayMoney) + parseFloat(deposit) - realSaleMoney);
     $("#paymentDiff").val(paymentDiff);
 }
 function autoSetExpectSaleMoney(){
