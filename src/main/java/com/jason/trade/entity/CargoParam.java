@@ -15,8 +15,17 @@ public class CargoParam {
     private String customerName;
     private String containerNo;
     private String ladingbillNo;
+    private String status;
     private int start;
     private int limit;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getCustomerName() {
         return customerName;

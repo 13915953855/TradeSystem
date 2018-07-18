@@ -97,11 +97,24 @@ var TableInit = function () {
                 field: 'realStoreBoxes',
                 title: '当前库存箱数'
             }, {
+                field: 'status',
+                title: '状态',
+                formatter: function(value, row, index){
+                    if(row.status == "1") return "已保存";
+                    else if(row.status == "9") return "编辑中";
+                    else if(row.status == "0") return "已删除";
+                }
+            }, {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
-                    var s = '<a href="/trade/cargo/view?id='+value+'&externalContract='+row.contractNo+'">查看</a>';
-                    return s;
+                    var status = row.status;
+                    if(status == "1"){
+                        var s = '<a href="/trade/cargo/view?id='+value+'">查看</a>';
+                        return s;
+                    }
+                    return "";
+
                 }
             }]
         });
@@ -122,7 +135,8 @@ var TableInit = function () {
             cargoNo: $("#cargoNo").val(),
             customerName: $("#customerName").val(),
             containerNo: $("#containerNo").val(),
-            ladingbillNo: $("#ladingbillNo").val()
+            ladingbillNo: $("#ladingbillNo").val(),
+            status: $("#status").val() == "全部"?"":$("#status").val()
         };
         return temp;
     };

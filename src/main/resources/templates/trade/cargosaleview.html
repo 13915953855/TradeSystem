@@ -37,10 +37,22 @@
     <script src="/assets/scripts/klorofil-common.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/cargosale.js"></script>
-    <script>
+    <script th:inline="javascript">
         $(function(){
             //获取警示数目
             getNoticeNum();
+
+            /*<![CDATA[*/
+            var boxes = /*[[${cargo.boxes}]]*/;
+            var invoiceAmount = /*[[${cargo.invoiceAmount}]]*/;
+            var ave = 0;
+            if(parseInt(boxes) > 0){
+                ave = parseFloat(invoiceAmount) / boxes;
+                ave = toFloat(ave);
+            }
+            $("#averageWeight").val(ave);
+            /*]]>*/
+
         });
         var getNoticeNum = function(){
             $("#noticeNum").html("");
@@ -124,6 +136,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">平均箱重</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="averageWeight"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
                                             <label class="control-label col-sm-2">当前库存重量</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="realStoreWeight" th:value="${cargo.realStoreWeight}"/>
@@ -143,6 +161,7 @@
                                                 <input type="text" class="form-control" id="expectStoreBoxes" th:value="${cargo.expectStoreBoxes}"/>
                                             </div>
                                         </div>
+
                                     </form>
                                 </div>
                             </div>

@@ -10,6 +10,7 @@ import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.SysLogRepository;
 import com.jason.trade.repository.UserRepository;
+import com.jason.trade.service.ExcelService;
 import com.jason.trade.service.TradeService;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.WebSecurityConfig;
@@ -43,6 +44,8 @@ public class MainController {
     private SysLogRepository sysLogRepository;
     @Autowired
     private TradeService tradeService;
+    @Autowired
+    private ExcelService excelService;
 
     @GetMapping("/")
     public String index(@SessionAttribute(WebSecurityConfig.SESSION_KEY) String account, Model model, HttpSession session) {
@@ -110,13 +113,14 @@ public class MainController {
         return "trade/cargomanage";
     }
     @GetMapping("/trade/cargo/view")
-    public String cargoview(@RequestParam(value="id") Integer id,@RequestParam(value="externalContract") String externalContract, Model model, HttpSession session) {
+    public String cargoview(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
         CargoInfo cargoInfo = cargoRepository.findOne(id);
         model.addAttribute("cargo",cargoInfo);
         model.addAttribute("action","view");
-        model.addAttribute("externalContract",externalContract);
+        ContractBaseInfo contractBaseInfo = contractRepository.findByContractId(cargoInfo.getContractId());
+        model.addAttribute("externalContract",contractBaseInfo.getExternalContract());
         return "trade/cargosaleview";
     }
     @GetMapping("/trade/agent")
@@ -175,7 +179,7 @@ public class MainController {
                @RequestParam(value="ladingbillNo") String ladingbillNo,@RequestParam(value="destinationPort") String destinationPort,
                @RequestParam(value="businessMode") String businessMode,@RequestParam(value="externalCompany") String externalCompany,
                @RequestParam(value="status") String status,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="level") String level,
-               @RequestParam(value="containerNo") String containerNo,@RequestParam(value="companyNo") String companyNo,
+               @RequestParam(value="containerNo") String containerNo,@RequestParam(value="companyNo") String companyNo,@RequestParam(value="chk") String[] chk,
                @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
@@ -201,7 +205,7 @@ public class MainController {
         List<ContractBaseInfo> data = tradeService.getContractBaseInfoList(contractParam);
         String fileName = "业务台账"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
         try {
-            Workbook workbook = tradeService.writeExcel(data);
+            Workbook workbook = excelService.writeExcel(data,chk);
             bos = new ByteArrayOutputStream();
             workbook.write(bos);
             workbook.close();

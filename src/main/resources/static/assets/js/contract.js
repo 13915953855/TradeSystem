@@ -24,6 +24,7 @@ $(function () {
     initExternalCompany();
     initCargoList();
 });
+
 function initExternalCompany(){
     var opts = "";
     opts += "<option>JOC AUS</option>";
@@ -149,6 +150,28 @@ var ButtonInit = function () {
 
     oInit.Init = function () {
         //初始化页面上面的按钮事件
+        $("#htBtn").click(function(){
+             if (this.checked){
+                 $("#htDiv input[name='excelChk']:checkbox").prop("checked", true);
+             } else {
+                 $("#htDiv input[name='excelChk']:checkbox").prop("checked", false);
+             }
+         });
+
+         $("#spBtn").click(function(){
+             if (this.checked){
+                 $("#spDiv input[name='excelChk']:checkbox").prop("checked", true);
+             } else {
+                 $("#spDiv input[name='excelChk']:checkbox").prop("checked", false);
+             }
+         });
+         $("#jxBtn").click(function(){
+             if (this.checked){
+                 $("#jxDiv input[name='excelChk']:checkbox").prop("checked", true);
+             } else {
+                 $("#jxDiv input[name='excelChk']:checkbox").prop("checked", false);
+             }
+         });
         $("#btn_query").click(function(){
             $('#tb_contract').bootstrapTable("refresh",{pageNumber:1});
         });
@@ -212,6 +235,16 @@ var ButtonInit = function () {
             var businessMode= $("#businessMode").val() == "全部"?"":$("#businessMode").val();
             var externalCompany=$("#externalCompany").val() == "全部"?"":$("#externalCompany").val();
             var status=$("#status").val() == "全部"?"":$("#status").val();
+
+            var chk = new Array();
+            $("input[name='excelChk']:checkbox").each(function(i){
+                if (true == $(this).is(':checked')) {
+                    chk[i] = "1";
+                }else{
+                    chk[i] = "0";
+                }
+            });
+
             var params = "?externalContract="+externalContract;
             params += "&insideContract="+insideContract;
             params += "&contractStartDate="+contractStartDate;
@@ -229,6 +262,7 @@ var ButtonInit = function () {
             params += "&businessMode="+businessMode;
             params += "&externalCompany="+externalCompany;
             params += "&status="+status;
+            params += "&chk="+chk;
         	var url = "/trade/contract/output"+params;
         	window.open(url);
         });

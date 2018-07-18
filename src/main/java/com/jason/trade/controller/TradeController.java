@@ -162,7 +162,7 @@ public class TradeController {
     }
 
     @PostMapping(value="/contract/update")
-    public String contractUpdate(ContractBaseInfo contractBaseInfo, HttpSession session){
+    public String contractUpdate(ContractBaseInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
         Integer currentVersion = contractRepository.findOne(contractBaseInfo.getId()).getVersion();
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         if(currentVersion > contractBaseInfo.getVersion()){
@@ -184,6 +184,12 @@ public class TradeController {
         }
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
         //contractRepository.save(contractBaseInfo);
+
+        if(StringUtils.isNotBlank(cargoId)) {
+            String[] arr = cargoId.split(",");
+            List<String> cargoIdList = Arrays.asList(arr);
+            tradeService.updateCargoStatus(cargoIdList);
+        }
         contractBaseInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
 
         SysLog sysLog = new SysLog();
