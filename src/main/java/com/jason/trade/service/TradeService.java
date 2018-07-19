@@ -99,8 +99,23 @@ public class TradeService {
             realSaleWeight = cargoInfo.getRealStoreWeight() - saleInfo.getRealSaleWeight();
             realSaleBoxes = cargoInfo.getRealStoreBoxes() - saleInfo.getRealSaleBoxes();
         }
+        String status = GlobalConst.ENABLE;
+        if(realSaleWeight <= 0){
+            status = GlobalConst.SELLOUT;
+        }
+        cargoRepository.updateSaleInfo(cargoId,expectSaleWeight,expectSaleBoxes,realSaleWeight,realSaleBoxes,status);
 
-        cargoRepository.updateSaleInfo(cargoId,expectSaleWeight,expectSaleBoxes,realSaleWeight,realSaleBoxes);
+        //商品售完，合同的状态同步变更
+        String contractId = cargoInfo.getContractId();
+        //查询该合同对应的所有商品的库存。
+        CargoParam cargoParam = new CargoParam();
+        cargoParam.setContractId(contractId);
+        Integer totalRealStoreWeight = cargoInfoMapper.getTotalStoreWeightByExample(cargoParam);
+        if(totalRealStoreWeight <= 0) {
+            List<String> id = new ArrayList<>();
+            id.add(contractId);
+            contractRepository.updateStatusByContractId(id, status);
+        }
 
         SaleInfo data = saleRepository.save(saleInfo);
         return data;
@@ -178,10 +193,11 @@ public class TradeService {
     }
 
     public JSONObject queryAllCargoList(CargoParam cargoParam){
-        String status = "";//0-已删除，1-已保存，9-编辑中
+        String status = "";//0-已删除，1-已保存,5-已售完，9-编辑中
         switch (cargoParam.getStatus()){
             case "全部":  status = "";break;
             case "已保存": status = "1";break;
+            case "已售完": status = "5";break;
             case "编辑中": status = "9";break;
             case "已删除": status = "0";break;
             default: break;

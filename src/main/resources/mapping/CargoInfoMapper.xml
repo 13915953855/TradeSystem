@@ -161,6 +161,9 @@
     select sum(a.real_store_weight)
     from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
     where a.status = '1'
+    <if test="contractId != null and contractId != ''" >
+      and b.contract_id = '${contractId}'
+    </if>
     <if test="contractNo != null and contractNo != ''" >
       and b.external_contract like '%${contractNo}%'
     </if>

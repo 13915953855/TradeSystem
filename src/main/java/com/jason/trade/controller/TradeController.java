@@ -233,7 +233,7 @@ public class TradeController {
     @PostMapping(value="/sale/delete")
     public String saleDel(@RequestParam("ids") String ids, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
-
+        //销售记录删除，没有对商品的库存进行恢复操作。需要管理员手动维护。
         tradeService.updateSaleStatus(ids,GlobalConst.DISABLE);
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除销售记录"+ids);

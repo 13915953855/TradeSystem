@@ -101,6 +101,7 @@ var TableInit = function () {
                 title: '状态',
                 formatter: function(value, row, index){
                     if(row.status == "1") return "已保存";
+                    else if(row.status == "5") return "已售完";
                     else if(row.status == "9") return "编辑中";
                     else if(row.status == "0") return "已删除";
                 }

@@ -22,9 +22,9 @@ public interface CargoRepository extends JpaRepository<CargoInfo,Integer>,JpaSpe
     @Modifying
     void updateStatus(List<String> id,String status);
 
-    @Query(value = "update cargo_info set expect_store_weight = ?2,expect_store_boxes=?3,real_store_weight=?4,real_store_boxes=?5 where cargo_id = ?1 ", nativeQuery = true)
+    @Query(value = "update cargo_info set expect_store_weight = ?2,expect_store_boxes=?3,real_store_weight=?4,real_store_boxes=?5,status=?6 where cargo_id = ?1 ", nativeQuery = true)
     @Modifying
-    void updateSaleInfo(String cargoId,double expectSaleWeight,Integer expectSaleBoxes,double realSaleWeight,Integer realSaleBoxes);
+    void updateSaleInfo(String cargoId,double expectSaleWeight,Integer expectSaleBoxes,double realSaleWeight,Integer realSaleBoxes,String status);
 
     @Query(value = "update cargo_info set status='1' where contract_id in (select contract_id from contract_base_info where id in (?1)) ", nativeQuery = true)
     @Modifying

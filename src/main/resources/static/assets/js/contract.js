@@ -91,7 +91,7 @@ var TableInit = function () {
             }, {
                 field: 'status',
                 title: '状态',
-                formatter: function(value, row, index){//0-作废，1-已下单，2-已装船，3-已到港，4-已入库
+                formatter: function(value, row, index){//0-作废，1-已下单，2-已装船，3-已到港，4-已入库,5-已售完
                     if(value == "1"){
                         return "已下单";
                     }else if(value == "2"){
@@ -100,7 +100,9 @@ var TableInit = function () {
                         return "已到港";
                     }else if(value == "4"){
                         return "已入库";
-                    }else{
+                    }else if(value == "5"){
+                         return "已售完";
+                     }else{
                         return "-";
                     }
                 }

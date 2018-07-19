@@ -4,6 +4,7 @@ package com.jason.trade.entity;
  * 查询Bean
  */
 public class CargoParam {
+    private String contractId;
     private String contractNo;
     private String insideContract;
     private String level;
@@ -18,6 +19,14 @@ public class CargoParam {
     private String status;
     private int start;
     private int limit;
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
+    }
 
     public String getStatus() {
         return status;
