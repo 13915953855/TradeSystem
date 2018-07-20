@@ -393,4 +393,7 @@
       )
     </if>
   </select>
+  <update id="updateStatusByField" parameterType="com.jason.trade.entity.ContractParam">
+    update contract_base_info set status = '${status}' where ${fieldName} != '' and ${fieldName} &lt;= '${today}'
+  </update>
 </mapper>

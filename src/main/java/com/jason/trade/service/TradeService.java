@@ -273,4 +273,24 @@ public class TradeService {
         return result;
     }
 
+    //0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+    public void autoUpdateContractStatus(){
+        String today = DateUtil.DateToString(new Date());
+        ContractParam contractParam = new ContractParam();
+        //2-已装船 （填写了ETD，且真实日期到了ETD的日期）
+        contractParam.setStatus(GlobalConst.SHIPPED);
+        contractParam.setFieldName("etd");
+        contractParam.setToday(today);
+        contractBaseInfoMapper.updateStatusByField(contractParam);
+        //3已到港（填写了ETA，且真实日期到了ETA所填的日期
+        contractParam.setStatus(GlobalConst.ARRIVED);
+        contractParam.setFieldName("eta");
+        contractParam.setToday(today);
+        contractBaseInfoMapper.updateStatusByField(contractParam);
+        //4已入库 （填写了入库日期，且真实日期到了所填的入库日期）
+        contractParam.setStatus(GlobalConst.STORED);
+        contractParam.setFieldName("store_date");
+        contractParam.setToday(today);
+        contractBaseInfoMapper.updateStatusByField(contractParam);
+    }
 }

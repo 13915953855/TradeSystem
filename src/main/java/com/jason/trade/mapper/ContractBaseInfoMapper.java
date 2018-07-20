@@ -13,4 +13,5 @@ public interface ContractBaseInfoMapper {
     int updateByPrimaryKeySelective(ContractBaseInfo record);
     List<ContractBaseInfo> selectByExample(ContractParam contractParam);
     Integer selectCountByExample(ContractParam contractParam);
+    void updateStatusByField(ContractParam contractParam);
 }

@@ -21,8 +21,26 @@ public class ContractParam {
     private String ladingbillNo;
     private String destinationPort;
     private String status;
+    private String fieldName;
+    private String today;
     private Integer start;
     private Integer limit;
+
+    public String getToday() {
+        return today;
+    }
+
+    public void setToday(String today) {
+        this.today = today;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
     public String getCargoNo() {
         return cargoNo;
