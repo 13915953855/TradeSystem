@@ -15,6 +15,8 @@ import com.jason.trade.service.TradeService;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.WebSecurityConfig;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -34,6 +36,9 @@ import java.util.*;
 
 @Controller
 public class MainController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -136,7 +141,6 @@ public class MainController {
         if(userInfo != null && userInfo.getPasswd().equals(password)){
             // 设置session
             session.setAttribute(WebSecurityConfig.SESSION_KEY, userInfo);
-
             map.put("status", "1");
             map.put("message", "登录成功");
 
