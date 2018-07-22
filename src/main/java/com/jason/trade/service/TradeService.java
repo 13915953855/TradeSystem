@@ -104,21 +104,24 @@ public class TradeService {
             status = GlobalConst.SELLOUT;
         }
         cargoRepository.updateSaleInfo(cargoId,expectSaleWeight,expectSaleBoxes,realSaleWeight,realSaleBoxes,status);
+        autoUpdateStatus(saleInfo.getCargoId(),status);
+        SaleInfo data = saleRepository.save(saleInfo);
+        return data;
+    }
 
+    public void autoUpdateStatus(String cargoId,String status){
         //商品售完，合同的状态同步变更
+        CargoInfo cargoInfo = cargoRepository.findByCargoId(cargoId);
         String contractId = cargoInfo.getContractId();
         //查询该合同对应的所有商品的库存。
         CargoParam cargoParam = new CargoParam();
         cargoParam.setContractId(contractId);
         Integer totalRealStoreWeight = cargoInfoMapper.getTotalStoreWeightByExample(cargoParam);
-        if(totalRealStoreWeight <= 0) {
+        if(totalRealStoreWeight == null || totalRealStoreWeight <= 0) {
             List<String> id = new ArrayList<>();
             id.add(contractId);
             contractRepository.updateStatusByContractId(id, status);
         }
-
-        SaleInfo data = saleRepository.save(saleInfo);
-        return data;
     }
 
     @Transactional
@@ -214,6 +217,16 @@ public class TradeService {
         JSONObject result = new JSONObject();
         result.put("totalStoreWeight",cargoInfoMapper.getTotalStoreWeightByExample(cargoParam));
         result.put("totalStoreBoxes",cargoInfoMapper.getTotalStoreBoxesByExample(cargoParam));
+        result.put("status","1");
+        return result;
+    }
+    public JSONObject getTotalInfo(ContractParam contractParam){
+        JSONObject result = new JSONObject();
+        ContractTotalInfo record = contractBaseInfoMapper.getTotalInfo(contractParam);
+        result.put("totalContractMoney",record.getTotalContractMoney());
+        result.put("totalContractAmount",record.getTotalContractAmount());
+        result.put("totalInvoiceMoney",record.getTotalInvoiceMoney());
+        result.put("totalInvoiceAmount",record.getTotalInvoiceAmount());
         result.put("status","1");
         return result;
     }

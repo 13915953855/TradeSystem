@@ -23,8 +23,45 @@ $(function () {
     });
     initExternalCompany();
     initCargoList();
-});
 
+    getTotalInfo();
+});
+function getTotalInfo(){
+    var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+        externalContract: $("#externalContract").val(),
+        insideContract: $("#insideContract").val(),
+        contractStartDate: $("#contractStartDate").val(),
+        contractEndDate: $("#contractEndDate").val(),
+        etaStartDate: $("#etaStartDate").val(),
+        etaEndDate: $("#etaEndDate").val(),
+        cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
+        cargoNo: $("#cargoNo").val(),
+        level: $("#level").val() == "全部"?"":$("#level").val(),
+        agent: $("#agent").val() == "全部"?"":$("#agent").val(),
+        containerNo: $("#containerNo").val(),
+        companyNo: $("#companyNo").val(),
+        ladingbillNo: $("#ladingbillNo").val(),
+        destinationPort: $("#destinationPort").val() == "全部"?"":$("#destinationPort").val(),
+        businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
+        externalCompany: $("#externalCompany").val() == "全部"?"":$("#externalCompany").val(),
+        status: $("#status").val() == "全部"?"":$("#status").val(),
+    };
+
+    $.ajax({
+        url:"/trade/contract/getTotalInfo",
+        type:"POST",
+        dataType:"json",
+        data:queryParams,
+        success:function(res){
+            if(res.status == "1"){
+                $("#totalContractMoney").html(res.totalContractMoney);
+                $("#totalContractAmount").html(res.totalContractAmount);
+                $("#totalInvoiceMoney").html(res.totalInvoiceMoney);
+                $("#totalInvoiceAmount").html(res.totalInvoiceAmount);
+            }
+        }
+    });
+}
 function initExternalCompany(){
     var opts = "";
     opts += "<option>JOC AUS</option>";

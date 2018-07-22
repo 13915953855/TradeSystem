@@ -165,8 +165,8 @@ function getTotalStore(){
         data:queryParams,
         success:function(res){
             if(res.status == "1"){
-                $("#totalStoreWeight").val(res.totalStoreWeight);
-                $("#totalStoreBoxes").val(res.totalStoreBoxes);
+                $("#totalStoreWeight").html(res.totalStoreWeight);
+                $("#totalStoreBoxes").html(res.totalStoreBoxes);
             }
         }
     });

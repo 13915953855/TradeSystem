@@ -80,6 +80,12 @@ public class TradeController {
         return result.toString();
     }
 
+    @RequestMapping(value = "/contract/getTotalInfo")
+    public String getTotalInfo(ContractParam contractParam) throws JSONException {
+        JSONObject result = tradeService.getTotalInfo(contractParam);
+        return result.toString();
+    }
+
     @RequestMapping(value = "/cargo/getTotalStore")
     public String getTotalStore(CargoParam cargoParam) throws JSONException {
         JSONObject result = tradeService.getTotalStore(cargoParam);

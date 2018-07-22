@@ -523,13 +523,7 @@
                                                     <option>40 GP</option>
                                                 </select>
                                             </div>
-                                            <label class="control-label col-sm-3">报关单号</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariffNo" th:value="${contract.tariffNo}"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">需要购买保险</label>
+                                            <label class="control-label col-sm-3">需要购买保险</label>
                                             <div class="col-sm-3">
                                                 <label class="fancy-checkbox" style="padding-top:5px;">
                                                     <input type="checkbox" id="isNeedInsurance" th:value="${contract.isNeedInsurance}"/>
@@ -600,6 +594,10 @@
                                                     <input type="checkbox" id="hasbaoguan" th:value="${contract.hasbaoguan}"/>
                                                     <span></span>
                                                 </label>
+                                            </div>
+                                            <label class="control-label col-sm-3">报关单号</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariffNo" th:value="${contract.tariffNo}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">

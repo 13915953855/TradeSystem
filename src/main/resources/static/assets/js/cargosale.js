@@ -44,23 +44,8 @@ $(function () {
     $("#realSaleWeight").blur(function(){
         autoSetProfit();
     });
-    $("#realSaleMoney").blur(function(){
-        var realSaleMoney = toFloat($("#realSaleMoney").val());
-        var customerPayMoney = toFloat($("#customerPayMoney").val());
-        if(customerPayMoney > 0 && realSaleMoney != customerPayMoney){
-            $("#deviationNotice").show();
-        }else{
-            $("#deviationNotice").hide();
-        }
-    });
-    $("#customerPayMoney").blur(function(){
-        var realSaleMoney = toFloat($("#realSaleMoney").val());
-        var customerPayMoney = toFloat($("#customerPayMoney").val());
-        if(realSaleMoney > 0 && realSaleMoney != customerPayMoney){
-            $("#deviationNotice").show();
-        }else{
-            $("#deviationNotice").hide();
-        }
+    $("#deposit").blur(function(){
+        autoSetCustomerMoney();
     });
 });
 function autoSetProfit(){
@@ -78,6 +63,11 @@ function autoSetCustomerMoney(){
     var deposit = $("#deposit").val() == ""?0:$("#deposit").val();
     paymentDiff = toFloat(parseFloat(customerPayMoney) + parseFloat(deposit) - realSaleMoney);
     $("#paymentDiff").val(paymentDiff);
+    if(paymentDiff != 0){
+        $("#deviationNotice").show();
+    }else{
+        $("#deviationNotice").hide();
+    }
 }
 function autoSetExpectSaleMoney(){
     var expectSaleMoney = 0;

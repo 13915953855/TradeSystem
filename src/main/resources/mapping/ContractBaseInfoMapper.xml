@@ -393,6 +393,80 @@
       )
     </if>
   </select>
+  <select id="getTotalInfo" resultType="com.jason.trade.entity.ContractTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
+    select sum(a.total_contract_money) as totalContractMoney,
+    sum(a.total_contract_amount) as totalContractAmount,
+    sum(a.total_invoice_money) as totalInvoiceMoney,
+    sum(a.total_invoice_amount) as totalInvoiceAmount
+    from contract_base_info a
+    where 1 = 1
+    <if test="externalContract != null" >
+      and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="insideContract != null" >
+      and a.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="agent != null" >
+      and a.agent like '%${agent}%'
+    </if>
+    <if test="containerNo != null" >
+      and a.container_no like '%${containerNo}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and a.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="externalCompany != null and externalCompany != ''" >
+      and a.external_company = '${externalCompany}'
+    </if>
+    <choose>
+      <when test="status != null and status != ''">
+        and a.status = '${status}'
+      </when>
+      <otherwise>
+        and a.status != '0'
+      </otherwise>
+    </choose>
+    <if test="destinationPort != null and destinationPort != ''" >
+      and a.destination_port = '${destinationPort}'
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and a.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and a.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '') or (cargoNo != null and cargoNo != '')" >
+      and a.contract_id in (
+      select contract_id from cargo_info where 1=1
+      <if test="cargoName != null and cargoName != ''" >
+        and cargo_name = '${cargoName}'
+      </if>
+      <if test="level != null and level != ''" >
+        and level = '${level}'
+      </if>
+      <if test="businessMode != null and businessMode != ''" >
+        and business_mode = '${businessMode}'
+      </if>
+      <if test="companyNo != null" >
+        and company_no like '%${companyNo}%'
+      </if>
+      <if test="cargoNo != null" >
+        and cargo_no like '%${cargoNo}%'
+      </if>
+      )
+    </if>
+
+    order by a.id desc
+    <if test="start != null and limit != null" >
+      limit ${start},${limit}
+    </if>
+  </select>
   <update id="updateStatusByField" parameterType="com.jason.trade.entity.ContractParam">
     update contract_base_info set status = '${status}' where ${fieldName} != '' and ${fieldName} &lt;= '${today}'
   </update>

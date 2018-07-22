@@ -22,6 +22,7 @@
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png"/>
     <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/assets/webuploader/webuploader.css"/>
     <!-- Javascript -->
     <script src="/assets/vendor/jquery/jquery.min.js"></script>
     <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -34,6 +35,7 @@
     <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="/assets/scripts/bootstrap-table.js"></script>
     <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="/assets/webuploader/webuploader.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/contractadd.js"></script>
@@ -451,13 +453,7 @@
                                                     <option>40 GP</option>
                                                 </select>
                                             </div>
-                                            <label class="control-label col-sm-3">报关单号</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariffNo"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">需要购买保险</label>
+                                            <label class="control-label col-sm-3">需要购买保险</label>
                                             <div class="col-sm-3">
                                                 <label class="fancy-checkbox" style="padding-top:5px;">
                                                     <input type="checkbox" id="isNeedInsurance"/>
@@ -528,6 +524,10 @@
                                                     <input type="checkbox" id="hasbaoguan"/>
                                                     <span></span>
                                                 </label>
+                                            </div>
+                                            <label class="control-label col-sm-3">报关单号</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariffNo"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
@@ -620,6 +620,13 @@
                                     </form>
                                 </div>
                             </div>
+                            <!--<div id="uploader" class="wu-example">
+                                <div id="thelist" class="uploader-list"></div>
+                                <div class="btns">
+                                    <div id="picker">选择文件</div>
+                                    <button id="ctlBtn" class="btn btn-default">开始上传</button>
+                                </div>
+                            </div>-->
                         </div>
                         <div class="panel-footer">
                             <div style="text-align:center;">

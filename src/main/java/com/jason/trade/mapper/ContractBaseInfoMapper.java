@@ -3,6 +3,7 @@ package com.jason.trade.mapper;
 import com.jason.trade.entity.CargoManageInfo;
 import com.jason.trade.entity.CargoParam;
 import com.jason.trade.entity.ContractParam;
+import com.jason.trade.entity.ContractTotalInfo;
 import com.jason.trade.model.ContractBaseInfo;
 import org.springframework.stereotype.Component;
 
@@ -14,4 +15,5 @@ public interface ContractBaseInfoMapper {
     List<ContractBaseInfo> selectByExample(ContractParam contractParam);
     Integer selectCountByExample(ContractParam contractParam);
     void updateStatusByField(ContractParam contractParam);
+    ContractTotalInfo getTotalInfo(ContractParam contractParam);
 }
