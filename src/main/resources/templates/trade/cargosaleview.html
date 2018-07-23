@@ -119,11 +119,10 @@
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="cargoNo" th:value="${cargo.cargoNo}"/>
                                             </div>
-                                            <label class="control-label col-sm-3">成本单价(CNY/KG)</label>
+                                            <label class="control-label col-sm-3">厂号</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="costPrice" th:value="${cargo.costPrice}"/>
+                                                <input type="text" class="form-control" id="companyNo" disabled="disabled" th:value="${cargo.companyNo}"/>
                                             </div>
-
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">发票箱数(小计)</label>
@@ -139,6 +138,10 @@
                                             <label class="control-label col-sm-2">平均箱重</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="averageWeight"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">成本单价(CNY/KG)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="costPrice" th:value="${cargo.costPrice}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">

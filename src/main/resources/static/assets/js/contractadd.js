@@ -12,7 +12,7 @@ $(function () {
 
 
 
-var uploader = WebUploader.create({
+/*var uploader = WebUploader.create({
     // 选完文件后，是否自动上传。
     auto: true,
     // swf文件路径
@@ -63,7 +63,7 @@ uploader.on( 'uploadError', function( file ) {
 
 uploader.on( 'uploadComplete', function( file ) {
     $( '#'+file.id ).find('.progress').fadeOut();
-});
+});*/
 
 
 

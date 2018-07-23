@@ -22,7 +22,7 @@
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png"/>
     <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon.png"/>
-    <link rel="stylesheet" type="text/css" href="/assets/webuploader/webuploader.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="/assets/webuploader/webuploader.css"/>-->
     <!-- Javascript -->
     <script src="/assets/vendor/jquery/jquery.min.js"></script>
     <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -35,7 +35,7 @@
     <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="/assets/scripts/bootstrap-table.js"></script>
     <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
-    <script src="/assets/webuploader/webuploader.js"></script>
+    <!--<script src="/assets/webuploader/webuploader.js"></script>-->
     <script src="/assets/scripts/klorofil-common.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/contractadd.js"></script>
@@ -525,10 +525,7 @@
                                                     <span></span>
                                                 </label>
                                             </div>
-                                            <label class="control-label col-sm-3">报关单号</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariffNo"/>
-                                            </div>
+
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">货代</label>
@@ -568,7 +565,14 @@
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
-                                            <label class="control-label col-sm-3">放行日期</label>
+                                            <label class="control-label col-sm-3">报关单号</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariffNo"/>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">放行日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
                                                     <input class="form-control" size="16" id="agentPassDate" type="text" readonly="readonly"/>

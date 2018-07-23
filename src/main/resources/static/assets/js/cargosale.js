@@ -120,7 +120,7 @@ var TableInit = function () {
                 visible: false
             }, {
                 field: 'saleContractNo',
-                title: '购销合同/订单号'
+                title: '购销合同<br>/订单号'
             }, {
                  field: 'pickupUser',
                  title: '销售经理'
@@ -129,59 +129,59 @@ var TableInit = function () {
                 title: '客户名称'
             }, {
                 field: 'expectSaleWeight',
-                title: '预销售重量(KG)'
+                title: '预销售<br>重量(KG)'
             }, {
                 field: 'expectSaleUnitPrice',
-                title: '预销售单价(CNY/KG)'
+                title: '预销售<br>单价(CNY/KG)'
             }, {
                 field: 'expectSaleMoney',
-                title: '预销售金额'
+                title: '预销售<br>金额'
             }, {
                 field: 'expectSaleDate',
-                title: '预出库时间'
+                title: '预出库<br>时间'
             }, {
                 field: 'realSaleWeight',
-                title: '实际销售重量(KG)'
+                title: '实际销售<br>重量(KG)'
             }, {
                 field: 'realSaleBoxes',
-                title: '实际销售箱数'
+                title: '实际销<br>售箱数'
             }, {
                 field: 'realSaleUnitPrice',
-                title: '实际销售单价(CNY/KG)'
+                title: '实际销售<br>单价(CNY/KG)'
             }, {
                 field: 'realSaleMoney',
-                title: '实际销售金额'
+                title: '实际销<br>售金额'
             }, {
                 field: 'realSaleDate',
-                title: '出库单时间'
+                title: '出库单<br>时间'
             }, {
                 field: 'customerPayDate',
-                title: '客户来款时间'
+                title: '客户来<br>款时间'
             }, {
                 field: 'customerPayMoney',
-                title: '客户来款金额'
+                title: '客户来<br>款金额'
             }, {
                 field: 'depositDate',
-                title: '定金时间'
+                title: '定金<br>时间'
             }, {
                 field: 'deposit',
                 title: '定金'
             }, {
                 field: 'paymentDiff',
-                title: '货款差额'
+                title: '货款<br>差额'
             }, {
                 field: 'profit',
                 title: '利润'
             }, {
                 field: 'moneyClear',
-                title: '是否已结清',
+                title: '是否<br>结清',
                 formatter:function(value, row, index){
                     if(value == "1") return "是";
                     else return "否";
                 }
             }, {
                  field: 'pickupDate',
-                 title: '提货时间'
+                 title: '提货<br>时间'
              } , {
                 field: 'remark',
                 title: '备注',

@@ -54,6 +54,9 @@ var TableInit = function () {
             onLoadSuccess:function(data){
                 getTotalStore();
             },
+            onDblClickRow:function(row){
+                window.location.href = "/trade/cargo/view?id="+row.id;
+            },
             columns: [{
                 checkbox: true
             },{
