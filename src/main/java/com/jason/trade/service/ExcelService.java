@@ -11,12 +11,12 @@ import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.SaleRepository;
 import com.jason.trade.util.SetStyleUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,13 +35,23 @@ public class ExcelService {
     private int thirdSize = 0;
 
     public XSSFWorkbook writeExcel(List<ContractBaseInfo> data, String[] chkArr) {
+
         firstSize = secondSize = thirdSize = 0;
         //创建工作簿
         XSSFWorkbook workBook = new XSSFWorkbook();
         //创建工作表
         XSSFSheet sheet = workBook.createSheet();
+        //创建样式
+        XSSFCellStyle styleNoColor = workBook.createCellStyle();
+        styleNoColor.setAlignment(HorizontalAlignment.CENTER);
+        styleNoColor.setVerticalAlignment(VerticalAlignment.CENTER);
+        styleNoColor.setBorderBottom(BorderStyle.THIN);
+        styleNoColor.setBorderLeft(BorderStyle.THIN);
+        styleNoColor.setBorderRight(BorderStyle.THIN);
+        styleNoColor.setBorderTop(BorderStyle.THIN);
+        styleNoColor.setWrapText(true);
         //创建头
-        writeExcelHeadZiYing(workBook,sheet,chkArr);
+        writeExcelHeadZiYing(sheet,chkArr,styleNoColor);
         int saleStart = 1;
         int saleEnd = 1;
         for (int i = 0,len = data.size(); i < len; i++) {
@@ -230,7 +240,7 @@ public class ExcelService {
                     cell = row.createCell(k);
                     cell.setCellValue("");
                 }
-                cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
+                cell.setCellStyle(styleNoColor);
             }
         }
         return workBook;
@@ -357,7 +367,7 @@ public class ExcelService {
         return result;
     }
 
-    private void writeExcelHeadZiYing(XSSFWorkbook workBook,XSSFSheet sheet,String[] chkArr){
+    private void writeExcelHeadZiYing(XSSFSheet sheet,String[] chkArr,XSSFCellStyle styleNoColor){
         //合并单元格
         //MergeCell(sheet);
         //创建第一行
@@ -369,21 +379,21 @@ public class ExcelService {
             if(chkArr[i].equals("1")) {
                 cell = row.createCell(firstSize++, CellType.STRING);
                 cell.setCellValue(GlobalConst.HEAD_CONTRACT_ARRAY[i]);
-                cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
+                cell.setCellStyle(styleNoColor);
             }
         }
         for (int i = 0; i < GlobalConst.HEAD_CARGO_ARRAY.length; i++) {
             if(chkArr[i + GlobalConst.HEAD_CONTRACT_ARRAY.length].equals("1")) {
                 cell = row.createCell(firstSize + secondSize++, CellType.STRING);
                 cell.setCellValue(GlobalConst.HEAD_CARGO_ARRAY[i]);
-                cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
+                cell.setCellStyle(styleNoColor);
             }
         }
         for (int i = 0; i < GlobalConst.HEAD_SALE_ARRAY.length; i++) {
             if(chkArr[i + GlobalConst.HEAD_CONTRACT_ARRAY.length + GlobalConst.HEAD_CARGO_ARRAY.length].equals("1")) {
                 cell = row.createCell( firstSize + secondSize + thirdSize++, CellType.STRING);
                 cell.setCellValue(GlobalConst.HEAD_SALE_ARRAY[i]);
-                cell.setCellStyle(SetStyleUtils.setStyleNoColor(workBook));
+                cell.setCellStyle(styleNoColor);
             }
         }
     }

@@ -66,7 +66,7 @@
   <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no
     from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
-    where 1 = 1
+    where 1 = 1 and a.status != '0' and b.status in ('4','5')
     <if test="contractNo != null" >
       and b.external_contract like '%${contractNo}%'
     </if>
@@ -114,7 +114,7 @@
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
     select count(1)
     from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
-    where 1 = 1
+    where 1 = 1 and a.status != '0' and b.status in ('4','5')
     <if test="contractNo != null and contractNo != ''" >
       and b.external_contract like '%${contractNo}%'
     </if>

@@ -47,6 +47,13 @@ function getTotalInfo(){
         status: $("#status").val() == "全部"?"":$("#status").val(),
     };
 
+var toFloat = function (value) {
+    value = Math.round(parseFloat(value) * 100) / 100;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".00";
+    }
+    return value;
+}
     $.ajax({
         url:"/trade/contract/getTotalInfo",
         type:"POST",
@@ -54,10 +61,10 @@ function getTotalInfo(){
         data:queryParams,
         success:function(res){
             if(res.status == "1"){
-                $("#totalContractMoney").html(res.totalContractMoney);
-                $("#totalContractAmount").html(res.totalContractAmount);
-                $("#totalInvoiceMoney").html(res.totalInvoiceMoney);
-                $("#totalInvoiceAmount").html(res.totalInvoiceAmount);
+                $("#totalContractMoney").html(toFloat(res.totalContractMoney));
+                $("#totalContractAmount").html(toFloat(res.totalContractAmount));
+                $("#totalInvoiceMoney").html(toFloat(res.totalInvoiceMoney));
+                $("#totalInvoiceAmount").html(toFloat(res.totalInvoiceAmount));
             }
         }
     });
