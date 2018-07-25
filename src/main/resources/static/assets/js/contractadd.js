@@ -95,6 +95,32 @@ uploader.on( 'uploadComplete', function( file ) {
         }
     });
 
+    if($("#isFinancing").checked){
+        $("#financingDiv").show();
+    }else{
+        $("#financingDiv").hide();
+    }
+    $("#isFinancing").change(function(){
+        if(this.checked){
+            $("#financingDiv").show();
+        }else{
+            $("#financingDiv").hide();
+        }
+    });
+
+    if($("#isYahui").checked){
+        $("#yahuiDiv").show();
+    }else{
+        $("#yahuiDiv").hide();
+    }
+    $("#isYahui").change(function(){
+        if(this.checked){
+            $("#yahuiDiv").show();
+        }else{
+            $("#yahuiDiv").hide();
+        }
+    });
+
     $("#unitPrice").blur(function(){
         var contractMoney = 0;
         var invoiceMoney = 0;
@@ -150,13 +176,23 @@ var toFloat = function (value) {
     }
     return value;
 }
+var toFloat4 = function (value) {
+    value = Math.round(parseFloat(value) * 10000) / 10000;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".0000";
+    }
+    return value;
+}
 function payTypeChange(){
     var type = $("#payType").val();
     if(type == "L/C"){
         $("#LCDiv").show();
         $("#TTDiv").hide();
-    }else{
+    }else if(type == "TT"){
         $("#TTDiv").show();
+        $("#LCDiv").hide();
+    }else{
+        $("#TTDiv").hide();
         $("#LCDiv").hide();
     }
 }
@@ -386,9 +422,9 @@ function autoSetTotalMoney(){
     }
     $("#totalBoxes").val(parseInt(totalBoxes));
     $("#totalInvoiceMoney").val(toFloat(totalInvoiceMoney));
-    $("#totalInvoiceAmount").val(toFloat(totalInvoiceAmount));
+    $("#totalInvoiceAmount").val(toFloat4(totalInvoiceAmount));
     $("#totalContractMoney").val(toFloat(totalContractMoney));
-    $("#totalContractAmount").val(toFloat(totalContractAmount));
+    $("#totalContractAmount").val(toFloat4(totalContractAmount));
 }
 function setFormData(data){
     $("#_id").val(data.id);
@@ -424,50 +460,52 @@ function saveContract(){
     }
 
     contract.externalContract = $("#externalContract").val();
-    if($("#insideContract").val() == "") {
-        $("#insideContract").parent().addClass("has-error");
-        $btn.button('reset');
-        return;
-    }
     contract.insideContract = $("#insideContract").val();
     contract.contractDate = $("#contractDate").val();
-    if($("#externalCompany").val() == "") {
-        $("#externalCompany").parent().addClass("has-error");
-        $btn.button('reset');
-        return;
-    }
     contract.externalCompany = $("#externalCompany").val();
     contract.originCountry = $("#originCountry").val();
-    //contract.shipmentPort = $("#shipmentPort").val();
     contract.destinationPort = $("#destinationPort").val();
     contract.priceCondition = $("#priceCondition").val();
     contract.payType = $("#payType").val();
     contract.currency = $("#currency").val();
     contract.expectSailingDate = $("#expectSailingDate").val();
-
     contract.exchangeRate = $("#exchangeRate").val() == "" ? 0:toFloat($("#exchangeRate").val());
-    contract.totalContractAmount = $("#totalContractAmount").val() == "" ? 0:toFloat($("#totalContractAmount").val());
+    contract.totalContractAmount = $("#totalContractAmount").val() == "" ? 0:toFloat4($("#totalContractAmount").val());
     contract.totalContractMoney = $("#totalContractMoney").val() == "" ? 0:toFloat($("#totalContractMoney").val());
-    contract.totalInvoiceAmount = $("#totalInvoiceAmount").val() == "" ? 0:toFloat($("#totalInvoiceAmount").val());
+    contract.totalInvoiceAmount = $("#totalInvoiceAmount").val() == "" ? 0:toFloat4($("#totalInvoiceAmount").val());
     contract.totalInvoiceMoney = $("#totalInvoiceMoney").val() == "" ? 0:toFloat($("#totalInvoiceMoney").val());
     contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:parseInt($("#totalBoxes").val());
     contract.issuingBank = $("#issuingBank").val();
     contract.issuingDate = $("#issuingDate").val();
     contract.lcno = $("#lcno").val();
-    contract.bankDaodanDate = $("#bankDaodanDate").val();
     contract.remittanceDate = $("#remittanceDate").val();
-    contract.yahuidaoqiDate = $("#yahuidaoqiDate").val();
     contract.remittanceRate = $("#remittanceRate").val() == "" ? 0:toFloat($("#remittanceRate").val());
-    contract.yahuiRate = $("#yahuiRate").val() == "" ? 0:toFloat($("#yahuiRate").val());
     contract.prePayment = $("#prePayment").val() == "" ? 0:toFloat($("#prePayment").val());
     contract.prePaymentDate = $("#prePaymentDate").val();
     contract.preRate = $("#preRate").val() == "" ? 0:toFloat($("#preRate").val());
     contract.finalPayment = $("#finalPayment").val() == "" ? 0:toFloat($("#finalPayment").val());
     contract.finalPaymentDate = $("#finalPaymentDate").val();
     contract.finalRate = $("#finalRate").val() == "" ? 0:toFloat($("#finalRate").val());
+    if($("#isFinancing").is(':checked')){
+        contract.isFinancing = "1";
+    }else{
+        contract.isFinancing = "0";
+    }
+    if($("#isYahui").is(':checked')){
+        contract.isYahui = "1";
+    }else{
+        contract.isYahui = "0";
+    }
+    contract.yahuiMoney = $("#yahuiMoney").val() == "" ? 0:toFloat($("#yahuiMoney").val());
+    contract.yahuiYearRate = $("#yahuiYearRate").val() == "" ? 0:toFloat($("#yahuiYearRate").val());
+    contract.yahuiDayRate = $("#yahuiDayRate").val() == "" ? 0:toFloat($("#yahuiDayRate").val());
+    contract.yahuidaoqiDate = $("#yahuidaoqiDate").val();
+    contract.financingMoney = $("#financingMoney").val() == "" ? 0:toFloat($("#financingMoney").val());
+    contract.financingRate = $("#financingRate").val() == "" ? 0:toFloat($("#financingRate").val());
+    contract.daoqiRate = $("#daoqiRate").val() == "" ? 0:toFloat($("#daoqiRate").val());
+    contract.financingDaoqi = $("#financingDaoqi").val();
     contract.containerNo = $("#containerNo").val();
     contract.ladingbillNo = $("#ladingbillNo").val();
-    //contract.shipCompany = $("#shipCompany").val();
     contract.containerSize = $("#containerSize").val();
     if($("#isNeedInsurance").is(':checked')){
         contract.isNeedInsurance = "1";
@@ -494,9 +532,6 @@ function saveContract(){
     }else{
         contract.hasbaoguan = "0";
     }
-    //contract.elecSendDate = $("#elecSendDate").val();
-    //contract.exCompanySendBillDate = $("#exCompanySendBillDate").val();
-    //contract.billSignDate = $("#billSignDate").val();
     contract.agent = $("#agent").val();
     contract.agentSendDate = $("#agentSendDate").val();
     contract.tariff = $("#tariff").val() == "" ? 0:toFloat($("#tariff").val());

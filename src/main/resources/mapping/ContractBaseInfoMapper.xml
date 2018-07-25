@@ -11,7 +11,6 @@
     <result column="agent" property="agent" jdbcType="VARCHAR" />
     <result column="agent_pass_date" property="agentPassDate" jdbcType="VARCHAR" />
     <result column="agent_send_date" property="agentSendDate" jdbcType="VARCHAR" />
-    <result column="bank_daodan_date" property="bankDaodanDate" jdbcType="VARCHAR" />
     <result column="container_no" property="containerNo" jdbcType="VARCHAR" />
     <result column="container_size" property="containerSize" jdbcType="VARCHAR" />
     <result column="contract_date" property="contractDate" jdbcType="VARCHAR" />
@@ -58,22 +57,31 @@
     <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
     <result column="yahuidaoqi_date" property="yahuidaoqiDate" jdbcType="VARCHAR" />
     <result column="exchange_rate" property="exchangeRate" jdbcType="DOUBLE" />
-    <result column="yahui_rate" property="yahuiRate" jdbcType="DOUBLE" />
     <result column="hasbaoguan" property="hasbaoguan" jdbcType="INTEGER" />
     <result column="zhixiangfei" property="zhixiangfei" jdbcType="DOUBLE" />
     <result column="zhigangfei" property="zhigangfei" jdbcType="DOUBLE" />
+    <result column="is_yahui" property="isYahui" jdbcType="INTEGER" />
+    <result column="yahui_money" property="yahuiMoney" jdbcType="DOUBLE" />
+    <result column="yahui_year_rate" property="yahuiYearRate" jdbcType="DOUBLE" />
+    <result column="yahui_day_rate" property="yahuiDayRate" jdbcType="DOUBLE" />
+    <result column="is_financing" property="isFinancing" jdbcType="INTEGER" />
+    <result column="financing_money" property="financingMoney" jdbcType="DOUBLE" />
+    <result column="financing_rate" property="financingRate" jdbcType="DOUBLE" />
+    <result column="daoqi_rate" property="daoqiRate" jdbcType="DOUBLE" />
+    <result column="financing_daoqi" property="financingDaoqi" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, eta, etd, lcno, qacertificate, added_value_tax, agent, agent_pass_date, agent_send_date, 
-    bank_daodan_date, container_no, container_size, contract_date,
-    contract_id, create_date_time, create_user, currency, destination_port, expect_sailing_date, 
-    external_company, external_contract, final_payment, final_payment_date, final_rate, 
-    inside_contract, insurance_buy_date, insurance_company, insurance_money, is_check_elec, 
-    is_need_insurance, issuing_bank, issuing_date, ladingbill_no, origin_country, pay_type, 
-    pre_payment, pre_payment_date, pre_rate, price_condition, remark, remittance_date, 
-    remittance_rate, status, store_date, tariff, tariff_no, tax_pay_date, total_boxes, 
-    total_contract_amount, total_contract_money, total_invoice_amount, total_invoice_money, 
-    version, warehouse, yahuidaoqi_date, exchange_rate, yahui_rate, hasbaoguan,zhixiangfei,zhigangfei
+    id, eta, etd, lcno, qacertificate, added_value_tax, agent, agent_pass_date, agent_send_date,
+    container_no, container_size, contract_date,
+    contract_id, create_date_time, create_user, currency, destination_port, expect_sailing_date,
+    external_company, external_contract, final_payment, final_payment_date, final_rate,
+    inside_contract, insurance_buy_date, insurance_company, insurance_money, is_check_elec,
+    is_need_insurance, issuing_bank, issuing_date, ladingbill_no, origin_country, pay_type,
+    pre_payment, pre_payment_date, pre_rate, price_condition, remark, remittance_date,
+    remittance_rate, status, store_date, tariff, tariff_no, tax_pay_date, total_boxes,
+    total_contract_amount, total_contract_money, total_invoice_amount, total_invoice_money,
+    version, warehouse, yahuidaoqi_date, exchange_rate, hasbaoguan,zhixiangfei,zhigangfei,
+    is_yahui,yahui_money,yahui_year_rate,yahui_day_rate,is_financing,financing_money,financing_rate,financing_daoqi,daoqi_rate
   </sql>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
     update contract_base_info
@@ -101,9 +109,6 @@
       </if>
       <if test="agentSendDate != null" >
         agent_send_date = #{agentSendDate,jdbcType=VARCHAR},
-      </if>
-      <if test="bankDaodanDate != null" >
-        bank_daodan_date = #{bankDaodanDate,jdbcType=VARCHAR},
       </if>
       <if test="containerNo != null" >
         container_no = #{containerNo,jdbcType=VARCHAR},
@@ -240,11 +245,11 @@
       <if test="yahuidaoqiDate != null" >
         yahuidaoqi_date = #{yahuidaoqiDate,jdbcType=VARCHAR},
       </if>
+      <if test="financingDaoqi != null" >
+        financing_daoqi = #{financingDaoqi,jdbcType=VARCHAR},
+      </if>
       <if test="exchangeRate != null" >
         exchange_rate = #{exchangeRate,jdbcType=DOUBLE},
-      </if>
-      <if test="yahuiRate != null" >
-        yahui_rate = #{yahuiRate,jdbcType=DOUBLE},
       </if>
       <if test="hasbaoguan != null" >
         hasbaoguan = #{hasbaoguan,jdbcType=INTEGER},
@@ -254,6 +259,30 @@
       </if>
       <if test="zhigangfei != null" >
         zhigangfei = #{zhigangfei,jdbcType=DOUBLE},
+      </if>
+      <if test="isYahui != null" >
+        is_yahui = #{isYahui,jdbcType=INTEGER},
+      </if>
+      <if test="isFinancing != null" >
+        is_financing = #{isFinancing,jdbcType=INTEGER},
+      </if>
+      <if test="yahuiMoney != null" >
+        yahui_money = #{yahuiMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="yahuiYearRate != null" >
+        yahui_year_rate = #{yahuiYearRate,jdbcType=DOUBLE},
+      </if>
+      <if test="yahuiDayRate != null" >
+        yahui_day_rate = #{yahuiDayRate,jdbcType=DOUBLE},
+      </if>
+      <if test="financingMoney != null" >
+        financing_money = #{financingMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="financingRate != null" >
+        financing_rate = #{financingRate,jdbcType=DOUBLE},
+      </if>
+      <if test="daoqiRate != null" >
+        daoqi_rate = #{daoqiRate,jdbcType=DOUBLE},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -466,6 +495,12 @@
     <if test="start != null and limit != null" >
       limit ${start},${limit}
     </if>
+  </select>
+  <select id="getTotalNumPerDay" resultType="com.jason.trade.entity.ContractForCharts">
+    select count(id) as total,DATE_FORMAT( create_date_time, '%Y-%m-%d') as dateStr from contract_base_info
+    where status != 0
+    group by DATE_FORMAT( create_date_time, '%Y-%m-%d')
+    ORDER BY id desc limit 0,15
   </select>
   <update id="updateStatusByField" parameterType="com.jason.trade.entity.ContractParam">
     update contract_base_info set status = '${status}' where ${fieldName} != '' and ${fieldName} &lt;= '${today}'

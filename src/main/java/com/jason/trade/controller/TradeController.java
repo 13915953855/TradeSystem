@@ -250,4 +250,15 @@ public class TradeController {
         return GlobalConst.SUCCESS;
     }
 
+    @RequestMapping(value = "/charts")
+    public String getCharts(@RequestParam("type") String type) throws JSONException {
+        JSONObject result = new JSONObject();
+        if(type.equals("contractAdd")){
+            List<ContractForCharts> data = contractBaseInfoMapper.getTotalNumPerDay();
+            result.put("status","1");
+            result.put("data",data);
+        }
+
+        return result.toString();
+    }
 }

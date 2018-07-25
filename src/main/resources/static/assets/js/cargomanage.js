@@ -183,6 +183,7 @@ var ButtonInit = function () {
         //初始化页面上面的按钮事件
         $("#btn_query").click(function(){
             $('#tb_cargo').bootstrapTable("refresh",{pageNumber:1});
+            getTotalStore();
         });
         $("#btn_reset").click(function(){
             resetQuery();

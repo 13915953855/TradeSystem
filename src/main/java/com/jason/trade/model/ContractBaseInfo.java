@@ -25,8 +25,7 @@ public class ContractBaseInfo {
     private String agentPassDate;
     @Column(name="agent_send_date")
     private String agentSendDate;
-    @Column(name="bank_daodan_date")
-    private String bankDaodanDate;
+
     @Column(name="container_no")
     private String containerNo;
     @Column(name="container_size")
@@ -119,14 +118,102 @@ public class ContractBaseInfo {
     private String yahuidaoqiDate;
     @Column(name="exchange_rate")
     private Double exchangeRate;
-    @Column(name="yahui_rate")
-    private Double yahuiRate;
     @Column(name="hasbaoguan")
     private Integer hasbaoguan;
     @Column(name="zhixiangfei")
     private Double zhixiangfei;
     @Column(name="zhigangfei")
     private Double zhigangfei;
+    @Column(name="is_yahui")
+    private Integer isYahui;
+    @Column(name="yahui_money")
+    private Double yahuiMoney;
+    @Column(name="yahui_year_rate")
+    private Double yahuiYearRate;
+    @Column(name="yahui_day_rate")
+    private Double yahuiDayRate;
+    @Column(name="is_financing")
+    private Integer isFinancing;
+    @Column(name="financing_money")
+    private Double financingMoney;
+    @Column(name="financing_rate")
+    private Double financingRate;
+    @Column(name="financing_daoqi")
+    private String financingDaoqi;
+    @Column(name="daoqi_rate")
+    private Double daoqiRate;
+
+    public Integer getIsYahui() {
+        return isYahui == null ? 0 : isYahui;
+    }
+
+    public void setIsYahui(Integer isYahui) {
+        this.isYahui = isYahui;
+    }
+
+    public Double getYahuiMoney() {
+        return yahuiMoney == null ? 0.0 : yahuiMoney;
+    }
+
+    public void setYahuiMoney(Double yahuiMoney) {
+        this.yahuiMoney = yahuiMoney;
+    }
+
+    public Double getYahuiYearRate() {
+        return yahuiYearRate == null ? 0.0 : yahuiYearRate;
+    }
+
+    public void setYahuiYearRate(Double yahuiYearRate) {
+        this.yahuiYearRate = yahuiYearRate;
+    }
+
+    public Double getYahuiDayRate() {
+        return yahuiDayRate == null ? 0.0 : yahuiDayRate;
+    }
+
+    public void setYahuiDayRate(Double yahuiDayRate) {
+        this.yahuiDayRate = yahuiDayRate;
+    }
+
+    public Integer getIsFinancing() {
+        return isFinancing == null ? 0 : isFinancing;
+    }
+
+    public void setIsFinancing(Integer isFinancing) {
+        this.isFinancing = isFinancing;
+    }
+
+    public Double getFinancingMoney() {
+        return financingMoney == null ? 0.0 : financingMoney;
+    }
+
+    public void setFinancingMoney(Double financingMoney) {
+        this.financingMoney = financingMoney;
+    }
+
+    public Double getFinancingRate() {
+        return financingRate == null ? 0.0 : financingRate;
+    }
+
+    public void setFinancingRate(Double financingRate) {
+        this.financingRate = financingRate;
+    }
+
+    public String getFinancingDaoqi() {
+        return financingDaoqi;
+    }
+
+    public void setFinancingDaoqi(String financingDaoqi) {
+        this.financingDaoqi = financingDaoqi;
+    }
+
+    public Double getDaoqiRate() {
+        return daoqiRate == null ? 0.0 : daoqiRate;
+    }
+
+    public void setDaoqiRate(Double daoqiRate) {
+        this.daoqiRate = daoqiRate;
+    }
 
     public Double getZhixiangfei() {
         return zhixiangfei == null ? 0.0 : zhixiangfei;
@@ -150,18 +237,6 @@ public class ContractBaseInfo {
 
     public void setHasbaoguan(Integer hasbaoguan) {
         this.hasbaoguan = hasbaoguan;
-    }
-
-    public Double getYahuiRate() {
-        return yahuiRate == null ? 0.0 : yahuiRate;
-    }
-
-    public void setYahuiRate(Double yahuiRate) {
-        if(yahuiRate == null){
-            this.yahuiRate = 0.0;
-        }else{
-            this.yahuiRate = yahuiRate;
-        }
     }
 
     public Double getExchangeRate() {
@@ -246,14 +321,6 @@ public class ContractBaseInfo {
 
     public void setAgentSendDate(String agentSendDate) {
         this.agentSendDate = agentSendDate == null ? null : agentSendDate.trim();
-    }
-
-    public String getBankDaodanDate() {
-        return bankDaodanDate;
-    }
-
-    public void setBankDaodanDate(String bankDaodanDate) {
-        this.bankDaodanDate = bankDaodanDate == null ? null : bankDaodanDate.trim();
     }
 
     public String getContainerNo() {

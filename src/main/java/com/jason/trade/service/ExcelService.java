@@ -268,10 +268,10 @@ public class ExcelService {
         list.add(baseInfo.getContractDate());//合同日期
         list.add(baseInfo.getExternalCompany());//外商
         list.add(baseInfo.getOriginCountry());//原产地
-        list.add(baseInfo.getDestinationPort());//目的港
         list.add(baseInfo.getPriceCondition());//价格条件
-        list.add(baseInfo.getPayType());//付款方式
+        list.add(baseInfo.getDestinationPort());//目的港
         list.add(baseInfo.getCurrency());//币种
+        list.add(baseInfo.getPayType());//付款方式
         list.add(baseInfo.getExpectSailingDate());//预计船期
         list.add(baseInfo.getExchangeRate());//汇率
         list.add(baseInfo.getTotalBoxes());//箱数总计
@@ -279,27 +279,37 @@ public class ExcelService {
         list.add(baseInfo.getTotalContractMoney());//合同总金额(元)
         list.add(baseInfo.getTotalInvoiceAmount());//发票总数量
         list.add(baseInfo.getTotalInvoiceMoney());//发票总金额(元)
+
         list.add(baseInfo.getIssuingBank());//开证行
         list.add(baseInfo.getIssuingDate());//开证日期
         list.add(baseInfo.getLcno());//LC NO.
-        list.add(baseInfo.getBankDaodanDate());//银行到单日
         list.add(baseInfo.getRemittanceDate());//付汇日
-        list.add(baseInfo.getYahuidaoqiDate());//押汇到期日
         list.add(baseInfo.getRemittanceRate());//付汇汇率(%)
-        list.add(baseInfo.getYahuiRate());//押汇汇率(%)
-        list.add(baseInfo.getPrePayment());//付款金额
-        list.add(baseInfo.getPrePaymentDate());//付款日期
-        list.add(baseInfo.getPreRate());//汇率
-        list.add(baseInfo.getFinalPayment());//付款金额
-        list.add(baseInfo.getFinalPaymentDate());//付款日期
-        list.add(baseInfo.getFinalRate());//汇率
+        list.add(baseInfo.getIsYahui() == 1?"是":"否");//已办理押汇
+        list.add(baseInfo.getYahuiMoney());//押汇金额
+        list.add(baseInfo.getYahuiYearRate());//押汇年汇率(%)
+        list.add(baseInfo.getYahuidaoqiDate());//押汇到期日
+        list.add(baseInfo.getYahuiDayRate());//押汇日汇率(%)
+
+        list.add(baseInfo.getPrePayment());//预付款金额
+        list.add(baseInfo.getPrePaymentDate());//预付款日期
+        list.add(baseInfo.getPreRate());//预付款汇率
+        list.add(baseInfo.getFinalPayment());//尾款金额
+        list.add(baseInfo.getFinalPaymentDate());//尾款日期
+        list.add(baseInfo.getFinalRate());//尾款汇率
+        list.add(baseInfo.getIsFinancing() == 1?"是":"否");//已办理融资
+        list.add(baseInfo.getFinancingMoney());//融资金额
+        list.add(baseInfo.getFinancingRate());//融资年利率
+        list.add(baseInfo.getFinancingDaoqi());//融资到期日
+        list.add(baseInfo.getDaoqiRate());//到期日汇率
+
         list.add(baseInfo.getContainerNo());//柜号
         list.add(baseInfo.getLadingbillNo());//提单号
         list.add(baseInfo.getContainerSize());//货柜尺寸
         list.add(baseInfo.getIsNeedInsurance() == 1?"是":"否");//需要购买保险
+        list.add(baseInfo.getInsuranceCompany());//保险公司
         list.add(baseInfo.getInsuranceBuyDate());//保险购买日期
         list.add(baseInfo.getInsuranceMoney());//保险费用
-        list.add(baseInfo.getInsuranceCompany());//保险公司
         list.add(baseInfo.getEtd());//ETD
         list.add(baseInfo.getEta());//ETA
         list.add(baseInfo.getIsCheckElec()==1?"是":"否");//已核对电子版
@@ -310,6 +320,7 @@ public class ExcelService {
         list.add(baseInfo.getTariff());//关税
         list.add(baseInfo.getAddedValueTax());//增值税
         list.add(baseInfo.getTaxPayDate());//付税日期
+        list.add(baseInfo.getTariffNo());//报关单号
         list.add(baseInfo.getAgentPassDate());//放行日期
         list.add(baseInfo.getWarehouse());//仓库
         list.add(baseInfo.getStoreDate());//入库日期

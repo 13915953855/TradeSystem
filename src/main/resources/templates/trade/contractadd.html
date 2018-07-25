@@ -350,26 +350,10 @@
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="lcno" />
                                             </div>
-                                            <label class="control-label col-sm-3">银行到单日</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="bankDaodanDate" type="text" />
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">付汇日</label>
+                                            <label class="control-label col-sm-3">付汇日</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
                                                     <input class="form-control" size="16" id="remittanceDate" type="text" />
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                            <label class="control-label col-sm-3">押汇到期日</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="yahuidaoqiDate" type="text" />
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
@@ -379,9 +363,39 @@
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="remittanceRate" />
                                             </div>
-                                            <label class="control-label col-sm-3">押汇利率</label>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">已办理押汇</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="yahuiRate" />
+                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="isYahui"/>
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="yahuiDiv">
+                                            <div class="form-group" style="">
+                                                <label class="control-label col-sm-2">押汇金额</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="yahuiMoney"/>
+                                                </div>
+                                                <label class="control-label col-sm-3">押汇年利率</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="yahuiYearRate"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="">
+                                                <label class="control-label col-sm-2">押汇到期日</label>
+                                                <div class="col-sm-3">
+                                                    <div class="input-append date form-date">
+                                                        <input class="form-control" size="16" id="yahuidaoqiDate" type="text" />
+                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                    </div>
+                                                </div>
+                                                <label class="control-label col-sm-3">押汇日利率</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="yahuiDayRate"/>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -425,6 +439,40 @@
                                             <label class="control-label col-sm-3">尾款汇率</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="finalRate" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">已办理融资</label>
+                                            <div class="col-sm-3">
+                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="isFinancing"/>
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="financingDiv">
+                                            <div class="form-group" style="">
+                                                <label class="control-label col-sm-2">融资金额</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="financingMoney" />
+                                                </div>
+                                                <label class="control-label col-sm-3">融资年利率</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="financingRate" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="">
+                                                <label class="control-label col-sm-2">融资到期日</label>
+                                                <div class="col-sm-3">
+                                                    <div class="input-append date form-date">
+                                                        <input class="form-control" size="16" id="financingDaoqi" type="text" />
+                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                    </div>
+                                                </div>
+                                                <label class="control-label col-sm-3">到期日汇率</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="daoqiRate" />
+                                                </div>
                                             </div>
                                         </div>
                                     </form>

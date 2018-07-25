@@ -26,6 +26,21 @@ $(function () {
 
     getTotalInfo();
 });
+
+var toFloat = function (value) {
+    value = Math.round(parseFloat(value) * 100) / 100;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".00";
+    }
+    return value;
+}
+var toFloat4 = function (value) {
+    value = Math.round(parseFloat(value) * 10000) / 10000;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".0000";
+    }
+    return value;
+}
 function getTotalInfo(){
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         externalContract: $("#externalContract").val(),
@@ -47,13 +62,6 @@ function getTotalInfo(){
         status: $("#status").val() == "全部"?"":$("#status").val(),
     };
 
-var toFloat = function (value) {
-    value = Math.round(parseFloat(value) * 100) / 100;
-    if (value.toString().indexOf(".") < 0) {
-        value = value.toString() + ".00";
-    }
-    return value;
-}
     $.ajax({
         url:"/trade/contract/getTotalInfo",
         type:"POST",
@@ -62,9 +70,9 @@ var toFloat = function (value) {
         success:function(res){
             if(res.status == "1"){
                 $("#totalContractMoney").html(toFloat(res.totalContractMoney));
-                $("#totalContractAmount").html(toFloat(res.totalContractAmount));
+                $("#totalContractAmount").html(toFloat4(res.totalContractAmount));
                 $("#totalInvoiceMoney").html(toFloat(res.totalInvoiceMoney));
-                $("#totalInvoiceAmount").html(toFloat(res.totalInvoiceAmount));
+                $("#totalInvoiceAmount").html(toFloat4(res.totalInvoiceAmount));
             }
         }
     });
@@ -223,6 +231,7 @@ var ButtonInit = function () {
          });
         $("#btn_query").click(function(){
             $('#tb_contract').bootstrapTable("refresh",{pageNumber:1});
+            getTotalInfo();
         });
         $("#btn_reset").click(function(){
             resetQuery();

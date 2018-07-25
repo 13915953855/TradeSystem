@@ -257,12 +257,12 @@ var ButtonInit = function () {
             sale.saleContractNo = $("#saleContractNo").val();//合同序号
             sale.customerName = $("#customerName").val();
             sale.expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == "" ? 0:toFloat($("#expectSaleUnitPrice").val());
-            sale.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:toFloat($("#expectSaleWeight").val());
+            sale.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:toFloat4($("#expectSaleWeight").val());
             sale.expectSaleBoxes = $("#expectSaleBoxes").val() == "" ? 0:parseInt($("#expectSaleBoxes").val());
             sale.expectSaleMoney = $("#expectSaleMoney").val() == "" ? 0:toFloat($("#expectSaleMoney").val());
             sale.expectSaleDate = $("#expectSaleDate").val();
             sale.realSaleUnitPrice = $("#realSaleUnitPrice").val() == "" ? 0:toFloat($("#realSaleUnitPrice").val());
-            sale.realSaleWeight = $("#realSaleWeight").val() == "" ? 0:toFloat($("#realSaleWeight").val());
+            sale.realSaleWeight = $("#realSaleWeight").val() == "" ? 0:toFloat4($("#realSaleWeight").val());
             sale.realSaleBoxes = $("#realSaleBoxes").val() == "" ? 0:parseInt($("#realSaleBoxes").val());
             sale.realSaleMoney = $("#realSaleMoney").val() == "" ? 0:toFloat($("#realSaleMoney").val());
             sale.realSaleDate = $("#realSaleDate").val();
@@ -306,7 +306,13 @@ var toFloat = function (value) {
     }
     return value;
 }
-
+var toFloat4 = function (value) {
+    value = Math.round(parseFloat(value) * 10000) / 10000;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".0000";
+    }
+    return value;
+}
 function resetForm(formId){
     $("#"+formId+" input[type=text]").val('');
 }
