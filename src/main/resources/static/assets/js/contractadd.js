@@ -316,7 +316,8 @@ var ButtonInit = function () {
             window.location.href = "/trade/contract";
         });
         $("#btn_add").click(function(){
-
+            resetForm("cargoForm");
+            $("#myModal").modal('show');
         });
         $("#btn_edit").click(function(){
             var data = $("#tb_cargo").bootstrapTable("getSelections");
@@ -404,6 +405,11 @@ var ButtonInit = function () {
 };
 function resetForm(formId){
     $("#"+formId+" input[type=text]").val('');
+    $('#_id').val('');
+    $('#cargoId').val('');
+    $("#cargoName").val('').trigger("change");
+    $("#level").val('').trigger("change");
+    $("#businessMode").val('').trigger("change");
     autoSetTotalMoney();
 }
 function autoSetTotalMoney(){

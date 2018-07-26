@@ -22,6 +22,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +44,7 @@ import java.util.*;
 @RestController
 @RequestMapping(value = "/trade")
 public class TradeController {
+    private static final Logger log = LoggerFactory.getLogger(TradeController.class.getName());
     @Autowired
     private ContractRepository contractRepository;
     @Autowired
@@ -122,10 +125,15 @@ public class TradeController {
 
     @PostMapping(value="/cargo/add")
     public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
+        log.info("开始处理商品新增或修改的请求");
         cargoInfo.setStatus(GlobalConst.EDITING);
         if(StringUtils.isBlank(cargoInfo.getCargoId())) {
             cargoInfo.setCargoId(UUID.randomUUID().toString());
+            log.info("新增商品cargoId="+cargoInfo.getCargoId());
+        }else{
+            log.info("编辑商品cargoId="+cargoInfo.getCargoId());
         }
+
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         String now = DateUtil.DateTimeToString(new Date());
         cargoInfo.setCreateUser(userInfo.getName());
@@ -134,7 +142,9 @@ public class TradeController {
         cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
         cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
         cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
+        log.info("保存商品开始");
         CargoInfo data = cargoRepository.save(cargoInfo);
+        log.info("保存商品完毕");
 
         SysLog sysLog = new SysLog();
         sysLog.setDetail("新增商品"+data.getCargoId());
