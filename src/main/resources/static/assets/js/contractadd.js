@@ -376,9 +376,9 @@ var ButtonInit = function () {
             cargo.companyNo = $("#companyNo").val();
             cargo.boxes = $("#boxes").val() == "" ? 0:parseInt($("#boxes").val());//箱数(小计)
             cargo.unitPrice = $("#unitPrice").val() == "" ? 0:toFloat($("#unitPrice").val());//单价
-            cargo.contractAmount = $("#contractAmount").val() == "" ? 0:toFloat($("#contractAmount").val());//合同数量(小计)
+            cargo.contractAmount = $("#contractAmount").val() == "" ? 0:toFloat4($("#contractAmount").val());//合同数量(小计)
             cargo.contractMoney = $("#contractMoney").val() == "" ? 0:toFloat($("#contractMoney").val());//合同金额(小计)
-            cargo.invoiceAmount = $("#invoiceAmount").val() == "" ? 0:toFloat($("#invoiceAmount").val());//发票数量(小计)
+            cargo.invoiceAmount = $("#invoiceAmount").val() == "" ? 0:toFloat4($("#invoiceAmount").val());//发票数量(小计)
             cargo.invoiceMoney = $("#invoiceMoney").val() == "" ? 0:toFloat($("#invoiceMoney").val());//发票金额(小计)
             cargo.costPrice = $("#costPrice").val() == "" ? 0:toFloat($("#costPrice").val());
             cargo.realStoreMoney = $("#realStoreMoney").val() == "" ? 0:toFloat($("#realStoreMoney").val());
