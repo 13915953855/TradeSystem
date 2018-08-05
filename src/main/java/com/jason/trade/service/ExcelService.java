@@ -9,12 +9,12 @@ import com.jason.trade.model.SaleInfo;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.SaleRepository;
+import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.SetStyleUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +50,12 @@ public class ExcelService {
         styleNoColor.setBorderRight(BorderStyle.THIN);
         styleNoColor.setBorderTop(BorderStyle.THIN);
         styleNoColor.setWrapText(true);
+
+        //set date format
+        CellStyle dateCellStyle = workBook.createCellStyle();
+        CreationHelper createHelper = workBook.getCreationHelper();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/m/d"));
+
         //创建头
         writeExcelHeadZiYing(sheet,chkArr,styleNoColor);
         int saleStart = 1;
@@ -83,6 +89,10 @@ public class ExcelService {
                                     if (value instanceof String) {
                                         cell = row.createCell(firstSize + secondSize + saleSize++, CellType.STRING);//从销售的单元格开始写，下标是65
                                         cell.setCellValue(String.valueOf(value));
+                                        if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
+                                            //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
+                                            cell.setCellStyle(dateCellStyle);
+                                        }
                                     } else {
                                         cell = row.createCell(firstSize + secondSize + saleSize++, CellType.NUMERIC);//从销售的单元格开始写，下标是65
                                         if (value instanceof Integer) {
@@ -107,6 +117,10 @@ public class ExcelService {
                                     if (value instanceof String) {
                                         cell = row.createCell(firstSize + cargoSize++, CellType.STRING);//从商品的单元格开始写，下标是50
                                         cell.setCellValue(String.valueOf(cargoList.get(k)));
+                                        if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
+                                            //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
+                                            cell.setCellStyle(dateCellStyle);
+                                        }
                                     } else {
                                         cell = row.createCell(firstSize + cargoSize++, CellType.NUMERIC);//从商品的单元格开始写，下标是50
                                         if (value instanceof Integer) {
@@ -141,6 +155,10 @@ public class ExcelService {
                                 if (value instanceof String) {
                                     cell = row.createCell(firstSize + cargoSize++, CellType.STRING);//从商品的单元格开始写，下标是50
                                     cell.setCellValue(String.valueOf(value));
+                                    if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
+                                        //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
+                                        cell.setCellStyle(dateCellStyle);
+                                    }
                                 } else {
                                     cell = row.createCell(firstSize + cargoSize++, CellType.NUMERIC);//从商品的单元格开始写，下标是50
                                     if (value instanceof Integer) {
@@ -173,6 +191,10 @@ public class ExcelService {
                             if (value instanceof String) {
                                 cell = row.createCell(contractSize++, CellType.STRING);
                                 cell.setCellValue(String.valueOf(value));
+                                if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
+                                    //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
+                                    cell.setCellStyle(dateCellStyle);
+                                }
                             } else {
                                 cell = row.createCell(contractSize++, CellType.NUMERIC);
                                 if (value instanceof Integer) {
@@ -203,6 +225,10 @@ public class ExcelService {
                         if (value instanceof String) {
                             cell = row.createCell(contractSize++, CellType.STRING);
                             cell.setCellValue(String.valueOf(value));
+                            if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
+                                //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
+                                cell.setCellStyle(dateCellStyle);
+                            }
                         } else {
                             cell = row.createCell(contractSize++, CellType.NUMERIC);
                             if (value instanceof Integer) {
