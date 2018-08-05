@@ -245,35 +245,44 @@ var ButtonInit = function () {
                  var id = a[0].id;
                  window.location.href="/trade/contract/update?id="+id;
             }else if(a.length > 1){
-                toastr.warning("仅支持编辑一行！");
+                swal('仅支持编辑一行！','','warning');
             }else{
-                toastr.warning("请选中一行！");
+                swal('请选中一行！','','warning');
             }
         });
         $("#btn_delete").click(function(){
-            if(confirm("确认删除吗？")){
-                var a = $('#tb_contract').bootstrapTable('getSelections');
-                var ids = "";
-                for(var i=0;i<a.length;i++) {
-                    ids += a[i].id+",";
-                }
-                if(ids != ""){
-                    $.ajax({
-                        url:"/trade/contract/delete",
-                        type:"POST",
-                        dataType:"json",
-                        data:{"ids":ids},
-                        success:function(res){
-                            if(res.status == "1"){
-                                toastr.success("删除成功");
-                            }else{
-                                toastr.error("删除失败");
-                            }
-                            $("#tb_contract").bootstrapTable("refresh",{pageNumber:1});
-                        }
-                    });
-                }
-            }
+            swal({
+              title: '确定删除吗？',
+              text: '你将无法恢复它！',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+            }).then(function(){
+              var a = $('#tb_contract').bootstrapTable('getSelections');
+              var ids = "";
+              for(var i=0;i<a.length;i++) {
+                  ids += a[i].id+",";
+              }
+              if(ids != ""){
+                  $.ajax({
+                      url:"/trade/contract/delete",
+                      type:"POST",
+                      dataType:"json",
+                      data:{"ids":ids},
+                      success:function(res){
+                          if(res.status == "1"){
+                              swal('删除成功！','','success');
+                          }else{
+                              swal('删除失败！','','error');
+                          }
+                          $("#tb_contract").bootstrapTable("refresh",{pageNumber:1});
+                      }
+                  });
+              }
+            });
         });
         $("#btn_output").click(function(){
             var externalContract = $("#externalContract").val();

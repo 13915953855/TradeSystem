@@ -142,6 +142,16 @@ public class ContractBaseInfo {
     private String financingDaoqi;
     @Column(name="daoqi_rate")
     private Double daoqiRate;
+    @Column(name="financing_bank")
+    private String financingBank;
+
+    public String getFinancingBank() {
+        return financingBank;
+    }
+
+    public void setFinancingBank(String financingBank) {
+        this.financingBank = financingBank;
+    }
 
     public Integer getIsYahui() {
         return isYahui == null ? 0 : isYahui;

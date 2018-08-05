@@ -1,5 +1,5 @@
 $(function(){
-    toastr.options = {
+    /*toastr.options = {
         closeButton: true,
         debug: false,
         progressBar: true,
@@ -13,7 +13,7 @@ $(function(){
         hideEasing: "linear",
         showMethod: "fadeIn",
         hideMethod: "fadeOut"
-    };
+    };*/
 
     var toFloat = function (value) {
         value = Math.round(parseFloat(value) * 100) / 100;

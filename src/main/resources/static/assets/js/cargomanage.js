@@ -73,8 +73,8 @@ var TableInit = function () {
                 field: 'containerNo',
                 title: '柜号'
             },{
-                field: 'ladingbillNo',
-                title: '提单号'
+                field: 'companyNo',
+                title: '厂号'
             },{
                 field: 'cargoName',
                 title: '产品名称'

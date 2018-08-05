@@ -22,20 +22,25 @@
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png"/>
     <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/assets/webuploader/webuploader.css"/>
     <!-- Javascript -->
     <script src="/assets/vendor/jquery/jquery.min.js"></script>
     <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="/assets/vendor/select2/css/select2.min.css"/>
     <script src="/assets/vendor/select2/js/select2.min.js"></script>
-    <link rel="stylesheet" href="/assets/vendor/toastr/toastr.min.css"/>
-    <script src="/assets/vendor/toastr/toastr.min.js"></script>
     <script src="/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="/assets/scripts/bootstrap-table.js"></script>
     <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
+
+    <link rel="stylesheet" href="/assets/vendor/sweetalert2/sweetalert2-6.6.2.min.css"/>
+    <script src="/assets/vendor/sweetalert2/sweetalert2-6.6.2.min.js"></script>
+    <script src="/assets/webuploader/webuploader.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
     <script src="/assets/js/common.js"></script>
+    <script src="/assets/js/upload.js"></script>
     <script src="/assets/js/contractadd.js"></script>
     <script th:inline="javascript">
         $(function(){
@@ -473,7 +478,7 @@
                                                         <span class="add-on"><i class="icon-th"></i></span>
                                                     </div>
                                                 </div>
-                                                <label class="control-label col-sm-3">押汇日利率</label>
+                                                <label class="control-label col-sm-3">押汇日汇率</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="yahuiDayRate"  th:value="${contract.yahuiDayRate}"/>
                                                 </div>
@@ -532,6 +537,12 @@
                                             </div>
                                         </div>
                                         <div id="financingDiv">
+                                            <div class="form-group" style="">
+                                                <label class="control-label col-sm-2">融资银行</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="financingBank" th:value="${contract.financingBank}"/>
+                                                </div>
+                                            </div>
                                             <div class="form-group" style="">
                                                 <label class="control-label col-sm-2">融资金额</label>
                                                 <div class="col-sm-3">
@@ -752,6 +763,28 @@
                                             </div>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">附件</div>
+                                <div class="panel-body">
+                                    <div id="uploader" class="wu-example">
+                                        <div class="btns">
+                                            <div id="picker">上传文件</div>
+                                        </div>
+                                        <div id="thelist" class="uploader-list"></div>
+                                    </div>
+                                    <div id="fileDiv" class="row">
+                                        <!--<div class="col-md-3">
+                                            <div class="metric">
+                                                <span class="icon"><i class="fa fa-download"></i></span>
+                                                <p>
+                                                    <span class="number">1,252</span>
+                                                    <span class="title">Downloads</span>
+                                                </p>
+                                            </div>
+                                        </div>-->
+                                    </div>
                                 </div>
                             </div>
                         </div>

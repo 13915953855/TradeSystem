@@ -298,6 +298,7 @@ public class ExcelService {
         list.add(baseInfo.getFinalPaymentDate());//尾款日期
         list.add(baseInfo.getFinalRate());//尾款汇率
         list.add(baseInfo.getIsFinancing() == 1?"是":"否");//已办理融资
+        list.add(baseInfo.getFinancingBank());//融资银行
         list.add(baseInfo.getFinancingMoney());//融资金额
         list.add(baseInfo.getFinancingRate());//融资年利率
         list.add(baseInfo.getFinancingDaoqi());//融资到期日

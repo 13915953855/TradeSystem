@@ -2,12 +2,10 @@ package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
+import com.jason.trade.mapper.AttachmentMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
 import com.jason.trade.model.*;
-import com.jason.trade.repository.CargoRepository;
-import com.jason.trade.repository.ContractRepository;
-import com.jason.trade.repository.SaleRepository;
-import com.jason.trade.repository.SysLogRepository;
+import com.jason.trade.repository.*;
 import com.jason.trade.service.TradeService;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.RespUtil;
@@ -33,8 +31,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,6 +50,8 @@ public class TradeController {
     @Autowired
     private CargoRepository cargoRepository;
     @Autowired
+    private AttachmentRepository attachmentRepository;
+    @Autowired
     private SaleRepository saleRepository;
     @Autowired
     private TradeService tradeService;
@@ -57,6 +59,8 @@ public class TradeController {
     private SysLogRepository sysLogRepository;
     @Autowired
     private ContractBaseInfoMapper contractBaseInfoMapper;
+    @Autowired
+    private AttachmentMapper attachmentMapper;
 
     @RequestMapping(value = "/list")
     public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
@@ -72,6 +76,33 @@ public class TradeController {
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
+        return result.toString();
+    }
+
+    @RequestMapping(value = "/attachment/getAll")
+    public String getAllFile(@RequestParam("contractId") String contractId) throws JSONException {
+        List<Attachment> list = attachmentRepository.findByContractId(contractId);
+        JSONObject result = new JSONObject();
+        result.put("status","1");
+        result.put("data",list);
+        return result.toString();
+    }
+
+    @RequestMapping(value = "/attachment/delete")
+    public String delete(@RequestParam("contractId") String contractId,@RequestParam("id") Integer id) throws JSONException {
+        AttachmentKey key = new AttachmentKey();
+        key.setId(id);
+        key.setContractId(contractId);
+        Attachment attachment = attachmentMapper.selectByPrimaryKey(key);
+        String filePath = attachment.getFilePath();
+        attachmentMapper.deleteByPrimaryKey(key);
+        //todo 删除文件
+        File file = new File(filePath);
+        if(file.exists()){
+            file.delete();
+        }
+        JSONObject result = new JSONObject();
+        result.put("status","1");
         return result.toString();
     }
 
@@ -270,5 +301,41 @@ public class TradeController {
         }
 
         return result.toString();
+    }
+
+    @PostMapping(value = "/upload")
+    public String upload(@RequestParam("file")MultipartFile files,@RequestParam("contractId") String contractId,@RequestParam("size") Integer size) {
+        JSONObject json=new JSONObject();
+        String msg = "添加成功";
+        log.info("-------------------开始调用上传文件upload接口-------------------");
+        try{
+            String name = files.getOriginalFilename();
+            String type = name.substring(name.lastIndexOf(".") + 1);// 文件类型
+            String path = GlobalConst.FILE_PATH + File.separator + contractId;
+            //String path = "D:"+ File.separator + contractId;
+            File file = new File(path);
+            if(!file.exists()){
+                file.mkdir();
+            }
+            String pathWithName = path + File.separator + name;
+            File uploadFile = new File(pathWithName);
+            files.transferTo(uploadFile);
+
+            //保存记录到数据库
+            Attachment attachment = new Attachment();
+            attachment.setContractId(contractId);
+            attachment.setFileName(name);
+            attachment.setFilePath(pathWithName);
+            attachment.setFileType(type);
+            attachment.setFileSize(size);
+            attachment.setStatus(GlobalConst.ENABLE);
+            attachment.setCreatetime(new Date());
+            attachmentMapper.insertSelective(attachment);
+        }catch(Exception e){
+            msg="添加失败";
+        }
+        log.info("-------------------结束调用上传文件upload接口-------------------");
+        json.put("msg", msg);
+        return json.toString();
     }
 }

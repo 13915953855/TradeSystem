@@ -7,68 +7,6 @@ $(function () {
     var oTable = new TableInit();
     oTable.Init();
 
-
-
-
-
-
-/*var uploader = WebUploader.create({
-    // 选完文件后，是否自动上传。
-    auto: true,
-    // swf文件路径
-    swf: '/assets/webuploader/Uploader.swf',
-
-    // 文件接收服务端。
-    server: 'http://webuploader.duapp.com/server/fileupload.php',
-
-    // 选择文件的按钮。可选。
-    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-    pick: '#picker',
-
-    // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-    resize: false
-});
-
-// 当有文件被添加进队列的时候
-uploader.on( 'fileQueued', function( file ) {
-    $("#thelist").append( '<div id="' + file.id + '" class="item">' +
-        '<h4 class="info">' + file.name + '</h4>' +
-        '<p class="state">等待上传...</p>' +
-    '</div>' );
-});
-// 文件上传过程中创建进度条实时显示。
-uploader.on( 'uploadProgress', function( file, percentage ) {
-    var $li = $( '#'+file.id ),
-        $percent = $li.find('.progress .progress-bar');
-
-    // 避免重复创建
-    if ( !$percent.length ) {
-        $percent = $('<div class="progress progress-striped active">' +
-          '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-          '</div>' +
-        '</div>').appendTo( $li ).find('.progress-bar');
-    }
-
-    $li.find('p.state').text('上传中');
-
-    $percent.css( 'width', percentage * 100 + '%' );
-});
-uploader.on( 'uploadSuccess', function( file ) {
-    $( '#'+file.id ).find('p.state').text('已上传');
-});
-
-uploader.on( 'uploadError', function( file ) {
-    $( '#'+file.id ).find('p.state').text('上传出错');
-});
-
-uploader.on( 'uploadComplete', function( file ) {
-    $( '#'+file.id ).find('.progress').fadeOut();
-});*/
-
-
-
-
-
     initCargoList();
     initOriginCountry();
     initExternalCompany();
@@ -160,14 +98,16 @@ uploader.on( 'uploadComplete', function( file ) {
     });
 
     $(".form-date").datetimepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true,
-            todayBtn: true,
-            minView: 2,
-            maxView: 4,
-            todayHighlight: true,
-            language: 'zh-CN'
-        });
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        minView: 2,
+        maxView: 4,
+        todayHighlight: true,
+        language: 'zh-CN'
+    });
+
+    getAllFile();
 });
 var toFloat = function (value) {
     value = Math.round(parseFloat(value) * 100) / 100;
@@ -325,15 +265,27 @@ var ButtonInit = function () {
                 $("#myModal").modal('show');
                 setFormData(data[0]);
             }else if(data.length > 1){
-                toastr.warning("只能选择一项进行编辑");
+                swal("只能选择一项进行编辑!","","warning");
                 $("#myModal").modal('hide');
             }else {
-                toastr.warning("请选中一行！");
+                swal("请选中一行!","","warning");
                 $("#myModal").modal('hide');
             }
         });
         $("#btn_del").click(function(){
-            if(confirm("确认删除吗？")){
+        swal({
+              title: '确定删除吗？',
+              text: '你将无法恢复它！',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '确定删除！',
+              cancelButtonText: '取消删除！',
+              confirmButtonClass: 'btn btn-success',
+              cancelButtonClass: 'btn btn-danger',
+              buttonsStyling: false
+            }).then(function() {
                 var a = $('#tb_cargo').bootstrapTable('getSelections');
                 var ids = "";
                 for(var i=0;i<a.length;i++) {
@@ -350,15 +302,16 @@ var ButtonInit = function () {
                         data:{"ids":ids},
                         success:function(res){
                             if(res.status == "1"){
-                                toastr.success("删除成功");
+                                swal("删除成功!","","success");
                             }else{
-                                toastr.error("删除失败");
+                                swal("删除失败!","","error");
                             }
                             $("#tb_cargo").bootstrapTable("refresh");
                         }
                     });
                 }
-            }
+            });
+
         });
         $("#save_cargo").click(function(){
             var cargo = {};
@@ -390,9 +343,17 @@ var ButtonInit = function () {
                 data:cargo,
                 success:function(res){
                     if(res.status == "1"){
-                        $('#myModal').modal('hide');
-                        $("#tb_cargo").bootstrapTable("refresh");
-                        resetForm("cargoForm");
+                        swal("保存成功!","","success").then(
+                            function(){
+                                $('#myModal').modal('hide');
+                                $("#tb_cargo").bootstrapTable("refresh");
+                                resetForm("cargoForm");
+                            },function(dismiss){
+                                $('#myModal').modal('hide');
+                                $("#tb_cargo").bootstrapTable("refresh");
+                                resetForm("cargoForm");
+                            });
+
                     }
                 },error:function(){
                     window.location.href="/login";
@@ -506,6 +467,7 @@ function saveContract(){
     contract.yahuiYearRate = $("#yahuiYearRate").val() == "" ? 0:toFloat($("#yahuiYearRate").val());
     contract.yahuiDayRate = $("#yahuiDayRate").val() == "" ? 0:toFloat($("#yahuiDayRate").val());
     contract.yahuidaoqiDate = $("#yahuidaoqiDate").val();
+    contract.financingBank = $("#financingBank").val();
     contract.financingMoney = $("#financingMoney").val() == "" ? 0:toFloat($("#financingMoney").val());
     contract.financingRate = $("#financingRate").val() == "" ? 0:toFloat($("#financingRate").val());
     contract.daoqiRate = $("#daoqiRate").val() == "" ? 0:toFloat($("#daoqiRate").val());
@@ -575,15 +537,87 @@ function saveContract(){
         data:contract,
         success:function(res){
             if(res.status == "1"){
-                toastr.success("保存成功");
-
-                window.location.href = "/trade/contract";
+                swal("保存成功!","","success").then(function(){window.location.href = "/trade/contract";},function(dismiss){window.location.href = "/trade/contract";});
             }else if(res.status == "-2"){
-                toastr.warning("此合同已被他人编辑过，请刷新页面后重新编辑再保存。");
+                swal("此合同已被他人编辑过，请刷新页面后重新编辑再保存!","","warning");
             }
             $btn.button('reset');
         },error:function(){
             $btn.button('reset');
         }
+    });
+}
+
+function downloadFile(id,contractId){
+    var url = "/trade/attachment/download?id="+id+"&contractId="+contractId;
+    window.open(url);
+}
+function getAllFile(){
+    var contractId = $("#contractId").val();
+    $.ajax({
+        url:'/trade/attachment/getAll',
+        type:"POST",
+        dataType:"json",
+        data:{'contractId':contractId},
+        success:function(res){
+            setFileDiv(res.data);
+        }
+    });
+}
+function setFileDiv(data){
+    $("#fileDiv").html('');
+    for(var i=0;i<data.length;i++){
+        var fileName = data[i].fileName;
+        if(fileName.length > 60){
+            fileName = fileName.substring(0,48)+"...";
+        }
+
+        var s = '<div class="col-md-3">';
+        s += '<div class="metric" style="height:90px;">';
+        s += '<span class="icon" style="cursor:pointer" onclick="downloadFile('+data[i].id+',\''+data[i].contractId+'\')"><i class="fa fa-download"></i></span>';
+        s += '<p style="word-break:break-all;">';
+        s += '<span style="font-size:16px;">'+fileName+'</span>';
+        s += '</p>';
+        s += '<div style="position:absolute; right:20px; bottom:30px;"><span style="cursor:pointer" onclick="deleteAttachment('+data[i].id+',\''+data[i].contractId+'\')"><i class="lnr lnr-trash"></i></span>';
+        s += '</div></div></div>';
+
+        $("#fileDiv").append(s);
+    }
+}
+
+function deleteAttachment(id,contractId){
+    swal({
+      title: '确定删除吗？',
+      text: '你将无法恢复它！',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '确定删除！',
+      cancelButtonText: '取消删除！',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false
+    }).then(function() {
+        $.ajax({
+                url:'/trade/attachment/delete',
+                type:"POST",
+                dataType:"json",
+                data:{'id':id,'contractId':contractId},
+                success:function(res){
+                    swal(
+                        '删除！',
+                        '你的文件已经被删除。',
+                        'success'
+                        );
+                    getAllFile();
+                }
+            });
+    }, function(dismiss) {
+      // dismiss的值可以是'cancel', 'overlay','esc'
+      // 'close', 'timer'
+      if (dismiss === 'cancel' || dismiss === 'close' || dismiss === 'overlay') {
+        swal('已取消！','','error');
+      }
     });
 }
