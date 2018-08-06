@@ -222,11 +222,30 @@ public class TradeService {
     }
     public JSONObject getTotalInfo(ContractParam contractParam){
         JSONObject result = new JSONObject();
+        //处理status
+        String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        switch (contractParam.getStatus()){
+            case "全部":  status = "";break;
+            case "已下单": status = "1";break;
+            case "已装船": status = "2";break;
+            case "已到港": status = "3";break;
+            case "已入库": status = "4";break;
+            case "已售完": status = "5";break;
+            default: break;
+        }
+        contractParam.setStatus(status);
         ContractTotalInfo record = contractBaseInfoMapper.getTotalInfo(contractParam);
-        result.put("totalContractMoney",record.getTotalContractMoney());
-        result.put("totalContractAmount",record.getTotalContractAmount());
-        result.put("totalInvoiceMoney",record.getTotalInvoiceMoney());
-        result.put("totalInvoiceAmount",record.getTotalInvoiceAmount());
+        if(record != null) {
+            result.put("totalContractMoney", record.getTotalContractMoney());
+            result.put("totalContractAmount", record.getTotalContractAmount());
+            result.put("totalInvoiceMoney", record.getTotalInvoiceMoney());
+            result.put("totalInvoiceAmount", record.getTotalInvoiceAmount());
+        }else{
+            result.put("totalContractMoney", "0");
+            result.put("totalContractAmount", "0");
+            result.put("totalInvoiceMoney", "0");
+            result.put("totalInvoiceAmount", "0");
+        }
         result.put("status","1");
         return result;
     }

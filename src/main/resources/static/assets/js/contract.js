@@ -21,6 +21,8 @@ $(function () {
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    initLevel();
+    initBusinessMode();
     initExternalCompany();
     initCargoList();
 
@@ -42,6 +44,104 @@ var toFloat4 = function (value) {
     return value;
 }
 function getTotalInfo(){
+        var externalCompanyArr = $("#externalCompany").val();
+        var externalCompany = "";
+        if(externalCompanyArr != null){
+            for(var i=0;i<externalCompanyArr.length;i++){
+                if(externalCompanyArr[i] != '全部'){
+                    externalCompany += "'"+externalCompanyArr[i] + "',";
+                }else{
+                    externalCompany = "";break;
+                }
+            }
+        }
+        if(externalCompany.length > 1){
+            externalCompany = externalCompany.substring(0,externalCompany.length-1);
+        }
+        var levelArr = $("#level").val();
+        var level = "";
+        if(levelArr != null){
+            for(var i=0;i<levelArr.length;i++){
+                if(levelArr[i] != '全部'){
+                    level += "'"+levelArr[i] + "',";
+                }else{
+                    level = "";break;
+                }
+            }
+        }
+        if(level.length > 1){
+            level = level.substring(0,level.length-1);
+        }
+        var cargoNameArr = $("#cargoName").val();
+        var cargoName = "";
+        if(cargoNameArr != null){
+            for(var i=0;i<cargoNameArr.length;i++){
+                if(cargoNameArr[i] != '全部'){
+                    cargoName += "'"+cargoNameArr[i] + "',";
+                }else{
+                    cargoName = "";break;
+                }
+            }
+        }
+        if(cargoName.length > 1){
+            cargoName = cargoName.substring(0,cargoName.length-1);
+        }
+        var businessModeArr = $("#businessMode").val();
+        var businessMode = "";
+        if(businessModeArr != null){
+            for(var i=0;i<businessModeArr.length;i++){
+                if(businessModeArr[i] != '全部'){
+                    businessMode += "'"+businessModeArr[i] + "',";
+                }else{
+                    businessMode = "";break;
+                }
+            }
+        }
+        if(businessMode.length > 1){
+            businessMode = businessMode.substring(0,businessMode.length-1);
+        }
+        var agentArr = $("#agent").val();
+        var agent = "";
+        if(agentArr != null){
+            for(var i=0;i<agentArr.length;i++){
+                if(agentArr[i] != '全部'){
+                    agent += "'"+agentArr[i] + "',";
+                }else{
+                    agent = "";break;
+                }
+            }
+        }
+        if(agent.length > 1){
+            agent = agent.substring(0,agent.length-1);
+        }
+        var destinationPortArr = $("#destinationPort").val();
+        var destinationPort = "";
+        if(destinationPortArr != null){
+            for(var i=0;i<destinationPortArr.length;i++){
+                if(destinationPortArr[i] != '全部'){
+                    destinationPort += "'"+destinationPortArr[i] + "',";
+                }else{
+                    destinationPort = "";break;
+                }
+            }
+        }
+        if(destinationPort.length > 1){
+            destinationPort = destinationPort.substring(0,destinationPort.length-1);
+        }
+        var statusArr = $("#status").val();
+        var status = "";
+        if(statusArr != null){
+            for(var i=0;i<statusArr.length;i++){
+                if(statusArr[i] != '全部'){
+                    status += "'"+statusArr[i] + "',";
+                }else{
+                    status = "";break;
+                }
+            }
+        }
+        if(status.length > 1){
+            status = status.substring(0,status.length-1);
+        }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         externalContract: $("#externalContract").val(),
         insideContract: $("#insideContract").val(),
@@ -49,17 +149,17 @@ function getTotalInfo(){
         contractEndDate: $("#contractEndDate").val(),
         etaStartDate: $("#etaStartDate").val(),
         etaEndDate: $("#etaEndDate").val(),
-        cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
+        cargoName: cargoName,
         cargoNo: $("#cargoNo").val(),
-        level: $("#level").val() == "全部"?"":$("#level").val(),
-        agent: $("#agent").val() == "全部"?"":$("#agent").val(),
+        level: level,
+        agent: agent,
         containerNo: $("#containerNo").val(),
         companyNo: $("#companyNo").val(),
         ladingbillNo: $("#ladingbillNo").val(),
-        destinationPort: $("#destinationPort").val() == "全部"?"":$("#destinationPort").val(),
-        businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
-        externalCompany: $("#externalCompany").val() == "全部"?"":$("#externalCompany").val(),
-        status: $("#status").val() == "全部"?"":$("#status").val(),
+        destinationPort: destinationPort,
+        businessMode: businessMode,
+        externalCompany: externalCompany,
+        status: status,
     };
 
     $.ajax({
@@ -76,21 +176,6 @@ function getTotalInfo(){
             }
         }
     });
-}
-function initExternalCompany(){
-    var opts = "";
-    opts += "<option>JOC AUS</option>";
-    opts += "<option>KPC HK</option>";
-    opts += "<option>STANBROKE</option>";
-    opts += "<option>JBS AUS</option>";
-    opts += "<option>HARVEY</option>";
-    opts += "<option>TEYS AUS</option>";
-    opts += "<option>NH AUS</option>";
-    opts += "<option>TIF</option>";
-    opts += "<option>SANGER</option>";
-    opts += "<option>MARFRIG</option>";
-    opts += "<option>AACO</option>";
-    $("#externalCompany").append(opts);
 }
 
 var TableInit = function () {
@@ -174,6 +259,105 @@ var TableInit = function () {
 
     //得到查询的参数
     oTableInit.queryParams = function (params) {
+        var externalCompanyArr = $("#externalCompany").val();
+        var externalCompany = "";
+        if(externalCompanyArr != null){
+            for(var i=0;i<externalCompanyArr.length;i++){
+                if(externalCompanyArr[i] != '全部'){
+                    externalCompany += "'"+externalCompanyArr[i] + "',";
+                }else{
+                    externalCompany = "";break;
+                }
+            }
+        }
+        if(externalCompany.length > 1){
+            externalCompany = externalCompany.substring(0,externalCompany.length-1);
+        }
+        var levelArr = $("#level").val();
+        var level = "";
+        if(levelArr != null){
+            for(var i=0;i<levelArr.length;i++){
+                if(levelArr[i] != '全部'){
+                    level += "'"+levelArr[i] + "',";
+                }else{
+                    level = "";break;
+                }
+            }
+        }
+        if(level.length > 1){
+            level = level.substring(0,level.length-1);
+        }
+        var cargoNameArr = $("#cargoName").val();
+        var cargoName = "";
+        if(cargoNameArr != null){
+            for(var i=0;i<cargoNameArr.length;i++){
+                if(cargoNameArr[i] != '全部'){
+                    cargoName += "'"+cargoNameArr[i] + "',";
+                }else{
+                    cargoName = "";break;
+                }
+            }
+        }
+        if(cargoName.length > 1){
+            cargoName = cargoName.substring(0,cargoName.length-1);
+        }
+        var businessModeArr = $("#businessMode").val();
+        var businessMode = "";
+        if(businessModeArr != null){
+            for(var i=0;i<businessModeArr.length;i++){
+                if(businessModeArr[i] != '全部'){
+                    businessMode += "'"+businessModeArr[i] + "',";
+                }else{
+                    businessMode = "";break;
+                }
+            }
+        }
+        if(businessMode.length > 1){
+            businessMode = businessMode.substring(0,businessMode.length-1);
+        }
+        var agentArr = $("#agent").val();
+        var agent = "";
+        if(agentArr != null){
+            for(var i=0;i<agentArr.length;i++){
+                if(agentArr[i] != '全部'){
+                    agent += "'"+agentArr[i] + "',";
+                }else{
+                    agent = "";break;
+                }
+            }
+        }
+        if(agent.length > 1){
+            agent = agent.substring(0,agent.length-1);
+        }
+        var destinationPortArr = $("#destinationPort").val();
+        var destinationPort = "";
+        if(destinationPortArr != null){
+            for(var i=0;i<destinationPortArr.length;i++){
+                if(destinationPortArr[i] != '全部'){
+                    destinationPort += "'"+destinationPortArr[i] + "',";
+                }else{
+                    destinationPort = "";break;
+                }
+            }
+        }
+        if(destinationPort.length > 1){
+            destinationPort = destinationPort.substring(0,destinationPort.length-1);
+        }
+        var statusArr = $("#status").val();
+        var status = "";
+        if(statusArr != null){
+            for(var i=0;i<statusArr.length;i++){
+                if(statusArr[i] != '全部'){
+                    status += "'"+statusArr[i] + "',";
+                }else{
+                    status = "";break;
+                }
+            }
+        }
+        if(status.length > 1){
+            status = status.substring(0,status.length-1);
+        }
+
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
@@ -183,17 +367,17 @@ var TableInit = function () {
             contractEndDate: $("#contractEndDate").val(),
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
-            cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
+            cargoName: cargoName,
             cargoNo: $("#cargoNo").val(),
-            level: $("#level").val() == "全部"?"":$("#level").val(),
-            agent: $("#agent").val() == "全部"?"":$("#agent").val(),
+            level: level,
+            agent: agent,
             containerNo: $("#containerNo").val(),
             companyNo: $("#companyNo").val(),
             ladingbillNo: $("#ladingbillNo").val(),
-            destinationPort: $("#destinationPort").val() == "全部"?"":$("#destinationPort").val(),
-            businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
-            externalCompany: $("#externalCompany").val() == "全部"?"":$("#externalCompany").val(),
-            status: $("#status").val() == "全部"?"":$("#status").val(),
+            destinationPort: destinationPort,
+            businessMode: businessMode,
+            externalCompany: externalCompany,
+            status: status,
         };
         return temp;
     };
@@ -345,14 +529,14 @@ function resetQuery(){
     $("#contractEndDate").val("");
     $("#containerNo").val("");
     $("#ladingbillNo").val("");
-    $("#agent").val("全部").trigger("change");
+    $("#agent").val("").trigger("change");
     $("#companyNo").val("");
-    $("#destinationPort").val("全部").trigger("change");
-    $("#businessMode").val("全部").trigger("change");
-    $("#status").val("全部").trigger("change");
-    $("#externalCompany").val("全部").trigger("change");
-    $("#level").val("全部").trigger("change");
-    $("#cargoName").val("全部").trigger("change");
+    $("#destinationPort").val("").trigger("change");
+    $("#businessMode").val("").trigger("change");
+    $("#status").val("").trigger("change");
+    $("#externalCompany").val("").trigger("change");
+    $("#level").val("").trigger("change");
+    $("#cargoName").val("").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
     $("#cargoNo").val("");

@@ -17,8 +17,17 @@ public class CargoParam {
     private String containerNo;
     private String ladingbillNo;
     private String status;
+    private String businessMode;
     private int start;
     private int limit;
+
+    public String getBusinessMode() {
+        return businessMode;
+    }
+
+    public void setBusinessMode(String businessMode) {
+        this.businessMode = businessMode;
+    }
 
     public String getContractId() {
         return contractId;

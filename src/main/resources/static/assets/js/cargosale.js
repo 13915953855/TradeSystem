@@ -16,7 +16,7 @@ $(function () {
         todayHighlight: true,
         language: 'zh-CN'
     });
-
+    initLevel();
     $("#cargoDiv input[type=text]").attr('disabled','disabled');
 
     $("#expectSaleUnitPrice").blur(function(){

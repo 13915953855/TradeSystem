@@ -156,11 +156,85 @@ function initExternalCompany(){
     opts += "<option>STANBROKE</option>";
     opts += "<option>JBS AUS</option>";
     opts += "<option>HARVEY</option>";
+    opts += "<option>HARVEY</option>";
     opts += "<option>TEYS AUS</option>";
     opts += "<option>NH AUS</option>";
     opts += "<option>TIF</option>";
     opts += "<option>SANGER</option>";
     opts += "<option>MARFRIG</option>";
     opts += "<option>AACO</option>";
+    opts += "<option>SWIFT</option>";
     $("#externalCompany").append(opts);
+}
+
+function initBusinessMode(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>自营</option>";
+    opts += "<option>定向</option>";
+    opts += "<option>代理(增值税专用发票)</option>";
+    opts += "<option>代理(代理费发票)</option>";
+    opts += "<option>HDL</option>";
+    opts += "<option>MJ</option>";
+    opts += "<option>WP</option>";
+    $("#businessMode").append(opts);
+}
+
+function initLevel(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>A</option>";
+    opts += "<option>B</option>";
+    opts += "<option>S</option>";
+    opts += "<option>YP</option>";
+    opts += "<option>YG</option>";
+    opts += "<option>GF S</option>";
+    opts += "<option>GF S ANGUS</option>";
+    opts += "<option>S 3R</option>";
+    opts += "<option>S IW</option>";
+    opts += "<option>S MW</option>";
+    opts += "<option>YG MW</option>";
+    opts += "<option>YP 5R</option>";
+    opts += "<option>YP ANGUS</option>";
+    opts += "<option>YP ANGUS MW</option>";
+    opts += "<option>YP IW</option>";
+    opts += "<option>YP PIECES</option>";
+    opts += "<option>GF 冷切</option>";
+    opts += "<option>GF 热切</option>";
+    opts += "<option>GF S IW</option>";
+    opts += "<option>HEEL MUSCLE</option>";
+    opts += "<option>HIND</option>";
+    opts += "<option>GF S ANGUS 7R</option>";
+    opts += "<option>GF S ANGUS IW</option>";
+    opts += "<option>GF S/PR</option>";
+    opts += "<option>GF WAGYU</option>";
+    opts += "<option>GF YP</option>";
+    opts += "<option>GF YP 3R</option>";
+    opts += "<option>GF YP 7R</option>";
+    opts += "<option>GF YP ANGUS</option>";
+    opts += "<option>GF YP ANGUS 3R</option>";
+    opts += "<option>GF YP ANGUS IW</option>";
+    opts += "<option>GF YP ANGUS LONG</option>";
+    opts += "<option>GF YP ANGUS PICECS</option>";
+    opts += "<option>GF YP IW</option>";
+    opts += "<option>GF YP LONG</option>";
+    opts += "<option>GF YP PIECES</option>";
+    opts += "<option>A MW</option>";
+    opts += "<option>A/YP</option>";
+    opts += "<option>GF 150D</option>";
+    opts += "<option>GF 150D IW</option>";
+    opts += "<option>GF 200D</option>";
+    opts += "<option>GF 210D</option>";
+    opts += "<option>GF 210D IW</option>";
+    opts += "<option>GF 270D</option>";
+    opts += "<option>GF IW</option>";
+    opts += "<option>GF M6+</option>";
+    opts += "<option>GF MW</option>";
+    opts += "<option>GF PR</option>";
+    opts += "<option>GF S 1R</option>";
+    opts += "<option>GF S 3R</option>";
+    opts += "<option>GF S 5R</option>";
+    opts += "<option>GF S 7R</option>";
+    opts += "<option>无</option>";
+    $("#level").append(opts);
 }

@@ -300,8 +300,8 @@
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
     </if>
-    <if test="agent != null" >
-      and a.agent like '%${agent}%'
+    <if test="agent != null and agent != ''" >
+      and a.agent in (${agent})
     </if>
     <if test="containerNo != null" >
       and a.container_no like '%${containerNo}%'
@@ -310,18 +310,18 @@
       and a.ladingbill_no like '%${ladingbillNo}%'
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
-      and a.external_company = '${externalCompany}'
+      and a.external_company in (${externalCompany})
     </if>
     <choose>
       <when test="status != null and status != ''">
-        and a.status = '${status}'
+        and a.status in (${status})
       </when>
       <otherwise>
         and a.status != '0'
       </otherwise>
     </choose>
     <if test="destinationPort != null and destinationPort != ''" >
-      and a.destination_port = '${destinationPort}'
+      and a.destination_port in (${destinationPort})
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
@@ -339,13 +339,13 @@
       and a.contract_id in (
       select contract_id from cargo_info where 1=1
       <if test="cargoName != null and cargoName != ''" >
-        and cargo_name = '${cargoName}'
+        and cargo_name in (${cargoName})
       </if>
       <if test="level != null and level != ''" >
-        and level = '${level}'
+        and level in (${level})
       </if>
       <if test="businessMode != null and businessMode != ''" >
-        and business_mode = '${businessMode}'
+        and business_mode in (${businessMode})
       </if>
       <if test="companyNo != null" >
         and company_no like '%${companyNo}%'
@@ -370,8 +370,8 @@
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
     </if>
-    <if test="agent != null" >
-      and a.agent like '%${agent}%'
+    <if test="agent != null and agent != ''" >
+      and a.agent in (${agent})
     </if>
     <if test="containerNo != null" >
       and a.container_no like '%${containerNo}%'
@@ -380,18 +380,18 @@
       and a.ladingbill_no like '%${ladingbillNo}%'
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
-      and a.external_company = '${externalCompany}'
+      and a.external_company in (${externalCompany})
     </if>
     <choose>
       <when test="status != null and status != ''">
-        and a.status = '${status}'
+        and a.status in (${status})
       </when>
       <otherwise>
         and a.status != '0'
       </otherwise>
     </choose>
     <if test="destinationPort != null and destinationPort != ''" >
-      and a.destination_port = '${destinationPort}'
+      and a.destination_port in (${destinationPort})
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
@@ -409,13 +409,13 @@
       and a.contract_id in (
       select contract_id from cargo_info where 1=1
       <if test="cargoName != null and cargoName != ''" >
-        and cargo_name = '${cargoName}'
+        and cargo_name in (${cargoName})
       </if>
       <if test="level != null and level != ''" >
-        and level = '${level}'
+        and level in (${level})
       </if>
       <if test="businessMode != null and businessMode != ''" >
-        and business_mode = '${businessMode}'
+        and business_mode in (${businessMode})
       </if>
       <if test="companyNo != null" >
         and company_no like '%${companyNo}%'
@@ -439,8 +439,8 @@
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
     </if>
-    <if test="agent != null" >
-      and a.agent like '%${agent}%'
+    <if test="agent != null and agent != ''" >
+      and a.agent in (${agent})
     </if>
     <if test="containerNo != null" >
       and a.container_no like '%${containerNo}%'
@@ -449,18 +449,18 @@
       and a.ladingbill_no like '%${ladingbillNo}%'
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
-      and a.external_company = '${externalCompany}'
+      and a.external_company in (${externalCompany})
     </if>
     <choose>
       <when test="status != null and status != ''">
-        and a.status = '${status}'
+        and a.status in (${status})
       </when>
       <otherwise>
         and a.status != '0'
       </otherwise>
     </choose>
     <if test="destinationPort != null and destinationPort != ''" >
-      and a.destination_port = '${destinationPort}'
+      and a.destination_port in (${destinationPort})
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
@@ -478,13 +478,13 @@
       and a.contract_id in (
       select contract_id from cargo_info where 1=1
       <if test="cargoName != null and cargoName != ''" >
-        and cargo_name = '${cargoName}'
+        and cargo_name in (${cargoName})
       </if>
       <if test="level != null and level != ''" >
-        and level = '${level}'
+        and level in (${level})
       </if>
       <if test="businessMode != null and businessMode != ''" >
-        and business_mode = '${businessMode}'
+        and business_mode in (${businessMode})
       </if>
       <if test="companyNo != null" >
         and company_no like '%${companyNo}%'

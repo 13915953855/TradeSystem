@@ -10,6 +10,8 @@ $(function () {
     initCargoList();
     initOriginCountry();
     initExternalCompany();
+    initBusinessMode();
+    initLevel();
 
     $("#currency").blur(function(){
         $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());

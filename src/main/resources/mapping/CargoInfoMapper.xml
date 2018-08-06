@@ -94,6 +94,9 @@
     <if test="status != null and status != ''" >
       and a.status = '${status}'
     </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and a.business_mode = '${businessMode}'
+    </if>
     <if test="cargoName != null and cargoName != ''" >
       and a.cargo_name = '${cargoName}'
     </if>
@@ -141,6 +144,9 @@
     </if>
     <if test="status != null and status != ''" >
       and a.status = '${status}'
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and a.business_mode = '${businessMode}'
     </if>
     <if test="cargoName != null and cargoName != ''" >
       and a.cargo_name = '${cargoName}'

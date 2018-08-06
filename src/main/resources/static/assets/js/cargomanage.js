@@ -17,6 +17,8 @@ $(function () {
         todayHighlight: true,
         language: 'zh-CN'
     });
+    initLevel();
+    initBusinessMode();
     $("select").on("change",function(){
         $("#btn_query").click();
     });
@@ -140,7 +142,8 @@ var TableInit = function () {
             customerName: $("#customerName").val(),
             containerNo: $("#containerNo").val(),
             ladingbillNo: $("#ladingbillNo").val(),
-            status: $("#status").val() == "全部"?"":$("#status").val()
+            status: $("#status").val() == "全部"?"":$("#status").val(),
+            businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val()
         };
         return temp;
     };
@@ -155,6 +158,8 @@ function getTotalStore(){
         storeEndDate: $("#storeEndDate").val(),
         insideContract: $("#insideContract").val(),
         level: $("#level").val() == "全部"?"":$("#level").val(),
+        status: $("#status").val() == "全部"?"":$("#status").val(),
+        businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
         cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
         cargoNo: $("#cargoNo").val(),
         customerName: $("#customerName").val(),
@@ -167,6 +172,8 @@ function getTotalStore(){
         dataType:"json",
         data:queryParams,
         success:function(res){
+            $("#totalStoreWeight").html("0");
+            $("#totalStoreBoxes").html("0");
             if(res.status == "1"){
                 $("#totalStoreWeight").html(res.totalStoreWeight);
                 $("#totalStoreBoxes").html(res.totalStoreBoxes);
@@ -200,6 +207,14 @@ function resetQuery(){
     $("#warehouse").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
+    $("#status").val("全部").trigger("change");
+    $("#businessMode").val("全部").trigger("change");
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
+    $("#containerNo").val("");
+    $("#ladingbillNo").val("");
+    $("#customerName").val("");
+
+    $("#totalStoreWeight").html("");
+    $("#totalStoreBoxes").html("");
 }
