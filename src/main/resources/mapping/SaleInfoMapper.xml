@@ -47,6 +47,15 @@
     delete from sale_info
     where sale_id = #{saleId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByContract" parameterType="java.util.List" >
+    delete from sale_info where cargo_id in (
+      select cargo_id from cargo_info where contract_id in (
+        select contract_id from contract_base_info where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+    ))
+  </delete>
   <insert id="insert" parameterType="com.jason.trade.model.SaleInfo" >
     insert into sale_info (sale_id, cargo_id, create_date_time, 
       create_user, customer_name, customer_pay_date, 

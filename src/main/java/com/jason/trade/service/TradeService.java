@@ -5,6 +5,7 @@ import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
 import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
+import com.jason.trade.mapper.SaleInfoMapper;
 import com.jason.trade.model.CargoInfo;
 import com.jason.trade.model.ContractBaseInfo;
 import com.jason.trade.model.SaleInfo;
@@ -50,6 +51,8 @@ public class TradeService {
     @Autowired
     private CargoInfoMapper cargoInfoMapper;
     @Autowired
+    private SaleInfoMapper saleInfoMapper;
+    @Autowired
     private ContractBaseInfoMapper contractBaseInfoMapper;
 
     @Transactional
@@ -82,7 +85,7 @@ public class TradeService {
     public SaleInfo saveSale(SaleInfo saleInfo){
         //商品的库存进行减操作
         String cargoId = saleInfo.getCargoId();
-        CargoInfo cargoInfo = cargoRepository.findByCargoId(cargoId);
+        CargoInfo cargoInfo = cargoInfoMapper.selectByCargoId(cargoId);
         double expectSaleWeight = 0;
         Integer expectSaleBoxes = 0;
         double realSaleWeight =0;
@@ -103,7 +106,12 @@ public class TradeService {
         if(realSaleWeight <= 0){
             status = GlobalConst.SELLOUT;
         }
-        cargoRepository.updateSaleInfo(cargoId,expectSaleWeight,expectSaleBoxes,realSaleWeight,realSaleBoxes,status);
+        cargoInfo.setStatus(status);
+        cargoInfo.setExpectStoreWeight(expectSaleWeight);
+        cargoInfo.setExpectStoreBoxes(expectSaleBoxes);
+        cargoInfo.setRealStoreWeight(realSaleWeight);
+        cargoInfo.setRealStoreBoxes(realSaleBoxes);
+        cargoInfoMapper.updateByCargoId(cargoInfo);
         autoUpdateStatus(saleInfo.getCargoId(),status);
         SaleInfo data = saleRepository.save(saleInfo);
         return data;
@@ -111,7 +119,7 @@ public class TradeService {
 
     public void autoUpdateStatus(String cargoId,String status){
         //商品售完，合同的状态同步变更
-        CargoInfo cargoInfo = cargoRepository.findByCargoId(cargoId);
+        CargoInfo cargoInfo = cargoInfoMapper.selectByCargoId(cargoId);
         String contractId = cargoInfo.getContractId();
         //查询该合同对应的所有商品的库存。
         CargoParam cargoParam = new CargoParam();
@@ -125,31 +133,31 @@ public class TradeService {
     }
 
     @Transactional
-    public void updateContractStatus(String ids,String status){
+    public void deleteContract(String ids){
         if(StringUtils.isNotBlank(ids)) {
             String[] arr = ids.split(",");
             List<String> idList = Arrays.asList(arr);
-            contractRepository.updateStatus(idList,status);
-            cargoRepository.deleteByContract(idList);
-            saleRepository.deleteByContract(idList);
+            saleInfoMapper.deleteByContract(idList);
+            cargoInfoMapper.deleteByContract(idList);
+            contractRepository.deleteContract(idList);
         }
     }
 
     @Transactional
-    public void updateCargoStatus(String cargoId,String status){
+    public void deleteCargo(String cargoId){
         if(StringUtils.isNotBlank(cargoId)) {
             String[] arr = cargoId.split(",");
             List<String> cargoIdList = Arrays.asList(arr);
-            cargoRepository.updateStatus(cargoIdList,status);
+            cargoRepository.deleteCargo(cargoIdList);
         }
     }
 
     @Transactional
-    public void updateSaleStatus(String saleId,String status){
+    public void deleteSaleInfo(String saleId){
         if(StringUtils.isNotBlank(saleId)) {
             String[] arr = saleId.split(",");
             List<String> saleIdList = Arrays.asList(arr);
-            saleRepository.updateStatus(saleIdList,status);
+            saleRepository.deleteSaleInfo(saleIdList);
             double expectSaleWeight = 0;
             Integer expectSaleBoxes = 0;
             double realSaleWeight = 0;
@@ -163,7 +171,7 @@ public class TradeService {
                 realSaleWeight += saleInfo.getRealSaleWeight();
                 realSaleBoxes += saleInfo.getRealSaleBoxes();
             }
-            CargoInfo cargoInfo = cargoRepository.findByCargoId(cargoId);
+            CargoInfo cargoInfo = cargoInfoMapper.selectByCargoId(cargoId);
             cargoInfo.setExpectStoreWeight(cargoInfo.getExpectStoreWeight() + expectSaleWeight);
             cargoInfo.setExpectStoreBoxes(cargoInfo.getExpectStoreBoxes() + expectSaleBoxes);
             cargoInfo.setRealStoreWeight(cargoInfo.getRealStoreWeight() + realSaleWeight);

@@ -18,7 +18,7 @@ public class GlobalConst {
     public static final String EDITING = "9";
 
     public static final String FILE_PATH = "/home/uploadFile";
-    //public static final String FILE_PATH = "D:";
+    //\\public static final String FILE_PATH = "D:";
 
     //size
     public static final String[] HEAD_CONTRACT_ARRAY = new String[]{"序号","外合同编号","内合同编号","合同日期","外商","原产地","价格条件","目的港","币种","付款方式","预计船期","汇率","箱数总计","合同总重量(KG)","合同总金额(元)","发票总重量(KG)","发票总金额(元)","开证行","开证日期","LC NO.","付汇日","付汇汇率","已办理押汇","押汇金额","押汇年利率","押汇到期日","押汇日汇率","预付款金额","尾款金额","预付款日期","尾款日期","预付款汇率","尾款汇率","已办理融资","融资银行","融资金额","融资年利率","融资到期日","到期日汇率","柜号","提单号","货柜尺寸","需要购买保险","保险公司","保险购买日期","保费","ETD","ETA","已核对电子版","已出检疫证","已出报关单","货代","单据寄给货代日期","关税","增值税","付税日期","报关单号","放行日期","仓库","入库日期","滞箱费","滞港费","备注"};

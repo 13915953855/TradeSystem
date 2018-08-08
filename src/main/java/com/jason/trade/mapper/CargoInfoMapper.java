@@ -10,6 +10,9 @@ import java.util.List;
 @Component
 public interface CargoInfoMapper {
     int updateByPrimaryKeySelective(CargoInfo record);
+    int updateByCargoId(CargoInfo record);
+    int deleteByContract(List<String> id);
+    CargoInfo selectByCargoId(String cargoId);
     List<CargoManageInfo> selectByExample(CargoParam cargoParam);
     Integer getTotalStoreWeightByExample(CargoParam cargoParam);
     Integer getTotalStoreBoxesByExample(CargoParam cargoParam);

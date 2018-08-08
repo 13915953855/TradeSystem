@@ -14,9 +14,9 @@ public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integ
     ContractBaseInfo findByContractId(String contractId);
     List<ContractBaseInfo> findByStatusNot(String status);
 
-    @Query(value = "update contract_base_info set status=?2 where id in (?1) ", nativeQuery = true)
+    @Query(value = "delete from contract_base_info where id in (?1)", nativeQuery = true)
     @Modifying
-    void updateStatus(List<String> id,String status);
+    void deleteContract(List<String> id);
 
     @Query(value = "update contract_base_info set status=?2 where contract_id in (?1) ", nativeQuery = true)
     @Modifying

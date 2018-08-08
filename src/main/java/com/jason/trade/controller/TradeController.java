@@ -96,7 +96,7 @@ public class TradeController {
         Attachment attachment = attachmentMapper.selectByPrimaryKey(key);
         String filePath = attachment.getFilePath();
         attachmentMapper.deleteByPrimaryKey(key);
-        //todo 删除文件
+        //删除文件
         File file = new File(filePath);
         if(file.exists()){
             file.delete();
@@ -139,7 +139,7 @@ public class TradeController {
     public String contractAdd(ContractBaseInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         String now = DateUtil.DateTimeToString(new Date());
-        contractBaseInfo.setCreateUser(userInfo.getName());
+        contractBaseInfo.setCreateUser(userInfo.getAccount());
         contractBaseInfo.setCreateDateTime(now);
         contractBaseInfo.setVersion(1);
         ContractBaseInfo record = tradeService.saveContract(contractBaseInfo,cargoId);
@@ -147,7 +147,7 @@ public class TradeController {
         SysLog sysLog = new SysLog();
         sysLog.setDetail("新增合同"+record.getContractId());
         sysLog.setOperation("新增");
-        sysLog.setUser(userInfo.getName());
+        sysLog.setUser(userInfo.getAccount());
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
 
@@ -167,7 +167,7 @@ public class TradeController {
 
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         String now = DateUtil.DateTimeToString(new Date());
-        cargoInfo.setCreateUser(userInfo.getName());
+        cargoInfo.setCreateUser(userInfo.getAccount());
         cargoInfo.setCreateDateTime(now);
         cargoInfo.setExpectStoreBoxes(cargoInfo.getBoxes());
         cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
@@ -180,7 +180,7 @@ public class TradeController {
         SysLog sysLog = new SysLog();
         sysLog.setDetail("新增商品"+data.getCargoId());
         sysLog.setOperation("新增");
-        sysLog.setUser(userInfo.getName());
+        sysLog.setUser(userInfo.getAccount());
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
 
@@ -193,7 +193,7 @@ public class TradeController {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         if(saleInfo.getSaleId() == null) {//新增
             String now = DateUtil.DateTimeToString(new Date());
-            saleInfo.setCreateUser(userInfo.getName());
+            saleInfo.setCreateUser(userInfo.getAccount());
             saleInfo.setCreateDateTime(now);
         }
 
@@ -202,7 +202,7 @@ public class TradeController {
         SysLog sysLog = new SysLog();
         sysLog.setDetail("新增销售记录"+data.getSaleId());
         sysLog.setOperation("新增");
-        sysLog.setUser(userInfo.getName());
+        sysLog.setUser(userInfo.getAccount());
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
         return RespUtil.respSuccess(data);
@@ -242,7 +242,7 @@ public class TradeController {
         SysLog sysLog = new SysLog();
         sysLog.setDetail("更新合同"+contractBaseInfo.getContractId());
         sysLog.setOperation("更新");
-        sysLog.setUser(userInfo.getName());
+        sysLog.setUser(userInfo.getAccount());
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
 
@@ -252,12 +252,12 @@ public class TradeController {
     @PostMapping(value="/contract/delete")
     public String contractDel(@RequestParam("ids") String ids, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
-        tradeService.updateContractStatus(ids,GlobalConst.DISABLE);
+        tradeService.deleteContract(ids);
 
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除合同"+ids);
         sysLog.setOperation("删除");
-        sysLog.setUser(userInfo.getName());
+        sysLog.setUser(userInfo.getAccount());
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
         return GlobalConst.SUCCESS;
@@ -267,11 +267,11 @@ public class TradeController {
     public String cargoDel(@RequestParam("ids") String ids, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
 
-        tradeService.updateCargoStatus(ids,GlobalConst.DISABLE);
+        tradeService.deleteCargo(ids);
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除商品"+ids);
         sysLog.setOperation("删除");
-        sysLog.setUser(userInfo.getName());
+        sysLog.setUser(userInfo.getAccount());
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
         return GlobalConst.SUCCESS;
@@ -281,11 +281,11 @@ public class TradeController {
     public String saleDel(@RequestParam("ids") String ids, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         //销售记录删除，没有对商品的库存进行恢复操作。需要管理员手动维护。
-        tradeService.updateSaleStatus(ids,GlobalConst.DISABLE);
+        tradeService.deleteSaleInfo(ids);
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除销售记录"+ids);
         sysLog.setOperation("删除");
-        sysLog.setUser(userInfo.getName());
+        sysLog.setUser(userInfo.getAccount());
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
         return GlobalConst.SUCCESS;

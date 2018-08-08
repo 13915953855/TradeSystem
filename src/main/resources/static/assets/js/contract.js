@@ -133,7 +133,7 @@ function getTotalInfo(){
         if(statusArr != null){
             for(var i=0;i<statusArr.length;i++){
                 if(statusArr[i] != '全部'){
-                    status += "'"+statusArr[i] + "',";
+                    status += statusArr[i] + ",";
                 }else{
                     status = "";break;
                 }
@@ -348,7 +348,7 @@ var TableInit = function () {
         if(statusArr != null){
             for(var i=0;i<statusArr.length;i++){
                 if(statusArr[i] != '全部'){
-                    status += "'"+statusArr[i] + "',";
+                    status += statusArr[i] + ",";
                 }else{
                     status = "";break;
                 }
@@ -469,23 +469,114 @@ var ButtonInit = function () {
             });
         });
         $("#btn_output").click(function(){
+            var externalCompanyArr = $("#externalCompany").val();
+            var externalCompany = "";
+            if(externalCompanyArr != null){
+                for(var i=0;i<externalCompanyArr.length;i++){
+                    if(externalCompanyArr[i] != '全部'){
+                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                    }else{
+                        externalCompany = "";break;
+                    }
+                }
+            }
+            if(externalCompany.length > 1){
+                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+            }
+            var levelArr = $("#level").val();
+            var level = "";
+            if(levelArr != null){
+                for(var i=0;i<levelArr.length;i++){
+                    if(levelArr[i] != '全部'){
+                        level += "'"+levelArr[i] + "',";
+                    }else{
+                        level = "";break;
+                    }
+                }
+            }
+            if(level.length > 1){
+                level = level.substring(0,level.length-1);
+            }
+            var cargoNameArr = $("#cargoName").val();
+            var cargoName = "";
+            if(cargoNameArr != null){
+                for(var i=0;i<cargoNameArr.length;i++){
+                    if(cargoNameArr[i] != '全部'){
+                        cargoName += "'"+cargoNameArr[i] + "',";
+                    }else{
+                        cargoName = "";break;
+                    }
+                }
+            }
+            if(cargoName.length > 1){
+                cargoName = cargoName.substring(0,cargoName.length-1);
+            }
+            var businessModeArr = $("#businessMode").val();
+            var businessMode = "";
+            if(businessModeArr != null){
+                for(var i=0;i<businessModeArr.length;i++){
+                    if(businessModeArr[i] != '全部'){
+                        businessMode += "'"+businessModeArr[i] + "',";
+                    }else{
+                        businessMode = "";break;
+                    }
+                }
+            }
+            if(businessMode.length > 1){
+                businessMode = businessMode.substring(0,businessMode.length-1);
+            }
+            var agentArr = $("#agent").val();
+            var agent = "";
+            if(agentArr != null){
+                for(var i=0;i<agentArr.length;i++){
+                    if(agentArr[i] != '全部'){
+                        agent += "'"+agentArr[i] + "',";
+                    }else{
+                        agent = "";break;
+                    }
+                }
+            }
+            if(agent.length > 1){
+                agent = agent.substring(0,agent.length-1);
+            }
+            var destinationPortArr = $("#destinationPort").val();
+            var destinationPort = "";
+            if(destinationPortArr != null){
+                for(var i=0;i<destinationPortArr.length;i++){
+                    if(destinationPortArr[i] != '全部'){
+                        destinationPort += "'"+destinationPortArr[i] + "',";
+                    }else{
+                        destinationPort = "";break;
+                    }
+                }
+            }
+            if(destinationPort.length > 1){
+                destinationPort = destinationPort.substring(0,destinationPort.length-1);
+            }
+            var statusArr = $("#status").val();
+            var status = "";
+            if(statusArr != null){
+                for(var i=0;i<statusArr.length;i++){
+                    if(statusArr[i] != '全部'){
+                        status += statusArr[i] + ",";
+                    }else{
+                        status = "";break;
+                    }
+                }
+            }
+            if(status.length > 1){
+                status = status.substring(0,status.length-1);
+            }
             var externalContract = $("#externalContract").val();
             var insideContract=$("#insideContract").val();
             var contractStartDate= $("#contractStartDate").val();
             var contractEndDate= $("#contractEndDate").val();
             var etaStartDate= $("#etaStartDate").val();
             var etaEndDate= $("#etaEndDate").val();
-            var cargoName= $("#cargoName").val() == "全部"?"":$("#cargoName").val();
-            var level= $("#level").val() == "全部"?"":$("#level").val();
-            var agent= $("#agent").val() == "全部"?"":$("#agent").val();
             var containerNo=$("#containerNo").val();
             var cargoNo=$("#cargoNo").val();
             var companyNo= $("#companyNo").val();
             var ladingbillNo= $("#ladingbillNo").val();
-            var destinationPort= $("#destinationPort").val() == "全部"?"":$("#destinationPort").val();
-            var businessMode= $("#businessMode").val() == "全部"?"":$("#businessMode").val();
-            var externalCompany=$("#externalCompany").val() == "全部"?"":$("#externalCompany").val();
-            var status=$("#status").val() == "全部"?"":$("#status").val();
 
             var chk = new Array();
             $("input[name='excelChk']:checkbox").each(function(i){
@@ -529,14 +620,14 @@ function resetQuery(){
     $("#contractEndDate").val("");
     $("#containerNo").val("");
     $("#ladingbillNo").val("");
-    $("#agent").val("").trigger("change");
+    $("#agent").val("全部").trigger("change");
     $("#companyNo").val("");
-    $("#destinationPort").val("").trigger("change");
-    $("#businessMode").val("").trigger("change");
-    $("#status").val("").trigger("change");
-    $("#externalCompany").val("").trigger("change");
-    $("#level").val("").trigger("change");
-    $("#cargoName").val("").trigger("change");
+    $("#destinationPort").val("全部").trigger("change");
+    $("#businessMode").val("全部").trigger("change");
+    $("#status").val("全部").trigger("change");
+    $("#externalCompany").val("全部").trigger("change");
+    $("#level").val("全部").trigger("change");
+    $("#cargoName").val("全部").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
     $("#cargoNo").val("");

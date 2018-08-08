@@ -150,7 +150,7 @@ public class MainController {
             SysLog sysLog = new SysLog();
             sysLog.setDetail("");
             sysLog.setOperation("登录");
-            sysLog.setUser(userInfo.getName());
+            sysLog.setUser(userInfo.getAccount());
             sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
             sysLogRepository.save(sysLog);
             return map;
@@ -230,7 +230,7 @@ public class MainController {
             SysLog sysLog = new SysLog();
             sysLog.setDetail("导出Excel记录");
             sysLog.setOperation("导出");
-            sysLog.setUser(userInfo.getName());
+            sysLog.setUser(userInfo.getAccount());
             sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
             sysLogRepository.save(sysLog);
 
