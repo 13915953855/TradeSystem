@@ -157,7 +157,7 @@ public class TradeService {
         if(StringUtils.isNotBlank(saleId)) {
             String[] arr = saleId.split(",");
             List<String> saleIdList = Arrays.asList(arr);
-            saleRepository.deleteSaleInfo(saleIdList);
+
             double expectSaleWeight = 0;
             Integer expectSaleBoxes = 0;
             double realSaleWeight = 0;
@@ -177,6 +177,8 @@ public class TradeService {
             cargoInfo.setRealStoreWeight(cargoInfo.getRealStoreWeight() + realSaleWeight);
             cargoInfo.setRealStoreBoxes(cargoInfo.getRealStoreBoxes() + realSaleBoxes);
             cargoRepository.save(cargoInfo);
+
+            saleRepository.deleteSaleInfo(saleIdList);
         }
     }
 

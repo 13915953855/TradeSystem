@@ -47,6 +47,12 @@ $(function () {
     $("#deposit").blur(function(){
         autoSetCustomerMoney();
     });
+    var invoiceAmount = $("#invoiceAmount").val();
+    $("#invoiceAmount").val(toFloat4(invoiceAmount));
+    var expectStoreWeight = $("#expectStoreWeight").val();
+    $("#expectStoreWeight").val(toFloat4(expectStoreWeight));
+    var realStoreWeight = $("#realStoreWeight").val();
+    $("#realStoreWeight").val(toFloat4(realStoreWeight));
 });
 function autoSetProfit(){
     var profit = 0;

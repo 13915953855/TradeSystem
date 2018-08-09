@@ -22,7 +22,7 @@ public interface CargoRepository extends JpaRepository<CargoInfo,Integer>,JpaSpe
     @Modifying
     void updateStatus(List<String> id,String status);
 
-    @Query(value = "delete cargo_info where id in (?1) ", nativeQuery = true)
+    @Query(value = "delete from cargo_info where id in (?1) ", nativeQuery = true)
     @Modifying
     void deleteCargo(List<String> id);
 }
