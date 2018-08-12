@@ -451,9 +451,11 @@ function saveContract(){
     contract.remittanceRate = $("#remittanceRate").val() == "" ? 0:toFloat($("#remittanceRate").val());
     contract.prePayment = $("#prePayment").val() == "" ? 0:toFloat($("#prePayment").val());
     contract.prePaymentDate = $("#prePaymentDate").val();
+    contract.prePayBank = $("#prePayBank").val();
     contract.preRate = $("#preRate").val() == "" ? 0:toFloat($("#preRate").val());
     contract.finalPayment = $("#finalPayment").val() == "" ? 0:toFloat($("#finalPayment").val());
     contract.finalPaymentDate = $("#finalPaymentDate").val();
+    contract.finalPayBank = $("#finalPayBank").val();
     contract.finalRate = $("#finalRate").val() == "" ? 0:toFloat($("#finalRate").val());
     if($("#isFinancing").is(':checked')){
         contract.isFinancing = "1";

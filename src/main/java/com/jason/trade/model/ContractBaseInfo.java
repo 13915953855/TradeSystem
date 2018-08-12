@@ -78,6 +78,10 @@ public class ContractBaseInfo {
     private String payType;
     @Column(name="pre_payment")
     private Double prePayment;
+    @Column(name="pre_pay_bank")
+    private String prePayBank;
+    @Column(name="final_pay_bank")
+    private String finalPayBank;
     @Column(name="pre_payment_date")
     private String prePaymentDate;
     @Column(name="pre_rate")
@@ -144,6 +148,22 @@ public class ContractBaseInfo {
     private Double daoqiRate;
     @Column(name="financing_bank")
     private String financingBank;
+
+    public String getPrePayBank() {
+        return prePayBank;
+    }
+
+    public void setPrePayBank(String prePayBank) {
+        this.prePayBank = prePayBank;
+    }
+
+    public String getFinalPayBank() {
+        return finalPayBank;
+    }
+
+    public void setFinalPayBank(String finalPayBank) {
+        this.finalPayBank = finalPayBank;
+    }
 
     public String getFinancingBank() {
         return financingBank;

@@ -319,6 +319,8 @@ public class ExcelService {
 
         list.add(baseInfo.getPrePayment());//预付款金额
         list.add(baseInfo.getPrePaymentDate());//预付款日期
+        list.add(baseInfo.getPrePayBank());//预付款银行
+        list.add(baseInfo.getFinalPayBank());//尾款银行
         list.add(baseInfo.getPreRate());//预付款汇率
         list.add(baseInfo.getFinalPayment());//尾款金额
         list.add(baseInfo.getFinalPaymentDate());//尾款日期
