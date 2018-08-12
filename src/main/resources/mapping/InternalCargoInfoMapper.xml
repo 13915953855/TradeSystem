@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.trade.mapper2.InternalCargoInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jason.trade.model.InternalCargoInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="cargo_id" property="cargoId" jdbcType="VARCHAR" />
+    <result column="boxes" property="boxes" jdbcType="INTEGER" />
+    <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
+    <result column="cargo_no" property="cargoNo" jdbcType="VARCHAR" />
+    <result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+    <result column="cost_price" property="costPrice" jdbcType="DOUBLE" />
+    <result column="create_date_time" property="createDateTime" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="DOUBLE" />
+    <result column="company_no" property="companyNo" jdbcType="VARCHAR" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cargo_id, boxes, cargo_name, cargo_no, contract_id, cost_price, create_date_time, 
+    create_user, amount, level, status, unit_price, company_no, warehouse
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.jason.trade.model.InternalCargoInfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from internal_cargo_info
+    where id = #{id,jdbcType=INTEGER}
+      and cargo_id = #{cargoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jason.trade.model.InternalCargoInfoKey" >
+    delete from internal_cargo_info
+    where id = #{id,jdbcType=INTEGER}
+      and cargo_id = #{cargoId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jason.trade.model.InternalCargoInfo" >
+    insert into internal_cargo_info (id, cargo_id, boxes, 
+      cargo_name, cargo_no, contract_id, 
+      cost_price, create_date_time, create_user, 
+      amount, level, status, 
+      unit_price, company_no, warehouse
+      )
+    values (#{id,jdbcType=INTEGER}, #{cargoId,jdbcType=VARCHAR}, #{boxes,jdbcType=INTEGER}, 
+      #{cargoName,jdbcType=VARCHAR}, #{cargoNo,jdbcType=VARCHAR}, #{contractId,jdbcType=VARCHAR}, 
+      #{costPrice,jdbcType=DOUBLE}, #{createDateTime,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DOUBLE}, #{level,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{unitPrice,jdbcType=DOUBLE}, #{companyNo,jdbcType=VARCHAR}, #{warehouse,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jason.trade.model.InternalCargoInfo" >
+    insert into internal_cargo_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cargoId != null" >
+        cargo_id,
+      </if>
+      <if test="boxes != null" >
+        boxes,
+      </if>
+      <if test="cargoName != null" >
+        cargo_name,
+      </if>
+      <if test="cargoNo != null" >
+        cargo_no,
+      </if>
+      <if test="contractId != null" >
+        contract_id,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+      <if test="companyNo != null" >
+        company_no,
+      </if>
+      <if test="warehouse != null" >
+        warehouse,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cargoId != null" >
+        #{cargoId,jdbcType=VARCHAR},
+      </if>
+      <if test="boxes != null" >
+        #{boxes,jdbcType=INTEGER},
+      </if>
+      <if test="cargoName != null" >
+        #{cargoName,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoNo != null" >
+        #{cargoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="companyNo != null" >
+        #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouse != null" >
+        #{warehouse,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.InternalCargoInfo" >
+    update internal_cargo_info
+    <set >
+      <if test="boxes != null" >
+        boxes = #{boxes,jdbcType=INTEGER},
+      </if>
+      <if test="cargoName != null" >
+        cargo_name = #{cargoName,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoNo != null" >
+        cargo_no = #{cargoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="companyNo != null" >
+        company_no = #{companyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouse != null" >
+        warehouse = #{warehouse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and cargo_id = #{cargoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jason.trade.model.InternalCargoInfo" >
+    update internal_cargo_info
+    set boxes = #{boxes,jdbcType=INTEGER},
+      cargo_name = #{cargoName,jdbcType=VARCHAR},
+      cargo_no = #{cargoNo,jdbcType=VARCHAR},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      cost_price = #{costPrice,jdbcType=DOUBLE},
+      create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DOUBLE},
+      level = #{level,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      unit_price = #{unitPrice,jdbcType=DOUBLE},
+      company_no = #{companyNo,jdbcType=VARCHAR},
+      warehouse = #{warehouse,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and cargo_id = #{cargoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

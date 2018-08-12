@@ -4,10 +4,7 @@ import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.ContractParam;
 import com.jason.trade.mapper.AttachmentMapper;
 import com.jason.trade.model.*;
-import com.jason.trade.repository.CargoRepository;
-import com.jason.trade.repository.ContractRepository;
-import com.jason.trade.repository.SysLogRepository;
-import com.jason.trade.repository.UserRepository;
+import com.jason.trade.repository.*;
 import com.jason.trade.service.ExcelService;
 import com.jason.trade.service.TradeService;
 import com.jason.trade.util.DateUtil;
@@ -47,6 +44,10 @@ public class MainController {
     @Autowired
     private CargoRepository cargoRepository;
     @Autowired
+    private InternalContractRepository internalContractRepository;
+    @Autowired
+    private InternalCargoRepository internalCargoRepository;
+    @Autowired
     private SysLogRepository sysLogRepository;
     @Autowired
     private TradeService tradeService;
@@ -79,6 +80,12 @@ public class MainController {
         model.addAttribute("user", userInfo);
         return "trade/contract";
     }
+    @GetMapping("/trade/internal")
+    public String internal(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/internal";
+    }
     @GetMapping("/trade/contract/add")
     public String contractadd(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -86,6 +93,14 @@ public class MainController {
         String uuid = UUID.randomUUID().toString();
         model.addAttribute("contractId",uuid);
         return "trade/contractadd";
+    }
+    @GetMapping("/trade/internal/contract/add")
+    public String internalcontractadd(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        String uuid = UUID.randomUUID().toString();
+        model.addAttribute("contractId",uuid);
+        return "trade/internaladd";
     }
     @GetMapping("/trade/contract/update")
     public String contractupdate(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
@@ -105,6 +120,25 @@ public class MainController {
         model.addAttribute("action","view");
         return "trade/contractupdate";
     }
+    @GetMapping("/trade/internal/contract/update")
+    public String internalcontractupdate(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        InternalContractInfo contract = internalContractRepository.findOne(id);
+        model.addAttribute("contract",contract);
+        model.addAttribute("action","update");
+        return "trade/internalupdate";
+    }
+    @GetMapping("/trade/internal/contract/view")
+    public String internalcontractview(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        InternalContractInfo contract = internalContractRepository.findOne(id);
+        model.addAttribute("contract",contract);
+        model.addAttribute("action","view");
+        return "trade/internalupdate";
+    }
+
     @GetMapping("/trade/contract/viewByEC")
     public String contractview(@RequestParam(value="externalContract") String externalContract, Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);

@@ -4,6 +4,7 @@ import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
 import com.jason.trade.mapper.AttachmentMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
+import com.jason.trade.mapper.InternalContractInfoMapper;
 import com.jason.trade.model.*;
 import com.jason.trade.repository.*;
 import com.jason.trade.service.TradeService;
@@ -50,6 +51,10 @@ public class TradeController {
     @Autowired
     private CargoRepository cargoRepository;
     @Autowired
+    private InternalContractRepository internalContractRepository;
+    @Autowired
+    private InternalCargoRepository internalCargoRepository;
+    @Autowired
     private AttachmentRepository attachmentRepository;
     @Autowired
     private SaleRepository saleRepository;
@@ -60,6 +65,8 @@ public class TradeController {
     @Autowired
     private ContractBaseInfoMapper contractBaseInfoMapper;
     @Autowired
+    private InternalContractInfoMapper internalContractInfoMapper;
+    @Autowired
     private AttachmentMapper attachmentMapper;
 
     @RequestMapping(value = "/list")
@@ -69,10 +76,24 @@ public class TradeController {
         JSONObject result = tradeService.queryContractListByMapper(contractParam);
         return result.toString();
     }
-
+    @RequestMapping(value = "/internal/list")
+    public String getInternalTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, InternalContractParam contractParam) throws JSONException {
+        contractParam.setStart(offset);
+        contractParam.setLimit(limit);
+        JSONObject result = tradeService.queryInternalContractListByMapper(contractParam);
+        return result.toString();
+    }
     @RequestMapping(value = "/cargo/list")
     public String getCargoList(@RequestParam("contractId") String contractId) throws JSONException {
         List<CargoInfo> list = cargoRepository.findByContractIdAndStatusNot(contractId,GlobalConst.DISABLE);
+        JSONObject result = new JSONObject();
+        result.put("total",list.size());
+        result.put("rows",list);
+        return result.toString();
+    }
+    @RequestMapping(value = "/internal/cargo/list")
+    public String getInternalCargoList(@RequestParam("contractId") String contractId) throws JSONException {
+        List<InternalCargoInfo> list = internalCargoRepository.findByContractIdAndStatusNot(contractId,GlobalConst.DISABLE);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -208,6 +229,54 @@ public class TradeController {
         return RespUtil.respSuccess(data);
     }
 
+    @PostMapping(value="/internal/contract/add")
+    public String internalcontractAdd(InternalContractInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        String now = DateUtil.DateTimeToString(new Date());
+        contractBaseInfo.setCreateUser(userInfo.getAccount());
+        contractBaseInfo.setCreateDateTime(now);
+        contractBaseInfo.setVersion(1);
+        InternalContractInfo record = tradeService.saveInternalContract(contractBaseInfo,cargoId);
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("新增合同"+record.getContractId());
+        sysLog.setOperation("新增");
+        sysLog.setUser(userInfo.getAccount());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+
+        return GlobalConst.SUCCESS;
+    }
+
+    @PostMapping(value="/internal/cargo/add")
+    public String internalcargoAdd(InternalCargoInfo cargoInfo, HttpSession session){
+        log.info("开始处理商品新增或修改的请求");
+        cargoInfo.setStatus(GlobalConst.EDITING);
+        if(StringUtils.isBlank(cargoInfo.getCargoId())) {
+            cargoInfo.setCargoId(UUID.randomUUID().toString());
+            log.info("新增商品cargoId="+cargoInfo.getCargoId());
+        }else{
+            log.info("编辑商品cargoId="+cargoInfo.getCargoId());
+        }
+
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        String now = DateUtil.DateTimeToString(new Date());
+        cargoInfo.setCreateUser(userInfo.getAccount());
+        cargoInfo.setCreateDateTime(now);
+        log.info("保存商品开始");
+        InternalCargoInfo data = internalCargoRepository.save(cargoInfo);
+        log.info("保存商品完毕");
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("新增商品"+data.getCargoId());
+        sysLog.setOperation("新增");
+        sysLog.setUser(userInfo.getAccount());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+
+        return RespUtil.respSuccess(data);
+    }
+
     @PostMapping(value="/contract/update")
     public String contractUpdate(ContractBaseInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
         Integer currentVersion = contractRepository.findOne(contractBaseInfo.getId()).getVersion();
@@ -248,7 +317,32 @@ public class TradeController {
 
         return GlobalConst.SUCCESS;
     }
+    @PostMapping(value="/internal/contract/update")
+    public String internalContractUpdate(InternalContractInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
+        Integer currentVersion = internalContractRepository.findOne(contractBaseInfo.getId()).getVersion();
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        if(currentVersion > contractBaseInfo.getVersion()){
+            return GlobalConst.MODIFIED;
+        }
 
+        contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
+
+        if(StringUtils.isNotBlank(cargoId)) {
+            String[] arr = cargoId.split(",");
+            List<String> cargoIdList = Arrays.asList(arr);
+            tradeService.updateInternalCargoStatus(cargoIdList);
+        }
+        internalContractInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("更新合同"+contractBaseInfo.getContractId());
+        sysLog.setOperation("更新");
+        sysLog.setUser(userInfo.getAccount());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+
+        return GlobalConst.SUCCESS;
+    }
     @PostMapping(value="/contract/delete")
     public String contractDel(@RequestParam("ids") String ids, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);

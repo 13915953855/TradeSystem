@@ -5,13 +5,13 @@ import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
 import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
+import com.jason.trade.mapper.InternalContractInfoMapper;
 import com.jason.trade.mapper.SaleInfoMapper;
 import com.jason.trade.model.CargoInfo;
 import com.jason.trade.model.ContractBaseInfo;
+import com.jason.trade.model.InternalContractInfo;
 import com.jason.trade.model.SaleInfo;
-import com.jason.trade.repository.CargoRepository;
-import com.jason.trade.repository.ContractRepository;
-import com.jason.trade.repository.SaleRepository;
+import com.jason.trade.repository.*;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.SetStyleUtils;
 import com.jason.trade.util.WebSecurityConfig;
@@ -47,6 +47,10 @@ public class TradeService {
     @Autowired
     private CargoRepository cargoRepository;
     @Autowired
+    private InternalContractRepository internalContractRepository;
+    @Autowired
+    private InternalCargoRepository internalCargoRepository;
+    @Autowired
     private SaleRepository saleRepository;
     @Autowired
     private CargoInfoMapper cargoInfoMapper;
@@ -54,10 +58,16 @@ public class TradeService {
     private SaleInfoMapper saleInfoMapper;
     @Autowired
     private ContractBaseInfoMapper contractBaseInfoMapper;
+    @Autowired
+    private InternalContractInfoMapper internalContractInfoMapper;
 
     @Transactional
     public void updateCargoStatus(List<String> cargoIdList){
         cargoRepository.updateStatus(cargoIdList,GlobalConst.ENABLE);
+    }
+    @Transactional
+    public void updateInternalCargoStatus(List<String> cargoIdList){
+        internalCargoRepository.updateStatus(cargoIdList,GlobalConst.ENABLE);
     }
     @Transactional
     public ContractBaseInfo saveContract(ContractBaseInfo contractBaseInfo, String cargoId){
@@ -80,7 +90,18 @@ public class TradeService {
         }
         return record;
     }
+    @Transactional
+    public InternalContractInfo saveInternalContract(InternalContractInfo contractBaseInfo, String cargoId){
+        contractBaseInfo.setStatus(GlobalConst.ENABLE);
 
+        InternalContractInfo record = internalContractRepository.save(contractBaseInfo);
+        if(StringUtils.isNotBlank(cargoId)) {
+            String[] arr = cargoId.split(",");
+            List<String> cargoIdList = Arrays.asList(arr);
+            internalCargoRepository.updateStatus(cargoIdList,GlobalConst.ENABLE);
+        }
+        return record;
+    }
     @Transactional
     public SaleInfo saveSale(SaleInfo saleInfo){
         //商品的库存进行减操作
@@ -198,6 +219,25 @@ public class TradeService {
         JSONObject result = new JSONObject();
         result.put("total",count);
         result.put("rows",getContractBaseInfoList(contractParam));
+        return result;
+    }
+
+    public JSONObject queryInternalContractListByMapper(InternalContractParam contractParam){
+        String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        switch (contractParam.getStatus()){
+            case "全部":  status = "";break;
+            case "已下单": status = "1";break;
+            case "已装船": status = "2";break;
+            case "已到港": status = "3";break;
+            case "已入库": status = "4";break;
+            case "已售完": status = "5";break;
+            default: break;
+        }
+        contractParam.setStatus(status);
+        Integer count = internalContractInfoMapper.selectCountByExample(contractParam);
+        JSONObject result = new JSONObject();
+        result.put("total",count);
+        result.put("rows",internalContractInfoMapper.selectByExample(contractParam));
         return result;
     }
 
