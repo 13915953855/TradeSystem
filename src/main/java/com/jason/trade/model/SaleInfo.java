@@ -21,6 +21,22 @@ public class SaleInfo {
     private String customerPayDate;
     @Column(name="customer_pay_money")
     private Double customerPayMoney;
+    @Column(name="customer_pay_date2")
+    private String customerPayDate2;
+    @Column(name="customer_pay_money2")
+    private Double customerPayMoney2;
+    @Column(name="customer_pay_date3")
+    private String customerPayDate3;
+    @Column(name="customer_pay_money3")
+    private Double customerPayMoney3;
+    @Column(name="customer_pay_date4")
+    private String customerPayDate4;
+    @Column(name="customer_pay_money4")
+    private Double customerPayMoney4;
+    @Column(name="customer_pay_date5")
+    private String customerPayDate5;
+    @Column(name="customer_pay_money5")
+    private Double customerPayMoney5;
     @Column(name="expect_sale_boxes")
     private Integer expectSaleBoxes;
     @Column(name="expect_sale_date")
@@ -61,6 +77,70 @@ public class SaleInfo {
     private String depositDate;
     @Column(name="deposit")
     private Double deposit;
+
+    public String getCustomerPayDate2() {
+        return customerPayDate2;
+    }
+
+    public void setCustomerPayDate2(String customerPayDate2) {
+        this.customerPayDate2 = customerPayDate2;
+    }
+
+    public Double getCustomerPayMoney2() {
+        return customerPayMoney2;
+    }
+
+    public void setCustomerPayMoney2(Double customerPayMoney2) {
+        this.customerPayMoney2 = customerPayMoney2;
+    }
+
+    public String getCustomerPayDate3() {
+        return customerPayDate3;
+    }
+
+    public void setCustomerPayDate3(String customerPayDate3) {
+        this.customerPayDate3 = customerPayDate3;
+    }
+
+    public Double getCustomerPayMoney3() {
+        return customerPayMoney3;
+    }
+
+    public void setCustomerPayMoney3(Double customerPayMoney3) {
+        this.customerPayMoney3 = customerPayMoney3;
+    }
+
+    public String getCustomerPayDate4() {
+        return customerPayDate4;
+    }
+
+    public void setCustomerPayDate4(String customerPayDate4) {
+        this.customerPayDate4 = customerPayDate4;
+    }
+
+    public Double getCustomerPayMoney4() {
+        return customerPayMoney4;
+    }
+
+    public void setCustomerPayMoney4(Double customerPayMoney4) {
+        this.customerPayMoney4 = customerPayMoney4;
+    }
+
+    public String getCustomerPayDate5() {
+        return customerPayDate5;
+    }
+
+    public void setCustomerPayDate5(String customerPayDate5) {
+        this.customerPayDate5 = customerPayDate5;
+    }
+
+    public Double getCustomerPayMoney5() {
+        return customerPayMoney5;
+    }
+
+    public void setCustomerPayMoney5(Double customerPayMoney5) {
+        this.customerPayMoney5 = customerPayMoney5;
+    }
 
     public String getDepositDate() {
         return depositDate;

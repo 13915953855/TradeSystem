@@ -9,6 +9,14 @@
     <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
     <result column="customer_pay_date" property="customerPayDate" jdbcType="VARCHAR" />
     <result column="customer_pay_money" property="customerPayMoney" jdbcType="DOUBLE" />
+    <result column="customer_pay_date2" property="customerPayDate2" jdbcType="VARCHAR" />
+    <result column="customer_pay_money2" property="customerPayMoney2" jdbcType="DOUBLE" />
+    <result column="customer_pay_date3" property="customerPayDate3" jdbcType="VARCHAR" />
+    <result column="customer_pay_money3" property="customerPayMoney3" jdbcType="DOUBLE" />
+    <result column="customer_pay_date4" property="customerPayDate4" jdbcType="VARCHAR" />
+    <result column="customer_pay_money4" property="customerPayMoney4" jdbcType="DOUBLE" />
+    <result column="customer_pay_date5" property="customerPayDate5" jdbcType="VARCHAR" />
+    <result column="customer_pay_money5" property="customerPayMoney5" jdbcType="DOUBLE" />
     <result column="expect_sale_boxes" property="expectSaleBoxes" jdbcType="INTEGER" />
     <result column="expect_sale_date" property="expectSaleDate" jdbcType="VARCHAR" />
     <result column="expect_sale_money" property="expectSaleMoney" jdbcType="DOUBLE" />
@@ -31,8 +39,9 @@
     <result column="deposit" property="deposit" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    sale_id, cargo_id, create_date_time, create_user, customer_name, customer_pay_date, 
-    customer_pay_money, expect_sale_boxes, expect_sale_date, expect_sale_money, expect_sale_unit_price, 
+    sale_id, cargo_id, create_date_time, create_user, customer_name, customer_pay_date, customer_pay_money,
+    customer_pay_date2,customer_pay_money2,customer_pay_date3,customer_pay_money3,customer_pay_date4, customer_pay_money4,
+    customer_pay_date5, customer_pay_money5,expect_sale_boxes, expect_sale_date, expect_sale_money, expect_sale_unit_price,
     expect_sale_weight, money_clear, payment_diff, pickup_date, pickup_user, profit, 
     real_sale_boxes, real_sale_date, real_sale_money, real_sale_unit_price, real_sale_weight, 
     remark, sale_contract_no, status, deposit_date, deposit
@@ -58,8 +67,10 @@
   </delete>
   <insert id="insert" parameterType="com.jason.trade.model.SaleInfo" >
     insert into sale_info (sale_id, cargo_id, create_date_time, 
-      create_user, customer_name, customer_pay_date, 
-      customer_pay_money, expect_sale_boxes, expect_sale_date, 
+      create_user, customer_name, customer_pay_date, customer_pay_money,
+    customer_pay_date2, customer_pay_money2,customer_pay_date3, customer_pay_money3,
+    customer_pay_date4, customer_pay_money4,customer_pay_date5, customer_pay_money5,
+      expect_sale_boxes, expect_sale_date,
       expect_sale_money, expect_sale_unit_price, expect_sale_weight, 
       money_clear, payment_diff, pickup_date, 
       pickup_user, profit, real_sale_boxes, 
@@ -67,8 +78,12 @@
       real_sale_weight, remark, sale_contract_no, deposit_date, deposit
       status)
     values (#{saleId,jdbcType=INTEGER}, #{cargoId,jdbcType=VARCHAR}, #{createDateTime,jdbcType=VARCHAR}, 
-      #{createUser,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerPayDate,jdbcType=VARCHAR}, 
-      #{customerPayMoney,jdbcType=DOUBLE}, #{expectSaleBoxes,jdbcType=INTEGER}, #{expectSaleDate,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerPayDate,jdbcType=VARCHAR}, #{customerPayMoney,jdbcType=DOUBLE},
+      #{customerPayDate2,jdbcType=VARCHAR},#{customerPayMoney2,jdbcType=DOUBLE},
+    #{customerPayDate3,jdbcType=VARCHAR},#{customerPayMoney3,jdbcType=DOUBLE},
+    #{customerPayDate4,jdbcType=VARCHAR},#{customerPayMoney4,jdbcType=DOUBLE},
+    #{customerPayDate5,jdbcType=VARCHAR},#{customerPayMoney5,jdbcType=DOUBLE},
+    #{expectSaleBoxes,jdbcType=INTEGER}, #{expectSaleDate,jdbcType=VARCHAR},
       #{expectSaleMoney,jdbcType=DOUBLE}, #{expectSaleUnitPrice,jdbcType=DOUBLE}, #{expectSaleWeight,jdbcType=DOUBLE}, 
       #{moneyClear,jdbcType=INTEGER}, #{paymentDiff,jdbcType=DOUBLE}, #{pickupDate,jdbcType=VARCHAR}, 
       #{pickupUser,jdbcType=VARCHAR}, #{profit,jdbcType=DOUBLE}, #{realSaleBoxes,jdbcType=INTEGER}, 
@@ -100,6 +115,30 @@
       </if>
       <if test="customerPayMoney != null" >
         customer_pay_money,
+      </if>
+      <if test="customerPayDate2 != null" >
+        customer_pay_date2,
+      </if>
+      <if test="customerPayMoney2 != null" >
+        customer_pay_money2,
+      </if>
+      <if test="customerPayDate3 != null" >
+        customer_pay_date3,
+      </if>
+      <if test="customerPayMoney3 != null" >
+        customer_pay_money3,
+      </if>
+      <if test="customerPayDate4 != null" >
+        customer_pay_date4,
+      </if>
+      <if test="customerPayMoney4 != null" >
+        customer_pay_money4,
+      </if>
+      <if test="customerPayDate5 != null" >
+        customer_pay_date5,
+      </if>
+      <if test="customerPayMoney5 != null" >
+        customer_pay_money5,
       </if>
       <if test="expectSaleBoxes != null" >
         expect_sale_boxes,
@@ -184,6 +223,30 @@
       <if test="customerPayMoney != null" >
         #{customerPayMoney,jdbcType=DOUBLE},
       </if>
+      <if test="customerPayDate2 != null" >
+        #{customerPayDate2,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney2 != null" >
+        #{customerPayMoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="customerPayDate3 != null" >
+        #{customerPayDate3,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney3 != null" >
+        #{customerPayMoney3,jdbcType=DOUBLE},
+      </if>
+      <if test="customerPayDate4 != null" >
+        #{customerPayDate4,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney4 != null" >
+        #{customerPayMoney4,jdbcType=DOUBLE},
+      </if>
+      <if test="customerPayDate5 != null" >
+        #{customerPayDate5,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney5 != null" >
+        #{customerPayMoney5,jdbcType=DOUBLE},
+      </if>
       <if test="expectSaleBoxes != null" >
         #{expectSaleBoxes,jdbcType=INTEGER},
       </if>
@@ -267,6 +330,30 @@
       <if test="customerPayMoney != null" >
         customer_pay_money = #{customerPayMoney,jdbcType=DOUBLE},
       </if>
+      <if test="customerPayDate2 != null" >
+        customer_pay_date2 = #{customerPayDate2,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney2 != null" >
+        customer_pay_money2 = #{customerPayMoney2,jdbcType=DOUBLE},
+      </if>
+      <if test="customerPayDate3 != null" >
+        customer_pay_date3 = #{customerPayDate3,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney3 != null" >
+        customer_pay_money3 = #{customerPayMoney3,jdbcType=DOUBLE},
+      </if>
+      <if test="customerPayDate4 != null" >
+        customer_pay_date4 = #{customerPayDate4,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney4 != null" >
+        customer_pay_money4 = #{customerPayMoney4,jdbcType=DOUBLE},
+      </if>
+      <if test="customerPayDate5 != null" >
+        customer_pay_date5 = #{customerPayDate5,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPayMoney5 != null" >
+        customer_pay_money5 = #{customerPayMoney5,jdbcType=DOUBLE},
+      </if>
       <if test="expectSaleBoxes != null" >
         expect_sale_boxes = #{expectSaleBoxes,jdbcType=INTEGER},
       </if>
@@ -338,6 +425,14 @@
       customer_name = #{customerName,jdbcType=VARCHAR},
       customer_pay_date = #{customerPayDate,jdbcType=VARCHAR},
       customer_pay_money = #{customerPayMoney,jdbcType=DOUBLE},
+      customer_pay_date2 = #{customerPayDate2,jdbcType=VARCHAR},
+      customer_pay_money2 = #{customerPayMoney2,jdbcType=DOUBLE},
+      customer_pay_date3 = #{customerPayDate3,jdbcType=VARCHAR},
+      customer_pay_money3 = #{customerPayMoney3,jdbcType=DOUBLE},
+      customer_pay_date4 = #{customerPayDate4,jdbcType=VARCHAR},
+      customer_pay_money4 = #{customerPayMoney4,jdbcType=DOUBLE},
+      customer_pay_date5 = #{customerPayDate5,jdbcType=VARCHAR},
+      customer_pay_money5 = #{customerPayMoney5,jdbcType=DOUBLE},
       expect_sale_boxes = #{expectSaleBoxes,jdbcType=INTEGER},
       expect_sale_date = #{expectSaleDate,jdbcType=VARCHAR},
       expect_sale_money = #{expectSaleMoney,jdbcType=DOUBLE},

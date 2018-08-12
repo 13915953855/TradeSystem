@@ -37,6 +37,18 @@ $(function () {
     $("#customerPayMoney").blur(function(){
         autoSetCustomerMoney();
     });
+    $("#customerPayMoney2").blur(function(){
+            autoSetCustomerMoney();
+        });
+    $("#customerPayMoney3").blur(function(){
+            autoSetCustomerMoney();
+        });
+    $("#customerPayMoney4").blur(function(){
+            autoSetCustomerMoney();
+        });
+    $("#customerPayMoney5").blur(function(){
+            autoSetCustomerMoney();
+        });
 
     $("#realSaleUnitPrice").blur(function(){
         autoSetProfit();
@@ -65,9 +77,13 @@ function autoSetProfit(){
 function autoSetCustomerMoney(){
     var paymentDiff = 0;
     var customerPayMoney = $("#customerPayMoney").val() == ""?0:$("#customerPayMoney").val();
+    var customerPayMoney2 = $("#customerPayMoney2").val() == ""?0:$("#customerPayMoney2").val();
+    var customerPayMoney3 = $("#customerPayMoney3").val() == ""?0:$("#customerPayMoney3").val();
+    var customerPayMoney4 = $("#customerPayMoney4").val() == ""?0:$("#customerPayMoney4").val();
+    var customerPayMoney5 = $("#customerPayMoney5").val() == ""?0:$("#customerPayMoney5").val();
     var realSaleMoney = $("#realSaleMoney").val() == ""?0:$("#realSaleMoney").val();
     var deposit = $("#deposit").val() == ""?0:$("#deposit").val();
-    paymentDiff = toFloat(parseFloat(customerPayMoney) + parseFloat(deposit) - realSaleMoney);
+    paymentDiff = toFloat(parseFloat(customerPayMoney)+parseFloat(customerPayMoney2)+parseFloat(customerPayMoney3)+parseFloat(customerPayMoney4)+parseFloat(customerPayMoney5) + parseFloat(deposit) - realSaleMoney);
     $("#paymentDiff").val(paymentDiff);
     if(paymentDiff != 0){
         $("#deviationNotice").show();
@@ -162,10 +178,34 @@ var TableInit = function () {
                 title: '出库单<br>时间'
             }, {
                 field: 'customerPayDate',
-                title: '客户来<br>款时间'
+                title: '客户来款<br>时间No.1'
             }, {
                 field: 'customerPayMoney',
-                title: '客户来<br>款金额'
+                title: '客户来款<br>金额No.1'
+            }, {
+                field: 'customerPayDate2',
+                title: '客户来款<br>时间No.2'
+            }, {
+                field: 'customerPayMoney2',
+                title: '客户来款<br>金额No.2'
+            }, {
+                field: 'customerPayDate3',
+                title: '客户来款<br>时间No.3'
+            }, {
+                field: 'customerPayMoney3',
+                title: '客户来款<br>金额No.3'
+            }, {
+                field: 'customerPayDate4',
+                title: '客户来款<br>时间No.4'
+            }, {
+                field: 'customerPayMoney4',
+                title: '客户来款<br>金额No.4'
+            }, {
+                field: 'customerPayDate5',
+                title: '客户来款<br>时间No.5'
+            }, {
+                field: 'customerPayMoney5',
+                title: '客户来款<br>金额No.5'
             }, {
                 field: 'depositDate',
                 title: '定金<br>时间'
@@ -281,7 +321,6 @@ var ButtonInit = function () {
             sale.realSaleBoxes = $("#realSaleBoxes").val() == "" ? 0:parseInt($("#realSaleBoxes").val());
             sale.realSaleMoney = $("#realSaleMoney").val() == "" ? 0:toFloat($("#realSaleMoney").val());
             sale.realSaleDate = $("#realSaleDate").val();
-            sale.customerPayDate = $("#customerPayDate").val();
             sale.depositDate = $("#depositDate").val();
             sale.remark = $("#remark").val();
             if($("#moneyClear").is(':checked')){
@@ -289,7 +328,16 @@ var ButtonInit = function () {
                 }else{
                     sale.moneyClear = "0";
                 }
+            sale.customerPayDate = $("#customerPayDate").val();
             sale.customerPayMoney = $("#customerPayMoney").val() == "" ? 0:toFloat($("#customerPayMoney").val());
+            sale.customerPayDate2 = $("#customerPayDate2").val();
+            sale.customerPayMoney2 = $("#customerPayMoney2").val() == "" ? 0:toFloat($("#customerPayMoney2").val());
+            sale.customerPayDate3 = $("#customerPayDate3").val();
+            sale.customerPayMoney3 = $("#customerPayMoney3").val() == "" ? 0:toFloat($("#customerPayMoney3").val());
+            sale.customerPayDate4 = $("#customerPayDate4").val();
+            sale.customerPayMoney4 = $("#customerPayMoney4").val() == "" ? 0:toFloat($("#customerPayMoney4").val());
+            sale.customerPayDate5 = $("#customerPayDate5").val();
+            sale.customerPayMoney5 = $("#customerPayMoney5").val() == "" ? 0:toFloat($("#customerPayMoney5").val());
             sale.deposit = $("#deposit").val() == "" ? 0:toFloat($("#deposit").val());
             sale.paymentDiff = $("#paymentDiff").val() == "" ? 0:toFloat($("#paymentDiff").val());
             sale.profit = $("#profit").val() == "" ? 0:toFloat($("#profit").val());
@@ -358,10 +406,18 @@ function setFormData(data){
     $("#realSaleBoxes").val(data.realSaleBoxes);
     $("#realSaleMoney").val(data.realSaleMoney);
     $("#realSaleDate").val(data.realSaleDate);
-    $("#customerPayDate").val(data.customerPayDate);
     $("#depositDate").val(data.depositDate);
     $("#deposit").val(data.deposit);
     $("#customerPayMoney").val(data.customerPayMoney);
+    $("#customerPayDate").val(data.customerPayDate);
+    $("#customerPayMoney2").val(data.customerPayMoney2);
+    $("#customerPayDate2").val(data.customerPayDate2);
+    $("#customerPayMoney3").val(data.customerPayMoney3);
+    $("#customerPayDate3").val(data.customerPayDate3);
+    $("#customerPayMoney4").val(data.customerPayMoney4);
+    $("#customerPayDate4").val(data.customerPayDate4);
+    $("#customerPayMoney5").val(data.customerPayMoney5);
+    $("#customerPayDate5").val(data.customerPayDate5);
     $("#profit").val(data.profit);
     $("#paymentDiff").val(data.paymentDiff);
     $("#remark").html(data.remark);

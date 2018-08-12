@@ -329,7 +329,6 @@ public class ExcelService {
         list.add(baseInfo.getFinancingRate());//融资年利率
         list.add(baseInfo.getFinancingDaoqi());//融资到期日
         list.add(baseInfo.getDaoqiRate());//到期日汇率
-
         list.add(baseInfo.getContainerNo());//柜号
         list.add(baseInfo.getLadingbillNo());//提单号
         list.add(baseInfo.getContainerSize());//货柜尺寸
@@ -396,7 +395,7 @@ public class ExcelService {
             list.add(saleInfo.getDepositDate());//定金时间
             list.add(saleInfo.getDeposit());//定金(元)
             list.add(saleInfo.getCustomerPayDate());//客户来款时间
-            list.add(saleInfo.getCustomerPayMoney());//客户来款金额(元)
+            list.add(saleInfo.getCustomerPayMoney()+saleInfo.getCustomerPayMoney2()+saleInfo.getCustomerPayMoney3()+saleInfo.getCustomerPayMoney4()+saleInfo.getCustomerPayMoney5());//客户来款金额(元)
             list.add(saleInfo.getPaymentDiff());//货款差额
             list.add(saleInfo.getMoneyClear()==1?"是":"否");//是否已结清
             list.add(saleInfo.getRemark());//备注
