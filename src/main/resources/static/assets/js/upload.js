@@ -14,14 +14,23 @@ var uploader = WebUploader.create({
     swf: '/assets/webuploader/Uploader.swf',
 
     // 文件接收服务端。
-    server: '/trade/upload?contractId='+$('#contractId').val(),
+    server: '/trade/upload',
 
+    formData: { "contractId": $('#contractId').val(), "fileRef": $('#fileRefHidden').val()},
+
+    fileSingleSizeLimit: 10*1024*1024,//限制大小10M，单文件
     // 选择文件的按钮。可选。
     // 内部根据当前运行是创建，可能是input元素，也可能是flash.
     pick: '#picker',
 
     // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
     resize: false
+});
+
+uploader.on( 'uploadBeforeSend', function( block, data ) {
+    // 修改data可以控制发送哪些携带数据。
+    data.contractId =  $('#contractId').val();
+    data.fileRef =  $('#fileRef').val();
 });
 
 // 当有文件被添加进队列的时候

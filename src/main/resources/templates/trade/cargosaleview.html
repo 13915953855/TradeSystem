@@ -43,6 +43,7 @@
             getNoticeNum();
 
             /*<![CDATA[*/
+
             var boxes = /*[[${cargo.boxes}]]*/;
             var invoiceAmount = /*[[${cargo.invoiceAmount}]]*/;
             var ave = 0;
@@ -51,6 +52,13 @@
                 ave = toFloat(ave);
             }
             $("#averageWeight").val(ave);
+
+            var status = /*[[${cargo.status}]]*/;
+            if(status != 1){
+                $("button").attr("disabled","disabled");
+                $("#cancel").removeAttr("disabled");
+                $("#cancel").html("关闭");
+            }
             /*]]>*/
 
         });

@@ -569,6 +569,7 @@ function getAllFile(){
 function setFileDiv(data){
     $("#fileDiv").html('');
     for(var i=0;i<data.length;i++){
+        var fileRef = data[i].fileRef;
         var fileName = data[i].fileName;
         if(fileName.length > 60){
             fileName = fileName.substring(0,48)+"...";
@@ -578,7 +579,7 @@ function setFileDiv(data){
         s += '<div class="metric" style="height:90px;">';
         s += '<span class="icon" style="cursor:pointer" onclick="downloadFile('+data[i].id+',\''+data[i].contractId+'\')"><i class="fa fa-download"></i></span>';
         s += '<p style="word-break:break-all;">';
-        s += '<span style="font-size:16px;">'+fileName+'</span>';
+        s += '<span style="font-size:16px;">'+fileRef+':'+fileName+'</span>';
         s += '</p>';
         s += '<div style="position:absolute; right:20px; bottom:30px;"><span style="cursor:pointer" onclick="deleteAttachment('+data[i].id+',\''+data[i].contractId+'\')"><i class="lnr lnr-trash"></i></span>';
         s += '</div></div></div>';

@@ -196,7 +196,7 @@ public class TradeController {
             saleInfo.setCreateUser(userInfo.getAccount());
             saleInfo.setCreateDateTime(now);
         }
-
+        log.debug("开始保存销售记录====================");
         SaleInfo data = tradeService.saveSale(saleInfo);
 
         SysLog sysLog = new SysLog();
@@ -304,7 +304,7 @@ public class TradeController {
     }
 
     @PostMapping(value = "/upload")
-    public String upload(@RequestParam("file")MultipartFile files,@RequestParam("contractId") String contractId,@RequestParam("size") Integer size) {
+    public String upload(@RequestParam("file")MultipartFile files,@RequestParam("contractId") String contractId,@RequestParam("fileRef") String fileRef, @RequestParam("size") Integer size) {
         JSONObject json=new JSONObject();
         String msg = "添加成功";
         log.info("-------------------开始调用上传文件upload接口-------------------");
@@ -327,6 +327,7 @@ public class TradeController {
             attachment.setFileName(name);
             attachment.setFilePath(pathWithName);
             attachment.setFileType(type);
+            attachment.setFileRef(fileRef);
             attachment.setFileSize(size);
             attachment.setStatus(GlobalConst.ENABLE);
             attachment.setCreatetime(new Date());

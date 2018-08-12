@@ -20,10 +20,20 @@ public class Attachment {
     private Integer fileSize;
     @Column(name="file_path")
     private String filePath;
+    @Column(name="file_ref")
+    private String fileRef;
     @Column(name="status")
     private String status;
     @Column(name="create_time")
     private Date createtime;
+
+    public String getFileRef() {
+        return fileRef;
+    }
+
+    public void setFileRef(String fileRef) {
+        this.fileRef = fileRef;
+    }
 
     public Date getCreatetime() {
         return createtime;
