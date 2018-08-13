@@ -397,7 +397,13 @@ public class ExcelService {
             list.add(saleInfo.getDepositDate());//定金时间
             list.add(saleInfo.getDeposit());//定金(元)
             list.add(saleInfo.getCustomerPayDate());//客户来款时间
-            list.add(saleInfo.getCustomerPayMoney()+saleInfo.getCustomerPayMoney2()+saleInfo.getCustomerPayMoney3()+saleInfo.getCustomerPayMoney4()+saleInfo.getCustomerPayMoney5());//客户来款金额(元)
+            Double totalPayMoney = 0.0;
+            if(saleInfo.getCustomerPayMoney() != null) totalPayMoney += saleInfo.getCustomerPayMoney();
+            if(saleInfo.getCustomerPayMoney2() != null) totalPayMoney += saleInfo.getCustomerPayMoney2();
+            if(saleInfo.getCustomerPayMoney3() != null) totalPayMoney += saleInfo.getCustomerPayMoney3();
+            if(saleInfo.getCustomerPayMoney4() != null) totalPayMoney += saleInfo.getCustomerPayMoney4();
+            if(saleInfo.getCustomerPayMoney5() != null) totalPayMoney += saleInfo.getCustomerPayMoney5();
+            list.add(totalPayMoney);//客户来款金额(元)
             list.add(saleInfo.getPaymentDiff());//货款差额
             list.add(saleInfo.getMoneyClear()==1?"是":"否");//是否已结清
             list.add(saleInfo.getRemark());//备注

@@ -127,13 +127,13 @@ public class TradeService {
         if(realSaleWeight <= 0){
             status = GlobalConst.SELLOUT;
         }
+        autoUpdateStatus(saleInfo.getCargoId(),status);
         cargoInfo.setStatus(status);
         cargoInfo.setExpectStoreWeight(expectSaleWeight);
         cargoInfo.setExpectStoreBoxes(expectSaleBoxes);
         cargoInfo.setRealStoreWeight(realSaleWeight);
         cargoInfo.setRealStoreBoxes(realSaleBoxes);
         cargoInfoMapper.updateByCargoId(cargoInfo);
-        autoUpdateStatus(saleInfo.getCargoId(),status);
         SaleInfo data = saleRepository.save(saleInfo);
         return data;
     }
