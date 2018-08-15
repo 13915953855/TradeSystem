@@ -217,7 +217,6 @@ public class TradeController {
             saleInfo.setCreateUser(userInfo.getAccount());
             saleInfo.setCreateDateTime(now);
         }
-        log.debug("开始保存销售记录====================");
         SaleInfo data = tradeService.saveSale(saleInfo);
 
         SysLog sysLog = new SysLog();
@@ -374,7 +373,6 @@ public class TradeController {
     @PostMapping(value="/sale/delete")
     public String saleDel(@RequestParam("ids") String ids, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
-        //销售记录删除，没有对商品的库存进行恢复操作。需要管理员手动维护。
         tradeService.deleteSaleInfo(ids);
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除销售记录"+ids);

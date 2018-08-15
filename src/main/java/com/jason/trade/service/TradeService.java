@@ -124,7 +124,7 @@ public class TradeService {
             realSaleBoxes = cargoInfo.getRealStoreBoxes() - saleInfo.getRealSaleBoxes();
         }
         String status = GlobalConst.ENABLE;
-        if(realSaleWeight <= 0){
+        if(realSaleBoxes <= 0){
             status = GlobalConst.SELLOUT;
         }
         autoUpdateStatus(saleInfo.getCargoId(),status);

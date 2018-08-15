@@ -291,6 +291,8 @@ function autoSetTotalMoney(){
     $("#totalBoxes").val(parseInt(totalBoxes));
     $("#totalMoney").val(toFloat(totalMoney));
     $("#totalAmount").val(toFloat4(totalAmount));
+    $("#realMoney").val(toFloat(totalMoney));
+    $("#realAmount").val(toFloat4(totalAmount));
 }
 function setFormData(data){
     $("#_id").val(data.id);
@@ -325,9 +327,12 @@ function saveContract(){
     contract.contractDate = $("#contractDate").val();
     contract.supplier = $("#supplier").val();
     contract.payDate = $("#payDate").val();
-    contract.payMoney = $("#payMoney").val();
-    contract.totalAmount = $("#totalAmount").val() == "" ? 0:toFloat4($("#totalAmount").val());
-    contract.totalMoney = $("#totalMoney").val() == "" ? 0:toFloat($("#totalMoney").val());
+    contract.receiptDate = $("#receiptDate").val();
+    contract.payMoney = $("#payMoney").val() == "" ? 0:toFloat4($("#payMoney").val());
+    contract.totalAmount = $("#totalAmount").val() == "" ? 0:toFloat($("#totalAmount").val());
+    contract.totalMoney = $("#totalMoney").val() == "" ? 0:toFloat4($("#totalMoney").val());
+    contract.realAmount = $("#realAmount").val() == "" ? 0:toFloat($("#realAmount").val());
+    contract.realMoney = $("#realMoney").val() == "" ? 0:toFloat4($("#realMoney").val());
     contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:parseInt($("#totalBoxes").val());
 
     var a = $("#tb_cargo").bootstrapTable("getData");
