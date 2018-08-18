@@ -128,7 +128,7 @@ var TableInit = function () {
                 return res.rows;
             },
             onLoadSuccess:function(data){
-                //autoSetTotal();
+                autoSetTotal(data);
             },
             columns: [{
                 checkbox: true
@@ -424,4 +424,16 @@ function setFormData(data){
     if(data.moneyClear == 1){
         $("#moneyClear").attr("checked","checked");
     }
+}
+
+function autoSetTotal(data){
+    var totalWeight = 0;
+    var totalMoney = 0;
+    for(var i=0;i<data.length;i++){
+        var res = data[i];
+        totalWeight = parseFloat(totalWeight) + parseFloat(res.realSaleWeight);
+        totalMoney = parseFloat(totalMoney) + parseFloat(res.realSaleMoney);
+    }
+    $("#totalSaleWeight").html(totalWeight);
+    $("#totalSaleMoney").html(totalMoney);
 }
