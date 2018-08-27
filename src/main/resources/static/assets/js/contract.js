@@ -72,7 +72,7 @@ function getTotalInfo(){
         if(level.length > 1){
             level = level.substring(0,level.length-1);
         }
-        var cargoNameArr = $("#cargoName").val();
+        /*var cargoNameArr = $("#cargoName").val();
         var cargoName = "";
         if(cargoNameArr != null){
             for(var i=0;i<cargoNameArr.length;i++){
@@ -85,7 +85,8 @@ function getTotalInfo(){
         }
         if(cargoName.length > 1){
             cargoName = cargoName.substring(0,cargoName.length-1);
-        }
+        }*/
+        var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
         var businessMode = "";
         if(businessModeArr != null){
@@ -287,7 +288,7 @@ var TableInit = function () {
         if(level.length > 1){
             level = level.substring(0,level.length-1);
         }
-        var cargoNameArr = $("#cargoName").val();
+        /*var cargoNameArr = $("#cargoName").val();
         var cargoName = "";
         if(cargoNameArr != null){
             for(var i=0;i<cargoNameArr.length;i++){
@@ -300,7 +301,8 @@ var TableInit = function () {
         }
         if(cargoName.length > 1){
             cargoName = cargoName.substring(0,cargoName.length-1);
-        }
+        }*/
+        var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
         var businessMode = "";
         if(businessModeArr != null){
@@ -497,7 +499,7 @@ var ButtonInit = function () {
             if(level.length > 1){
                 level = level.substring(0,level.length-1);
             }
-            var cargoNameArr = $("#cargoName").val();
+            /*var cargoNameArr = $("#cargoName").val();
             var cargoName = "";
             if(cargoNameArr != null){
                 for(var i=0;i<cargoNameArr.length;i++){
@@ -510,7 +512,8 @@ var ButtonInit = function () {
             }
             if(cargoName.length > 1){
                 cargoName = cargoName.substring(0,cargoName.length-1);
-            }
+            }*/
+            var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
             var businessModeArr = $("#businessMode").val();
             var businessMode = "";
             if(businessModeArr != null){

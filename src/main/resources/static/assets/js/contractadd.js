@@ -376,6 +376,9 @@ function resetForm(formId){
     autoSetTotalMoney();
 }
 function autoSetTotalMoney(){
+    if($("#action").val() == "update"){
+        return;
+    }
     var all = $('#tb_cargo').bootstrapTable('getData');
     var totalBoxes = 0;
     var totalInvoiceMoney = 0;

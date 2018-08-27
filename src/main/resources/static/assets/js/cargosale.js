@@ -434,6 +434,6 @@ function autoSetTotal(data){
         totalWeight = parseFloat(totalWeight) + parseFloat(res.realSaleWeight);
         totalMoney = parseFloat(totalMoney) + parseFloat(res.realSaleMoney);
     }
-    $("#totalSaleWeight").html(totalWeight);
-    $("#totalSaleMoney").html(totalMoney);
+    $("#totalSaleWeight").html(toFloat(totalWeight));
+    $("#totalSaleMoney").html(toFloat(totalMoney));
 }

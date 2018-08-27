@@ -20,11 +20,13 @@
     <result column="real_amount" jdbcType="DOUBLE" property="realAmount" />
     <result column="real_money" jdbcType="DOUBLE" property="realMoney" />
     <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="store_date" property="storeDate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, contract_no, contract_date, contract_id, supplier, pay_date, pay_money, receipt_date,
     create_date_time, create_user, remark, status, total_boxes, total_amount, total_money,
-    real_amount, real_money, version
+    real_amount, real_money, version, warehouse, store_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -42,15 +44,15 @@
     pay_money, receipt_date, create_date_time,
     create_user, remark, status,
     total_boxes, total_amount, total_money,
-    real_amount, real_money, version
-    )
+    real_amount, real_money, version,
+    warehouse, store_date)
     values (#{id,jdbcType=INTEGER}, #{contractNo,jdbcType=VARCHAR}, #{contractDate,jdbcType=VARCHAR},
     #{contractId,jdbcType=VARCHAR}, #{supplier,jdbcType=VARCHAR}, #{payDate,jdbcType=VARCHAR},
     #{payMoney,jdbcType=DOUBLE}, #{receiptDate,jdbcType=VARCHAR}, #{createDateTime,jdbcType=VARCHAR},
     #{createUser,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
     #{totalBoxes,jdbcType=INTEGER}, #{totalAmount,jdbcType=DOUBLE}, #{totalMoney,jdbcType=DOUBLE},
-    #{realAmount,jdbcType=DOUBLE}, #{realMoney,jdbcType=DOUBLE}, #{version,jdbcType=INTEGER}
-    )
+    #{realAmount,jdbcType=DOUBLE}, #{realMoney,jdbcType=DOUBLE}, #{version,jdbcType=INTEGER},
+    #{warehouse,jdbcType=VARCHAR}, #{storeDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jason.trade.model.InternalContractInfo" >
     insert into internal_contract_info
@@ -109,6 +111,12 @@
       <if test="version != null">
         version,
       </if>
+      <if test="warehouse != null" >
+        warehouse,
+      </if>
+      <if test="storeDate != null" >
+        store_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -164,6 +172,12 @@
       </if>
       <if test="version != null">
         #{version,jdbcType=INTEGER},
+      </if>
+      <if test="warehouse != null" >
+        #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="storeDate != null" >
+        #{storeDate,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -221,6 +235,12 @@
       <if test="version != null">
         version = #{version,jdbcType=INTEGER},
       </if>
+      <if test="warehouse != null" >
+        warehouse = #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="storeDate != null" >
+        store_date = #{storeDate,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -242,7 +262,9 @@
     total_money = #{totalMoney,jdbcType=DOUBLE},
     real_amount = #{realAmount,jdbcType=DOUBLE},
     real_money = #{realMoney,jdbcType=DOUBLE},
-    version = #{version,jdbcType=INTEGER}
+    version = #{version,jdbcType=INTEGER},
+    warehouse = #{warehouse,jdbcType=VARCHAR},
+    store_date = #{storeDate,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

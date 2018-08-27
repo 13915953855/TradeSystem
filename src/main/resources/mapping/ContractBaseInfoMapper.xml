@@ -348,7 +348,7 @@
       and a.contract_id in (
       select contract_id from cargo_info where 1=1
       <if test="cargoName != null and cargoName != ''" >
-        and cargo_name in (${cargoName})
+        and cargo_name = '${cargoName}'
       </if>
       <if test="level != null and level != ''" >
         and level in (${level})
@@ -418,7 +418,7 @@
       and a.contract_id in (
       select contract_id from cargo_info where 1=1
       <if test="cargoName != null and cargoName != ''" >
-        and cargo_name in (${cargoName})
+        and cargo_name = '${cargoName}'
       </if>
       <if test="level != null and level != ''" >
         and level in (${level})

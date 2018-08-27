@@ -154,6 +154,25 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">仓库</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="warehouse" />
+                                            </div>
+                                            <label class="control-label col-sm-3">入库时间</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="storeDate" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">备注</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" rows="3" id="remark"></textarea>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -199,17 +218,18 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">库号</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="cargoNo" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">厂号</label>
+
+                                                                <label class="control-label col-sm-2">厂号</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="companyNo" />
                                                                 </div>
+                                                                <label class="control-label col-sm-3">库号</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="cargoNo" />
+                                                                </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">采购单价(/KG)</label>
+                                                                <label class="control-label col-sm-2">采购单价(CNY/KG)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="unitPrice" />
                                                                 </div>
@@ -219,22 +239,34 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">采购重量(小计)</label>
+                                                                <label class="control-label col-sm-2">合同重量(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="amount" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">采购箱数(小计)</label>
+                                                                <label class="control-label col-sm-3">合同金额(小计)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="money" />
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">实际重量(小计)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="sjAmount" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">实际金额(小计)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="sjMoney" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">箱数(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="boxes" />
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group" style="">
 
-                                                                <label class="control-label col-sm-2">仓库</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="warehouse" />
-                                                                </div>
-                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>

@@ -93,7 +93,7 @@ public class TradeController {
     }
     @RequestMapping(value = "/internal/cargo/list")
     public String getInternalCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        List<InternalCargoInfo> list = internalCargoRepository.findByContractIdAndStatusNot(contractId,GlobalConst.DISABLE);
+        List<CargoInfo> list = cargoRepository.findByContractIdAndStatusNot(contractId,GlobalConst.DISABLE);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -182,6 +182,8 @@ public class TradeController {
         if(StringUtils.isBlank(cargoInfo.getCargoId())) {
             cargoInfo.setCargoId(UUID.randomUUID().toString());
             log.info("新增商品cargoId="+cargoInfo.getCargoId());
+            cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
+            cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
         }else{
             log.info("编辑商品cargoId="+cargoInfo.getCargoId());
         }
@@ -191,9 +193,7 @@ public class TradeController {
         cargoInfo.setCreateUser(userInfo.getAccount());
         cargoInfo.setCreateDateTime(now);
         cargoInfo.setExpectStoreBoxes(cargoInfo.getBoxes());
-        cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
         cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
-        cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
         log.info("保存商品开始");
         CargoInfo data = cargoRepository.save(cargoInfo);
         log.info("保存商品完毕");
@@ -329,7 +329,7 @@ public class TradeController {
         if(StringUtils.isNotBlank(cargoId)) {
             String[] arr = cargoId.split(",");
             List<String> cargoIdList = Arrays.asList(arr);
-            tradeService.updateInternalCargoStatus(cargoIdList);
+            tradeService.updateCargoStatus(cargoIdList);
         }
         internalContractInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
 
@@ -355,7 +355,19 @@ public class TradeController {
         sysLogRepository.save(sysLog);
         return GlobalConst.SUCCESS;
     }
+    @PostMapping(value="/internal/contract/delete")
+    public String intercontractDel(@RequestParam("ids") String ids, HttpSession session){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        tradeService.deleteInternalContract(ids);
 
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("删除合同"+ids);
+        sysLog.setOperation("删除");
+        sysLog.setUser(userInfo.getAccount());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+        return GlobalConst.SUCCESS;
+    }
     @PostMapping(value="/cargo/delete")
     public String cargoDel(@RequestParam("ids") String ids, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);

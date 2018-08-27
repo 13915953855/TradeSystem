@@ -108,14 +108,20 @@ var TableInit = function () {
                 field: 'unitPrice',
                 title: '采购单价'
             }, {
-                field: 'amount',
-                title: '采购重量(小计)'
-            }, {
                 field: 'costPrice',
                 title: '成本单价(CNY/KG)'
             }, {
-                field: 'warehouse',
-                title: '仓库'
+                field: 'contractAmount',
+                title: '合同重量(小计)'
+            }, {
+                field: 'contractMoney',
+                title: '合同金额(小计)'
+            }, {
+                field: 'invoiceAmount',
+                title: '实际重量(小计)'
+            }, {
+                field: 'invoiceMoney',
+                title: '实际金额(小计)'
             }, {
                 field: 'status',
                 title: '状态',
@@ -163,7 +169,7 @@ var ButtonInit = function () {
             $("#myModal").modal('show');
         });
         $("#btn_edit").click(function(){
-            /*var data = $("#tb_cargo").bootstrapTable("getSelections");
+            var data = $("#tb_cargo").bootstrapTable("getSelections");
             if(data.length == 1){
                 $("#myModal").modal('show');
                 setFormData(data[0]);
@@ -173,7 +179,7 @@ var ButtonInit = function () {
             }else {
                 swal("请选中一行!","","warning");
                 $("#myModal").modal('hide');
-            }*/
+            }
         });
         $("#btn_del").click(function(){
         swal({
@@ -231,12 +237,15 @@ var ButtonInit = function () {
             cargo.companyNo = $("#companyNo").val();
             cargo.boxes = $("#boxes").val() == "" ? 0:parseInt($("#boxes").val());//箱数(小计)
             cargo.unitPrice = $("#unitPrice").val() == "" ? 0:toFloat($("#unitPrice").val());//单价
-            cargo.amount = $("#amount").val() == "" ? 0:toFloat4($("#amount").val());//合同数量(小计)
+            cargo.contractAmount = $("#amount").val() == "" ? 0:toFloat4($("#amount").val());//合同数量(小计)
             cargo.costPrice = $("#costPrice").val() == "" ? 0:toFloat($("#costPrice").val());
-            cargo.warehouse = $("#warehouse").val();
+            cargo.contractMoney = $("#money").val() == "" ? 0:toFloat4($("#money").val());
+            cargo.invoiceAmount = $("#sjAmount").val() == "" ? 0:toFloat4($("#sjAmount").val());
+            cargo.invoiceMoney = $("#sjMoney").val() == "" ? 0:toFloat4($("#sjMoney").val());
+            cargo.realStoreMoney = 0;
 
             $.ajax({
-                url:"/trade/internal/cargo/add",
+                url:"/trade/cargo/add",
                 type:"POST",
                 dataType:"json",
                 data:cargo,
@@ -273,7 +282,6 @@ function resetForm(formId){
     $('#costPrice').val('');
     $('#amount').val('');
     $('#boxes').val('');
-    $('#warehouse').val('');
     $("#cargoName").val('').trigger("change");
     $("#level").val('').trigger("change");
     autoSetTotalMoney();
@@ -285,8 +293,8 @@ function autoSetTotalMoney(){
     var totalAmount = 0;
     for(var i=0;i<all.length;i++) {
         totalBoxes += all[i].boxes;
-        totalMoney += all[i].unitPrice;
-        totalAmount += all[i].amount;
+        totalMoney += all[i].contractMoney;
+        totalAmount += all[i].contractAmount;
     }
     $("#totalBoxes").val(parseInt(totalBoxes));
     $("#totalMoney").val(toFloat(totalMoney));
@@ -307,8 +315,10 @@ function setFormData(data){
     $("#unitPrice").val(data.unitPrice);
     $("#boxes").val(data.boxes);
     $("#amount").val(data.contractAmount);
+    $("#money").val(data.contractMoney);
     $("#costPrice").val(data.costPrice);
-    $("#warehouse").val(data.warehouse);
+    $("#sjMoney").val(data.invoiceMoney);
+    $("#sjAmount").val(data.invoiceAmount);
 }
 
 function saveContract(){
@@ -334,6 +344,8 @@ function saveContract(){
     contract.realAmount = $("#realAmount").val() == "" ? 0:toFloat($("#realAmount").val());
     contract.realMoney = $("#realMoney").val() == "" ? 0:toFloat4($("#realMoney").val());
     contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:parseInt($("#totalBoxes").val());
+    contract.storeDate = $("#storeDate").val();
+    contract.warehouse = $("#warehouse").val();
 
     var a = $("#tb_cargo").bootstrapTable("getData");
     var cargoIds = "";

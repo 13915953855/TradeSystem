@@ -163,7 +163,16 @@ public class TradeService {
             contractRepository.deleteContract(idList);
         }
     }
-
+    @Transactional
+    public void deleteInternalContract(String ids){
+        if(StringUtils.isNotBlank(ids)) {
+            String[] arr = ids.split(",");
+            List<String> idList = Arrays.asList(arr);
+            saleInfoMapper.deleteByContract(idList);
+            cargoInfoMapper.deleteByContract(idList);
+            internalContractRepository.deleteContract(idList);
+        }
+    }
     @Transactional
     public void deleteCargo(String cargoId){
         if(StringUtils.isNotBlank(cargoId)) {

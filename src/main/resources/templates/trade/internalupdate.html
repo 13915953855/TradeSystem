@@ -45,6 +45,12 @@
         var getNoticeNum = function(){
             $("#noticeNum").html("");
         }
+        var initDetailData = function(){
+            /*<![CDATA[*/
+            var remark = /*[[${contract.remark}]]*/;
+            $("#remark").html(remark);
+            /*]]>*/
+        }
     </script>
 </head>
 
@@ -108,7 +114,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">合同总重量(KG)</label>
+                                            <label class="control-label col-sm-2">合同总重量</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalAmount" th:value="${contract.totalAmount}" disabled="disabled"/>
                                             </div>
@@ -118,7 +124,17 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">合同总箱数</label>
+                                            <label class="control-label col-sm-2">实际总重量</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="realAmount" th:value="${contract.realAmount}"  disabled="disabled"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">实际总金额</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="realMoney" th:value="${contract.realMoney}"  disabled="disabled"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">总箱数</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalBoxes" th:value="${contract.totalBoxes}" disabled="disabled"/>
                                             </div>
@@ -134,6 +150,34 @@
                                             <label class="control-label col-sm-3">海企付款金额</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="payMoney" th:value="${contract.payMoney}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">收到发票时间</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="receiptDate" type="text" th:value="${contract.receiptDate}"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">仓库</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="warehouse" th:value="${contract.warehouse}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">入库时间</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="storeDate" type="text" th:value="${contract.storeDate}"/>
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">备注</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" rows="3" id="remark" th:value="${contract.remark}"></textarea>
                                             </div>
                                         </div>
                                     </form>
@@ -181,17 +225,18 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">库号</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="cargoNo" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">厂号</label>
+                                                                <label class="control-label col-sm-2">厂号</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="companyNo" />
                                                                 </div>
+                                                                <label class="control-label col-sm-3">库号</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="cargoNo" />
+                                                                </div>
+
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">采购单价(/KG)</label>
+                                                                <label class="control-label col-sm-2">采购单价(CNY/KG)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="unitPrice" />
                                                                 </div>
@@ -201,22 +246,34 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">采购重量(小计)</label>
+                                                                <label class="control-label col-sm-2">合同重量(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="amount" />
                                                                 </div>
-                                                                <label class="control-label col-sm-3">采购箱数(小计)</label>
+                                                                <label class="control-label col-sm-3">合同金额(小计)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="money" />
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">实际重量(小计)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="sjAmount" />
+                                                                </div>
+                                                                <label class="control-label col-sm-3">实际金额(小计)</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="text" class="form-control" id="sjMoney" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group" style="">
+                                                                <label class="control-label col-sm-2">箱数(小计)</label>
                                                                 <div class="col-sm-3">
                                                                     <input type="text" class="form-control" id="boxes" />
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group" style="">
 
-                                                                <label class="control-label col-sm-2">仓库</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="warehouse" />
-                                                                </div>
-                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>

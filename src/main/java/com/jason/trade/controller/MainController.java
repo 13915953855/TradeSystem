@@ -143,10 +143,18 @@ public class MainController {
     public String contractview(@RequestParam(value="externalContract") String externalContract, Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        ContractBaseInfo contract = contractRepository.findByExternalContractAndStatusNot(externalContract,GlobalConst.DISABLE);
-        model.addAttribute("contract",contract);
-        model.addAttribute("action","view");
-        return "trade/contractupdate";
+        ContractBaseInfo contract = contractRepository.findByExternalContractAndStatusNot(externalContract, GlobalConst.DISABLE);
+        if(contract != null){
+            model.addAttribute("contract", contract);
+            model.addAttribute("action","view");
+            return "trade/contractupdate";
+        }else{
+            InternalContractInfo contract1 = internalContractRepository.findByContractNo(externalContract);
+            model.addAttribute("contract", contract1);
+            model.addAttribute("action","view");
+            return "trade/internalupdate";
+        }
+
     }
     @GetMapping("/trade/cargomanage")
     public String inout(Model model, HttpSession session) {
@@ -162,7 +170,16 @@ public class MainController {
         model.addAttribute("cargo",cargoInfo);
         model.addAttribute("action","view");
         ContractBaseInfo contractBaseInfo = contractRepository.findByContractId(cargoInfo.getContractId());
-        model.addAttribute("externalContract",contractBaseInfo.getExternalContract());
+        if(contractBaseInfo != null) {
+            model.addAttribute("externalContract", contractBaseInfo.getExternalContract());
+            model.addAttribute("from","jinkou");
+            model.addAttribute("type","进口台账");
+        }else{
+            InternalContractInfo internalContractInfo = internalContractRepository.findByContractId(cargoInfo.getContractId());
+            model.addAttribute("externalContract", internalContractInfo.getContractNo());
+            model.addAttribute("from","neimao");
+            model.addAttribute("type","内贸台账");
+        }
         return "trade/cargosaleview";
     }
     @GetMapping("/trade/agent")
