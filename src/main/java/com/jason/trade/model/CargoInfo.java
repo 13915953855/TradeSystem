@@ -45,8 +45,6 @@ public class CargoInfo {
     private Double realStoreMoney;
     @Column(name="real_store_weight")
     private Double realStoreWeight;
-    @Column(name="status")
-    private String status;
     @Column(name="unit_price")
     private Double unitPrice;
     @Column(name="business_mode")
@@ -220,14 +218,6 @@ public class CargoInfo {
 
     public void setRealStoreWeight(Double realStoreWeight) {
         this.realStoreWeight = realStoreWeight;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
     }
 
     public Double getUnitPrice() {

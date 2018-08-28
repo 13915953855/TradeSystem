@@ -65,7 +65,7 @@ public class ExcelService {
             ContractBaseInfo baseInfo = data.get(i);
             List<Object> contractList = convertContractList(baseInfo,i);
             //获取单个合同的多个商品
-            List<CargoInfo> cargoData = cargoRepository.findByContractIdAndStatus(baseInfo.getContractId(), GlobalConst.ENABLE);
+            List<CargoInfo> cargoData = cargoRepository.findByContractId(baseInfo.getContractId());
             if(cargoData.size()>0) {
                 //获取单个商品的多个销售记录
                 for (int j = 0; j < cargoData.size(); j++) {

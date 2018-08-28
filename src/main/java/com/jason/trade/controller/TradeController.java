@@ -85,7 +85,7 @@ public class TradeController {
     }
     @RequestMapping(value = "/cargo/list")
     public String getCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        List<CargoInfo> list = cargoRepository.findByContractIdAndStatusNot(contractId,GlobalConst.DISABLE);
+        List<CargoInfo> list = cargoRepository.findByContractId(contractId);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -93,7 +93,7 @@ public class TradeController {
     }
     @RequestMapping(value = "/internal/cargo/list")
     public String getInternalCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        List<CargoInfo> list = cargoRepository.findByContractIdAndStatusNot(contractId,GlobalConst.DISABLE);
+        List<CargoInfo> list = cargoRepository.findByContractId(contractId);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -178,7 +178,6 @@ public class TradeController {
     @PostMapping(value="/cargo/add")
     public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
         log.info("开始处理商品新增或修改的请求");
-        cargoInfo.setStatus(GlobalConst.EDITING);
         if(StringUtils.isBlank(cargoInfo.getCargoId())) {
             cargoInfo.setCargoId(UUID.randomUUID().toString());
             log.info("新增商品cargoId="+cargoInfo.getCargoId());
@@ -186,6 +185,9 @@ public class TradeController {
             cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
         }else{
             log.info("编辑商品cargoId="+cargoInfo.getCargoId());
+            CargoInfo cargo = cargoRepository.findByCargoId(cargoInfo.getCargoId());
+            cargoInfo.setRealStoreBoxes(cargo.getRealStoreBoxes());
+            cargoInfo.setRealStoreWeight(cargo.getRealStoreWeight());
         }
 
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -211,6 +213,21 @@ public class TradeController {
     @PostMapping(value="/sale/checkStore")
     public String checkStore(@RequestParam("cargoId") String cargoId,@RequestParam("boxes") String boxes,@RequestParam("weight") String weight){
         cargoRepository.updateWeightAndBoxes(cargoId,weight,boxes);
+        if(boxes.equals("0") || weight.startsWith("-") || weight.equals("0")){
+            CargoInfo cargoInfo = cargoRepository.findByCargoId(cargoId);
+            List<String> id = new ArrayList<>();
+            id.add(cargoInfo.getContractId());
+            List<CargoInfo> cargoList = cargoRepository.findByContractId(cargoInfo.getContractId());
+            int flag = 0;
+            for (CargoInfo cargo : cargoList) {
+                if(cargo.getRealStoreWeight() > 0){
+                    flag = 1;
+                }
+            }
+            if(flag == 0) {
+                contractRepository.updateStatusByContractId(id, GlobalConst.SELLOUT);
+            }
+        }
         return RespUtil.respSuccess("");
     }
 
@@ -306,11 +323,11 @@ public class TradeController {
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
         //contractRepository.save(contractBaseInfo);
 
-        if(StringUtils.isNotBlank(cargoId)) {
+        /*if(StringUtils.isNotBlank(cargoId)) {
             String[] arr = cargoId.split(",");
             List<String> cargoIdList = Arrays.asList(arr);
             tradeService.updateCargoStatus(cargoIdList);
-        }
+        }*/
         contractBaseInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
 
         SysLog sysLog = new SysLog();
@@ -331,12 +348,6 @@ public class TradeController {
         }
 
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
-
-        if(StringUtils.isNotBlank(cargoId)) {
-            String[] arr = cargoId.split(",");
-            List<String> cargoIdList = Arrays.asList(arr);
-            tradeService.updateCargoStatus(cargoIdList);
-        }
         internalContractInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
 
         SysLog sysLog = new SysLog();

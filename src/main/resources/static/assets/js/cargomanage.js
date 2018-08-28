@@ -105,22 +105,18 @@ var TableInit = function () {
                 field: 'status',
                 title: '状态',
                 formatter: function(value, row, index){
-                    if(row.status == "1") return "已保存";
+                    if(row.status == "1") return "已下单";
+                    else if(row.status == "2") return "已装船";
+                    else if(row.status == "3") return "已到港";
+                    else if(row.status == "4") return "已入库";
                     else if(row.status == "5") return "已售完";
-                    else if(row.status == "9") return "编辑中";
-                    else if(row.status == "0") return "已删除";
                 }
             }, {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
-                    var status = row.status;
-                    if(status == "1"){
                         var s = '<a href="/trade/cargo/view?id='+value+'">查看</a>';
                         return s;
-                    }
-                    return "";
-
                 }
             }]
         });

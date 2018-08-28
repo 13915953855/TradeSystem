@@ -62,14 +62,6 @@ public class TradeService {
     private InternalContractInfoMapper internalContractInfoMapper;
 
     @Transactional
-    public void updateCargoStatus(List<String> cargoIdList){
-        cargoRepository.updateStatus(cargoIdList,GlobalConst.ENABLE);
-    }
-    @Transactional
-    public void updateInternalCargoStatus(List<String> cargoIdList){
-        internalCargoRepository.updateStatus(cargoIdList,GlobalConst.ENABLE);
-    }
-    @Transactional
     public ContractBaseInfo saveContract(ContractBaseInfo contractBaseInfo, String cargoId){
         contractBaseInfo.setStatus(GlobalConst.ENABLE);
         if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
@@ -83,11 +75,11 @@ public class TradeService {
         }
 
         ContractBaseInfo record = contractRepository.save(contractBaseInfo);
-        if(StringUtils.isNotBlank(cargoId)) {
+        /*if(StringUtils.isNotBlank(cargoId)) {
             String[] arr = cargoId.split(",");
             List<String> cargoIdList = Arrays.asList(arr);
             cargoRepository.updateStatus(cargoIdList,GlobalConst.ENABLE);
-        }
+        }*/
         return record;
     }
     @Transactional
@@ -128,7 +120,7 @@ public class TradeService {
             status = GlobalConst.SELLOUT;
         }
         autoUpdateStatus(saleInfo.getCargoId(),status);
-        cargoInfo.setStatus(status);
+        //cargoInfo.setStatus(status);
         cargoInfo.setExpectStoreWeight(expectSaleWeight);
         cargoInfo.setExpectStoreBoxes(expectSaleBoxes);
         cargoInfo.setRealStoreWeight(realSaleWeight);
@@ -149,7 +141,20 @@ public class TradeService {
         if(totalRealStoreWeight == null || totalRealStoreWeight <= 0) {
             List<String> id = new ArrayList<>();
             id.add(contractId);
-            contractRepository.updateStatusByContractId(id, status);
+            List<CargoInfo> cargoList = cargoRepository.findByContractId(cargoInfo.getContractId());
+            if(status.equals(GlobalConst.SELLOUT)) {
+                int flag = 0;
+                for (CargoInfo cargo : cargoList) {
+                    if (cargo.getRealStoreWeight() > 0) {
+                        flag = 1;
+                    }
+                }
+                if (flag == 0) {
+                    contractRepository.updateStatusByContractId(id, status);
+                }
+            }else {
+                contractRepository.updateStatusByContractId(id, status);
+            }
         }
     }
 
@@ -255,13 +260,14 @@ public class TradeService {
     }
 
     public JSONObject queryAllCargoList(CargoParam cargoParam){
-        String status = "";//0-已删除，1-已保存,5-已售完，9-编辑中
+        String status = "";
         switch (cargoParam.getStatus()){
             case "全部":  status = "";break;
-            case "已保存": status = "1";break;
+            case "已下单": status = "1";break;
+            case "已装船": status = "2";break;
+            case "已到港": status = "3";break;
+            case "已入库": status = "4";break;
             case "已售完": status = "5";break;
-            case "编辑中": status = "9";break;
-            case "已删除": status = "0";break;
             default: break;
         }
         cargoParam.setStatus(status);

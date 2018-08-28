@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integer>,JpaSpecificationExecutor<ContractBaseInfo> {
@@ -20,5 +21,6 @@ public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integ
 
     @Query(value = "update contract_base_info set status=?2 where contract_id in (?1) ", nativeQuery = true)
     @Modifying
+    @Transactional
     void updateStatusByContractId(List<String> id,String status);
 }

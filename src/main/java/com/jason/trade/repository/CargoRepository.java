@@ -12,16 +12,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface CargoRepository extends JpaRepository<CargoInfo,Integer>,JpaSpecificationExecutor<CargoInfo> {
-    List<CargoInfo> findByContractIdAndStatus(String contractId,String status);
-    List<CargoInfo> findByContractIdAndStatusNot(String contractId,String status);
-    Page<CargoInfo> findByContractIdAndStatus(String contractId, String status, Pageable pageable);
-    Page<CargoInfo> findByContractIdAndStatusNot(String contractId,String status,Pageable pageable);
-    Page<CargoInfo> findByStatus(String status,Pageable pageable);
-    CargoInfo findByCargoIdAndStatus(String cargoId, String status);
-    //原生SQL实现更新方法接口
-    @Query(value = "update cargo_info set status=?2 where id in (?1) ", nativeQuery = true)
-    @Modifying
-    void updateStatus(List<String> id,String status);
+    List<CargoInfo> findByContractId(String contractId);
+    CargoInfo findByCargoId(String cargoId);
 
     @Query(value = "update cargo_info set real_store_weight = ?2,real_store_boxes = ?3 where cargo_id = ?1 ", nativeQuery = true)
     @Modifying

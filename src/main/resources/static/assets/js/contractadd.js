@@ -216,28 +216,10 @@ var TableInit = function () {
                 field: 'realStoreMoney',
                 title: '库存金额'
             }, {
-                field: 'status',
-                title: '状态',
-                formatter: function(value, row, index){
-                    if(value == 1) {
-                        return "已保存";
-                    }else if(value == 5) {
-                        return "已售完";
-                    }else if(value == 9) {
-                         return "编辑中";
-                     }
-                }
-            }, {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
-                    var status = row.status;
-                    if(status == 1 || status == 5) {
                         return '<a href="/trade/cargo/view?id='+value+'">查看销售记录</a>';
-                    }else{
-                        return "";
-                    }
-
                 }
             } ]
         });
