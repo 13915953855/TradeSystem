@@ -437,3 +437,25 @@ function autoSetTotal(data){
     $("#totalSaleWeight").html(toFloat(totalWeight));
     $("#totalSaleMoney").html(toFloat(totalMoney));
 }
+
+function checkStore(){
+    var totalBoxes = 0;
+    var all = $('#tb_sale').bootstrapTable('getData');
+    for(var i=0;i<all.length;i++) {
+        totalBoxes += all[i].realSaleBoxes;
+    }
+    var weight = $("#invoiceAmount").val() - $("#totalSaleWeight").html();
+    weight = toFloat4(weight);
+    var boxes = $("#boxes").val() - totalBoxes;
+    var cargoId = $("#cargoId").val();
+
+    $.ajax({
+            url:"/trade/sale/checkStore",
+            type:"POST",
+            dataType:"json",
+            data:{"cargoId":cargoId,"weight":weight,"boxes":boxes},
+            success:function(res){
+                window.location.href = window.location.href;
+            }
+        });
+}

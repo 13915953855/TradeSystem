@@ -208,6 +208,12 @@ public class TradeController {
         return RespUtil.respSuccess(data);
     }
 
+    @PostMapping(value="/sale/checkStore")
+    public String checkStore(@RequestParam("cargoId") String cargoId,@RequestParam("boxes") String boxes,@RequestParam("weight") String weight){
+        cargoRepository.updateWeightAndBoxes(cargoId,weight,boxes);
+        return RespUtil.respSuccess("");
+    }
+
     @PostMapping(value="/sale/add")
     public String saleAdd(SaleInfo saleInfo, HttpSession session){
         saleInfo.setStatus(GlobalConst.ENABLE);

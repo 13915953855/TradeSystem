@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface CargoRepository extends JpaRepository<CargoInfo,Integer>,JpaSpecificationExecutor<CargoInfo> {
@@ -21,6 +22,11 @@ public interface CargoRepository extends JpaRepository<CargoInfo,Integer>,JpaSpe
     @Query(value = "update cargo_info set status=?2 where id in (?1) ", nativeQuery = true)
     @Modifying
     void updateStatus(List<String> id,String status);
+
+    @Query(value = "update cargo_info set real_store_weight = ?2,real_store_boxes = ?3 where cargo_id = ?1 ", nativeQuery = true)
+    @Modifying
+    @Transactional
+    void updateWeightAndBoxes(String cargoId,String weight,String boxes);
 
     @Query(value = "delete from cargo_info where id in (?1) ", nativeQuery = true)
     @Modifying
