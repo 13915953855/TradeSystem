@@ -148,6 +148,16 @@ public class ContractBaseInfo {
     private Double daoqiRate;
     @Column(name="financing_bank")
     private String financingBank;
+    @Column(name="owner_company")
+    private String ownerCompany;
+
+    public String getOwnerCompany() {
+        return ownerCompany;
+    }
+
+    public void setOwnerCompany(String ownerCompany) {
+        this.ownerCompany = ownerCompany;
+    }
 
     public String getPrePayBank() {
         return prePayBank;

@@ -47,6 +47,16 @@ public class InternalContractInfo {
     private String warehouse;
     @Column(name="store_date")
     private String storeDate;
+    @Column(name="owner_company")
+    private String ownerCompany;
+
+    public String getOwnerCompany() {
+        return ownerCompany;
+    }
+
+    public void setOwnerCompany(String ownerCompany) {
+        this.ownerCompany = ownerCompany;
+    }
 
     public String getWarehouse() {
         return warehouse;

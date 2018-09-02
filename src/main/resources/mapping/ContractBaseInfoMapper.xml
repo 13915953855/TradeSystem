@@ -72,6 +72,7 @@
     <result column="financing_bank" property="financingBank" jdbcType="VARCHAR" />
     <result column="pre_pay_bank" property="prePayBank" jdbcType="VARCHAR" />
     <result column="final_pay_bank" property="finalPayBank" jdbcType="VARCHAR" />
+    <result column="owner_company" property="ownerCompany" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, eta, etd, lcno, qacertificate, added_value_tax, agent, agent_pass_date, agent_send_date,
@@ -85,7 +86,7 @@
     total_contract_amount, total_contract_money, total_invoice_amount, total_invoice_money,
     version, warehouse, yahuidaoqi_date, exchange_rate, hasbaoguan,zhixiangfei,zhigangfei,
     is_yahui,yahui_money,yahui_year_rate,yahui_day_rate,is_financing,financing_money,
-    financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank
+    financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,owner_company
   </sql>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
     update contract_base_info
@@ -297,6 +298,9 @@
       <if test="finalPayBank != null" >
         final_pay_bank = #{finalPayBank,jdbcType=VARCHAR},
       </if>
+      <if test="ownerCompany != null" >
+        owner_company = #{ownerCompany,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -487,7 +491,7 @@
       and a.contract_id in (
       select contract_id from cargo_info where 1=1
       <if test="cargoName != null and cargoName != ''" >
-        and cargo_name in (${cargoName})
+        and cargo_name = '${cargoName}'
       </if>
       <if test="level != null and level != ''" >
         and level in (${level})

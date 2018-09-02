@@ -96,6 +96,10 @@
             checkSelectOptionExist("externalCompany",externalCompany);
             $("#externalCompany").val(externalCompany).trigger("change");
 
+            var ownerCompany = /*[[${contract.ownerCompany}]]*/;
+            checkSelectOptionExist("ownerCompany",ownerCompany);
+            $("#ownerCompany").val(ownerCompany).trigger("change");
+
             var originCountry = /*[[${contract.originCountry}]]*/;
             checkSelectOptionExist("originCountry",originCountry);
             $("#originCountry").val(originCountry).trigger("change");
@@ -174,6 +178,15 @@
                                         <input type="hidden" id="id" th:value="${contract.id}"/>
                                         <input type="hidden" id="action" th:value="${action}"/>
                                         <input type="hidden" id="contractId" th:value="${contract.contractId}"/>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2" style="color:red;">合同归属公司</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-control select2" id="ownerCompany">
+                                                    <option>海企长城</option>
+                                                    <option>紫荆华美</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">外合同编号</label>
                                             <div class="col-sm-3">

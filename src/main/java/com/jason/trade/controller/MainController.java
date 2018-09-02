@@ -172,11 +172,13 @@ public class MainController {
         ContractBaseInfo contractBaseInfo = contractRepository.findByContractId(cargoInfo.getContractId());
         if(contractBaseInfo != null) {
             model.addAttribute("externalContract", contractBaseInfo.getExternalContract());
+            model.addAttribute("ownerCompany", contractBaseInfo.getOwnerCompany());
             model.addAttribute("from","jinkou");
             model.addAttribute("type","进口台账");
         }else{
             InternalContractInfo internalContractInfo = internalContractRepository.findByContractId(cargoInfo.getContractId());
             model.addAttribute("externalContract", internalContractInfo.getContractNo());
+            model.addAttribute("ownerCompany", internalContractInfo.getOwnerCompany());
             model.addAttribute("from","neimao");
             model.addAttribute("type","内贸台账");
         }
