@@ -448,6 +448,11 @@ function saveContract(){
     }else{
         contract.isFinancing = "0";
     }
+    if($("#baoguandan").is(':checked')){
+        contract.baoguandan = "1";
+    }else{
+        contract.baoguandan = "0";
+    }
     if($("#isYahui").is(':checked')){
         contract.isYahui = "1";
     }else{

@@ -30,6 +30,7 @@
     <result column="insurance_company" property="insuranceCompany" jdbcType="VARCHAR" />
     <result column="insurance_money" property="insuranceMoney" jdbcType="DOUBLE" />
     <result column="is_check_elec" property="isCheckElec" jdbcType="INTEGER" />
+    <result column="baoguandan" property="baoguandan" jdbcType="INTEGER" />
     <result column="is_need_insurance" property="isNeedInsurance" jdbcType="INTEGER" />
     <result column="issuing_bank" property="issuingBank" jdbcType="VARCHAR" />
     <result column="issuing_date" property="issuingDate" jdbcType="VARCHAR" />
@@ -86,7 +87,7 @@
     total_contract_amount, total_contract_money, total_invoice_amount, total_invoice_money,
     version, warehouse, yahuidaoqi_date, exchange_rate, hasbaoguan,zhixiangfei,zhigangfei,
     is_yahui,yahui_money,yahui_year_rate,yahui_day_rate,is_financing,financing_money,
-    financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,owner_company
+    financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,owner_company,baoguandan
   </sql>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
     update contract_base_info
@@ -300,6 +301,9 @@
       </if>
       <if test="ownerCompany != null" >
         owner_company = #{ownerCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="baoguandan != null" >
+        baoguandan = #{baoguandan,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

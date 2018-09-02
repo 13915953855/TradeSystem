@@ -150,6 +150,16 @@ public class ContractBaseInfo {
     private String financingBank;
     @Column(name="owner_company")
     private String ownerCompany;
+    @Column(name="baoguandan")
+    private Integer baoguandan;
+
+    public Integer getBaoguandan() {
+        return baoguandan == null ? 0 : baoguandan;
+    }
+
+    public void setBaoguandan(Integer baoguandan) {
+        this.baoguandan = baoguandan;
+    }
 
     public String getOwnerCompany() {
         return ownerCompany;
