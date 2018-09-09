@@ -376,4 +376,11 @@ public class MainController {
         json.put("flag", "success");// 标识
         //response(response, json);// 保存图片完成，返回前台进行回显
     }*/
+
+    @GetMapping("/trade/query/contract")
+    public String queryContract(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryContract";
+    }
 }

@@ -11,6 +11,8 @@ public interface ContractBaseInfoMapper {
     int updateByPrimaryKeySelective(ContractBaseInfo record);
     List<ContractBaseInfo> selectByExample(ContractParam contractParam);
     Integer selectCountByExample(ContractParam contractParam);
+    List<ContractBaseInfo> queryContractListByExample(ContractParam contractParam);
+    Integer queryContractTotalByExample(ContractParam contractParam);
     void updateStatusByField(ContractParam contractParam);
     ContractTotalInfo getTotalInfo(ContractParam contractParam);
     List<ContractForCharts> getTotalNumPerDay();

@@ -460,4 +460,12 @@ public class TradeController {
         json.put("msg", msg);
         return json.toString();
     }
+
+    @RequestMapping(value = "/queryContractList")
+    public String queryContractList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
+        contractParam.setStart(offset);
+        contractParam.setLimit(limit);
+        JSONObject result = tradeService.queryContractListForQuery(contractParam);
+        return result.toString();
+    }
 }

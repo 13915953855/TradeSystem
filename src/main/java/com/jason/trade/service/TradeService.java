@@ -236,6 +236,14 @@ public class TradeService {
         return result;
     }
 
+    public JSONObject queryContractListForQuery(ContractParam contractParam){
+        Integer count = contractBaseInfoMapper.queryContractTotalByExample(contractParam);
+        JSONObject result = new JSONObject();
+        result.put("total",count);
+        result.put("rows",contractBaseInfoMapper.queryContractListByExample(contractParam));
+        return result;
+    }
+
     public JSONObject queryInternalContractListByMapper(InternalContractParam contractParam){
         String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
         switch (contractParam.getStatus()){

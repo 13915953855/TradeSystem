@@ -14,7 +14,6 @@
             //获取警示数目
             getNoticeNum();
 
-
             $.ajax({
                 url:'/trade/charts',
                 type:"POST",
@@ -73,6 +72,14 @@
                                 <li><a href="/trade/contract">进口台账</a></li>
                                 <li><a href="/trade/cargomanage">进销存</a></li>
                                 <li><a href="/trade/internal">内贸台账</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>统计分析</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages2" class="collapse">
+                            <ul class="nav">
+                                <li><a href="/trade/query/contract">订单数据统计</a></li>
                             </ul>
                         </div>
                     </li>
