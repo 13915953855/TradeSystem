@@ -18,8 +18,26 @@ public class CargoParam {
     private String ladingbillNo;
     private String status;
     private String businessMode;
+    private String minBox;
+    private String maxBox;
     private int start;
     private int limit;
+
+    public String getMinBox() {
+        return minBox;
+    }
+
+    public void setMinBox(String minBox) {
+        this.minBox = minBox;
+    }
+
+    public String getMaxBox() {
+        return maxBox;
+    }
+
+    public void setMaxBox(String maxBox) {
+        this.maxBox = maxBox;
+    }
 
     public String getBusinessMode() {
         return businessMode;

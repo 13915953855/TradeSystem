@@ -139,7 +139,9 @@ var TableInit = function () {
             containerNo: $("#containerNo").val(),
             ladingbillNo: $("#ladingbillNo").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),
-            businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val()
+            businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
+            minBox: $("#minBox").val(),
+            maxBox: $("#maxBox").val()
         };
         return temp;
     };

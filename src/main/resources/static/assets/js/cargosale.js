@@ -311,6 +311,7 @@ var ButtonInit = function () {
             sale.pickupUser = $("#pickupUser").val();
             sale.saleContractNo = $("#saleContractNo").val();//合同序号
             sale.customerName = $("#customerName").val();
+            sale.customerType = $("#customerType").val();
             sale.expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == "" ? 0:toFloat($("#expectSaleUnitPrice").val());
             sale.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:toFloat4($("#expectSaleWeight").val());
             sale.expectSaleBoxes = $("#expectSaleBoxes").val() == "" ? 0:parseInt($("#expectSaleBoxes").val());
@@ -396,6 +397,7 @@ function setFormData(data){
     $("#pickupUser").val(data.pickupUser);
     $("#saleContractNo").val(data.saleContractNo);
     $("#customerName").val(data.customerName);
+    $("#customerType").val(data.customerType).trigger("change");
     $("#expectSaleUnitPrice").val(data.expectSaleUnitPrice);
     $("#expectSaleWeight").val(data.expectSaleWeight);
     $("#expectSaleBoxes").val(data.expectSaleBoxes);

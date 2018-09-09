@@ -103,6 +103,12 @@
     <if test="cargoName != null and cargoName != ''" >
       and a.cargo_name = '${cargoName}'
     </if>
+    <if test="minBox != null and minBox != ''" >
+      and a.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and a.real_store_boxes &lt;= '${maxBox}'
+    </if>
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
     </if>
@@ -129,6 +135,12 @@
     </if>
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and a.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and a.real_store_boxes &lt;= '${maxBox}'
     </if>
     <if test="customerName != null and customerName != ''" >
       and a.cargo_id in (
@@ -182,6 +194,12 @@
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
     </if>
+    <if test="minBox != null and minBox != ''" >
+      and a.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and a.real_store_boxes &lt;= '${maxBox}'
+    </if>
     <if test="customerName != null and customerName != ''" >
       and a.cargo_id in (
       select cargo_id from sale_info where 1=1
@@ -204,6 +222,12 @@
     </if>
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and a.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and a.real_store_boxes &lt;= '${maxBox}'
     </if>
     <if test="customerName != null and customerName != ''" >
       and a.cargo_id in (
@@ -252,6 +276,12 @@
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
     </if>
+    <if test="minBox != null and minBox != ''" >
+      and a.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and a.real_store_boxes &lt;= '${maxBox}'
+    </if>
     <if test="customerName != null and customerName != ''" >
       and a.cargo_id in (
       select cargo_id from sale_info where 1=1
@@ -294,6 +324,12 @@
     </if>
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and a.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and a.real_store_boxes &lt;= '${maxBox}'
     </if>
     <if test="customerName != null and customerName != ''" >
       and a.cargo_id in (
