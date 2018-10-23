@@ -88,13 +88,15 @@ var TableInit = function () {
                 title: '库号'
             }, {
                 field: 'businessMode',
-                title: '业务模式'
+                title: '业务模式',
+                visible: false
             }, {
                 field: 'warehouse',
                 title: '仓库'
             }, {
                 field: 'storeDate',
-                title: '入库日期'
+                title: '入库日期',
+                visible: false
             }, {
                 field: 'realStoreWeight',
                 title: '当前库存重量'

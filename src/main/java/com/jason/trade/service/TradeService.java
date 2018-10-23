@@ -67,19 +67,23 @@ public class TradeService {
         if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
             contractBaseInfo.setStatus(GlobalConst.SHIPPED);
         }
+        if(StringUtils.isNotBlank(contractBaseInfo.getEtd())){
+            if(contractBaseInfo.getEtd().compareTo(DateUtil.DateToString(new Date())) <= 0){
+                contractBaseInfo.setStatus(GlobalConst.SHIPPED);
+            }
+        }
         if(StringUtils.isNotBlank(contractBaseInfo.getEta())){
-            contractBaseInfo.setStatus(GlobalConst.ARRIVED);
+            if(contractBaseInfo.getEta().compareTo(DateUtil.DateToString(new Date())) <= 0){
+                contractBaseInfo.setStatus(GlobalConst.ARRIVED);
+            }
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
-            contractBaseInfo.setStatus(GlobalConst.STORED);
+            if(contractBaseInfo.getStoreDate().compareTo(DateUtil.DateToString(new Date())) <= 0){
+                contractBaseInfo.setStatus(GlobalConst.STORED);
+            }
         }
 
         ContractBaseInfo record = contractRepository.save(contractBaseInfo);
-        /*if(StringUtils.isNotBlank(cargoId)) {
-            String[] arr = cargoId.split(",");
-            List<String> cargoIdList = Arrays.asList(arr);
-            cargoRepository.updateStatus(cargoIdList,GlobalConst.ENABLE);
-        }*/
         return record;
     }
     @Transactional
@@ -218,7 +222,7 @@ public class TradeService {
     }
 
     public JSONObject queryContractListByMapper(ContractParam contractParam){
-        String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        /*String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
         switch (contractParam.getStatus()){
             case "全部":  status = "";break;
             case "已下单": status = "1";break;
@@ -227,6 +231,16 @@ public class TradeService {
             case "已入库": status = "4";break;
             case "已售完": status = "5";break;
             default: break;
+        }*/
+        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
         }
         contractParam.setStatus(status);
         Integer count = contractBaseInfoMapper.selectCountByExample(contractParam);
@@ -296,7 +310,7 @@ public class TradeService {
     public JSONObject getTotalInfo(ContractParam contractParam){
         JSONObject result = new JSONObject();
         //处理status
-        String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        /*String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
         switch (contractParam.getStatus()){
             case "全部":  status = "";break;
             case "已下单": status = "1";break;
@@ -305,6 +319,16 @@ public class TradeService {
             case "已入库": status = "4";break;
             case "已售完": status = "5";break;
             default: break;
+        }*/
+        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
         }
         contractParam.setStatus(status);
         ContractTotalInfo record = contractBaseInfoMapper.getTotalInfo(contractParam);
@@ -322,7 +346,19 @@ public class TradeService {
         result.put("status","1");
         return result;
     }
-
+    public JSONObject getTotalInfoForQuery(ContractParam contractParam){
+        JSONObject result = new JSONObject();
+        ContractTotalInfo record = contractBaseInfoMapper.getTotalInfoForQueryContract(contractParam);
+        if(record != null) {
+            result.put("totalContractMoney", record.getTotalContractMoney());
+            result.put("totalContractAmount", record.getTotalContractAmount());
+        }else{
+            result.put("totalContractMoney", "0");
+            result.put("totalContractAmount", "0");
+        }
+        result.put("status","1");
+        return result;
+    }
     public JSONObject queryCargoList(CargoParam cargoParam, int limit, int offset){
         /**root ：我们要查询的类型
          * query：添加查询条件

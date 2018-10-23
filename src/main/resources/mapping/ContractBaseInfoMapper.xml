@@ -74,6 +74,7 @@
     <result column="pre_pay_bank" property="prePayBank" jdbcType="VARCHAR" />
     <result column="final_pay_bank" property="finalPayBank" jdbcType="VARCHAR" />
     <result column="owner_company" property="ownerCompany" jdbcType="VARCHAR" />
+    <result column="storage_condition" property="storageCondition" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BaseResultMap2" type="com.jason.trade.entity.QueryContractInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -102,7 +103,7 @@
     total_contract_amount, total_contract_money, total_invoice_amount, total_invoice_money,
     version, warehouse, yahuidaoqi_date, exchange_rate, hasbaoguan,zhixiangfei,zhigangfei,
     is_yahui,yahui_money,yahui_year_rate,yahui_day_rate,is_financing,financing_money,
-    financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,owner_company,baoguandan
+    financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,owner_company,baoguandan,storage_condition
   </sql>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
     update contract_base_info
@@ -320,6 +321,9 @@
       <if test="baoguandan != null" >
         baoguandan = #{baoguandan,jdbcType=INTEGER},
       </if>
+      <if test="storageCondition != null" >
+        storage_condition = #{storageCondition,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -340,6 +344,9 @@
     </if>
     <if test="ladingbillNo != null" >
       and a.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="tariffNo != null" >
+      and a.tariff_no like '%${tariffNo}%'
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
@@ -411,6 +418,9 @@
     <if test="ladingbillNo != null" >
       and a.ladingbill_no like '%${ladingbillNo}%'
     </if>
+    <if test="tariffNo != null" >
+      and a.tariff_no like '%${tariffNo}%'
+    </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
@@ -479,6 +489,9 @@
     </if>
     <if test="ladingbillNo != null" >
       and a.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="tariffNo != null" >
+      and a.tariff_no like '%${tariffNo}%'
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
@@ -623,4 +636,44 @@
       )
     </if>
   </select>
+
+  <select id="getTotalInfoForQueryContract" resultType="com.jason.trade.entity.ContractTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
+    select sum(b.contract_money) as totalContractMoney,
+    sum(b.contract_amount) as totalContractAmount
+    from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
+    where 1 = 1 and a.status != '0'
+    <if test="externalCompany != null and externalCompany != ''" >
+      and a.external_company in (${externalCompany})
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and a.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and a.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '')" >
+      and a.contract_id in (
+      select contract_id from cargo_info where 1=1
+      <if test="cargoName != null and cargoName != ''" >
+        and cargo_name = '${cargoName}'
+      </if>
+      <if test="level != null and level != ''" >
+        and level in (${level})
+      </if>
+      <if test="businessMode != null and businessMode != ''" >
+        and business_mode in (${businessMode})
+      </if>
+      <if test="companyNo != null" >
+        and company_no like '%${companyNo}%'
+      </if>
+      )
+    </if>
+  </select>
+
 </mapper>

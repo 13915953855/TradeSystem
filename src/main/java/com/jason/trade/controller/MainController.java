@@ -221,7 +221,7 @@ public class MainController {
         return "redirect:/login";
     }
 
-    @GetMapping("/register")
+   /* @GetMapping("/register")
     public String register() {
         return "register";
     }
@@ -230,7 +230,7 @@ public class MainController {
     public @ResponseBody String register(UserInfo userInfo){
         userRepository.save(userInfo);
         return GlobalConst.SUCCESS;
-    }
+    }*/
 
     @GetMapping(value="/trade/contract/output")
     public ResponseEntity<Resource> output(HttpSession session,@RequestParam(value="externalContract") String externalContract,

@@ -14,6 +14,7 @@ public class ContractParam {
     private String externalCompany;
     private String cargoName;
     private String cargoNo;
+    private String tariffNo;
     private String level;
     private String agent;
     private String containerNo;
@@ -25,6 +26,14 @@ public class ContractParam {
     private String today;
     private Integer start;
     private Integer limit;
+
+    public String getTariffNo() {
+        return tariffNo;
+    }
+
+    public void setTariffNo(String tariffNo) {
+        this.tariffNo = tariffNo;
+    }
 
     public String getToday() {
         return today;

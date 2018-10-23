@@ -152,6 +152,16 @@ public class ContractBaseInfo {
     private String ownerCompany;
     @Column(name="baoguandan")
     private Integer baoguandan;
+    @Column(name="storage_condition")
+    private String storageCondition;
+
+    public String getStorageCondition() {
+        return storageCondition;
+    }
+
+    public void setStorageCondition(String storageCondition) {
+        this.storageCondition = storageCondition;
+    }
 
     public Integer getBaoguandan() {
         return baoguandan == null ? 0 : baoguandan;

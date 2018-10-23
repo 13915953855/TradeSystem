@@ -17,6 +17,8 @@ public class SaleInfo {
     private String createUser;
     @Column(name="customer_name")
     private String customerName;
+    @Column(name="customer_type")
+    private String customerType;
     @Column(name="customer_pay_date")
     private String customerPayDate;
     @Column(name="customer_pay_money")
@@ -77,6 +79,14 @@ public class SaleInfo {
     private String depositDate;
     @Column(name="deposit")
     private Double deposit;
+
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
 
     public String getCustomerPayDate2() {
         return customerPayDate2;

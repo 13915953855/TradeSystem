@@ -25,6 +25,8 @@ $(function () {
     initBusinessMode();
     initExternalCompany();
     initCargoList();
+
+    getTotalInfo();
 });
 
 var toFloat = function (value) {
@@ -162,48 +164,6 @@ var TableInit = function () {
         if(businessMode.length > 1){
             businessMode = businessMode.substring(0,businessMode.length-1);
         }
-        var agentArr = $("#agent").val();
-        var agent = "";
-        if(agentArr != null){
-            for(var i=0;i<agentArr.length;i++){
-                if(agentArr[i] != '全部'){
-                    agent += "'"+agentArr[i] + "',";
-                }else{
-                    agent = "";break;
-                }
-            }
-        }
-        if(agent.length > 1){
-            agent = agent.substring(0,agent.length-1);
-        }
-        var destinationPortArr = $("#destinationPort").val();
-        var destinationPort = "";
-        if(destinationPortArr != null){
-            for(var i=0;i<destinationPortArr.length;i++){
-                if(destinationPortArr[i] != '全部'){
-                    destinationPort += "'"+destinationPortArr[i] + "',";
-                }else{
-                    destinationPort = "";break;
-                }
-            }
-        }
-        if(destinationPort.length > 1){
-            destinationPort = destinationPort.substring(0,destinationPort.length-1);
-        }
-        var statusArr = $("#status").val();
-        var status = "";
-        if(statusArr != null){
-            for(var i=0;i<statusArr.length;i++){
-                if(statusArr[i] != '全部'){
-                    status += statusArr[i] + ",";
-                }else{
-                    status = "";break;
-                }
-            }
-        }
-        if(status.length > 1){
-            status = status.substring(0,status.length-1);
-        }
 
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
@@ -231,9 +191,11 @@ var ButtonInit = function () {
     oInit.Init = function () {
         $("#btn_query").click(function(){
             $('#tb_contract').bootstrapTable("refresh",{pageNumber:1});
+            getTotalInfo();
         });
         $("#btn_reset").click(function(){
             resetQuery();
+            getTotalInfo();
         });
     };
 
@@ -250,4 +212,75 @@ function resetQuery(){
     $("#cargoName").val("全部").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
+}
+
+function getTotalInfo(){
+        var externalCompanyArr = $("#externalCompany").val();
+        var externalCompany = "";
+        if(externalCompanyArr != null){
+            for(var i=0;i<externalCompanyArr.length;i++){
+                if(externalCompanyArr[i] != '全部'){
+                    externalCompany += "'"+externalCompanyArr[i] + "',";
+                }else{
+                    externalCompany = "";break;
+                }
+            }
+        }
+        if(externalCompany.length > 1){
+            externalCompany = externalCompany.substring(0,externalCompany.length-1);
+        }
+        var levelArr = $("#level").val();
+        var level = "";
+        if(levelArr != null){
+            for(var i=0;i<levelArr.length;i++){
+                if(levelArr[i] != '全部'){
+                    level += "'"+levelArr[i] + "',";
+                }else{
+                    level = "";break;
+                }
+            }
+        }
+        if(level.length > 1){
+            level = level.substring(0,level.length-1);
+        }
+        var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
+        var businessModeArr = $("#businessMode").val();
+        var businessMode = "";
+        if(businessModeArr != null){
+            for(var i=0;i<businessModeArr.length;i++){
+                if(businessModeArr[i] != '全部'){
+                    businessMode += "'"+businessModeArr[i] + "',";
+                }else{
+                    businessMode = "";break;
+                }
+            }
+        }
+        if(businessMode.length > 1){
+            businessMode = businessMode.substring(0,businessMode.length-1);
+        }
+
+    var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+        contractStartDate: $("#contractStartDate").val(),
+        contractEndDate: $("#contractEndDate").val(),
+        etaStartDate: $("#etaStartDate").val(),
+        etaEndDate: $("#etaEndDate").val(),
+        cargoName: cargoName,
+        level: level,
+        companyNo: $("#companyNo").val(),
+        businessMode: businessMode,
+        externalCompany: externalCompany
+    };
+
+    $.ajax({
+        url:"/trade/query/getTotalInfo",
+        type:"POST",
+        dataType:"json",
+        data:queryParams,
+        success:function(res){
+            if(res.status == "1"){
+                $("#totalContractMoney").html(toFloat(res.totalContractMoney));
+                $("#totalContractAmount").html(toFloat4(res.totalContractAmount));
+            }
+        }
+    });
 }

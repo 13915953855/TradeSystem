@@ -294,6 +294,7 @@ public class ExcelService {
         list.add(baseInfo.getContractDate());//合同日期
         list.add(baseInfo.getExternalCompany());//外商
         list.add(baseInfo.getOriginCountry());//原产地
+        list.add(baseInfo.getStorageCondition());//储存条件
         list.add(baseInfo.getPriceCondition());//价格条件
         list.add(baseInfo.getDestinationPort());//目的港
         list.add(baseInfo.getCurrency());//币种
@@ -373,6 +374,8 @@ public class ExcelService {
         list.add(cargoInfo.getInvoiceMoney());//发票金额(小计:元)
         list.add(cargoInfo.getCostPrice());//成本单价(/KG)
         list.add(cargoInfo.getRealStoreMoney());//库存成本
+        list.add(cargoInfo.getRealStoreWeight());//当前库存重量
+        list.add(cargoInfo.getRealStoreBoxes());//当前库存箱数
         return list;
     }
 

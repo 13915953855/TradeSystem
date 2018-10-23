@@ -122,7 +122,7 @@ var TableInit = function () {
             showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
             detailView: false,                   //是否显示父子表
-            showColumns:false,                  //是否显示内容列下拉框。
+            showColumns:true,                  //是否显示内容列下拉框。
             showRefresh: true,
             responseHandler:function(res){
                 return res.rows;
@@ -149,6 +149,9 @@ var TableInit = function () {
              }, {
                 field: 'customerName',
                 title: '客户名称'
+             }, {
+                field: 'customerType',
+                title: '客户属性'
             }, {
                 field: 'expectSaleWeight',
                 title: '预销售<br>重量(KG)'
@@ -175,46 +178,60 @@ var TableInit = function () {
                 title: '实际销<br>售金额'
             }, {
                 field: 'realSaleDate',
-                title: '出库单<br>时间'
+                title: '出库单<br>时间',
+                visible: false
             }, {
                 field: 'customerPayDate',
-                title: '客户来款<br>时间No.1'
+                title: '客户来款<br>时间No.1',
+                visible:false
             }, {
                 field: 'customerPayMoney',
-                title: '客户来款<br>金额No.1'
+                title: '客户来款<br>金额No.1',
+                visible:false
             }, {
                 field: 'customerPayDate2',
-                title: '客户来款<br>时间No.2'
+                title: '客户来款<br>时间No.2',
+                visible:false
             }, {
                 field: 'customerPayMoney2',
-                title: '客户来款<br>金额No.2'
+                title: '客户来款<br>金额No.2',
+                visible:false
             }, {
                 field: 'customerPayDate3',
-                title: '客户来款<br>时间No.3'
+                title: '客户来款<br>时间No.3',
+                visible:false
             }, {
                 field: 'customerPayMoney3',
-                title: '客户来款<br>金额No.3'
+                title: '客户来款<br>金额No.3',
+                visible:false
             }, {
                 field: 'customerPayDate4',
-                title: '客户来款<br>时间No.4'
+                title: '客户来款<br>时间No.4',
+                visible:false
             }, {
                 field: 'customerPayMoney4',
-                title: '客户来款<br>金额No.4'
+                title: '客户来款<br>金额No.4',
+                visible:false
             }, {
                 field: 'customerPayDate5',
-                title: '客户来款<br>时间No.5'
+                title: '客户来款<br>时间No.5',
+                visible:false
             }, {
                 field: 'customerPayMoney5',
-                title: '客户来款<br>金额No.5'
+                title: '客户来款<br>金额No.5',
+                visible:false
             }, {
                 field: 'depositDate',
-                title: '定金<br>时间'
+                title: '定金<br>时间',
+                visible:false
             }, {
                 field: 'deposit',
-                title: '定金'
+                title: '定金',
+                visible:false
             }, {
                 field: 'paymentDiff',
-                title: '货款<br>差额'
+                title: '货款<br>差额',
+                visible:false
             }, {
                 field: 'profit',
                 title: '利润'
@@ -224,10 +241,12 @@ var TableInit = function () {
                 formatter:function(value, row, index){
                     if(value == "1") return "是";
                     else return "否";
-                }
+                },
+                visible:false
             }, {
                  field: 'pickupDate',
-                 title: '提货<br>时间'
+                 title: '提货<br>时间',
+                 visible:false
              } , {
                 field: 'remark',
                 title: '备注',
@@ -248,6 +267,7 @@ var ButtonInit = function () {
             window.location.href = "/trade/cargomanage";
         });
         $("#btn_add").click(function(){
+            resetForm("myModal");
         });
         $("#btn_edit").click(function(){
             var data = $("#tb_sale").bootstrapTable("getSelections");

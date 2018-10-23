@@ -140,7 +140,11 @@ public class TradeController {
         JSONObject result = tradeService.getTotalInfo(contractParam);
         return result.toString();
     }
-
+    @RequestMapping(value = "/query/getTotalInfo")
+    public String getTotalInfoForQuery(ContractParam contractParam) throws JSONException {
+        JSONObject result = tradeService.getTotalInfoForQuery(contractParam);
+        return result.toString();
+    }
     @RequestMapping(value = "/cargo/getTotalStore")
     public String getTotalStore(CargoParam cargoParam) throws JSONException {
         JSONObject result = tradeService.getTotalStore(cargoParam);
@@ -321,13 +325,6 @@ public class TradeController {
             contractBaseInfo.setStatus(GlobalConst.STORED);
         }
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
-        //contractRepository.save(contractBaseInfo);
-
-        /*if(StringUtils.isNotBlank(cargoId)) {
-            String[] arr = cargoId.split(",");
-            List<String> cargoIdList = Arrays.asList(arr);
-            tradeService.updateCargoStatus(cargoIdList);
-        }*/
         contractBaseInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
 
         SysLog sysLog = new SysLog();

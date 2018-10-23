@@ -154,7 +154,7 @@ var TableInit = function () {
             showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
             detailView: false,                   //是否显示父子表
-            showColumns:false,                  //是否显示内容列下拉框。
+            showColumns:true,                  //是否显示内容列下拉框。
             showRefresh: true,
             responseHandler:function(res){
                 return res.rows;
@@ -199,16 +199,20 @@ var TableInit = function () {
                 title: '单价'
             }, {
                 field: 'contractAmount',
-                title: '合同重量(小计)'
+                title: '合同重量(小计)',
+                visible: false
             }, {
                 field: 'contractMoney',
-                title: '合同金额(小计)'
+                title: '合同金额(小计)',
+                visible: false
             }, {
                 field: 'invoiceAmount',
-                title: '发票重量(小计)'
+                title: '发票重量(小计)',
+                visible: false
             }, {
                 field: 'invoiceMoney',
-                title: '发票金额(小计)'
+                title: '发票金额(小计)',
+                visible: false
             }, {
                 field: 'costPrice',
                 title: '成本单价(CNY/KG)'
@@ -419,6 +423,7 @@ function saveContract(){
     contract.contractDate = $("#contractDate").val();
     contract.externalCompany = $("#externalCompany").val();
     contract.originCountry = $("#originCountry").val();
+    contract.storageCondition = $("#storageCondition").val();
     contract.destinationPort = $("#destinationPort").val();
     contract.priceCondition = $("#priceCondition").val();
     contract.payType = $("#payType").val();
