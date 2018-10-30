@@ -151,19 +151,19 @@ function initOriginCountry(){
 function initExternalCompany(){
     var opts = "";
     opts += "<option></option>";
+    opts += "<option>FRISA</option>";
+    opts += "<option>HARVEY</option>";
+    opts += "<option>JBS AUS</option>";
     opts += "<option>JOC AUS</option>";
     opts += "<option>KPC HK</option>";
-    opts += "<option>STANBROKE</option>";
-    opts += "<option>JBS AUS</option>";
-    opts += "<option>HARVEY</option>";
-    opts += "<option>HARVEY</option>";
-    opts += "<option>TEYS AUS</option>";
-    opts += "<option>NH AUS</option>";
-    opts += "<option>TIF</option>";
+    opts += "<option>MATABOI</option>";
+    opts += "<option>MOGILEV MEAT</option>";
     opts += "<option>SANGER</option>";
-    opts += "<option>MARFRIG</option>";
-    opts += "<option>AACO</option>";
-    opts += "<option>SWIFT</option>";
+    opts += "<option>STANBROKE</option>";
+    opts += "<option>SWIFT ARG</option>";
+    opts += "<option>TEYS AUS</option>";
+    opts += "<option>THOMAS</option>";
+    opts += "<option>WESTON</option>";
     $("#externalCompany").append(opts);
 }
 

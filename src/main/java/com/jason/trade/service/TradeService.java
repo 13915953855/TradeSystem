@@ -80,6 +80,8 @@ public class TradeService {
         if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
             if(contractBaseInfo.getStoreDate().compareTo(DateUtil.DateToString(new Date())) <= 0){
                 contractBaseInfo.setStatus(GlobalConst.STORED);
+                //对应商品的状态也设为已入库
+                cargoInfoMapper.storeByContractId(contractBaseInfo.getContractId());
             }
         }
 
@@ -123,13 +125,13 @@ public class TradeService {
         if(realSaleBoxes <= 0){
             status = GlobalConst.SELLOUT;
         }
-        autoUpdateStatus(saleInfo.getCargoId(),status);
-        //cargoInfo.setStatus(status);
+        cargoInfo.setStatus(status);
         cargoInfo.setExpectStoreWeight(expectSaleWeight);
         cargoInfo.setExpectStoreBoxes(expectSaleBoxes);
         cargoInfo.setRealStoreWeight(realSaleWeight);
         cargoInfo.setRealStoreBoxes(realSaleBoxes);
         cargoInfoMapper.updateByCargoId(cargoInfo);
+        autoUpdateStatus(saleInfo.getCargoId(),status);
         SaleInfo data = saleRepository.save(saleInfo);
         return data;
     }

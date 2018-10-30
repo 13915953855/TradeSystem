@@ -3,6 +3,7 @@ package com.jason.trade.controller;
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
 import com.jason.trade.mapper.AttachmentMapper;
+import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
 import com.jason.trade.mapper.InternalContractInfoMapper;
 import com.jason.trade.model.*;
@@ -68,6 +69,8 @@ public class TradeController {
     private InternalContractInfoMapper internalContractInfoMapper;
     @Autowired
     private AttachmentMapper attachmentMapper;
+    @Autowired
+    private CargoInfoMapper cargoInfoMapper;
 
     @RequestMapping(value = "/list")
     public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
@@ -187,6 +190,7 @@ public class TradeController {
             log.info("新增商品cargoId="+cargoInfo.getCargoId());
             cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
             cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
+            cargoInfo.setStatus(GlobalConst.ENABLE);
         }else{
             log.info("编辑商品cargoId="+cargoInfo.getCargoId());
             CargoInfo cargo = cargoRepository.findByCargoId(cargoInfo.getCargoId());
@@ -323,6 +327,8 @@ public class TradeController {
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
             contractBaseInfo.setStatus(GlobalConst.STORED);
+            //对应商品的状态也设为已入库
+            cargoInfoMapper.storeByContractId(contractBaseInfo.getContractId());
         }
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
         contractBaseInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);

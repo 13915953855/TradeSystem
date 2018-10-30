@@ -24,6 +24,7 @@
     <result column="unit_price" property="unitPrice" jdbcType="DOUBLE" />
     <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
     <result column="company_no" property="companyNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BaseResultMap2" type="com.jason.trade.entity.CargoManageInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -60,14 +61,14 @@
     id, boxes, cargo_id, cargo_name, cargo_no, contract_amount, contract_id, contract_money, 
     cost_price, create_date_time, create_user, expect_store_boxes, expect_store_weight, 
     invoice_amount, invoice_money, level, real_store_boxes, real_store_money, real_store_weight, 
-    unit_price, business_mode, company_no
+    unit_price, business_mode, company_no, status
   </sql>
   <select id="selectByCargoId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select * from cargo_info where cargo_id = #{_parameter}
   </select>
   <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select a.* from(
-    select a.*,b.status,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no
+    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no
     from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
     where 1 = 1 and b.status in ('4','5')
     <if test="contractNo != null" >
@@ -95,7 +96,7 @@
       and a.level = '${level}'
     </if>
     <if test="status != null and status != ''" >
-      and b.status = '${status}'
+      and a.status = '${status}'
     </if>
     <if test="businessMode != null and businessMode != ''" >
       and a.business_mode = '${businessMode}'
@@ -121,14 +122,14 @@
       )
     </if>
     UNION
-    select a.*,b.status,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no
+    select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id
     where 1=1
     <if test="level != null and level != ''" >
       and a.level = '${level}'
     </if>
     <if test="status != null and status != ''" >
-      and b.status = '${status}'
+      and a.status = '${status}'
     </if>
     <if test="cargoName != null and cargoName != ''" >
       and a.cargo_name = '${cargoName}'
@@ -183,7 +184,7 @@
       and a.level = '${level}'
     </if>
     <if test="status != null and status != ''" >
-      and b.status = '${status}'
+      and a.status = '${status}'
     </if>
     <if test="businessMode != null and businessMode != ''" >
       and a.business_mode = '${businessMode}'
@@ -215,7 +216,7 @@
       and a.level = '${level}'
     </if>
     <if test="status != null and status != ''" >
-      and b.status = '${status}'
+      and a.status = '${status}'
     </if>
     <if test="cargoName != null and cargoName != ''" >
       and a.cargo_name = '${cargoName}'
@@ -406,6 +407,9 @@
       <if test="companyNo != null" >
         company_no = #{companyNo,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -475,6 +479,9 @@
       <if test="companyNo != null" >
         company_no = #{companyNo,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
     </set>
     where cargo_id = #{cargoId,jdbcType=VARCHAR}
   </update>
@@ -486,5 +493,13 @@
     </foreach>
     )
   </delete>
+  <update id="storeByContractId" parameterType="java.lang.String" >
+    update cargo_info set status = 4
+    where contract_id = #{contractId,jdbcType=VARCHAR} and status != 5
+  </update>
+  <update id="selloutByCargoId" parameterType="java.lang.String" >
+    update cargo_info set status = 5
+    where cargo_id = #{cargoId,jdbcType=VARCHAR}
+  </update>
 
 </mapper>

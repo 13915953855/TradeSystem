@@ -17,4 +17,6 @@ public interface CargoInfoMapper {
     Integer getTotalStoreWeightByExample(CargoParam cargoParam);
     Integer getTotalStoreBoxesByExample(CargoParam cargoParam);
     Integer selectCountByExample(CargoParam cargoParam);
+    void storeByContractId(String contractId);
+    void selloutByCargoId(String cargoId);
 }
