@@ -9,6 +9,10 @@ $(function () {
 
     initCargoList();
     initOriginCountry();
+    initStorageCondition();
+    initPriceCondition();
+    initDestinationPort();
+    initPayType();
     initExternalCompany();
     initBusinessMode();
     initLevel();
@@ -110,7 +114,19 @@ $(function () {
     });
 
     getAllFile();
+
+    initChuanqi();
 });
+function initChuanqi(){
+    var now = new Date();
+    var date = new Date(now.getTime() + 60 * 24 * 3600 * 1000);
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    if($("#expectSailingDate").val() == ''){
+        $("#expectSailingDate").val(year+'-'+month+'-'+day);
+    }
+}
 var toFloat = function (value) {
     value = Math.round(parseFloat(value) * 100) / 100;
     if (value.toString().indexOf(".") < 0) {

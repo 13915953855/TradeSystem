@@ -146,6 +146,44 @@ function initOriginCountry(){
     opts += "<option>哥斯达黎加</option>";
     opts += "<option>新西兰</option>";
     $("#originCountry").append(opts);
+    $("#originCountry").val('澳大利亚').trigger("change");
+}
+
+function initStorageCondition(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>冷冻</option>";
+    opts += "<option>冰鲜</option>";
+    $("#storageCondition").append(opts);
+    $("#storageCondition").val('冷冻').trigger("change");
+}
+
+function initPriceCondition(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>CIF</option>";
+    opts += "<option>CFR</option>";
+    $("#priceCondition").append(opts);
+    $("#priceCondition").val('CIF').trigger("change");
+}
+function initPayType(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>TT</option>";
+    opts += "<option>L/C</option>";
+    $("#payType").append(opts);
+    $("#payType").val('TT').trigger("change");
+}
+function initDestinationPort(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>上海</option>";
+    opts += "<option>天津</option>";
+    opts += "<option>深圳</option>";
+    opts += "<option>连云港</option>";
+    opts += "<option>张家港</option>";
+    $("#destinationPort").append(opts);
+    $("#destinationPort").val('上海').trigger("change");
 }
 
 function initExternalCompany(){
