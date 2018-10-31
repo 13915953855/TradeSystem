@@ -154,6 +154,16 @@ public class ContractBaseInfo {
     private Integer baoguandan;
     @Column(name="storage_condition")
     private String storageCondition;
+    @Column(name="import_contract_no")
+    private String importContractNo;
+
+    public String getImportContractNo() {
+        return importContractNo;
+    }
+
+    public void setImportContractNo(String importContractNo) {
+        this.importContractNo = importContractNo;
+    }
 
     public String getStorageCondition() {
         return storageCondition;

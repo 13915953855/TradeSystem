@@ -233,7 +233,7 @@ public class MainController {
     }*/
 
     @GetMapping(value="/trade/contract/output")
-    public ResponseEntity<Resource> output(HttpSession session,@RequestParam(value="externalContract") String externalContract,
+    public ResponseEntity<Resource> output(HttpSession session,@RequestParam(value="externalContract") String externalContract,@RequestParam(value="importContractNo") String importContractNo,
                @RequestParam(value="insideContract") String insideContract,@RequestParam(value="contractStartDate") String contractStartDate,
                @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="agent") String agent,
                @RequestParam(value="ladingbillNo") String ladingbillNo,@RequestParam(value="destinationPort") String destinationPort,
@@ -243,6 +243,7 @@ public class MainController {
                @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
+        contractParam.setImportContractNo(importContractNo);
         contractParam.setExternalContract(externalContract);
         contractParam.setInsideContract(insideContract);
         contractParam.setContractStartDate(contractStartDate);

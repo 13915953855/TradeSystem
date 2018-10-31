@@ -222,6 +222,7 @@ public class TradeController {
     public String checkStore(@RequestParam("cargoId") String cargoId,@RequestParam("boxes") String boxes,@RequestParam("weight") String weight){
         cargoRepository.updateWeightAndBoxes(cargoId,weight,boxes);
         if(boxes.equals("0") || weight.startsWith("-") || weight.equals("0")){
+            cargoInfoMapper.selloutByCargoId(cargoId);
             CargoInfo cargoInfo = cargoRepository.findByCargoId(cargoId);
             List<String> id = new ArrayList<>();
             id.add(cargoInfo.getContractId());

@@ -95,15 +95,19 @@
                         <div id="collapseOne" class="panel-body panel-collapse collapse in" style="padding-top:10px;padding-bottom:0;">
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-2" for="externalContract">外合同编号</label>
+                                    <label class="control-label col-sm-1" for="externalContract">外合同编号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="externalContract"/>
                                     </div>
-                                    <label class="control-label col-sm-2">内合同编号</label>
+                                    <label class="control-label col-sm-1">内合同编号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="insideContract"/>
                                     </div>
-                                    <label class="control-label col-sm-2">外商</label>
+                                    <label class="control-label col-sm-1">进口合同编号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="importContractNo"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">外商</label>
                                     <div class="col-sm-2">
                                         <select class="form-control select2" id="externalCompany" multiple="multiple">
                                             <option>全部</option>
@@ -111,59 +115,53 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-2">产品名称</label>
+                                    <label class="control-label col-sm-1">产品名称</label>
                                     <div class="col-sm-2">
                                         <select class="form-control select2" id="cargoName">
                                             <option>全部</option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-2">产品级别</label>
+                                    <label class="control-label col-sm-1">产品级别</label>
                                     <div class="col-sm-2">
                                         <select class="form-control select2" id="level" multiple="multiple">
                                             <option>全部</option>
 
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-2">库号</label>
+                                    <label class="control-label col-sm-1">库号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="cargoNo"/>
                                     </div>
-                                </div>
-                                <div class="form-group" style="">
-                                    <label class="control-label col-sm-2">业务模式</label>
+                                    <label class="control-label col-sm-1">业务模式</label>
                                     <div class="col-sm-2">
                                         <select class="form-control select2" id="businessMode" multiple="multiple">
                                             <option>全部</option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-2" for="externalContract">合同日期从:</label>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1" for="externalContract">合同日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
                                             <input size="16" type="text" value="" id="contractStartDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                    <label class="control-label col-sm-2">到:</label>
+                                    <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
                                             <input size="16" type="text" value="" id="contractEndDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group" style="">
-                                    <label class="control-label col-sm-2" for="externalContract">报关单号:</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="tariffNo"/>
-                                    </div>
-                                    <label class="control-label col-sm-2" for="externalContract">ETA日期从:</label>
+                                    <label class="control-label col-sm-1" for="externalContract">ETA日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
                                             <input size="16" type="text" value="" id="etaStartDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                    <label class="control-label col-sm-2">到:</label>
+                                    <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
                                             <input size="16" type="text" value="" id="etaEndDate" class="form-control" />
@@ -172,15 +170,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-2">柜号</label>
+                                    <label class="control-label col-sm-1" for="externalContract">报关单号:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="tariffNo"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">柜号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="containerNo" />
                                     </div>
-                                    <label class="control-label col-sm-2">提单号</label>
+                                    <label class="control-label col-sm-1">提单号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="ladingbillNo" />
                                     </div>
-                                    <label class="control-label col-sm-2">货代</label>
+                                    <label class="control-label col-sm-1">货代</label>
                                     <div class="col-sm-2">
                                         <select class="form-control" id="agent" multiple="multiple">
                                             <option>全部</option>
@@ -193,11 +195,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-2">厂号</label>
+                                    <label class="control-label col-sm-1">厂号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="companyNo" />
                                     </div>
-                                    <label class="control-label col-sm-2">目的港</label>
+                                    <label class="control-label col-sm-1">目的港</label>
                                     <div class="col-sm-2">
                                         <select class="form-control select2" id="destinationPort" multiple="multiple">
                                             <option>全部</option>
@@ -208,7 +210,7 @@
                                             <option>张家港</option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-2">状态</label>
+                                    <label class="control-label col-sm-1">状态</label>
                                     <div class="col-sm-2">
                                         <select class="form-control" id="status" multiple="multiple">
                                             <option>全部</option>

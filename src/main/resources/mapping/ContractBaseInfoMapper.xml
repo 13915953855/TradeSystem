@@ -75,6 +75,7 @@
     <result column="final_pay_bank" property="finalPayBank" jdbcType="VARCHAR" />
     <result column="owner_company" property="ownerCompany" jdbcType="VARCHAR" />
     <result column="storage_condition" property="storageCondition" jdbcType="VARCHAR" />
+    <result column="import_contract_no" property="importContractNo" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BaseResultMap2" type="com.jason.trade.entity.QueryContractInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -103,7 +104,8 @@
     total_contract_amount, total_contract_money, total_invoice_amount, total_invoice_money,
     version, warehouse, yahuidaoqi_date, exchange_rate, hasbaoguan,zhixiangfei,zhigangfei,
     is_yahui,yahui_money,yahui_year_rate,yahui_day_rate,is_financing,financing_money,
-    financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,owner_company,baoguandan,storage_condition
+    financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,
+    owner_company,baoguandan,storage_condition,import_contract_no
   </sql>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
     update contract_base_info
@@ -324,6 +326,9 @@
       <if test="storageCondition != null" >
         storage_condition = #{storageCondition,jdbcType=VARCHAR},
       </if>
+      <if test="importContractNo != null" >
+        import_contract_no = #{importContractNo,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -332,6 +337,9 @@
     where 1 = 1
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="importContractNo != null" >
+      and a.import_contract_no like '%${importContractNo}%'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -406,6 +414,9 @@
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
+    <if test="importContractNo != null" >
+      and a.import_contract_no like '%${importContractNo}%'
+    </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
     </if>
@@ -477,6 +488,9 @@
     where 1 = 1
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="importContractNo != null" >
+      and a.import_contract_no like '%${importContractNo}%'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
