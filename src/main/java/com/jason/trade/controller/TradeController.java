@@ -185,37 +185,46 @@ public class TradeController {
     @PostMapping(value="/cargo/add")
     public String cargoAdd(CargoInfo cargoInfo, HttpSession session){
         log.info("开始处理商品新增或修改的请求");
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        String now = DateUtil.DateTimeToString(new Date());
+        String cargoId = "";
         if(StringUtils.isBlank(cargoInfo.getCargoId())) {
-            cargoInfo.setCargoId(UUID.randomUUID().toString());
+            cargoId = UUID.randomUUID().toString();
+            cargoInfo.setCargoId(cargoId);
             log.info("新增商品cargoId="+cargoInfo.getCargoId());
             cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
             cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
             cargoInfo.setStatus(GlobalConst.ENABLE);
+            cargoInfo.setCreateUser(userInfo.getAccount());
+            cargoInfo.setCreateDateTime(now);
+            cargoInfo.setExpectStoreBoxes(cargoInfo.getBoxes());
+            cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
+            log.info("保存商品开始");
+            cargoRepository.save(cargoInfo);
+            log.info("保存商品完毕");
         }else{
             log.info("编辑商品cargoId="+cargoInfo.getCargoId());
-            CargoInfo cargo = cargoRepository.findByCargoId(cargoInfo.getCargoId());
+            cargoId = cargoInfo.getCargoId();
+            CargoInfo cargo = cargoRepository.findByCargoId(cargoId);
             cargoInfo.setRealStoreBoxes(cargo.getRealStoreBoxes());
             cargoInfo.setRealStoreWeight(cargo.getRealStoreWeight());
+            cargoInfo.setCreateUser(userInfo.getAccount());
+            cargoInfo.setCreateDateTime(now);
+            cargoInfo.setExpectStoreBoxes(cargoInfo.getBoxes());
+            cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
+            log.info("保存商品开始");
+            cargoInfoMapper.updateByCargoId(cargoInfo);
+            log.info("保存商品完毕");
         }
 
-        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
-        String now = DateUtil.DateTimeToString(new Date());
-        cargoInfo.setCreateUser(userInfo.getAccount());
-        cargoInfo.setCreateDateTime(now);
-        cargoInfo.setExpectStoreBoxes(cargoInfo.getBoxes());
-        cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
-        log.info("保存商品开始");
-        CargoInfo data = cargoRepository.save(cargoInfo);
-        log.info("保存商品完毕");
-
         SysLog sysLog = new SysLog();
-        sysLog.setDetail("新增商品"+data.getCargoId());
+        sysLog.setDetail("新增商品"+cargoId);
         sysLog.setOperation("新增");
         sysLog.setUser(userInfo.getAccount());
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
 
-        return RespUtil.respSuccess(data);
+        return RespUtil.respSuccess("");
     }
 
     @PostMapping(value="/sale/checkStore")
@@ -236,6 +245,8 @@ public class TradeController {
             if(flag == 0) {
                 contractRepository.updateStatusByContractId(id, GlobalConst.SELLOUT);
             }
+        }else{
+            cargoInfoMapper.storeByCargoId(cargoId);
         }
         return RespUtil.respSuccess("");
     }

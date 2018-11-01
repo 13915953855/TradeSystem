@@ -483,7 +483,7 @@
     select sum(a.total_contract_money) as totalContractMoney,
     sum(a.total_contract_amount) as totalContractAmount,
     sum(a.total_invoice_money) as totalInvoiceMoney,
-    sum(a.total_invoice_amount) as totalInvoiceAmount
+    sum(a.total_invoice_amount) as totalInvoiceAmount, currency
     from contract_base_info a
     where 1 = 1
     <if test="externalContract != null" >
@@ -553,11 +553,8 @@
       </if>
       )
     </if>
-
+      group by a.currency
     order by a.id desc
-    <if test="start != null and limit != null" >
-      limit ${start},${limit}
-    </if>
   </select>
   <select id="getTotalNumPerDay" resultType="com.jason.trade.entity.ContractForCharts">
     select count(id) as total,DATE_FORMAT( create_date_time, '%Y-%m-%d') as dateStr from contract_base_info

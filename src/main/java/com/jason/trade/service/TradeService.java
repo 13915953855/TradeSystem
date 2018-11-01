@@ -217,6 +217,9 @@ public class TradeService {
             cargoInfo.setExpectStoreBoxes(cargoInfo.getExpectStoreBoxes() + expectSaleBoxes);
             cargoInfo.setRealStoreWeight(cargoInfo.getRealStoreWeight() + realSaleWeight);
             cargoInfo.setRealStoreBoxes(cargoInfo.getRealStoreBoxes() + realSaleBoxes);
+            if((cargoInfo.getRealStoreBoxes() + realSaleBoxes) > 0){
+                cargoInfo.setStatus(GlobalConst.STORED);
+            }
             cargoRepository.save(cargoInfo);
 
             saleRepository.deleteSaleInfo(saleIdList);
@@ -333,16 +336,55 @@ public class TradeService {
             status = status.replaceAll("已售完","5");
         }
         contractParam.setStatus(status);
-        ContractTotalInfo record = contractBaseInfoMapper.getTotalInfo(contractParam);
-        if(record != null) {
-            result.put("totalContractMoney", record.getTotalContractMoney());
-            result.put("totalContractAmount", record.getTotalContractAmount());
-            result.put("totalInvoiceMoney", record.getTotalInvoiceMoney());
-            result.put("totalInvoiceAmount", record.getTotalInvoiceAmount());
+        List<ContractTotalInfo> record = contractBaseInfoMapper.getTotalInfo(contractParam);
+        if(record != null && record.size() > 0) {
+            Float totalCNYContractMoney = 0F;
+            Float totalCNYInvoiceMoney = 0F;
+            Float totalUSDContractMoney = 0F;
+            Float totalUSDInvoiceMoney = 0F;
+            Float totalAUDContractMoney = 0F;
+            Float totalAUDInvoiceMoney = 0F;
+            Float totalContractAmount = 0F;
+            Float totalInvoiceAmount = 0F;
+            for (ContractTotalInfo totalInfo : record) {
+                switch(totalInfo.getCurrency()){
+                    case "CNY":
+                        totalCNYContractMoney = totalInfo.getTotalContractMoney();
+                        totalCNYInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalContractAmount += totalInfo.getTotalContractAmount();
+                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        break;
+                    case "USD":
+                        totalUSDContractMoney = totalInfo.getTotalContractMoney();
+                        totalUSDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalContractAmount += totalInfo.getTotalContractAmount();
+                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        break;
+                    case "AUD":
+                        totalAUDContractMoney = totalInfo.getTotalContractMoney();
+                        totalAUDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalContractAmount += totalInfo.getTotalContractAmount();
+                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        break;
+                    default:break;
+                }
+            }
+            result.put("totalCNYContractMoney", totalCNYContractMoney);
+            result.put("totalCNYInvoiceMoney", totalCNYInvoiceMoney);
+            result.put("totalUSDContractMoney", totalUSDContractMoney);
+            result.put("totalUSDInvoiceMoney", totalUSDInvoiceMoney);
+            result.put("totalAUDContractMoney", totalAUDContractMoney);
+            result.put("totalAUDInvoiceMoney", totalAUDInvoiceMoney);
+            result.put("totalContractAmount", totalContractAmount);
+            result.put("totalInvoiceAmount", totalInvoiceAmount);
         }else{
-            result.put("totalContractMoney", "0");
+            result.put("totalCNYContractMoney", "0");
+            result.put("totalCNYInvoiceMoney", "0");
+            result.put("totalUSDContractMoney", "0");
+            result.put("totalUSDInvoiceMoney", "0");
+            result.put("totalAUDContractMoney", "0");
+            result.put("totalAUDInvoiceMoney", "0");
             result.put("totalContractAmount", "0");
-            result.put("totalInvoiceMoney", "0");
             result.put("totalInvoiceAmount", "0");
         }
         result.put("status","1");

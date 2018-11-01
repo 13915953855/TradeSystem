@@ -1,40 +1,49 @@
 package com.jason.trade.entity;
 
 public class ContractTotalInfo {
-    private String totalContractMoney;
-    private String totalContractAmount;
-    private String totalInvoiceMoney;
-    private String totalInvoiceAmount;
+    private Float totalContractMoney;
+    private Float totalContractAmount;
+    private Float totalInvoiceMoney;
+    private Float totalInvoiceAmount;
+    private String currency;
 
-    public String getTotalContractMoney() {
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public Float getTotalContractMoney() {
         return totalContractMoney;
     }
 
-    public void setTotalContractMoney(String totalContractMoney) {
+    public void setTotalContractMoney(Float totalContractMoney) {
         this.totalContractMoney = totalContractMoney;
     }
 
-    public String getTotalContractAmount() {
+    public Float getTotalContractAmount() {
         return totalContractAmount;
     }
 
-    public void setTotalContractAmount(String totalContractAmount) {
+    public void setTotalContractAmount(Float totalContractAmount) {
         this.totalContractAmount = totalContractAmount;
     }
 
-    public String getTotalInvoiceMoney() {
+    public Float getTotalInvoiceMoney() {
         return totalInvoiceMoney;
     }
 
-    public void setTotalInvoiceMoney(String totalInvoiceMoney) {
+    public void setTotalInvoiceMoney(Float totalInvoiceMoney) {
         this.totalInvoiceMoney = totalInvoiceMoney;
     }
 
-    public String getTotalInvoiceAmount() {
+    public Float getTotalInvoiceAmount() {
         return totalInvoiceAmount;
     }
 
-    public void setTotalInvoiceAmount(String totalInvoiceAmount) {
+    public void setTotalInvoiceAmount(Float totalInvoiceAmount) {
         this.totalInvoiceAmount = totalInvoiceAmount;
     }
 }

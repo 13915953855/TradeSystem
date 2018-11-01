@@ -172,9 +172,13 @@ function getTotalInfo(){
         data:queryParams,
         success:function(res){
             if(res.status == "1"){
-                $("#totalContractMoney").html(toFloat(res.totalContractMoney));
+                $("#totalCNYContractMoney").html(toFloat(res.totalCNYContractMoney));
+                $("#totalCNYInvoiceMoney").html(toFloat(res.totalCNYInvoiceMoney));
+                $("#totalUSDContractMoney").html(toFloat(res.totalUSDContractMoney));
+                $("#totalUSDInvoiceMoney").html(toFloat(res.totalUSDInvoiceMoney));
+                $("#totalAUDContractMoney").html(toFloat(res.totalAUDContractMoney));
+                $("#totalAUDInvoiceMoney").html(toFloat(res.totalAUDInvoiceMoney));
                 $("#totalContractAmount").html(toFloat4(res.totalContractAmount));
-                $("#totalInvoiceMoney").html(toFloat(res.totalInvoiceMoney));
                 $("#totalInvoiceAmount").html(toFloat4(res.totalInvoiceAmount));
             }
         }

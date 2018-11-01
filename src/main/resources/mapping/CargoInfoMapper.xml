@@ -501,5 +501,8 @@
     update cargo_info set status = 5
     where cargo_id = #{cargoId,jdbcType=VARCHAR}
   </update>
-
+  <update id="storeByCargoId" parameterType="java.lang.String" >
+    update cargo_info set status = 4
+    where cargo_id = #{cargoId,jdbcType=VARCHAR}
+  </update>
 </mapper>

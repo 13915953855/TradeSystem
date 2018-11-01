@@ -19,4 +19,5 @@ public interface CargoInfoMapper {
     Integer selectCountByExample(CargoParam cargoParam);
     void storeByContractId(String contractId);
     void selloutByCargoId(String cargoId);
+    void storeByCargoId(String cargoId);
 }
