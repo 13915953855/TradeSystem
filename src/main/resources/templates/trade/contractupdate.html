@@ -60,6 +60,7 @@
             var isFinancing = /*[[${contract.isFinancing}]]*/;
             var baoguandan = /*[[${contract.baoguandan}]]*/;
             var isYahui = /*[[${contract.isYahui}]]*/;
+            var cargoMatch = /*[[${contract.cargoMatch}]]*/;
             var isCheckElec = /*[[${contract.isCheckElec}]]*/;
             var qacertificate = /*[[${contract.qacertificate}]]*/;
             var hasbaoguan = /*[[${contract.hasbaoguan}]]*/;
@@ -80,6 +81,9 @@
             if(isYahui == 1){
                 $("#isYahui").attr("checked","checked");
                 $("#yahuiDiv").show();
+            }
+            if(cargoMatch == 1){
+                $("#cargoMatch").attr("checked","checked");
             }
             if(isCheckElec == 1){
                 $("#isCheckElec").attr("checked","checked");
@@ -281,27 +285,27 @@
                                             </div>
                                             <label class="control-label col-sm-3">箱数总计</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalBoxes" th:value="${contract.totalBoxes}"/>
+                                                <input type="text" class="form-control" id="totalBoxes" disabled="disabled" th:value="${contract.totalBoxes}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">合同总数量(KG)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalContractAmount" th:value="${contract.totalContractAmount}"/>
+                                                <input type="text" class="form-control" id="totalContractAmount" disabled="disabled" th:value="${contract.totalContractAmount}"/>
                                             </div>
                                             <label class="control-label col-sm-3">合同总金额</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalContractMoney" th:value="${contract.totalContractMoney}"/>
+                                                <input type="text" class="form-control" id="totalContractMoney" disabled="disabled" th:value="${contract.totalContractMoney}"/>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">发票总数量(KG)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalInvoiceAmount" th:value="${contract.totalInvoiceAmount}"/>
+                                                <input type="text" class="form-control" id="totalInvoiceAmount" disabled="disabled" th:value="${contract.totalInvoiceAmount}"/>
                                             </div>
                                             <label class="control-label col-sm-3">发票总金额</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="totalInvoiceMoney" th:value="${contract.totalInvoiceMoney}"/>
+                                                <input type="text" class="form-control" id="totalInvoiceMoney" disabled="disabled" th:value="${contract.totalInvoiceMoney}"/>
                                             </div>
                                         </div>
 
@@ -386,7 +390,7 @@
                                                                 </div>
                                                                 <label class="control-label col-sm-3">合同金额(小计)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="contractMoney" />
+                                                                    <input type="text" class="form-control" id="contractMoney" disabled="disabled"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
@@ -396,7 +400,7 @@
                                                                 </div>
                                                                 <label class="control-label col-sm-3">发票金额(小计)</label>
                                                                 <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="invoiceMoney" />
+                                                                    <input type="text" class="form-control" id="invoiceMoney" disabled="disabled"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style="">
@@ -774,6 +778,15 @@
                                                     <input class="form-control" size="16" id="storeDate" th:value="${contract.storeDate}" type="text" />
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">产品信息与单据相符</label>
+                                            <div class="col-sm-3">
+                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="cargoMatch"/>
+                                                    <span></span>
+                                                </label>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">

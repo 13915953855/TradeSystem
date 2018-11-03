@@ -92,6 +92,14 @@ public class TradeService {
     public InternalContractInfo saveInternalContract(InternalContractInfo contractBaseInfo, String cargoId){
         contractBaseInfo.setStatus(GlobalConst.ENABLE);
 
+        if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
+            if(contractBaseInfo.getStoreDate().compareTo(DateUtil.DateToString(new Date())) <= 0){
+                contractBaseInfo.setStatus(GlobalConst.STORED);
+                //对应商品的状态也设为已入库
+                cargoInfoMapper.storeByContractId(contractBaseInfo.getContractId());
+            }
+        }
+
         InternalContractInfo record = internalContractRepository.save(contractBaseInfo);
         if(StringUtils.isNotBlank(cargoId)) {
             String[] arr = cargoId.split(",");
@@ -143,7 +151,12 @@ public class TradeService {
         //查询该合同对应的所有商品的库存。
         CargoParam cargoParam = new CargoParam();
         cargoParam.setContractId(contractId);
-        Integer totalRealStoreWeight = cargoInfoMapper.getTotalStoreWeightByExample(cargoParam);
+        Integer totalRealStoreWeight = 0;
+        if(contractId.startsWith("in_")){
+            totalRealStoreWeight = cargoInfoMapper.getInternalTotalStoreWeightByExample(cargoParam);
+        }else{
+            totalRealStoreWeight = cargoInfoMapper.getTotalStoreWeightByExample(cargoParam);
+        }
         if(totalRealStoreWeight == null || totalRealStoreWeight <= 0) {
             List<String> id = new ArrayList<>();
             id.add(contractId);
@@ -156,10 +169,18 @@ public class TradeService {
                     }
                 }
                 if (flag == 0) {
-                    contractRepository.updateStatusByContractId(id, status);
+                    if(contractId.startsWith("in_")){
+                        internalContractRepository.updateStatusByContractId(id,status);
+                    }else {
+                        contractRepository.updateStatusByContractId(id, status);
+                    }
                 }
             }else {
-                contractRepository.updateStatusByContractId(id, status);
+                if(contractId.startsWith("in_")){
+                    internalContractRepository.updateStatusByContractId(id,status);
+                }else {
+                    contractRepository.updateStatusByContractId(id, status);
+                }
             }
         }
     }

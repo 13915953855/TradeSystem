@@ -10,20 +10,30 @@ $(function () {
     initCargoList();
     initLevel();
 
-    $("#contractAmount").blur(function(){
-        var contractMoney = 0;
+    $("#unitPrice").blur(function(){
+        var money = 0;
+        var sjMoney = 0;
         var unitPrice = $("#unitPrice").val();
-        var contractAmount = $("#contractAmount").val();
-        contractMoney = toFloat(unitPrice * contractAmount);
-        $("#contractMoney").val(contractMoney);
+        var amount = $("#amount").val();
+        var sjAmount = $("#sjAmount").val();
+        money = toFloat(unitPrice * amount);
+        sjMoney = toFloat(unitPrice * sjAmount);
+        $("#money").val(money);
+        $("#sjMoney").val(sjMoney);
     });
-
-    $("#costPrice").blur(function(){
-        var realStoreMoney = 0;
-        var costPrice = $("#costPrice").val();
-        var invoiceAmount = $("#invoiceAmount").val();
-        realStoreMoney = toFloat(costPrice * invoiceAmount);
-        $("#realStoreMoney").val(realStoreMoney);
+    $("#amount").blur(function(){
+        var money = 0;
+        var unitPrice = $("#unitPrice").val();
+        var amount = $("#amount").val();
+        money = toFloat(unitPrice * amount);
+        $("#money").val(money);
+    });
+    $("#sjAmount").blur(function(){
+        var sjMoney = 0;
+        var unitPrice = $("#unitPrice").val();
+        var sjAmount = $("#sjAmount").val();
+        sjMoney = toFloat(unitPrice * sjAmount);
+        $("#sjMoney").val(sjMoney);
     });
 
     $(".form-date").datetimepicker({
@@ -127,12 +137,12 @@ var TableInit = function () {
                 title: '状态',
                 formatter: function(value, row, index){
                     if(value == 1) {
-                        return "已保存";
+                        return "已下单";
                     }else if(value == 5) {
                         return "已售完";
-                    }else if(value == 9) {
-                         return "编辑中";
-                     }
+                    }else if(value == 4) {
+                         return "已入库";
+                    }
                 }
             }/*, {
                 field: 'id',
@@ -291,16 +301,20 @@ function autoSetTotalMoney(){
     var totalBoxes = 0;
     var totalMoney = 0;
     var totalAmount = 0;
+    var totalSjMoney = 0;
+    var totalSjAmount = 0;
     for(var i=0;i<all.length;i++) {
         totalBoxes += all[i].boxes;
         totalMoney += all[i].contractMoney;
+        totalSjMoney += all[i].invoiceMoney;
         totalAmount += all[i].contractAmount;
+        totalSjAmount += all[i].invoiceAmount;
     }
     $("#totalBoxes").val(parseInt(totalBoxes));
     $("#totalMoney").val(toFloat(totalMoney));
     $("#totalAmount").val(toFloat4(totalAmount));
-    $("#realMoney").val(toFloat(totalMoney));
-    $("#realAmount").val(toFloat4(totalAmount));
+    $("#realMoney").val(toFloat(totalSjMoney));
+    $("#realAmount").val(toFloat4(totalSjAmount));
 }
 function setFormData(data){
     $("#_id").val(data.id);

@@ -6,6 +6,7 @@ package com.jason.trade.entity;
 public class CargoParam {
     private String contractId;
     private String contractNo;
+    private String importContractNo;
     private String insideContract;
     private String level;
     private String cargoName;
@@ -13,6 +14,8 @@ public class CargoParam {
     private String warehouse;
     private String storeStartDate;
     private String storeEndDate;
+    private String contractStartDate;
+    private String contractEndDate;
     private String customerName;
     private String containerNo;
     private String ladingbillNo;
@@ -22,6 +25,30 @@ public class CargoParam {
     private String maxBox;
     private int start;
     private int limit;
+
+    public String getImportContractNo() {
+        return importContractNo;
+    }
+
+    public void setImportContractNo(String importContractNo) {
+        this.importContractNo = importContractNo;
+    }
+
+    public String getContractStartDate() {
+        return contractStartDate;
+    }
+
+    public void setContractStartDate(String contractStartDate) {
+        this.contractStartDate = contractStartDate;
+    }
+
+    public String getContractEndDate() {
+        return contractEndDate;
+    }
+
+    public void setContractEndDate(String contractEndDate) {
+        this.contractEndDate = contractEndDate;
+    }
 
     public String getMinBox() {
         return minBox;

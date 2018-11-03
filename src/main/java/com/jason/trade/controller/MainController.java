@@ -98,7 +98,7 @@ public class MainController {
     public String internalcontractadd(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
-        String uuid = UUID.randomUUID().toString();
+        String uuid = "in_"+UUID.randomUUID().toString();
         model.addAttribute("contractId",uuid);
         return "trade/internaladd";
     }

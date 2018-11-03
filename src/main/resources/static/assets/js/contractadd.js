@@ -481,6 +481,11 @@ function saveContract(){
     }else{
         contract.isYahui = "0";
     }
+    if($("#cargoMatch").is(':checked')){
+        contract.cargoMatch = "1";
+    }else{
+        contract.cargoMatch = "0";
+    }
     contract.yahuiMoney = $("#yahuiMoney").val() == "" ? 0:toFloat($("#yahuiMoney").val());
     contract.yahuiYearRate = $("#yahuiYearRate").val() == "" ? 0:toFloat($("#yahuiYearRate").val());
     contract.yahuiDayRate = $("#yahuiDayRate").val() == "" ? 0:toFloat($("#yahuiDayRate").val());

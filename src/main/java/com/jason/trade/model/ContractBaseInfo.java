@@ -154,6 +154,16 @@ public class ContractBaseInfo {
     private Integer baoguandan;
     @Column(name="storage_condition")
     private String storageCondition;
+    @Column(name="cargo_match")
+    private Integer cargoMatch;
+
+    public Integer getCargoMatch() {
+        return cargoMatch == null ? 0 : cargoMatch;
+    }
+
+    public void setCargoMatch(Integer cargoMatch) {
+        this.cargoMatch = cargoMatch;
+    }
 
     public String getStorageCondition() {
         return storageCondition;

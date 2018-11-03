@@ -362,7 +362,11 @@ public class TradeController {
         if(currentVersion > contractBaseInfo.getVersion()){
             return GlobalConst.MODIFIED;
         }
-
+        if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
+            contractBaseInfo.setStatus(GlobalConst.STORED);
+            //对应商品的状态也设为已入库
+            cargoInfoMapper.storeByContractId(contractBaseInfo.getContractId());
+        }
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
         internalContractInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
 

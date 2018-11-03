@@ -505,4 +505,43 @@
     update cargo_info set status = 4
     where cargo_id = #{cargoId,jdbcType=VARCHAR}
   </update>
+
+
+
+
+
+  <select id="getInternalTotalStoreWeightByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
+    select sum(a.real_store_weight)
+    from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id
+    where 1=1 and a.status in ('4','5')
+    <if test="contractNo != null and contractNo != ''" >
+      and b.contract_no like '%${contractNo}%'
+    </if>
+    <if test="importContractNo != null and importContractNo != ''" >
+      and b.import_contract_no like '%${importContractNo}%'
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and b.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and b.contract_date &lt;= '${contractEndDate}'
+    </if>
+  </select>
+  <select id="getInternalTotalStoreBoxesByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
+    select sum(a.real_store_boxes)
+    from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id
+    where 1=1 and a.status in ('4','5')
+    <if test="contractNo != null and contractNo != ''" >
+      and b.contract_no like '%${contractNo}%'
+    </if>
+    <if test="importContractNo != null and importContractNo != ''" >
+      and b.import_contract_no like '%${importContractNo}%'
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and b.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and b.contract_date &lt;= '${contractEndDate}'
+    </if>
+  </select>
 </mapper>
