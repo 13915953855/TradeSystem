@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.jason.trade.model.InternalContractInfo" >
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="contract_no" jdbcType="VARCHAR" property="contractNo" />
+    <result column="import_contract_no" jdbcType="VARCHAR" property="importContractNo" />
     <result column="contract_date" jdbcType="VARCHAR" property="contractDate" />
     <result column="contract_id" jdbcType="VARCHAR" property="contractId" />
     <result column="supplier" jdbcType="VARCHAR" property="supplier" />
@@ -27,7 +28,7 @@
   <sql id="Base_Column_List" >
     id, contract_no, contract_date, contract_id, supplier, pay_date, pay_money, receipt_date,
     create_date_time, create_user, remark, status, total_boxes, total_amount, total_money,
-    real_amount, real_money, version, warehouse, store_date,owner_company
+    real_amount, real_money, version, warehouse, store_date,owner_company,import_contract_no
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -39,160 +40,14 @@
     delete from internal_contract_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jason.trade.model.InternalContractInfo" >
-    insert into internal_contract_info (id, contract_no, contract_date,
-    contract_id, supplier, pay_date,
-    pay_money, receipt_date, create_date_time,
-    create_user, remark, status,
-    total_boxes, total_amount, total_money,
-    real_amount, real_money, version,
-    warehouse, store_date,owner_company)
-    values (#{id,jdbcType=INTEGER}, #{contractNo,jdbcType=VARCHAR}, #{contractDate,jdbcType=VARCHAR},
-    #{contractId,jdbcType=VARCHAR}, #{supplier,jdbcType=VARCHAR}, #{payDate,jdbcType=VARCHAR},
-    #{payMoney,jdbcType=DOUBLE}, #{receiptDate,jdbcType=VARCHAR}, #{createDateTime,jdbcType=VARCHAR},
-    #{createUser,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
-    #{totalBoxes,jdbcType=INTEGER}, #{totalAmount,jdbcType=DOUBLE}, #{totalMoney,jdbcType=DOUBLE},
-    #{realAmount,jdbcType=DOUBLE}, #{realMoney,jdbcType=DOUBLE}, #{version,jdbcType=INTEGER},
-    #{warehouse,jdbcType=VARCHAR}, #{storeDate,jdbcType=VARCHAR},#{ownerCompany,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.jason.trade.model.InternalContractInfo" >
-    insert into internal_contract_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="contractNo != null">
-        contract_no,
-      </if>
-      <if test="contractDate != null">
-        contract_date,
-      </if>
-      <if test="contractId != null">
-        contract_id,
-      </if>
-      <if test="supplier != null">
-        supplier,
-      </if>
-      <if test="payDate != null">
-        pay_date,
-      </if>
-      <if test="payMoney != null">
-        pay_money,
-      </if>
-      <if test="receiptDate != null">
-        receipt_date,
-      </if>
-      <if test="createDateTime != null">
-        create_date_time,
-      </if>
-      <if test="createUser != null">
-        create_user,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="totalBoxes != null">
-        total_boxes,
-      </if>
-      <if test="totalAmount != null">
-        total_amount,
-      </if>
-      <if test="totalMoney != null">
-        total_money,
-      </if>
-      <if test="realAmount != null">
-        real_amount,
-      </if>
-      <if test="realMoney != null">
-        real_money,
-      </if>
-      <if test="version != null">
-        version,
-      </if>
-      <if test="warehouse != null" >
-        warehouse,
-      </if>
-      <if test="storeDate != null" >
-        store_date,
-      </if>
-      <if test="ownerCompany != null" >
-        owner_company,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="contractNo != null">
-        #{contractNo,jdbcType=VARCHAR},
-      </if>
-      <if test="contractDate != null">
-        #{contractDate,jdbcType=VARCHAR},
-      </if>
-      <if test="contractId != null">
-        #{contractId,jdbcType=VARCHAR},
-      </if>
-      <if test="supplier != null">
-        #{supplier,jdbcType=VARCHAR},
-      </if>
-      <if test="payDate != null">
-        #{payDate,jdbcType=VARCHAR},
-      </if>
-      <if test="payMoney != null">
-        #{payMoney,jdbcType=DOUBLE},
-      </if>
-      <if test="receiptDate != null">
-        #{receiptDate,jdbcType=VARCHAR},
-      </if>
-      <if test="createDateTime != null">
-        #{createDateTime,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null">
-        #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=VARCHAR},
-      </if>
-      <if test="totalBoxes != null">
-        #{totalBoxes,jdbcType=INTEGER},
-      </if>
-      <if test="totalAmount != null">
-        #{totalAmount,jdbcType=DOUBLE},
-      </if>
-      <if test="totalMoney != null">
-        #{totalMoney,jdbcType=DOUBLE},
-      </if>
-      <if test="realAmount != null">
-        #{realAmount,jdbcType=DOUBLE},
-      </if>
-      <if test="realMoney != null">
-        #{realMoney,jdbcType=DOUBLE},
-      </if>
-      <if test="version != null">
-        #{version,jdbcType=INTEGER},
-      </if>
-      <if test="warehouse != null" >
-        #{warehouse,jdbcType=VARCHAR},
-      </if>
-      <if test="storeDate != null" >
-        #{storeDate,jdbcType=VARCHAR},
-      </if>
-      <if test="ownerCompany != null" >
-        #{ownerCompany,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.InternalContractInfo" >
     update internal_contract_info
     <set>
       <if test="contractNo != null">
         contract_no = #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="importContractNo != null">
+        import_contract_no = #{importContractNo,jdbcType=VARCHAR},
       </if>
       <if test="contractDate != null">
         contract_date = #{contractDate,jdbcType=VARCHAR},
@@ -254,30 +109,6 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jason.trade.model.InternalContractInfo" >
-    update internal_contract_info
-    set contract_no = #{contractNo,jdbcType=VARCHAR},
-    contract_date = #{contractDate,jdbcType=VARCHAR},
-    contract_id = #{contractId,jdbcType=VARCHAR},
-    supplier = #{supplier,jdbcType=VARCHAR},
-    pay_date = #{payDate,jdbcType=VARCHAR},
-    pay_money = #{payMoney,jdbcType=DOUBLE},
-    receipt_date = #{receiptDate,jdbcType=VARCHAR},
-    create_date_time = #{createDateTime,jdbcType=VARCHAR},
-    create_user = #{createUser,jdbcType=VARCHAR},
-    remark = #{remark,jdbcType=VARCHAR},
-    status = #{status,jdbcType=VARCHAR},
-    total_boxes = #{totalBoxes,jdbcType=INTEGER},
-    total_amount = #{totalAmount,jdbcType=DOUBLE},
-    total_money = #{totalMoney,jdbcType=DOUBLE},
-    real_amount = #{realAmount,jdbcType=DOUBLE},
-    real_money = #{realMoney,jdbcType=DOUBLE},
-    version = #{version,jdbcType=INTEGER},
-    warehouse = #{warehouse,jdbcType=VARCHAR},
-    store_date = #{storeDate,jdbcType=VARCHAR},
-    owner_company = #{ownerCompany,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jason.trade.entity.InternalContractParam" >
     select
@@ -286,6 +117,9 @@
     where 1 = 1
     <if test="contractNo != null" >
       and contract_no like '%${contractNo}%'
+    </if>
+    <if test="importContractNo != null" >
+      and import_contract_no like '%${importContractNo}%'
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and contract_date &gt;= '${contractStartDate}'
@@ -312,6 +146,9 @@
   <if test="contractNo != null" >
     and contract_no like '%${contractNo}%'
   </if>
+    <if test="importContractNo != null" >
+      and import_contract_no like '%${importContractNo}%'
+    </if>
   <if test="contractStartDate != null and contractStartDate != ''" >
     and contract_date &gt;= '${contractStartDate}'
   </if>

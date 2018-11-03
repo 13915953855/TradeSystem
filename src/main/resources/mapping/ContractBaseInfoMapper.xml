@@ -75,7 +75,6 @@
     <result column="final_pay_bank" property="finalPayBank" jdbcType="VARCHAR" />
     <result column="owner_company" property="ownerCompany" jdbcType="VARCHAR" />
     <result column="storage_condition" property="storageCondition" jdbcType="VARCHAR" />
-    <result column="import_contract_no" property="importContractNo" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BaseResultMap2" type="com.jason.trade.entity.QueryContractInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -326,9 +325,6 @@
       <if test="storageCondition != null" >
         storage_condition = #{storageCondition,jdbcType=VARCHAR},
       </if>
-      <if test="importContractNo != null" >
-        import_contract_no = #{importContractNo,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -337,9 +333,6 @@
     where 1 = 1
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
-    </if>
-    <if test="importContractNo != null" >
-      and a.import_contract_no like '%${importContractNo}%'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -414,9 +407,6 @@
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
-    <if test="importContractNo != null" >
-      and a.import_contract_no like '%${importContractNo}%'
-    </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
     </if>
@@ -488,9 +478,6 @@
     where 1 = 1
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
-    </if>
-    <if test="importContractNo != null" >
-      and a.import_contract_no like '%${importContractNo}%'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'

@@ -145,7 +145,6 @@ function getTotalInfo(){
         }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         externalContract: $("#externalContract").val(),
-        importContractNo: $("#importContractNo").val(),
         insideContract: $("#insideContract").val(),
         contractStartDate: $("#contractStartDate").val(),
         contractEndDate: $("#contractEndDate").val(),
@@ -229,9 +228,6 @@ var TableInit = function () {
             }, {
                 field: 'insideContract',
                 title: '内合同编号'
-            }, {
-                field: 'importContractNo',
-                title: '进口合同编号'
             }, {
                 field: 'externalCompany',
                 title: '外商'
@@ -373,7 +369,6 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             externalContract: $("#externalContract").val(),
-            importContractNo: $("#importContractNo").val(),
             insideContract: $("#insideContract").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
@@ -582,7 +577,6 @@ var ButtonInit = function () {
                 status = status.substring(0,status.length-1);
             }
             var externalContract = $("#externalContract").val();
-            var importContractNo = $("#importContractNo").val();
             var insideContract=$("#insideContract").val();
             var contractStartDate= $("#contractStartDate").val();
             var contractEndDate= $("#contractEndDate").val();
@@ -603,7 +597,6 @@ var ButtonInit = function () {
             });
 
             var params = "?externalContract="+externalContract;
-            params += "&importContractNo="+importContractNo;
             params += "&insideContract="+insideContract;
             params += "&contractStartDate="+contractStartDate;
             params += "&contractEndDate="+contractEndDate;
@@ -630,7 +623,6 @@ var ButtonInit = function () {
 };
 
 function resetQuery(){
-    $("#importContractNo").val("");
     $("#externalContract").val("");
     $("#insideContract").val("");
     $("#contractStartDate").val("");

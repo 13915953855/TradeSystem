@@ -4,7 +4,6 @@ package com.jason.trade.entity;
  * 查询Bean
  */
 public class ContractParam {
-    private String importContractNo;
     private String externalContract;
     private String insideContract;
     private String businessMode;
@@ -27,14 +26,6 @@ public class ContractParam {
     private String today;
     private Integer start;
     private Integer limit;
-
-    public String getImportContractNo() {
-        return importContractNo;
-    }
-
-    public void setImportContractNo(String importContractNo) {
-        this.importContractNo = importContractNo;
-    }
 
     public String getTariffNo() {
         return tariffNo;

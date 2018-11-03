@@ -49,6 +49,16 @@ public class InternalContractInfo {
     private String storeDate;
     @Column(name="owner_company")
     private String ownerCompany;
+    @Column(name="import_contract_no")
+    private String importContractNo;
+
+    public String getImportContractNo() {
+        return importContractNo;
+    }
+
+    public void setImportContractNo(String importContractNo) {
+        this.importContractNo = importContractNo;
+    }
 
     public String getOwnerCompany() {
         return ownerCompany;

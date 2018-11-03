@@ -80,6 +80,9 @@ var TableInit = function () {
                 field: 'contractNo',
                 title: '合同编号'
             }, {
+                field: 'importContractNo',
+                title: '进口合同号'
+            }, {
                 field: 'contractDate',
                 title: '合同日期'
             }, {
@@ -132,6 +135,7 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             contractNo: $("#contractNo").val(),
+            importContractNo: $("#importContractNo").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
             status: status,
@@ -209,6 +213,7 @@ var ButtonInit = function () {
 
 function resetQuery(){
     $("#contractNo").val("");
+    $("#importContractNo").val("");
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
     $("#status").val("全部").trigger("change");

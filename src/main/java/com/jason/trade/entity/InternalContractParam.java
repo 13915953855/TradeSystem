@@ -5,6 +5,7 @@ package com.jason.trade.entity;
  */
 public class InternalContractParam {
     private String contractNo;
+    private String importContractNo;
     private String contractStartDate;
     private String contractEndDate;
     private String status;
@@ -12,6 +13,14 @@ public class InternalContractParam {
     private String today;
     private Integer start;
     private Integer limit;
+
+    public String getImportContractNo() {
+        return importContractNo;
+    }
+
+    public void setImportContractNo(String importContractNo) {
+        this.importContractNo = importContractNo;
+    }
 
     public String getContractNo() {
         return contractNo;

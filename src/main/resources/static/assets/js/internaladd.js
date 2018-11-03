@@ -334,6 +334,7 @@ function saveContract(){
     }
 
     contract.ownerCompany = $("#ownerCompany").val();
+    contract.importContractNo = $("#importContractNo").val();
     contract.contractNo = $("#contractNo").val();
     contract.contractDate = $("#contractDate").val();
     contract.supplier = $("#supplier").val();
