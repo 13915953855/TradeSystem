@@ -76,6 +76,7 @@ public class TradeController {
     public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
         contractParam.setStart(offset);
         contractParam.setLimit(limit);
+        contractParam.setSortName("contract_date");
         JSONObject result = tradeService.queryContractListByMapper(contractParam);
         return result.toString();
     }

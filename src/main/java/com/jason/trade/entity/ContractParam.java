@@ -24,8 +24,35 @@ public class ContractParam {
     private String status;
     private String fieldName;
     private String today;
+    private String originCountry;
     private Integer start;
     private Integer limit;
+    private String sortName;
+    private String sortOrder;
+
+    public String getSortName() {
+        return sortName;
+    }
+
+    public void setSortName(String sortName) {
+        this.sortName = sortName;
+    }
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public String getOriginCountry() {
+        return originCountry;
+    }
+
+    public void setOriginCountry(String originCountry) {
+        this.originCountry = originCountry;
+    }
 
     public String getTariffNo() {
         return tariffNo;

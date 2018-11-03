@@ -316,7 +316,7 @@ public class ExcelService {
         list.add(baseInfo.getYahuiMoney());//押汇金额
         list.add(baseInfo.getYahuiYearRate());//押汇年汇率(%)
         list.add(baseInfo.getYahuidaoqiDate());//押汇到期日
-        list.add(baseInfo.getYahuiDayRate());//押汇日汇率(%)
+        list.add(baseInfo.getYahuiDayRate());//到期日汇率(%)
 
         list.add(baseInfo.getPrePayment());//预付款金额
         list.add(baseInfo.getPrePaymentDate());//预付款日期

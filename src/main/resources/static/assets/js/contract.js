@@ -25,10 +25,24 @@ $(function () {
     initBusinessMode();
     initExternalCompany();
     initCargoList();
-
+    initOriginCountryQuery();
     getTotalInfo();
 });
-
+function initOriginCountryQuery(){
+    var opts = "";
+    opts += "<option>全部</option>";
+    opts += "<option>澳大利亚</option>";
+    opts += "<option>乌拉圭</option>";
+    opts += "<option>巴西</option>";
+    opts += "<option>加拿大</option>";
+    opts += "<option>美国</option>";
+    opts += "<option>阿根廷</option>";
+    opts += "<option>白俄罗斯</option>";
+    opts += "<option>南非</option>";
+    opts += "<option>哥斯达黎加</option>";
+    opts += "<option>新西兰</option>";
+    $("#originCountry").append(opts);
+}
 var toFloat = function (value) {
     value = Math.round(parseFloat(value) * 100) / 100;
     if (value.toString().indexOf(".") < 0) {
@@ -162,6 +176,7 @@ function getTotalInfo(){
         businessMode: businessMode,
         externalCompany: externalCompany,
         status: status,
+        originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val()
     };
 
     $.ajax({
@@ -196,7 +211,7 @@ var TableInit = function () {
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
             sortable: true,                     //是否启用排序
-            sortName: "id",                     //排序字段名
+            sortName: "contractDate",                     //排序字段名
             sortOrder: "desc",                   //排序方式
             queryParams: oTableInit.queryParams,//传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
@@ -233,7 +248,8 @@ var TableInit = function () {
                 title: '外商'
             }, {
                 field: 'contractDate',
-                title: '合同日期'
+                title: '合同日期',
+                sortable:true
             }, {
                 field: 'status',
                 title: '状态',
@@ -386,6 +402,9 @@ var TableInit = function () {
             businessMode: businessMode,
             externalCompany: externalCompany,
             status: status,
+            originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val(),
+            sortName:this.sortName,
+            sortOrder:this.sortOrder,
         };
         return temp;
     };
@@ -613,6 +632,7 @@ var ButtonInit = function () {
             params += "&businessMode="+businessMode;
             params += "&externalCompany="+externalCompany;
             params += "&status="+status;
+            params += "&originCountry="+$("#originCountry").val() == "全部" ? "":$("#originCountry").val();
             params += "&chk="+chk;
         	var url = "/trade/contract/output"+params;
         	window.open(url);
@@ -637,6 +657,7 @@ function resetQuery(){
     $("#externalCompany").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
+    $("#originCountry").val("全部").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
     $("#cargoNo").val("");

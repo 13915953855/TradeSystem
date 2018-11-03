@@ -334,6 +334,9 @@
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
+    <if test="originCountry != null" >
+      and a.origin_country like '%${originCountry}%'
+    </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
     </if>
@@ -396,7 +399,7 @@
       )
     </if>
 
-    order by a.id desc
+    order by a.${sortName} ${sortOrder}
     <if test="start != null and limit != null" >
       limit ${start},${limit}
     </if>
@@ -406,6 +409,9 @@
     where 1 = 1
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="originCountry != null" >
+      and a.origin_country like '%${originCountry}%'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -478,6 +484,9 @@
     where 1 = 1
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="originCountry != null" >
+      and a.origin_country like '%${originCountry}%'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
