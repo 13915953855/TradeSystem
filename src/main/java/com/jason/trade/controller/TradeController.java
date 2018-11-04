@@ -77,7 +77,33 @@ public class TradeController {
         contractParam.setStart(offset);
         contractParam.setLimit(limit);
         contractParam.setSortName("contract_date");
-        JSONObject result = tradeService.queryContractListByMapper(contractParam);
+        String type = contractParam.getType();
+        JSONObject result = new JSONObject();
+        if(StringUtils.isBlank(type)){
+            result = tradeService.queryContractListByMapper(contractParam);
+        }else{
+            switch (type){
+                case "n1":
+                    Date before14Date = DateUtil.getDateBefore(new Date(),14);
+                    String date1 = DateUtil.DateToString(before14Date);
+                    result.put("total",contractRepository.countByExpectSailingDateLessThanAndStatus(date1,GlobalConst.ENABLE));
+                    result.put("rows",contractRepository.findByExpectSailingDateLessThanAndStatus(date1,GlobalConst.ENABLE));
+                    break;
+                case "n2":
+                    Date before60Date = DateUtil.getDateBefore(new Date(),60);
+                    String date2 = DateUtil.DateToString(before60Date);
+                    result.put("total",contractRepository.countByStoreDateLessThanAndStatus(date2,GlobalConst.STORED));
+                    result.put("rows",contractRepository.findByStoreDateLessThanAndStatus(date2,GlobalConst.STORED));
+                    break;
+                case "n3":
+                    Date before15Date = DateUtil.getDateBefore(new Date(),15);
+                    String date3 = DateUtil.DateToString(before15Date);
+                    result.put("total",contractRepository.countByEtaLessThanAndStoreDate(date3,""));
+                    result.put("rows",contractRepository.findByEtaLessThanAndStoreDate(date3,""));
+                    break;
+                default:break;
+            }
+        }
         return result.toString();
     }
     @RequestMapping(value = "/internal/list")
@@ -486,6 +512,31 @@ public class TradeController {
         contractParam.setStart(offset);
         contractParam.setLimit(limit);
         JSONObject result = tradeService.queryContractListForQuery(contractParam);
+        return result.toString();
+    }
+
+    @PostMapping(value="/notice")
+    public String noticeAll(HttpSession session){
+        //UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        Date before14Date = DateUtil.getDateBefore(new Date(),14);
+        String date1 = DateUtil.DateToString(before14Date);
+        JSONObject result = new JSONObject();
+        result.put("status","1");
+        int n1 = contractRepository.countByExpectSailingDateLessThanAndStatus(date1,GlobalConst.ENABLE);
+        result.put("n1",n1);
+        Date before60Date = DateUtil.getDateBefore(new Date(),60);
+        String date2 = DateUtil.DateToString(before60Date);
+        int n2 = contractRepository.countByStoreDateLessThanAndStatus(date2,GlobalConst.STORED);
+        result.put("n2",n2);
+        Date before15Date = DateUtil.getDateBefore(new Date(),15);
+        String date3 = DateUtil.DateToString(before15Date);
+        int n3 = contractRepository.countByEtaLessThanAndStoreDate(date3,"");
+        result.put("n3",n3);
+        int n4 = cargoRepository.countByRealStoreBoxesBetween(1,5);
+        result.put("n4",n4);
+        int n5 = saleRepository.countByProfitLessThan(0.001);
+        result.put("n5",n5);
+        result.put("total",n1+n2+n3+n4+n5);
         return result.toString();
     }
 }

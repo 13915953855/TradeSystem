@@ -23,4 +23,9 @@ public interface CargoRepository extends JpaRepository<CargoInfo,Integer>,JpaSpe
     @Query(value = "delete from cargo_info where id in (?1) ", nativeQuery = true)
     @Modifying
     void deleteCargo(List<String> id);
+
+    //当前库存箱数≤5，预警通知；
+    //select * from cargo_info where real_store_boxes <=5 and real_store_boxes > 0;
+    List<CargoInfo> findByRealStoreBoxesBetween(Integer start,Integer end);
+    Integer countByRealStoreBoxesBetween(Integer start,Integer end);
 }

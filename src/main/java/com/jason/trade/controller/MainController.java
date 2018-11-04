@@ -78,6 +78,7 @@ public class MainController {
     public String contract(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
+        model.addAttribute("type","");
         return "trade/contract";
     }
     @GetMapping("/trade/internal")

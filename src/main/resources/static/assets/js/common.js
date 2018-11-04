@@ -1,20 +1,4 @@
 $(function(){
-    /*toastr.options = {
-        closeButton: true,
-        debug: false,
-        progressBar: true,
-        positionClass: "toast-top-center",
-        onclick: null,
-        showDuration: "300",
-        hideDuration: "1000",
-        timeOut: "2000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        hideEasing: "linear",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut"
-    };*/
-
     var toFloat = function (value) {
         value = Math.round(parseFloat(value) * 100) / 100;
         if (value.toString().indexOf(".") < 0) {
@@ -275,4 +259,45 @@ function initLevel(){
     opts += "<option>GF S 7R</option>";
     opts += "<option>无</option>";
     $("#level").append(opts);
+}
+
+var getNoticeNum = function(){
+    $.ajax({
+        url:'/trade/notice',
+        type:"POST",
+        dataType:"json",
+        data:{},
+        success:function(res){
+            if(res.status == "1"){
+                $("#noticeNum").html(res.total);
+                $("#n1").html(res.n1);
+                $("#n2").html(res.n2);
+                $("#n3").html(res.n3);
+                $("#n4").html(res.n4);
+                $("#n5").html(res.n5);
+            }
+        }
+    });
+}
+function getParam(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
+}
+function alarm(index){
+    if(index == 1){
+        //window.location.href = "/trade/query/contract?type=n1";
+        window.location.href = "/trade/contract?type=n1";
+    }else if(index == 2){
+        window.location.href = "/trade/contract?type=n2";
+    }else if (index == 3){
+        window.location.href = "/trade/contract?type=n3";
+    }else if(index == 4){
+        window.location.href = "/trade/cargomanage?status=已入库&minBox=0.001&maxBox=5";
+    }else if(index == 5){
+
+    }
 }

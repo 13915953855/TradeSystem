@@ -23,4 +23,19 @@ public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integ
     @Modifying
     @Transactional
     void updateStatusByContractId(List<String> id,String status);
+
+    //-- 当前日期超出预计船期14天，预警通知；
+    //select * from contract_base_info where expect_Sailing_Date < '2018-10-20' and status = '1';
+    List<ContractBaseInfo> findByExpectSailingDateLessThanAndStatus(String date,String status);
+    Integer countByExpectSailingDateLessThanAndStatus(String date,String status);
+
+    //-- 当前日期-入库日期＞60天，预警通知
+    //select * from contract_base_info where store_date < '2018-09-03' and status = '4';
+    List<ContractBaseInfo> findByStoreDateLessThanAndStatus(String date,String status);
+    Integer countByStoreDateLessThanAndStatus(String date,String status);
+
+    //-- 当前日期超出ETA时间15天，预警通知
+    //select * from contract_base_info where eta < '2018-10-20' and store_date = '';
+    List<ContractBaseInfo> findByEtaLessThanAndStoreDate(String date,String blank);
+    Integer countByEtaLessThanAndStoreDate(String date,String blank);
 }

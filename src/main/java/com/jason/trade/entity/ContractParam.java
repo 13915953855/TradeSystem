@@ -29,6 +29,15 @@ public class ContractParam {
     private Integer limit;
     private String sortName;
     private String sortOrder;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getSortName() {
         return sortName;

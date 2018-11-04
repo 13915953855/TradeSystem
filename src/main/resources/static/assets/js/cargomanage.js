@@ -1,5 +1,10 @@
 $(function () {
-
+    var status = getParam("status");
+    var minBox = getParam("minBox");
+    var maxBox = getParam("maxBox");
+    $("#status").val(status).trigger("change");
+    $("#minBox").val(minBox);
+    $("#maxBox").val(maxBox);
     //1.初始化Table
     var oTable = new TableInit();
     oTable.Init();

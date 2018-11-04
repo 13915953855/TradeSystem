@@ -1,5 +1,6 @@
+var queryType;
 $(function () {
-
+    queryType = getParam("type");
     //1.初始化Table
     var oTable = new TableInit();
     oTable.Init();
@@ -26,7 +27,14 @@ $(function () {
     initExternalCompany();
     initCargoList();
     initOriginCountryQuery();
-    getTotalInfo();
+    if(queryType == "" || queryType == null || queryType == undefined){
+        $("#totalInfoDiv").show();
+        $("#btn_excel").show();
+        getTotalInfo();
+    }else{
+        $("#totalInfoDiv").hide();
+        $("#btn_excel").hide();
+    }
 });
 function initOriginCountryQuery(){
     var opts = "";
@@ -176,6 +184,7 @@ function getTotalInfo(){
         businessMode: businessMode,
         externalCompany: externalCompany,
         status: status,
+        type:queryType,
         originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val()
     };
 
@@ -402,6 +411,7 @@ var TableInit = function () {
             businessMode: businessMode,
             externalCompany: externalCompany,
             status: status,
+            type:queryType,
             originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val(),
             sortName:this.sortName,
             sortOrder:this.sortOrder,
@@ -441,10 +451,19 @@ var ButtonInit = function () {
              }
          });
         $("#btn_query").click(function(){
+            queryType = "";
             $('#tb_contract').bootstrapTable("refresh",{pageNumber:1});
-            getTotalInfo();
+            if(queryType == ""){
+                $("#totalInfoDiv").show();
+                $("#btn_excel").show();
+                getTotalInfo();
+            }else{
+                $("#totalInfoDiv").hide();
+                $("#btn_excel").hide();
+            }
         });
         $("#btn_reset").click(function(){
+            queryType = "";
             resetQuery();
         });
         $("#btn_add").click(function(){
@@ -634,6 +653,7 @@ var ButtonInit = function () {
             params += "&status="+status;
             params += "&originCountry="+$("#originCountry").val() == "全部" ? "":$("#originCountry").val();
             params += "&chk="+chk;
+            params += "&type="+queryType;
         	var url = "/trade/contract/output"+params;
         	window.open(url);
         });

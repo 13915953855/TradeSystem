@@ -2,6 +2,7 @@ package com.jason.trade.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
@@ -48,5 +49,19 @@ public class DateUtil {
 
     public static Date stringToDateTime(String source) {
         return stringToDate(source,"yyyy-MM-dd HH:mm:ss");
+    }
+
+    /**
+     * 得到几天前的时间
+     * 
+     * @param d
+     * @param day
+     * @return
+     */
+    public static Date getDateBefore(Date d, int day) {
+        Calendar no = Calendar.getInstance();
+        no.setTime(d);
+        no.set(Calendar.DATE, no.get(Calendar.DATE) - day);
+        return no.getTime();
     }
 }

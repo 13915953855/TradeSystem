@@ -48,7 +48,11 @@
                             <span class="badge bg-danger" id="noticeNum"></span>
                         </a>
                         <ul class="dropdown-menu notifications">
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+                            <li><a href="#" onclick="alarm(1)" class="notification-item"><span class="badge bg-danger" id="n1"></span>条台账超出预计船期14天未处理</a></li>
+                            <li><a href="#" onclick="alarm(2)" class="notification-item"><span class="badge bg-danger" id="n2"></span>条台账超出入库日期60天未处理</a></li>
+                            <li><a href="#" onclick="alarm(3)" class="notification-item"><span class="badge bg-danger" id="n3"></span>条台账超出ETA日期15天未处理</a></li>
+                            <li><a href="#" onclick="alarm(4)" class="notification-item"><span class="badge bg-danger" id="n4"></span>种商品的库存小于5箱且未售完</a></li>
+                            <li><a href="#" onclick="alarm(5)" class="notification-item"><span class="badge bg-danger" id="n5"></span>笔销售记录的利润亏损</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

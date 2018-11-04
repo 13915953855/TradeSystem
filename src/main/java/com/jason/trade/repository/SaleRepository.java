@@ -16,4 +16,8 @@ public interface SaleRepository extends JpaRepository<SaleInfo,Integer> {
     @Query(value = "delete from sale_info where sale_id in (?1) ", nativeQuery = true)
     @Modifying
     void deleteSaleInfo(List<String> id);
+
+    //当利润≤0，预警通知   select * from sale_info where profit <= 0;
+    List<SaleInfo> findByProfitLessThan(Double profit);
+    Integer countByProfitLessThan(Double profit);
 }
