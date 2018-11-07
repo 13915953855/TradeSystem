@@ -384,4 +384,11 @@ public class MainController {
         model.addAttribute("user", userInfo);
         return "trade/queryContract";
     }
+
+    @GetMapping("/trade/query/duty")
+    public String queryDuty(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryduty";
+    }
 }

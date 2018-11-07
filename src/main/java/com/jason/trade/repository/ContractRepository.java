@@ -35,7 +35,11 @@ public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integ
     Integer countByStoreDateLessThanAndStatus(String date,String status);
 
     //-- 当前日期超出ETA时间15天，预警通知
-    //select * from contract_base_info where eta < '2018-10-20' and store_date = '';
-    List<ContractBaseInfo> findByEtaLessThanAndStoreDate(String date,String blank);
-    Integer countByEtaLessThanAndStoreDate(String date,String blank);
+    //select * from contract_base_info where eta < '2018-10-20' and status = '3';
+    List<ContractBaseInfo> findByEtaLessThanAndStatus(String date,String status);
+    Integer countByEtaLessThanAndStatus(String date,String status);
+
+    //根据付税日期来统计
+    List<ContractBaseInfo> findByTaxPayDateBetweenOrderByTaxPayDateDesc(String start,String end);
+    Integer countByTaxPayDateBetween(String start,String end);
 }

@@ -30,6 +30,24 @@ public class ContractParam {
     private String sortName;
     private String sortOrder;
     private String type;
+    private String taxPayDateStart;
+    private String taxPayDateEnd;
+
+    public String getTaxPayDateStart() {
+        return taxPayDateStart;
+    }
+
+    public void setTaxPayDateStart(String taxPayDateStart) {
+        this.taxPayDateStart = taxPayDateStart;
+    }
+
+    public String getTaxPayDateEnd() {
+        return taxPayDateEnd;
+    }
+
+    public void setTaxPayDateEnd(String taxPayDateEnd) {
+        this.taxPayDateEnd = taxPayDateEnd;
+    }
 
     public String getType() {
         return type;

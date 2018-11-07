@@ -362,6 +362,7 @@ function saveContract(){
     contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:parseInt($("#totalBoxes").val());
     contract.storeDate = $("#storeDate").val();
     contract.warehouse = $("#warehouse").val();
+    contract.remark = $("#remark").val();
 
     var a = $("#tb_cargo").bootstrapTable("getData");
     var cargoIds = "";

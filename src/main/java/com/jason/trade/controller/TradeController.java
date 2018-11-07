@@ -1,7 +1,10 @@
 package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
-import com.jason.trade.entity.*;
+import com.jason.trade.entity.CargoParam;
+import com.jason.trade.entity.ContractForCharts;
+import com.jason.trade.entity.ContractParam;
+import com.jason.trade.entity.InternalContractParam;
 import com.jason.trade.mapper.AttachmentMapper;
 import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
@@ -11,37 +14,26 @@ import com.jason.trade.repository.*;
 import com.jason.trade.service.TradeService;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.RespUtil;
-import com.jason.trade.util.SetStyleUtils;
 import com.jason.trade.util.WebSecurityConfig;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/trade")
@@ -98,8 +90,8 @@ public class TradeController {
                 case "n3":
                     Date before15Date = DateUtil.getDateBefore(new Date(),15);
                     String date3 = DateUtil.DateToString(before15Date);
-                    result.put("total",contractRepository.countByEtaLessThanAndStoreDate(date3,""));
-                    result.put("rows",contractRepository.findByEtaLessThanAndStoreDate(date3,""));
+                    result.put("total",contractRepository.countByEtaLessThanAndStatus(date3,GlobalConst.ARRIVED));
+                    result.put("rows",contractRepository.findByEtaLessThanAndStatus(date3,GlobalConst.ARRIVED));
                     break;
                 default:break;
             }
@@ -530,13 +522,62 @@ public class TradeController {
         result.put("n2",n2);
         Date before15Date = DateUtil.getDateBefore(new Date(),15);
         String date3 = DateUtil.DateToString(before15Date);
-        int n3 = contractRepository.countByEtaLessThanAndStoreDate(date3,"");
+        int n3 = contractRepository.countByEtaLessThanAndStatus(date3,GlobalConst.ARRIVED);
         result.put("n3",n3);
         int n4 = cargoRepository.countByRealStoreBoxesBetween(1,5);
         result.put("n4",n4);
         int n5 = saleRepository.countByProfitLessThan(0.001);
         result.put("n5",n5);
         result.put("total",n1+n2+n3+n4+n5);
+        return result.toString();
+    }
+
+    @RequestMapping(value = "/queryDutyList")
+    public String queryDutyList(ContractParam contractParam) throws JSONException {
+        JSONObject result = new JSONObject();
+        String start = contractParam.getTaxPayDateStart();
+        String end = contractParam.getTaxPayDateEnd();
+        if(StringUtils.isBlank(start)){
+            start = "2000-01-01";
+        }
+        if(StringUtils.isBlank(end)){
+            end = "2099-12-31";
+        }
+        result.put("total",contractRepository.countByTaxPayDateBetween(start,end));
+        List<ContractBaseInfo> data = contractRepository.findByTaxPayDateBetweenOrderByTaxPayDateDesc(start,end);
+        Double totalTariff = 0.0;
+        Double totalAddedValueTax = 0.0;
+        for (ContractBaseInfo contractBaseInfo : data) {
+            totalTariff += contractBaseInfo.getTariff();
+            totalAddedValueTax += contractBaseInfo.getAddedValueTax();
+        }
+        result.put("rows",data);
+        result.put("totalTariff",new BigDecimal(totalTariff+""));
+        result.put("totalAddedValueTax",new BigDecimal(totalAddedValueTax+""));
+        return result.toString();
+    }
+
+    @RequestMapping(value = "/queryDutyTotal")
+    public String queryDutyTotal(ContractParam contractParam) throws JSONException {
+        JSONObject result = new JSONObject();
+        String start = contractParam.getTaxPayDateStart();
+        String end = contractParam.getTaxPayDateEnd();
+        if(StringUtils.isBlank(start)){
+            start = "2000-01-01";
+        }
+        if(StringUtils.isBlank(end)){
+            end = "2099-12-31";
+        }
+        List<ContractBaseInfo> data = contractRepository.findByTaxPayDateBetweenOrderByTaxPayDateDesc(start,end);
+        Double totalTariff = 0.0;
+        Double totalAddedValueTax = 0.0;
+        for (ContractBaseInfo contractBaseInfo : data) {
+            totalTariff += contractBaseInfo.getTariff();
+            totalAddedValueTax += contractBaseInfo.getAddedValueTax();
+        }
+        result.put("status","1");
+        result.put("totalTariff",new BigDecimal(totalTariff+""));
+        result.put("totalAddedValueTax",new BigDecimal(totalAddedValueTax+""));
         return result.toString();
     }
 }
