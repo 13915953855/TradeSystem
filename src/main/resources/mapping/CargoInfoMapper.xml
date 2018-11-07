@@ -67,10 +67,10 @@
     select * from cargo_info where cargo_id = #{_parameter}
   </select>
   <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
-    select a.* from(
-    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
-    where 1 = 1 and b.status in ('4','5')
+    select b.* from (
+    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
+    UNION select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
+    where 1 = 1
     <if test="contractNo != null" >
       and b.external_contract like '%${contractNo}%'
     </if>
@@ -93,79 +93,49 @@
       and b.store_date &lt;= '${storeEndDate}'
     </if>
     <if test="level != null and level != ''" >
-      and a.level = '${level}'
+      and b.level = '${level}'
     </if>
     <if test="status != null and status != ''" >
-      and a.status = '${status}'
+      and b.status = '${status}'
     </if>
     <if test="businessMode != null and businessMode != ''" >
-      and a.business_mode = '${businessMode}'
+      and b.business_mode = '${businessMode}'
     </if>
     <if test="cargoName != null and cargoName != ''" >
-      and a.cargo_name = '${cargoName}'
+      and b.cargo_name = '${cargoName}'
     </if>
     <if test="minBox != null and minBox != ''" >
-      and a.real_store_boxes &gt;= '${minBox}'
+      and b.real_store_boxes &gt;= '${minBox}'
     </if>
     <if test="maxBox != null and maxBox != ''" >
-      and a.real_store_boxes &lt;= '${maxBox}'
+      and b.real_store_boxes &lt;= '${maxBox}'
     </if>
     <if test="cargoNo != null" >
-      and a.cargo_no like '%${cargoNo}%'
+      and b.cargo_no like '%${cargoNo}%'
     </if>
     <if test="customerName != null and customerName != ''" >
-      and a.cargo_id in (
+      and b.cargo_id in (
       select cargo_id from sale_info where 1=1
       <if test="customerName != null and customerName != ''" >
         and customer_name like '%${customerName}%'
       </if>
       )
     </if>
-    UNION
-    select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no
-    from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id
-    where 1=1
-    <if test="level != null and level != ''" >
-      and a.level = '${level}'
-    </if>
-    <if test="status != null and status != ''" >
-      and a.status = '${status}'
-    </if>
-    <if test="cargoName != null and cargoName != ''" >
-      and a.cargo_name = '${cargoName}'
-    </if>
-    <if test="cargoNo != null" >
-      and a.cargo_no like '%${cargoNo}%'
-    </if>
-    <if test="minBox != null and minBox != ''" >
-      and a.real_store_boxes &gt;= '${minBox}'
-    </if>
-    <if test="maxBox != null and maxBox != ''" >
-      and a.real_store_boxes &lt;= '${maxBox}'
-    </if>
-    <if test="customerName != null and customerName != ''" >
-      and a.cargo_id in (
-      select cargo_id from sale_info where 1=1
-      <if test="customerName != null and customerName != ''" >
-        and customer_name like '%${customerName}%'
-      </if>
-      )
-    </if>
-    ) a
-    order by a.id desc
+    order by b.id desc
     limit ${start},${limit}
   </select>
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
-    select count(1) from(
-    select a.* from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
-    where 1 = 1 and b.status in ('4','5')
-    <if test="contractNo != null and contractNo != ''" >
+    select count(1) from (
+    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
+    UNION select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
+    where 1 = 1
+    <if test="contractNo != null" >
       and b.external_contract like '%${contractNo}%'
     </if>
-    <if test="insideContract != null and insideContract != ''" >
+    <if test="insideContract != null" >
       and b.inside_contract like '%${insideContract}%'
     </if>
-    <if test="warehouse != null and warehouse != ''" >
+    <if test="warehouse != null" >
       and b.warehouse like '%${warehouse}%'
     </if>
     <if test="ladingbillNo != null" >
@@ -181,64 +151,34 @@
       and b.store_date &lt;= '${storeEndDate}'
     </if>
     <if test="level != null and level != ''" >
-      and a.level = '${level}'
+      and b.level = '${level}'
     </if>
     <if test="status != null and status != ''" >
-      and a.status = '${status}'
+      and b.status = '${status}'
     </if>
     <if test="businessMode != null and businessMode != ''" >
-      and a.business_mode = '${businessMode}'
+      and b.business_mode = '${businessMode}'
     </if>
     <if test="cargoName != null and cargoName != ''" >
-      and a.cargo_name = '${cargoName}'
-    </if>
-    <if test="cargoNo != null" >
-      and a.cargo_no like '%${cargoNo}%'
+      and b.cargo_name = '${cargoName}'
     </if>
     <if test="minBox != null and minBox != ''" >
-      and a.real_store_boxes &gt;= '${minBox}'
+      and b.real_store_boxes &gt;= '${minBox}'
     </if>
     <if test="maxBox != null and maxBox != ''" >
-      and a.real_store_boxes &lt;= '${maxBox}'
+      and b.real_store_boxes &lt;= '${maxBox}'
+    </if>
+    <if test="cargoNo != null" >
+      and b.cargo_no like '%${cargoNo}%'
     </if>
     <if test="customerName != null and customerName != ''" >
-      and a.cargo_id in (
+      and b.cargo_id in (
       select cargo_id from sale_info where 1=1
       <if test="customerName != null and customerName != ''" >
         and customer_name like '%${customerName}%'
       </if>
       )
     </if>
-    UNION
-    select a.* from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id
-    where 1=1
-    <if test="level != null and level != ''" >
-      and a.level = '${level}'
-    </if>
-    <if test="status != null and status != ''" >
-      and a.status = '${status}'
-    </if>
-    <if test="cargoName != null and cargoName != ''" >
-      and a.cargo_name = '${cargoName}'
-    </if>
-    <if test="cargoNo != null" >
-      and a.cargo_no like '%${cargoNo}%'
-    </if>
-    <if test="minBox != null and minBox != ''" >
-      and a.real_store_boxes &gt;= '${minBox}'
-    </if>
-    <if test="maxBox != null and maxBox != ''" >
-      and a.real_store_boxes &lt;= '${maxBox}'
-    </if>
-    <if test="customerName != null and customerName != ''" >
-      and a.cargo_id in (
-      select cargo_id from sale_info where 1=1
-      <if test="customerName != null and customerName != ''" >
-        and customer_name like '%${customerName}%'
-      </if>
-      )
-    </if>
-    ) a
   </select>
   <select id="getTotalStoreWeightByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
     select sum(a.real_store_weight)
