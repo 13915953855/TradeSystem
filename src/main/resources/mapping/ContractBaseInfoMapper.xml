@@ -80,17 +80,33 @@
   <resultMap id="BaseResultMap2" type="com.jason.trade.entity.QueryContractInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="eta" property="eta" jdbcType="VARCHAR" />
+    <result column="etd" property="etd" jdbcType="VARCHAR" />
     <result column="contract_date" property="contractDate" jdbcType="VARCHAR" />
     <result column="external_company" property="externalCompany" jdbcType="VARCHAR" />
     <result column="external_contract" property="externalContract" jdbcType="VARCHAR" />
     <result column="inside_contract" property="insideContract" jdbcType="VARCHAR" />
     <result column="company_no" property="companyNo" jdbcType="VARCHAR" />
+    <result column="cargo_no" property="cargoNo" jdbcType="VARCHAR" />
     <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
     <result column="unit_price" property="unitPrice" jdbcType="VARCHAR" />
     <result column="contract_amount" property="contractAmount" jdbcType="VARCHAR" />
     <result column="contract_money" property="contractMoney" jdbcType="VARCHAR" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="VARCHAR" />
+    <result column="invoice_money" property="invoiceMoney" jdbcType="VARCHAR" />
+    <result column="expect_sailing_date" property="expectSailingDate" jdbcType="VARCHAR" />
+    <result column="origin_country" property="originCountry" jdbcType="VARCHAR" />
+    <result column="container_no" property="containerNo" jdbcType="VARCHAR" />
+    <result column="ladingbill_no" property="ladingbillNo" jdbcType="VARCHAR" />
+    <result column="store_date" property="storeDate" jdbcType="VARCHAR" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="expect_store_weight" property="expectStoreWeight" jdbcType="VARCHAR" />
+    <result column="expect_store_boxes" property="expectStoreBoxes" jdbcType="VARCHAR" />
+    <result column="real_store_weight" property="realStoreWeight" jdbcType="VARCHAR" />
+    <result column="real_store_boxes" property="realStoreBoxes" jdbcType="VARCHAR" />
+    <result column="real_store_money" property="realStoreMoney" jdbcType="VARCHAR" />
+    <result column="boxes" property="boxes" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, eta, etd, lcno, qacertificate, added_value_tax, agent, agent_pass_date, agent_send_date,
@@ -382,6 +398,12 @@
     <if test="etaEndDate != null and etaEndDate != ''" >
       and a.eta &lt;= '${etaEndDate}'
     </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
+    </if>
     <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '') or (cargoNo != null and cargoNo != '')" >
       and a.contract_id in (
       select contract_id from cargo_info where 1=1
@@ -457,6 +479,12 @@
     </if>
     <if test="etaEndDate != null and etaEndDate != ''" >
       and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
     </if>
     <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '') or (cargoNo != null and cargoNo != '')" >
       and a.contract_id in (
@@ -568,9 +596,9 @@
 
 
 
-  <select id="queryContractListByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
-    select a.id,a.eta,a.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
-    b.cargo_name,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money
+  <select id="queryCargoListByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
+    select a.id,a.eta,a.etd,a.expect_sailing_date,a.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
+    b.cargo_name,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <if test="externalCompany != null and externalCompany != ''" >
@@ -582,11 +610,23 @@
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
     </if>
+    <if test="startDate != null and startDate != ''" >
+      and a.expect_sailing_date &gt;= '${startDate}'
+    </if>
+    <if test="endDate != null and endDate != ''" >
+      and a.expect_sailing_date &lt;= '${endDate}'
+    </if>
     <if test="etaStartDate != null and etaStartDate != ''" >
       and a.eta &gt;= '${etaStartDate}'
     </if>
     <if test="etaEndDate != null and etaEndDate != ''" >
       and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
     </if>
     <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '')" >
       and a.contract_id in (
@@ -610,7 +650,7 @@
       limit ${start},${limit}
     </if>
   </select>
-  <select id="queryContractTotalByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.ContractParam" >
+  <select id="queryCargoTotalByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.ContractParam" >
     select count(1)
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
@@ -623,11 +663,23 @@
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
     </if>
+    <if test="startDate != null and startDate != ''" >
+      and a.expect_sailing_date &gt;= '${startDate}'
+    </if>
+    <if test="endDate != null and endDate != ''" >
+      and a.expect_sailing_date &lt;= '${endDate}'
+    </if>
     <if test="etaStartDate != null and etaStartDate != ''" >
       and a.eta &gt;= '${etaStartDate}'
     </if>
     <if test="etaEndDate != null and etaEndDate != ''" >
       and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
     </if>
     <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '')" >
       and a.contract_id in (
@@ -649,8 +701,8 @@
   </select>
 
   <select id="getTotalInfoForQueryContract" resultType="com.jason.trade.entity.ContractTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
-    select sum(b.contract_money) as totalContractMoney,
-    sum(b.contract_amount) as totalContractAmount
+    select sum(b.contract_money) as totalContractMoney,sum(b.contract_amount) as totalContractAmount,
+    sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceAmount
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <if test="externalCompany != null and externalCompany != ''" >
@@ -662,11 +714,23 @@
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
     </if>
+    <if test="startDate != null and startDate != ''" >
+      and a.expect_sailing_date &gt;= '${startDate}'
+    </if>
+    <if test="endDate != null and endDate != ''" >
+      and a.expect_sailing_date &lt;= '${endDate}'
+    </if>
     <if test="etaStartDate != null and etaStartDate != ''" >
       and a.eta &gt;= '${etaStartDate}'
     </if>
     <if test="etaEndDate != null and etaEndDate != ''" >
       and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
     </if>
     <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '')" >
       and a.contract_id in (
@@ -687,4 +751,135 @@
     </if>
   </select>
 
+
+
+  <select id="queryStoreInfoListByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
+    select a.id,a.eta,a.etd,a.expect_sailing_date,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,b.boxes,
+    b.cargo_name,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country,b.cargo_no,
+    a.container_no,a.ladingbill_no,a.store_date,a.warehouse,b.expect_store_weight,b.expect_store_boxes,b.real_store_weight,b.real_store_boxes,b.real_store_money
+    from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
+    where 1 = 1 and a.status != '0'
+    <if test="status != null and status != ''" >
+      and b.status in (${status})
+    </if>
+    <if test="externalCompany != null and externalCompany != ''" >
+      and a.external_company in (${externalCompany})
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and a.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level in (${level})
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode in (${businessMode})
+    </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+    order by b.cargo_id desc
+    <if test="start != null and limit != null" >
+      limit ${start},${limit}
+    </if>
+  </select>
+  <select id="countStoreInfoListByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.ContractParam" >
+    select count(1)
+    from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
+    where 1 = 1 and a.status != '0'
+    <if test="status != null and status != ''" >
+      and b.status in (${status})
+    </if>
+    <if test="externalCompany != null and externalCompany != ''" >
+      and a.external_company in (${externalCompany})
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and a.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="startDate != null and startDate != ''" >
+      and a.expect_sailing_date &gt;= '${startDate}'
+    </if>
+    <if test="endDate != null and endDate != ''" >
+      and a.expect_sailing_date &lt;= '${endDate}'
+    </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and a.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level in (${level})
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode in (${businessMode})
+    </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+  </select>
+  <select id="getTotalStoreInfoForQuery" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
+    select sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceWeight,
+    sum(b.expect_store_weight) as expectStoreWeight,sum(b.expect_store_boxes) as expectStoreBoxes,
+    sum(b.real_store_weight) as realStoreWeight,sum(b.real_store_boxes) as realStoreBoxes,
+    sum(b.real_store_money) as realStoreMoney,sum(b.boxes) as totalInvoiceBoxes
+    from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
+    where 1 = 1 and a.status != '0'
+    <if test="externalCompany != null and externalCompany != ''" >
+      and a.external_company in (${externalCompany})
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and a.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="startDate != null and startDate != ''" >
+      and a.expect_sailing_date &gt;= '${startDate}'
+    </if>
+    <if test="endDate != null and endDate != ''" >
+      and a.expect_sailing_date &lt;= '${endDate}'
+    </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and a.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level in (${level})
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode in (${businessMode})
+    </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+  </select>
 </mapper>

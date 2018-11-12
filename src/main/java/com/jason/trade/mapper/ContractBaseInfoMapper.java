@@ -11,10 +11,13 @@ public interface ContractBaseInfoMapper {
     int updateByPrimaryKeySelective(ContractBaseInfo record);
     List<ContractBaseInfo> selectByExample(ContractParam contractParam);
     Integer selectCountByExample(ContractParam contractParam);
-    List<ContractBaseInfo> queryContractListByExample(ContractParam contractParam);
-    Integer queryContractTotalByExample(ContractParam contractParam);
+    List<QueryContractInfo> queryCargoListByExample(ContractParam contractParam);
+    Integer queryCargoTotalByExample(ContractParam contractParam);
     void updateStatusByField(ContractParam contractParam);
     List<ContractTotalInfo> getTotalInfo(ContractParam contractParam);
     ContractTotalInfo getTotalInfoForQueryContract(ContractParam contractParam);
     List<ContractForCharts> getTotalNumPerDay();
+    List<QueryContractInfo> queryStoreInfoListByExample(ContractParam contractParam);
+    Integer countStoreInfoListByExample(ContractParam contractParam);
+    CargoTotalInfo getTotalStoreInfoForQuery(ContractParam contractParam);
 }

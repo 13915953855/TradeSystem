@@ -248,16 +248,6 @@ public class TradeService {
     }
 
     public JSONObject queryContractListByMapper(ContractParam contractParam){
-        /*String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        switch (contractParam.getStatus()){
-            case "全部":  status = "";break;
-            case "已下单": status = "1";break;
-            case "已装船": status = "2";break;
-            case "已到港": status = "3";break;
-            case "已入库": status = "4";break;
-            case "已售完": status = "5";break;
-            default: break;
-        }*/
         String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
         if(status.indexOf("全部") >= 0){
             status = "";
@@ -276,11 +266,30 @@ public class TradeService {
         return result;
     }
 
-    public JSONObject queryContractListForQuery(ContractParam contractParam){
-        Integer count = contractBaseInfoMapper.queryContractTotalByExample(contractParam);
+    public JSONObject queryCargoListForQuery(ContractParam contractParam){
+        Integer count = contractBaseInfoMapper.queryCargoTotalByExample(contractParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
-        result.put("rows",contractBaseInfoMapper.queryContractListByExample(contractParam));
+        result.put("rows",contractBaseInfoMapper.queryCargoListByExample(contractParam));
+        return result;
+    }
+
+    public JSONObject queryStoreInfoList(ContractParam contractParam){
+        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
+        }
+        contractParam.setStatus(status);
+        Integer count = contractBaseInfoMapper.countStoreInfoListByExample(contractParam);
+        JSONObject result = new JSONObject();
+        result.put("total",count);
+        result.put("rows",contractBaseInfoMapper.queryStoreInfoListByExample(contractParam));
         return result;
     }
 
@@ -416,10 +425,14 @@ public class TradeService {
         ContractTotalInfo record = contractBaseInfoMapper.getTotalInfoForQueryContract(contractParam);
         if(record != null) {
             result.put("totalContractMoney", record.getTotalContractMoney());
+            result.put("totalInvoiceMoney", record.getTotalInvoiceMoney());
             result.put("totalContractAmount", record.getTotalContractAmount());
+            result.put("totalInvoiceAmount", record.getTotalInvoiceAmount());
         }else{
             result.put("totalContractMoney", "0");
+            result.put("totalInvoiceMoney", "0");
             result.put("totalContractAmount", "0");
+            result.put("totalInvoiceAmount", "0");
         }
         result.put("status","1");
         return result;
@@ -498,5 +511,42 @@ public class TradeService {
         contractParam.setFieldName("store_date");
         contractParam.setToday(today);
         contractBaseInfoMapper.updateStatusByField(contractParam);
+    }
+
+    public JSONObject getTotalStoreInfoForQuery(ContractParam contractParam){
+        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
+        }
+        contractParam.setStatus(status);
+        JSONObject result = new JSONObject();
+        CargoTotalInfo record = contractBaseInfoMapper.getTotalStoreInfoForQuery(contractParam);
+        if(record != null) {
+            result.put("totalInvoiceMoney", record.getTotalInvoiceMoney());
+            result.put("totalInvoiceWeight", record.getTotalInvoiceWeight());
+            result.put("totalInvoiceBoxes", record.getTotalInvoiceBoxes());
+            result.put("expectStoreWeight", record.getExpectStoreWeight());
+            result.put("realStoreWeight", record.getRealStoreWeight());
+            result.put("expectStoreBoxes", record.getExpectStoreBoxes());
+            result.put("realStoreBoxes", record.getRealStoreBoxes());
+            result.put("realStoreMoney", record.getRealStoreMoney());
+        }else{
+            result.put("totalInvoiceMoney", "0");
+            result.put("totalInvoiceWeight", "0");
+            result.put("totalInvoiceBoxes", "0");
+            result.put("expectStoreWeight", "0");
+            result.put("realStoreWeight", "0");
+            result.put("expectStoreBoxes", "0");
+            result.put("realStoreBoxes", "0");
+            result.put("realStoreMoney", "0");
+        }
+        result.put("status","1");
+        return result;
     }
 }

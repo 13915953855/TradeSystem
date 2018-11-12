@@ -130,7 +130,6 @@ function initOriginCountry(){
     opts += "<option>哥斯达黎加</option>";
     opts += "<option>新西兰</option>";
     $("#originCountry").append(opts);
-    $("#originCountry").val('澳大利亚').trigger("change");
 }
 
 function initStorageCondition(){
@@ -148,7 +147,6 @@ function initPriceCondition(){
     opts += "<option>CIF</option>";
     opts += "<option>CFR</option>";
     $("#priceCondition").append(opts);
-    $("#priceCondition").val('CIF').trigger("change");
 }
 function initPayType(){
     var opts = "";
@@ -167,7 +165,6 @@ function initDestinationPort(){
     opts += "<option>连云港</option>";
     opts += "<option>张家港</option>";
     $("#destinationPort").append(opts);
-    $("#destinationPort").val('上海').trigger("change");
 }
 
 function initExternalCompany(){
@@ -175,17 +172,19 @@ function initExternalCompany(){
     opts += "<option></option>";
     opts += "<option>FRISA</option>";
     opts += "<option>HARVEY</option>";
+    opts += "<option>GORINA</option>";
     opts += "<option>JBS AUS</option>";
     opts += "<option>JOC AUS</option>";
     opts += "<option>KPC HK</option>";
     opts += "<option>MATABOI</option>";
+    opts += "<option>MINEVER</option>";
     opts += "<option>MOGILEV MEAT</option>";
     opts += "<option>SANGER</option>";
     opts += "<option>STANBROKE</option>";
-    opts += "<option>SWIFT ARG</option>";
+    opts += "<option>SWIFT</option>";
     opts += "<option>TEYS AUS</option>";
     opts += "<option>THOMAS</option>";
-    opts += "<option>WESTON</option>";
+    opts += "<option>MARFRIG</option>";
     $("#externalCompany").append(opts);
 }
 
@@ -289,7 +288,6 @@ function getParam(name) {
 }
 function alarm(index){
     if(index == 1){
-        //window.location.href = "/trade/query/contract?type=n1";
         window.location.href = "/trade/contract?type=n1";
     }else if(index == 2){
         window.location.href = "/trade/contract?type=n2";

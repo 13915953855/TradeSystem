@@ -115,7 +115,7 @@ $(function () {
 
     getAllFile();
 
-    initChuanqi();
+    //initChuanqi();
 });
 function initChuanqi(){
     var now = new Date();

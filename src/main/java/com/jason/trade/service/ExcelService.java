@@ -1,6 +1,7 @@
 package com.jason.trade.service;
 
 import com.jason.trade.constant.GlobalConst;
+import com.jason.trade.entity.QueryContractInfo;
 import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
 import com.jason.trade.model.CargoInfo;
@@ -33,6 +34,83 @@ public class ExcelService {
     private int firstSize = 0;
     private int secondSize = 0;
     private int thirdSize = 0;
+
+    public XSSFWorkbook writeCargoExcel(List<QueryContractInfo> data){
+        //创建工作簿
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        //创建工作表
+        XSSFSheet sheet = workBook.createSheet();
+        //创建样式
+        XSSFCellStyle styleNoColor = workBook.createCellStyle();
+        styleNoColor.setAlignment(HorizontalAlignment.CENTER);
+        styleNoColor.setVerticalAlignment(VerticalAlignment.CENTER);
+        styleNoColor.setBorderBottom(BorderStyle.THIN);
+        styleNoColor.setBorderLeft(BorderStyle.THIN);
+        styleNoColor.setBorderRight(BorderStyle.THIN);
+        styleNoColor.setBorderTop(BorderStyle.THIN);
+        styleNoColor.setWrapText(true);
+
+        //set date format
+        CellStyle dateCellStyle = workBook.createCellStyle();
+        CreationHelper createHelper = workBook.getCreationHelper();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/m/d"));
+
+        List<List<Object>> result = convertQueryCargoList(data);
+
+        //创建头
+        //创建第一行
+        XSSFRow row = sheet.createRow(0);
+        //创建单元格
+        XSSFCell cell = null;
+        //创建单元格
+        for (int j = 0; j < GlobalConst.HEAD_CARGO_QUERY_ARRAY.length; j++) {
+            cell = row.createCell(j, CellType.STRING);
+            cell.setCellValue(GlobalConst.HEAD_CARGO_QUERY_ARRAY[j]);
+            cell.setCellStyle(styleNoColor);
+        }
+
+
+        for (int i = 0; i < result.size(); i++) {
+            //创建行
+            row = sheet.createRow(i+1);
+            List<Object> rowData = result.get(i);
+            for (int k = 0; k < GlobalConst.HEAD_CARGO_QUERY_ARRAY.length; k++) {
+                cell = row.createCell(k, CellType.STRING);
+                if(rowData.get(k) == null){
+                    cell.setCellValue("");
+                }else {
+                    cell.setCellValue(rowData.get(k).toString());
+                }
+                cell.setCellStyle(styleNoColor);
+            }
+        }
+        return workBook;
+    }
+
+    private List<List<Object>> convertQueryCargoList(List<QueryContractInfo> data) {
+        List<List<Object>> result = new ArrayList<>();
+        for (QueryContractInfo cargoInfo : data) {
+            List<Object> list = new ArrayList<>();
+            list.add(cargoInfo.getExternalContract());//外合同编号
+            list.add(cargoInfo.getInsideContract());//内合同编号
+            list.add(cargoInfo.getExternalCompany());//外商
+            list.add(cargoInfo.getOriginCountry());//原产地
+            list.add(cargoInfo.getContractDate());//合同日期
+            list.add(cargoInfo.getCompanyNo());//厂号
+            list.add(cargoInfo.getCargoName());//商品
+            list.add(cargoInfo.getLevel());//级别
+            list.add(cargoInfo.getUnitPrice());//单价
+            list.add(cargoInfo.getContractAmount());//合同重量
+            list.add(cargoInfo.getContractMoney());//合同金额
+            list.add(cargoInfo.getInvoiceAmount());//发票重量
+            list.add(cargoInfo.getInvoiceMoney());//发票金额
+            list.add(cargoInfo.getEtd());//ETD
+            list.add(cargoInfo.getEta());//ETA
+            list.add(cargoInfo.getExpectSailingDate());//预计船期
+            result.add(list);
+        }
+        return result;
+    }
 
     public XSSFWorkbook writeExcel(List<ContractBaseInfo> data, String[] chkArr) {
 

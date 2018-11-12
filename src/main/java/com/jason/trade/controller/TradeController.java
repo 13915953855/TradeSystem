@@ -499,14 +499,22 @@ public class TradeController {
         return json.toString();
     }
 
+    @RequestMapping(value = "/queryCargoList")
+    public String queryCargoList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
+        contractParam.setStart(offset);
+        contractParam.setLimit(limit);
+        JSONObject result = tradeService.queryCargoListForQuery(contractParam);
+        return result.toString();
+    }
     @RequestMapping(value = "/queryContractList")
     public String queryContractList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
         contractParam.setStart(offset);
         contractParam.setLimit(limit);
-        JSONObject result = tradeService.queryContractListForQuery(contractParam);
+        contractParam.setSortName("contract_date");
+        contractParam.setSortOrder("desc");
+        JSONObject result = tradeService.queryContractListByMapper(contractParam);
         return result.toString();
     }
-
     @PostMapping(value="/notice")
     public String noticeAll(HttpSession session){
         //UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -578,6 +586,20 @@ public class TradeController {
         result.put("status","1");
         result.put("totalTariff",new BigDecimal(totalTariff+""));
         result.put("totalAddedValueTax",new BigDecimal(totalAddedValueTax+""));
+        return result.toString();
+    }
+
+    @RequestMapping(value = "/queryStoreInfoList")
+    public String queryStoreInfoList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
+        contractParam.setStart(offset);
+        contractParam.setLimit(limit);
+        JSONObject result = tradeService.queryStoreInfoList(contractParam);
+        return result.toString();
+    }
+
+    @RequestMapping(value = "/query/getTotalStoreInfo")
+    public String getTotalStoreInfo(ContractParam contractParam) throws JSONException {
+        JSONObject result = tradeService.getTotalStoreInfoForQuery(contractParam);
         return result.toString();
     }
 }

@@ -11,6 +11,8 @@ public class ContractParam {
     private String contractEndDate;
     private String etaStartDate;
     private String etaEndDate;
+    private String etdStartDate;
+    private String etdEndDate;
     private String externalCompany;
     private String cargoName;
     private String cargoNo;
@@ -32,6 +34,40 @@ public class ContractParam {
     private String type;
     private String taxPayDateStart;
     private String taxPayDateEnd;
+    private String startDate;
+    private String endDate;
+
+    public String getEtdStartDate() {
+        return etdStartDate;
+    }
+
+    public void setEtdStartDate(String etdStartDate) {
+        this.etdStartDate = etdStartDate;
+    }
+
+    public String getEtdEndDate() {
+        return etdEndDate;
+    }
+
+    public void setEtdEndDate(String etdEndDate) {
+        this.etdEndDate = etdEndDate;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
     public String getTaxPayDateStart() {
         return taxPayDateStart;

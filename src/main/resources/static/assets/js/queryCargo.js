@@ -21,8 +21,11 @@ $(function () {
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    initLevel();
+    initBusinessMode();
     initExternalCompany();
-    initOriginCountry();
+    initCargoList();
+
     getTotalInfo();
 });
 
@@ -46,7 +49,7 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#tb_contract').bootstrapTable({
-            url: '/trade/queryContractList',         //请求后台的URL（*）
+            url: '/trade/queryCargoList',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
@@ -72,8 +75,6 @@ var TableInit = function () {
             cardView: false,                    //是否显示详细视图
             detailView: false,                   //是否显示父子表
             columns: [{
-                checkbox: true
-            }, {
                 field: 'externalContract',
                 title: '外合同编号'
             }, {
@@ -83,51 +84,45 @@ var TableInit = function () {
                 field: 'externalCompany',
                 title: '外商'
             }, {
+                 field: 'originCountry',
+                 title: '原产地'
+             }, {
                 field: 'contractDate',
                 title: '合同日期'
             }, {
-                field: 'totalContractAmount',
-                title: '合同总重量'
+                field: 'companyNo',
+                title: '厂号'
             }, {
-                field: 'totalContractMoney',
-                title: '合同总金额'
+                field: 'cargoName',
+                title: '商品'
             }, {
-                field: 'totalInvoiceAmount',
-                title: '发票总重量'
+                field: 'level',
+                title: '级别'
             }, {
-                field: 'totalInvoiceMoney',
-                title: '发票总金额'
+                field: 'unitPrice',
+                title: '单价'
             }, {
-                field: 'originCountry',
-                title: '原产地'
+                field: 'contractAmount',
+                title: '合同重量'
             }, {
-                field: 'eta',
-                title: 'ETA'
+                field: 'contractMoney',
+                title: '合同金额'
+            }, {
+                field: 'invoiceAmount',
+                title: '发票重量'
+            }, {
+                field: 'invoiceMoney',
+                title: '发票金额'
             }, {
                 field: 'etd',
                 title: 'ETD'
             }, {
+                field: 'eta',
+                title: 'ETA'
+            }, {
                 field: 'expectSailingDate',
                 title: '预计船期'
-            },{
-              field: 'status',
-              title: '状态',
-              formatter: function(value, row, index){//0-作废，1-已下单，2-已装船，3-已到港，4-已入库,5-已售完
-                  if(value == "1"){
-                      return "已下单";
-                  }else if(value == "2"){
-                      return "已装船";
-                  }else if(value == "3"){
-                      return "已到港";
-                  }else if(value == "4"){
-                      return "已入库";
-                  }else if(value == "5"){
-                       return "已售完";
-                   }else{
-                      return "-";
-                  }
-              }
-          }]
+            }]
         });
     };
 
@@ -147,20 +142,34 @@ var TableInit = function () {
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
-
-        var statusArr = $("#status").val();
-        var status = "";
-        if(statusArr != null){
-            for(var i=0;i<statusArr.length;i++){
-                if(statusArr[i] != '全部'){
-                    status += statusArr[i] + ",";
+        var levelArr = $("#level").val();
+        var level = "";
+        if(levelArr != null){
+            for(var i=0;i<levelArr.length;i++){
+                if(levelArr[i] != '全部'){
+                    level += "'"+levelArr[i] + "',";
                 }else{
-                    status = "";break;
+                    level = "";break;
                 }
             }
         }
-        if(status.length > 1){
-            status = status.substring(0,status.length-1);
+        if(level.length > 1){
+            level = level.substring(0,level.length-1);
+        }
+        var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
+        var businessModeArr = $("#businessMode").val();
+        var businessMode = "";
+        if(businessModeArr != null){
+            for(var i=0;i<businessModeArr.length;i++){
+                if(businessModeArr[i] != '全部'){
+                    businessMode += "'"+businessModeArr[i] + "',";
+                }else{
+                    businessMode = "";break;
+                }
+            }
+        }
+        if(businessMode.length > 1){
+            businessMode = businessMode.substring(0,businessMode.length-1);
         }
 
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
@@ -174,8 +183,10 @@ var TableInit = function () {
             etaEndDate: $("#etaEndDate").val(),
             etdStartDate: $("#etdStartDate").val(),
             etdEndDate: $("#etdEndDate").val(),
-            status: status,
-            originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val(),
+            cargoName: cargoName,
+            level: level,
+            companyNo: $("#companyNo").val(),
+            businessMode: businessMode,
             externalCompany: externalCompany
         };
         return temp;
@@ -197,6 +208,67 @@ var ButtonInit = function () {
             resetQuery();
             getTotalInfo();
         });
+        $("#btn_output").click(function(){
+            var externalCompanyArr = $("#externalCompany").val();
+            var externalCompany = "";
+            if(externalCompanyArr != null){
+                for(var i=0;i<externalCompanyArr.length;i++){
+                    if(externalCompanyArr[i] != '全部'){
+                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                    }else{
+                        externalCompany = "";break;
+                    }
+                }
+            }
+            if(externalCompany.length > 1){
+                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+            }
+            var levelArr = $("#level").val();
+            var level = "";
+            if(levelArr != null){
+                for(var i=0;i<levelArr.length;i++){
+                    if(levelArr[i] != '全部'){
+                        level += "'"+levelArr[i] + "',";
+                    }else{
+                        level = "";break;
+                    }
+                }
+            }
+            if(level.length > 1){
+                level = level.substring(0,level.length-1);
+            }
+            var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
+            var businessModeArr = $("#businessMode").val();
+            var businessMode = "";
+            if(businessModeArr != null){
+                for(var i=0;i<businessModeArr.length;i++){
+                    if(businessModeArr[i] != '全部'){
+                        businessMode += "'"+businessModeArr[i] + "',";
+                    }else{
+                        businessMode = "";break;
+                    }
+                }
+            }
+            if(businessMode.length > 1){
+                businessMode = businessMode.substring(0,businessMode.length-1);
+            }
+
+            var params = "?externalCompany="+externalCompany;
+            params += "&businessMode="+businessMode;
+            params += "&companyNo="+$("#companyNo").val();
+            params += "&level="+level;
+            params += "&cargoName="+cargoName;
+            params += "&etaEndDate="+$("#etaStartDate").val();
+            params += "&etaStartDate="+$("#etaEndDate").val();
+            params += "&endDate="+$("#endDate").val();
+            params += "&startDate="+$("#startDate").val();
+            params += "&etdStartDate="+$("#etdStartDate").val();
+            params += "&etdEndDate="+$("#etdEndDate").val();
+            params += "&contractEndDate="+$("#contractEndDate").val();
+            params += "&contractStartDate="+$("#contractStartDate").val();
+            var url = "/trade/queryCargo/output"+params;
+            window.open(url);
+        });
     };
 
     return oInit;
@@ -205,15 +277,17 @@ var ButtonInit = function () {
 function resetQuery(){
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
+    $("#companyNo").val("");
+    $("#businessMode").val("全部").trigger("change");
     $("#externalCompany").val("全部").trigger("change");
-    $("#originCountry").val("全部").trigger("change");
-    $("#status").val("全部").trigger("change");
+    $("#level").val("全部").trigger("change");
+    $("#cargoName").val("全部").trigger("change");
     $("#startDate").val("");
     $("#endDate").val("");
     $("#etaStartDate").val("");
-    $("#etaEndDate").val("");
-    $("#etdStartDate").val("");
-    $("#etdEndDate").val("");
+        $("#etaEndDate").val("");
+        $("#etdStartDate").val("");
+        $("#etdEndDate").val("");
 }
 
 function getTotalInfo(){
@@ -231,21 +305,35 @@ function getTotalInfo(){
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
-
-        var statusArr = $("#status").val();
-                var status = "";
-                if(statusArr != null){
-                    for(var i=0;i<statusArr.length;i++){
-                        if(statusArr[i] != '全部'){
-                            status += statusArr[i] + ",";
-                        }else{
-                            status = "";break;
-                        }
-                    }
+        var levelArr = $("#level").val();
+        var level = "";
+        if(levelArr != null){
+            for(var i=0;i<levelArr.length;i++){
+                if(levelArr[i] != '全部'){
+                    level += "'"+levelArr[i] + "',";
+                }else{
+                    level = "";break;
                 }
-                if(status.length > 1){
-                    status = status.substring(0,status.length-1);
+            }
+        }
+        if(level.length > 1){
+            level = level.substring(0,level.length-1);
+        }
+        var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
+        var businessModeArr = $("#businessMode").val();
+        var businessMode = "";
+        if(businessModeArr != null){
+            for(var i=0;i<businessModeArr.length;i++){
+                if(businessModeArr[i] != '全部'){
+                    businessMode += "'"+businessModeArr[i] + "',";
+                }else{
+                    businessMode = "";break;
                 }
+            }
+        }
+        if(businessMode.length > 1){
+            businessMode = businessMode.substring(0,businessMode.length-1);
+        }
 
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractStartDate: $("#contractStartDate").val(),
@@ -256,27 +344,26 @@ function getTotalInfo(){
         etaEndDate: $("#etaEndDate").val(),
         etdStartDate: $("#etdStartDate").val(),
         etdEndDate: $("#etdEndDate").val(),
-        originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val(),
-        status: status,
+        cargoName: cargoName,
+        level: level,
+        companyNo: $("#companyNo").val(),
+        businessMode: businessMode,
         externalCompany: externalCompany
     };
 
     $.ajax({
-        url:"/trade/contract/getTotalInfo",
+        url:"/trade/query/getTotalInfo",
         type:"POST",
         dataType:"json",
         data:queryParams,
         success:function(res){
             if(res.status == "1"){
-                $("#totalCNYContractMoney").html(toFloat(res.totalCNYContractMoney));
-                $("#totalCNYInvoiceMoney").html(toFloat(res.totalCNYInvoiceMoney));
-                $("#totalUSDContractMoney").html(toFloat(res.totalUSDContractMoney));
-                $("#totalUSDInvoiceMoney").html(toFloat(res.totalUSDInvoiceMoney));
-                $("#totalAUDContractMoney").html(toFloat(res.totalAUDContractMoney));
-                $("#totalAUDInvoiceMoney").html(toFloat(res.totalAUDInvoiceMoney));
+                $("#totalContractMoney").html(toFloat(res.totalContractMoney));
+                $("#totalInvoiceMoney").html(toFloat(res.totalInvoiceMoney));
                 $("#totalContractAmount").html(toFloat4(res.totalContractAmount));
                 $("#totalInvoiceAmount").html(toFloat4(res.totalInvoiceAmount));
             }
         }
     });
 }
+

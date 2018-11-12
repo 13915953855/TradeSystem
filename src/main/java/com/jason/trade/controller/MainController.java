@@ -2,7 +2,9 @@ package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.ContractParam;
+import com.jason.trade.entity.QueryContractInfo;
 import com.jason.trade.mapper.AttachmentMapper;
+import com.jason.trade.mapper.ContractBaseInfoMapper;
 import com.jason.trade.model.*;
 import com.jason.trade.repository.*;
 import com.jason.trade.service.ExcelService;
@@ -55,6 +57,8 @@ public class MainController {
     private ExcelService excelService;
     @Autowired
     private AttachmentMapper attachmentMapper;
+    @Autowired
+    private ContractBaseInfoMapper contractBaseInfoMapper;
 
     @GetMapping("/")
     public String index(@SessionAttribute(WebSecurityConfig.SESSION_KEY) String account, Model model, HttpSession session) {
@@ -385,10 +389,119 @@ public class MainController {
         return "trade/queryContract";
     }
 
+    @GetMapping("/trade/query/cargo")
+    public String queryCargo(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryCargo";
+    }
+
     @GetMapping("/trade/query/duty")
     public String queryDuty(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         model.addAttribute("user", userInfo);
         return "trade/queryduty";
+    }
+
+    @GetMapping("/trade/query/storeInfo")
+    public String queryStoreInfo(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryStoreInfo";
+    }
+
+    @GetMapping("/trade/query/storeIn")
+    public String queryStoreIn(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryStoreIn";
+    }
+
+    @GetMapping("/trade/query/storeOut")
+    public String queryStoreOut(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryStoreOut";
+    }
+
+    @GetMapping("/trade/query/baoguan")
+    public String queryBaoguan(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryBaoguan";
+    }
+
+    @GetMapping("/trade/query/fuhui")
+    public String queryFuhui(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryFuhui";
+    }
+
+    @GetMapping(value="/trade/queryCargo/output")
+    public ResponseEntity<Resource> queryCargoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,
+                                           @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
+                                           @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,
+                                           @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
+                                           @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,
+                                           @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,
+                                           @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        ContractParam contractParam = new ContractParam();
+        contractParam.setContractStartDate(contractStartDate);
+        contractParam.setContractEndDate(contractEndDate);
+        contractParam.setBusinessMode(businessMode);
+        contractParam.setExternalCompany(externalCompany);
+        contractParam.setCompanyNo(companyNo);
+        contractParam.setCargoName(cargoName);
+        contractParam.setLevel(level);
+        contractParam.setEtaStartDate(etaStartDate);
+        contractParam.setEtaEndDate(etaEndDate);
+        contractParam.setEtdStartDate(etdStartDate);
+        contractParam.setEtdEndDate(etdEndDate);
+        contractParam.setStartDate(startDate);
+        contractParam.setEndDate(endDate);
+
+        ByteArrayOutputStream bos = null;
+        List<QueryContractInfo> data = contractBaseInfoMapper.queryCargoListByExample(contractParam);
+        String fileName = "订单数据统计商品"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
+        try {
+            Workbook workbook = excelService.writeCargoExcel(data);
+            bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            workbook.close();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            headers.add("charset", "utf-8");
+            //设置下载文件名
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            headers.add("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+
+            SysLog sysLog = new SysLog();
+            sysLog.setDetail("导出Excel记录");
+            sysLog.setOperation("导出");
+            sysLog.setUser(userInfo.getAccount());
+            sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+            sysLogRepository.save(sysLog);
+
+
+            Resource resource = new InputStreamResource(new ByteArrayInputStream(bos.toByteArray()));
+
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/x-msdownload")).body(resource);
+
+        } catch (IOException e) {
+            if (null != bos) {
+                try {
+                    bos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 }
