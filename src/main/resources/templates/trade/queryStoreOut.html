@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>出库信息-JOC系统</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/vendor/linearicons/style.css"/>
+    <link rel="stylesheet" href="/assets/vendor/chartist/css/chartist-custom.css"/>
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css"/>
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="/assets/css/demo.css"/>
+    <!-- GOOGLE FONTS -->
+    <link rel="stylesheet" href="/assets/css/googlefont.css"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap-table.css"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap-datetimepicker.css"/>
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png"/>
+    <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon.png"/>
+    <!-- Javascript -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/vendor/select2/css/select2.css"/>
+    <script src="/assets/vendor/select2/js/select2.min.js"></script>
+    <link rel="stylesheet" href="/assets/vendor/sweetalert2/sweetalert2-6.6.2.min.css"/>
+    <script src="/assets/vendor/sweetalert2/sweetalert2-6.6.2.min.js"></script>
+    <script src="/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="/assets/vendor/chartist/js/chartist.min.js"></script>
+    <script src="/assets/scripts/bootstrap-table.js"></script>
+    <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="/assets/scripts/klorofil-common.js"></script>
+    <script src="/assets/js/common.js"></script>
+    <script src="/assets/js/queryStoreOut.js"></script>
+    <script>
+        $(function(){
+            //获取警示数目
+            getNoticeNum();
+        });
+    </script>
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <div th:include="common::nav"></div>
+    <!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="/index"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>贸易台账管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages" class="collapse">
+                            <ul class="nav">
+                                <li><a href="/trade/contract">进口台账</a></li>
+                                <li><a href="/trade/cargomanage">进销存</a></li>
+                                <li><a href="/trade/internal">内贸台账</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#subPages2" data-toggle="collapse"><i class="lnr lnr-file-empty"></i> <span>统计分析</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages2" class="collapse in">
+                            <ul class="nav">
+                                <li><a href="/trade/query/contract">订单数据统计(台账)</a></li>
+                                <li><a href="/trade/query/cargo" class="active">订单数据统计(商品)</a></li>
+                                <li><a href="/trade/query/duty">付税信息</a></li>
+                                <li><a href="/trade/query/fuhui">付汇信息</a></li>
+                                <li><a href="/trade/query/baoguan">报关信息</a></li>
+                                <li><a href="/trade/query/storeIn">入库信息</a></li>
+                                <li><a href="/trade/query/storeInfo">库存信息</a></li>
+                                <li><a href="/trade/query/storeOut">出库信息</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="main">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="" style="padding-bottom:0px;">
+                    <div class="panel panel-default" style="margin-bottom:10px;">
+                        <div class="panel-heading" style="padding-top:10px;padding-bottom:10px;">查询条件
+                            <div style="float:right;">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">展开/收起</a>
+                            </div>
+                        </div>
+                        <div id="collapseOne" class="panel-body panel-collapse collapse in" style="padding-top:10px;padding-bottom:0;">
+                            <form id="formSearch" class="form-horizontal">
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-2">外合同编号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="contractNo"/>
+                                    </div>
+                                    <label class="control-label col-sm-2">内合同编号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="insideContract"/>
+                                    </div>
+                                    <label class="control-label col-sm-2">库号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="cargoNo"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-2">仓库</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" id="warehouse">
+                                            <option>全部</option>
+                                            <option>名联</option>
+                                            <option>领升</option>
+                                            <option>普菲斯（外高桥）</option>
+                                            <option>普菲斯（洋山）</option>
+                                            <option>太古</option>
+                                            <option>保翔</option>
+                                            <option>大宛</option>
+                                            <option>鑫汇洋</option>
+                                            <option>瑞源</option>
+                                            <option>库外</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-2">产品名称</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="cargoName">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-2">产品级别</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="level">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-2">客户名称</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="customerName"/>
+                                    </div>
+                                    <label class="control-label col-sm-2">柜号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="containerNo"/>
+                                    </div>
+                                    <label class="control-label col-sm-2">提单号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="ladingbillNo"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">状态</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="status">
+                                            <option>全部</option>
+                                            <option>已入库</option>
+                                            <option>已售完</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">业务模式</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="businessMode">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-2">库存总箱数最小值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="minBox"/>
+                                    </div>
+                                    <label class="control-label col-sm-2">库存总箱数最大值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="maxBox"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <div class="col-sm-12" style="text-align:right;">
+                                        <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                                        <button type="button" id="btn_reset" class="btn btn-default">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel panel-default" style="margin-bottom: -5px;">
+                        <form class="form-horizontal">
+                            <div class="panel-body">
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-2">库存总重量:</label>
+                                    <div class="col-sm-2" style="padding-top:6px;">
+                                        <span id="totalStoreWeight"></span>
+                                    </div>
+                                    <label class="control-label col-sm-2">库存成本:</label>
+                                    <div class="col-sm-2" style="padding-top:6px;">
+                                        <span id="totalStoreMoney"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!--<div id="toolbar" class="btn-group">
+                        <button id="btn_output" type="button" class="btn btn-default">
+                            <span class="fa fa-download" aria-hidden="true"></span>导出EXCEL
+                        </button>
+                    </div>-->
+                    <table id="tb_contract"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Copyright &copy; 2018 All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+<!-- END WRAPPER -->
+</body>
+
+</html>

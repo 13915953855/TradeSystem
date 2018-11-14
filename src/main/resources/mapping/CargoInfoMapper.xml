@@ -484,4 +484,157 @@
       and b.contract_date &lt;= '${contractEndDate}'
     </if>
   </select>
+
+
+
+  <select id="getSellList" resultType="com.jason.trade.entity.CargoSellInfo" parameterType="com.jason.trade.entity.CargoParam">
+    select c.inside_contract,c.external_company,b.company_no,b.cargo_name,b.level,c.warehouse,
+    b.unit_price,b.real_store_weight,b.real_store_money,c.container_no,c.ladingbill_no,
+    a.real_sale_date,a.customer_name,a.real_sale_weight,a.real_sale_boxes,a.real_sale_unit_price,a.real_sale_money,
+    a.deposit,(a.customer_pay_money+a.customer_pay_money2+a.customer_pay_money3+a.customer_pay_money4+a.customer_pay_money5) as customer_pay_money,a.profit
+    from cargo_info b
+    inner join sale_info a on a.cargo_id = b.cargo_id
+    inner join contract_base_info c on c.contract_id = b.contract_id
+    where 1=1
+    <if test="contractNo != null and contractNo != ''" >
+      and c.contract_no like '%${contractNo}%'
+    </if>
+    <if test="insideContract != null and insideContract != ''" >
+      and c.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and c.warehouse like '%${warehouse}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and c.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="containerNo != null" >
+      and c.container_no like '%${containerNo}%'
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode = '${businessMode}'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level = '${level}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and b.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and b.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and b.real_store_boxes &lt;= '${maxBox}'
+    </if>
+    <if test="customerName != null and customerName != ''" >
+      and b.cargo_id in (
+      select cargo_id from sale_info where 1=1
+      <if test="customerName != null and customerName != ''" >
+        and customer_name like '%${customerName}%'
+      </if>
+      )
+    </if>
+    order by b.cargo_id desc
+    limit ${start},${limit}
+  </select>
+  <select id="countSellList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam">
+    select count(1) from cargo_info b
+    inner join sale_info a on a.cargo_id = b.cargo_id
+    inner join contract_base_info c on c.contract_id = b.contract_id
+    where 1=1
+    <if test="contractNo != null and contractNo != ''" >
+      and c.contract_no like '%${contractNo}%'
+    </if>
+    <if test="insideContract != null and insideContract != ''" >
+      and c.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and c.warehouse like '%${warehouse}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and c.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="containerNo != null" >
+      and c.container_no like '%${containerNo}%'
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode = '${businessMode}'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level = '${level}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and b.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and b.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and b.real_store_boxes &lt;= '${maxBox}'
+    </if>
+    <if test="customerName != null and customerName != ''" >
+      and b.cargo_id in (
+      select cargo_id from sale_info where 1=1
+      <if test="customerName != null and customerName != ''" >
+        and customer_name like '%${customerName}%'
+      </if>
+      )
+    </if>
+    order by b.cargo_id desc
+    limit ${start},${limit}
+  </select>
+  <select id="getTotalStoreInfoForQuery" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.CargoParam" >
+    select sum(b.real_store_weight) as realStoreWeight,sum(b.real_store_money) as realStoreMoney
+    from cargo_info b
+    inner join sale_info a on a.cargo_id = b.cargo_id
+    inner join contract_base_info c on c.contract_id = b.contract_id
+    where 1=1
+    <if test="contractNo != null and contractNo != ''" >
+      and c.contract_no like '%${contractNo}%'
+    </if>
+    <if test="insideContract != null and insideContract != ''" >
+      and c.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and c.warehouse like '%${warehouse}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and c.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="containerNo != null" >
+      and c.container_no like '%${containerNo}%'
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode = '${businessMode}'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level = '${level}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and b.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and b.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and b.real_store_boxes &lt;= '${maxBox}'
+    </if>
+    <if test="customerName != null and customerName != ''" >
+      and b.cargo_id in (
+      select cargo_id from sale_info where 1=1
+      <if test="customerName != null and customerName != ''" >
+        and customer_name like '%${customerName}%'
+      </if>
+      )
+    </if>
+  </select>
 </mapper>

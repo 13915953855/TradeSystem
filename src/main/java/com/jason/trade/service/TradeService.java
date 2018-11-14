@@ -293,6 +293,25 @@ public class TradeService {
         return result;
     }
 
+    public JSONObject queryCargoSellInfo(CargoParam cargoParam){
+        String status = cargoParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
+        }
+        cargoParam.setStatus(status);
+        Integer count = cargoInfoMapper.countSellList(cargoParam);
+        JSONObject result = new JSONObject();
+        result.put("total",count);
+        result.put("rows",cargoInfoMapper.getSellList(cargoParam));
+        return result;
+    }
+
     public JSONObject queryInternalContractListByMapper(InternalContractParam contractParam){
         String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
         switch (contractParam.getStatus()){
@@ -545,6 +564,31 @@ public class TradeService {
             result.put("expectStoreBoxes", "0");
             result.put("realStoreBoxes", "0");
             result.put("realStoreMoney", "0");
+        }
+        result.put("status","1");
+        return result;
+    }
+
+    public JSONObject getTotalStoreOutForQuery(CargoParam cargoParam){
+        String status = cargoParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
+        }
+        cargoParam.setStatus(status);
+        JSONObject result = new JSONObject();
+        CargoTotalInfo record = cargoInfoMapper.getTotalStoreInfoForQuery(cargoParam);
+        if(record != null) {
+            result.put("totalStoreWeight", record.getRealStoreWeight());
+            result.put("totalStoreMoney", record.getRealStoreMoney());
+        }else{
+            result.put("totalStoreWeight", "0");
+            result.put("totalStoreMoney", "0");
         }
         result.put("status","1");
         return result;

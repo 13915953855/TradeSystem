@@ -224,9 +224,21 @@ public class TradeController {
         }else{
             log.info("编辑商品cargoId="+cargoInfo.getCargoId());
             cargoId = cargoInfo.getCargoId();
-            CargoInfo cargo = cargoRepository.findByCargoId(cargoId);
-            cargoInfo.setRealStoreBoxes(cargo.getRealStoreBoxes());
-            cargoInfo.setRealStoreWeight(cargo.getRealStoreWeight());
+            List<SaleInfo> saleInfoList = saleRepository.findByCargoIdAndStatus(cargoId,GlobalConst.ENABLE);
+            Integer saleBoxes = 0;
+            Double saleWeight = 0.0;
+            for (SaleInfo saleInfo : saleInfoList) {
+                saleBoxes += saleInfo.getRealSaleBoxes();
+                saleWeight += saleInfo.getRealSaleWeight();
+            }
+            Integer realStoreBoxes = cargoInfo.getBoxes() - saleBoxes;
+            cargoInfo.setRealStoreBoxes(realStoreBoxes);
+            if(realStoreBoxes > 0){
+                cargoInfo.setStatus(GlobalConst.STORED);
+            }else if(realStoreBoxes <= 0){
+                cargoInfo.setStatus(GlobalConst.SELLOUT);
+            }
+            cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount() - saleWeight);
             cargoInfo.setCreateUser(userInfo.getAccount());
             cargoInfo.setCreateDateTime(now);
             cargoInfo.setExpectStoreBoxes(cargoInfo.getBoxes());
@@ -600,6 +612,20 @@ public class TradeController {
     @RequestMapping(value = "/query/getTotalStoreInfo")
     public String getTotalStoreInfo(ContractParam contractParam) throws JSONException {
         JSONObject result = tradeService.getTotalStoreInfoForQuery(contractParam);
+        return result.toString();
+    }
+
+    @RequestMapping(value = "/queryCargoSellInfo")
+    public String queryCargoSellInfo(@RequestParam("limit") int limit, @RequestParam("offset") int offset, CargoParam cargoParam) throws JSONException {
+        cargoParam.setStart(offset);
+        cargoParam.setLimit(limit);
+        JSONObject result = tradeService.queryCargoSellInfo(cargoParam);
+        return result.toString();
+    }
+
+    @RequestMapping(value = "/query/getTotalStoreOut")
+    public String getTotalStoreOut(CargoParam cargoParam) throws JSONException {
+        JSONObject result = tradeService.getTotalStoreOutForQuery(cargoParam);
         return result.toString();
     }
 }

@@ -597,7 +597,7 @@
 
 
   <select id="queryCargoListByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
-    select a.id,a.eta,a.etd,a.expect_sailing_date,a.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
+    select a.id,a.eta,a.etd,a.expect_sailing_date,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
     b.cargo_name,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
