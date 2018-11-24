@@ -80,6 +80,22 @@ function getTotalInfo(){
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
+
+        var originCountryArr = $("#originCountry").val();
+                var originCountry = "";
+                if(originCountryArr != null){
+                    for(var i=0;i<originCountryArr.length;i++){
+                        if(originCountryArr[i] != '全部'){
+                            originCountry += "'"+originCountryArr[i] + "',";
+                        }else{
+                            originCountry = "";break;
+                        }
+                    }
+                }
+                if(originCountry.length > 1){
+                    originCountry = originCountry.substring(0,originCountry.length-1);
+                }
+
         var levelArr = $("#level").val();
         var level = "";
         if(levelArr != null){
@@ -185,7 +201,7 @@ function getTotalInfo(){
         externalCompany: externalCompany,
         status: status,
         type:queryType,
-        originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val()
+        originCountry:originCountry
     };
 
     $.ajax({
@@ -304,6 +320,20 @@ var TableInit = function () {
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
+        var originCountryArr = $("#originCountry").val();
+                        var originCountry = "";
+                        if(originCountryArr != null){
+                            for(var i=0;i<originCountryArr.length;i++){
+                                if(originCountryArr[i] != '全部'){
+                                    originCountry += "'"+originCountryArr[i] + "',";
+                                }else{
+                                    originCountry = "";break;
+                                }
+                            }
+                        }
+                        if(originCountry.length > 1){
+                            originCountry = originCountry.substring(0,originCountry.length-1);
+                        }
         var levelArr = $("#level").val();
         var level = "";
         if(levelArr != null){
@@ -412,7 +442,7 @@ var TableInit = function () {
             externalCompany: externalCompany,
             status: status,
             type:queryType,
-            originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val(),
+            originCountry:originCountry,
             sortName:this.sortName,
             sortOrder:this.sortOrder,
         };
@@ -529,6 +559,20 @@ var ButtonInit = function () {
             if(externalCompany.length > 1){
                 externalCompany = externalCompany.substring(0,externalCompany.length-1);
             }
+            var originCountryArr = $("#originCountry").val();
+                            var originCountry = "";
+                            if(originCountryArr != null){
+                                for(var i=0;i<originCountryArr.length;i++){
+                                    if(originCountryArr[i] != '全部'){
+                                        originCountry += "'"+originCountryArr[i] + "',";
+                                    }else{
+                                        originCountry = "";break;
+                                    }
+                                }
+                            }
+                            if(originCountry.length > 1){
+                                originCountry = originCountry.substring(0,originCountry.length-1);
+                            }
             var levelArr = $("#level").val();
             var level = "";
             if(levelArr != null){
@@ -651,7 +695,7 @@ var ButtonInit = function () {
             params += "&businessMode="+businessMode;
             params += "&externalCompany="+externalCompany;
             params += "&status="+status;
-            params += "&originCountry="+$("#originCountry").val() == "全部" ? "":$("#originCountry").val();
+            params += "&originCountry="+originCountry;
             params += "&chk="+chk;
             params += "&type="+queryType;
         	var url = "/trade/contract/output"+params;

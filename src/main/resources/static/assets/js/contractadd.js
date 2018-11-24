@@ -547,6 +547,7 @@ function saveContract(){
     contract.warehouse = $("#warehouse").val();
     contract.storeDate = $("#storeDate").val();
     contract.remark = $("#remark").val();
+    contract.cargoType = $("#cargoType").val();
     contract.zhixiangfei = $("#zhixiangfei").val() == "" ? 0:toFloat($("#zhixiangfei").val());
     contract.zhigangfei = $("#zhigangfei").val() == "" ? 0:toFloat($("#zhigangfei").val());
 

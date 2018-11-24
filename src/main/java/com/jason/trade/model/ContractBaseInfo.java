@@ -9,6 +9,8 @@ public class ContractBaseInfo {
     @GeneratedValue
     @Column(name="id")
     private Integer id;
+    @Column(name="cargo_type")
+    private String cargoType;
     @Column(name="eta")
     private String eta;
     @Column(name="etd")
@@ -180,6 +182,14 @@ public class ContractBaseInfo {
     private String storageCondition;
     @Column(name="cargo_match")
     private Integer cargoMatch;
+
+    public String getCargoType() {
+        return cargoType;
+    }
+
+    public void setCargoType(String cargoType) {
+        this.cargoType = cargoType;
+    }
 
     public Double getAddedValueTax1() {
         return addedValueTax1;

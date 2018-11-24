@@ -396,8 +396,8 @@
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
-    <if test="originCountry != null" >
-      and a.origin_country like '%${originCountry}%'
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -484,8 +484,8 @@
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
-    <if test="originCountry != null" >
-      and a.origin_country like '%${originCountry}%'
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -573,8 +573,8 @@
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
-    <if test="originCountry != null" >
-      and a.origin_country like '%${originCountry}%'
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'

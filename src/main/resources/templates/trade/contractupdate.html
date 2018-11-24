@@ -61,6 +61,9 @@
             var isCheckElec = /*[[${contract.isCheckElec}]]*/;
             var qacertificate = /*[[${contract.qacertificate}]]*/;
             var hasbaoguan = /*[[${contract.hasbaoguan}]]*/;
+            var cargoType = /*[[${contract.cargoType}]]*/;
+
+            $("#cargoType").val(cargoType).trigger("change");
 
             $("#currency").val(currency).trigger("change");
             $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());
@@ -208,6 +211,14 @@
                                                 <select class="form-control select2" id="ownerCompany">
                                                     <option>海企长城</option>
                                                     <option>紫荆华美</option>
+                                                </select>
+                                            </div>
+                                            <label class="control-label col-sm-2">商品属性</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-control select2" id="cargoType">
+                                                    <option>牛产品</option>
+                                                    <option>猪产品</option>
+                                                    <option>禽产品</option>
                                                 </select>
                                             </div>
                                         </div>
