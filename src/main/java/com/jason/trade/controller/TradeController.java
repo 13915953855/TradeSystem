@@ -189,6 +189,8 @@ public class TradeController {
         contractBaseInfo.setCreateUser(userInfo.getAccount());
         contractBaseInfo.setCreateDateTime(now);
         contractBaseInfo.setVersion(1);
+        contractBaseInfo.setTariff(contractBaseInfo.getTariff1()+contractBaseInfo.getTariff2()+contractBaseInfo.getTariff3()+contractBaseInfo.getTariff4()+contractBaseInfo.getTariff5()+contractBaseInfo.getTariff6());
+        contractBaseInfo.setAddedValueTax(contractBaseInfo.getAddedValueTax1()+contractBaseInfo.getAddedValueTax2()+contractBaseInfo.getAddedValueTax3()+contractBaseInfo.getAddedValueTax4()+contractBaseInfo.getAddedValueTax5()+contractBaseInfo.getAddedValueTax6());
         ContractBaseInfo record = tradeService.saveContract(contractBaseInfo,cargoId);
 
         SysLog sysLog = new SysLog();
@@ -374,6 +376,10 @@ public class TradeController {
             cargoInfoMapper.storeByContractId(contractBaseInfo.getContractId());
         }
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
+
+        contractBaseInfo.setTariff(contractBaseInfo.getTariff1()+contractBaseInfo.getTariff2()+contractBaseInfo.getTariff3()+contractBaseInfo.getTariff4()+contractBaseInfo.getTariff5()+contractBaseInfo.getTariff6());
+        contractBaseInfo.setAddedValueTax(contractBaseInfo.getAddedValueTax1()+contractBaseInfo.getAddedValueTax2()+contractBaseInfo.getAddedValueTax3()+contractBaseInfo.getAddedValueTax4()+contractBaseInfo.getAddedValueTax5()+contractBaseInfo.getAddedValueTax6());
+
         contractBaseInfoMapper.updateByPrimaryKeySelective(contractBaseInfo);
 
         SysLog sysLog = new SysLog();

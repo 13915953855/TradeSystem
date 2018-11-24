@@ -141,6 +141,24 @@
       <if test="addedValueTax != null" >
         added_value_tax = #{addedValueTax,jdbcType=DOUBLE},
       </if>
+      <if test="addedValueTax1 != null" >
+        added_value_tax1 = #{addedValueTax1,jdbcType=DOUBLE},
+      </if>
+      <if test="addedValueTax2 != null" >
+        added_value_tax2 = #{addedValueTax2,jdbcType=DOUBLE},
+      </if>
+      <if test="addedValueTax3 != null" >
+        added_value_tax3 = #{addedValueTax3,jdbcType=DOUBLE},
+      </if>
+      <if test="addedValueTax4 != null" >
+        added_value_tax4 = #{addedValueTax4,jdbcType=DOUBLE},
+      </if>
+      <if test="addedValueTax5 != null" >
+        added_value_tax5 = #{addedValueTax5,jdbcType=DOUBLE},
+      </if>
+      <if test="addedValueTax6 != null" >
+        added_value_tax6 = #{addedValueTax6,jdbcType=DOUBLE},
+      </if>
       <if test="agent != null" >
         agent = #{agent,jdbcType=VARCHAR},
       </if>
@@ -254,6 +272,24 @@
       </if>
       <if test="tariff != null" >
         tariff = #{tariff,jdbcType=DOUBLE},
+      </if>
+      <if test="tariff1 != null" >
+        tariff1 = #{tariff1,jdbcType=DOUBLE},
+      </if>
+      <if test="tariff2 != null" >
+        tariff2 = #{tariff2,jdbcType=DOUBLE},
+      </if>
+      <if test="tariff3 != null" >
+        tariff3 = #{tariff3,jdbcType=DOUBLE},
+      </if>
+      <if test="tariff4 != null" >
+        tariff4 = #{tariff4,jdbcType=DOUBLE},
+      </if>
+      <if test="tariff5 != null" >
+        tariff5 = #{tariff5,jdbcType=DOUBLE},
+      </if>
+      <if test="tariff6 != null" >
+        tariff6 = #{tariff6,jdbcType=DOUBLE},
       </if>
       <if test="tariffNo != null" >
         tariff_no = #{tariffNo,jdbcType=VARCHAR},

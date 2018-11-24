@@ -19,6 +19,18 @@ public class ContractBaseInfo {
     private Integer qacertificate;
     @Column(name="added_value_tax")
     private Double addedValueTax;
+    @Column(name="added_value_tax1")
+    private Double addedValueTax1;
+    @Column(name="added_value_tax2")
+    private Double addedValueTax2;
+    @Column(name="added_value_tax3")
+    private Double addedValueTax3;
+    @Column(name="added_value_tax4")
+    private Double addedValueTax4;
+    @Column(name="added_value_tax5")
+    private Double addedValueTax5;
+    @Column(name="added_value_tax6")
+    private Double addedValueTax6;
     @Column(name="agent")
     private String agent;
     @Column(name="agent_pass_date")
@@ -100,6 +112,18 @@ public class ContractBaseInfo {
     private String storeDate;
     @Column(name="tariff")
     private Double tariff;
+    @Column(name="tariff1")
+    private Double tariff1;
+    @Column(name="tariff2")
+    private Double tariff2;
+    @Column(name="tariff3")
+    private Double tariff3;
+    @Column(name="tariff4")
+    private Double tariff4;
+    @Column(name="tariff5")
+    private Double tariff5;
+    @Column(name="tariff6")
+    private Double tariff6;
     @Column(name="tariff_no")
     private String tariffNo;
     @Column(name="tax_pay_date")
@@ -156,6 +180,102 @@ public class ContractBaseInfo {
     private String storageCondition;
     @Column(name="cargo_match")
     private Integer cargoMatch;
+
+    public Double getAddedValueTax1() {
+        return addedValueTax1;
+    }
+
+    public void setAddedValueTax1(Double addedValueTax1) {
+        this.addedValueTax1 = addedValueTax1;
+    }
+
+    public Double getAddedValueTax2() {
+        return addedValueTax2;
+    }
+
+    public void setAddedValueTax2(Double addedValueTax2) {
+        this.addedValueTax2 = addedValueTax2;
+    }
+
+    public Double getAddedValueTax3() {
+        return addedValueTax3;
+    }
+
+    public void setAddedValueTax3(Double addedValueTax3) {
+        this.addedValueTax3 = addedValueTax3;
+    }
+
+    public Double getAddedValueTax4() {
+        return addedValueTax4;
+    }
+
+    public void setAddedValueTax4(Double addedValueTax4) {
+        this.addedValueTax4 = addedValueTax4;
+    }
+
+    public Double getAddedValueTax5() {
+        return addedValueTax5;
+    }
+
+    public void setAddedValueTax5(Double addedValueTax5) {
+        this.addedValueTax5 = addedValueTax5;
+    }
+
+    public Double getAddedValueTax6() {
+        return addedValueTax6;
+    }
+
+    public void setAddedValueTax6(Double addedValueTax6) {
+        this.addedValueTax6 = addedValueTax6;
+    }
+
+    public Double getTariff1() {
+        return tariff1;
+    }
+
+    public void setTariff1(Double tariff1) {
+        this.tariff1 = tariff1;
+    }
+
+    public Double getTariff2() {
+        return tariff2;
+    }
+
+    public void setTariff2(Double tariff2) {
+        this.tariff2 = tariff2;
+    }
+
+    public Double getTariff3() {
+        return tariff3;
+    }
+
+    public void setTariff3(Double tariff3) {
+        this.tariff3 = tariff3;
+    }
+
+    public Double getTariff4() {
+        return tariff4;
+    }
+
+    public void setTariff4(Double tariff4) {
+        this.tariff4 = tariff4;
+    }
+
+    public Double getTariff5() {
+        return tariff5;
+    }
+
+    public void setTariff5(Double tariff5) {
+        this.tariff5 = tariff5;
+    }
+
+    public Double getTariff6() {
+        return tariff6;
+    }
+
+    public void setTariff6(Double tariff6) {
+        this.tariff6 = tariff6;
+    }
 
     public Integer getCargoMatch() {
         return cargoMatch == null ? 0 : cargoMatch;

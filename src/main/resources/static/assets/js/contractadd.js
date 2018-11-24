@@ -528,6 +528,18 @@ function saveContract(){
     contract.tariff = $("#tariff").val() == "" ? 0:toFloat($("#tariff").val());
     contract.tariffNo = $("#tariffNo").val();
     contract.addedValueTax = $("#addedValueTax").val() == "" ? 0:toFloat($("#addedValueTax").val());
+    contract.tariff1 = $("#tariff1").val() == "" ? 0:toFloat($("#tariff1").val());
+    contract.addedValueTax1 = $("#addedValueTax1").val() == "" ? 0:toFloat($("#addedValueTax1").val());
+    contract.tariff2 = $("#tariff2").val() == "" ? 0:toFloat($("#tariff2").val());
+    contract.addedValueTax2 = $("#addedValueTax2").val() == "" ? 0:toFloat($("#addedValueTax2").val());
+    contract.tariff3 = $("#tariff3").val() == "" ? 0:toFloat($("#tariff3").val());
+    contract.addedValueTax3 = $("#addedValueTax3").val() == "" ? 0:toFloat($("#addedValueTax3").val());
+    contract.tariff4 = $("#tariff4").val() == "" ? 0:toFloat($("#tariff4").val());
+    contract.addedValueTax4 = $("#addedValueTax4").val() == "" ? 0:toFloat($("#addedValueTax4").val());
+    contract.tariff5 = $("#tariff5").val() == "" ? 0:toFloat($("#tariff5").val());
+    contract.addedValueTax5 = $("#addedValueTax5").val() == "" ? 0:toFloat($("#addedValueTax5").val());
+    contract.tariff6 = $("#tariff6").val() == "" ? 0:toFloat($("#tariff6").val());
+    contract.addedValueTax6 = $("#addedValueTax6").val() == "" ? 0:toFloat($("#addedValueTax6").val());
     contract.taxPayDate = $("#taxPayDate").val();
     contract.taxSignDate = $("#taxSignDate").val();
     contract.taxDeductibleParty = $("#taxDeductibleParty").val();
