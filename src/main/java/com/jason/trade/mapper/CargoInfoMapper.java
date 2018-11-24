@@ -1,9 +1,6 @@
 package com.jason.trade.mapper;
 
-import com.jason.trade.entity.CargoManageInfo;
-import com.jason.trade.entity.CargoParam;
-import com.jason.trade.entity.CargoSellInfo;
-import com.jason.trade.entity.CargoTotalInfo;
+import com.jason.trade.entity.*;
 import com.jason.trade.model.CargoInfo;
 import org.springframework.stereotype.Component;
 
@@ -27,4 +24,7 @@ public interface CargoInfoMapper {
     List<CargoSellInfo> getSellList(CargoParam cargoParam);
     Integer countSellList(CargoParam cargoParam);
     CargoTotalInfo getTotalStoreInfoForQuery(CargoParam cargoParam);
+    List<CargoStoreInfo> getStoreList(CargoParam cargoParam);
+    Integer countStoreList(CargoParam cargoParam);
+    CargoTotalInfo getTotalStoreInInfo(CargoParam cargoParam);
 }

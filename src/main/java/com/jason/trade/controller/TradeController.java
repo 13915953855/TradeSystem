@@ -628,4 +628,12 @@ public class TradeController {
         JSONObject result = tradeService.getTotalStoreOutForQuery(cargoParam);
         return result.toString();
     }
+
+    @RequestMapping(value = "/queryCargoStoreInfo")
+    public String queryCargoStoreInfo(@RequestParam("limit") int limit, @RequestParam("offset") int offset, CargoParam cargoParam) throws JSONException {
+        cargoParam.setStart(offset);
+        cargoParam.setLimit(limit);
+        JSONObject result = tradeService.queryCargoStoreInfo(cargoParam);
+        return result.toString();
+    }
 }

@@ -36,6 +36,24 @@ public class ContractParam {
     private String taxPayDateEnd;
     private String startDate;
     private String endDate;
+    private String isFinancing;
+    private String isYahui;
+
+    public String getIsYahui() {
+        return isYahui;
+    }
+
+    public void setIsYahui(String isYahui) {
+        this.isYahui = isYahui;
+    }
+
+    public String getIsFinancing() {
+        return isFinancing;
+    }
+
+    public void setIsFinancing(String isFinancing) {
+        this.isFinancing = isFinancing;
+    }
 
     public String getEtdStartDate() {
         return etdStartDate;

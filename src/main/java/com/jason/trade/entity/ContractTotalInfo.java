@@ -5,7 +5,25 @@ public class ContractTotalInfo {
     private Float totalContractAmount;
     private Float totalInvoiceMoney;
     private Float totalInvoiceAmount;
+    private Float totalFinancingMoney;
+    private Float totalYahuiMoney;
     private String currency;
+
+    public Float getTotalYahuiMoney() {
+        return totalYahuiMoney;
+    }
+
+    public void setTotalYahuiMoney(Float totalYahuiMoney) {
+        this.totalYahuiMoney = totalYahuiMoney;
+    }
+
+    public Float getTotalFinancingMoney() {
+        return totalFinancingMoney;
+    }
+
+    public void setTotalFinancingMoney(Float totalFinancingMoney) {
+        this.totalFinancingMoney = totalFinancingMoney;
+    }
 
     public String getCurrency() {
         return currency;

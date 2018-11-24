@@ -497,7 +497,7 @@
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
     <if test="contractNo != null and contractNo != ''" >
-      and c.contract_no like '%${contractNo}%'
+      and c.external_contract like '%${contractNo}%'
     </if>
     <if test="insideContract != null and insideContract != ''" >
       and c.inside_contract like '%${insideContract}%'
@@ -546,7 +546,7 @@
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
     <if test="contractNo != null and contractNo != ''" >
-      and c.contract_no like '%${contractNo}%'
+      and c.external_contract like '%${contractNo}%'
     </if>
     <if test="insideContract != null and insideContract != ''" >
       and c.inside_contract like '%${insideContract}%'
@@ -596,7 +596,7 @@
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
     <if test="contractNo != null and contractNo != ''" >
-      and c.contract_no like '%${contractNo}%'
+      and c.external_contract like '%${contractNo}%'
     </if>
     <if test="insideContract != null and insideContract != ''" >
       and c.inside_contract like '%${insideContract}%'
@@ -635,6 +635,148 @@
         and customer_name like '%${customerName}%'
       </if>
       )
+    </if>
+  </select>
+
+
+  <select id="getStoreList" resultType="com.jason.trade.entity.CargoStoreInfo" parameterType="com.jason.trade.entity.CargoParam">
+    select a.cargo_name,a.level,a.company_no,a.cargo_no,b.external_contract,b.inside_contract,
+    b.container_no,b.ladingbill_no,b.store_date,b.warehouse,
+    a.invoice_amount,a.boxes,b.baoguandan,b.qacertificate
+    from cargo_info a
+    inner join contract_base_info b on a.contract_id = b.contract_id
+    where 1=1
+    <if test="contractNo != null and contractNo != ''" >
+      and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="insideContract != null and insideContract != ''" >
+      and b.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and b.warehouse like '%${warehouse}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and b.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="containerNo != null" >
+      and b.container_no like '%${containerNo}%'
+    </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and b.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and b.store_date &lt;= '${storeEndDate}'
+    </if>
+    <if test="level != null and level != ''" >
+      and a.level = '${level}'
+    </if>
+    <if test="status != null and status != ''" >
+      and a.status = '${status}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and a.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="baoguandan != null and baoguandan != ''" >
+      and b.baoguandan = '${baoguandan}'
+    </if>
+    <if test="qacertificate != null and qacertificate != ''" >
+      and b.qacertificate = '${qacertificate}'
+    </if>
+    order by a.cargo_id desc
+    limit ${start},${limit}
+  </select>
+  <select id="countStoreList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam">
+    select count(1) from cargo_info a
+    inner join contract_base_info b on a.contract_id = b.contract_id
+    where 1=1
+    <if test="contractNo != null and contractNo != ''" >
+      and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="insideContract != null and insideContract != ''" >
+      and b.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and b.warehouse like '%${warehouse}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and b.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="containerNo != null" >
+      and b.container_no like '%${containerNo}%'
+    </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and b.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and b.store_date &lt;= '${storeEndDate}'
+    </if>
+    <if test="level != null and level != ''" >
+      and a.level = '${level}'
+    </if>
+    <if test="status != null and status != ''" >
+      and a.status = '${status}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and a.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="baoguandan != null and baoguandan != ''" >
+      and b.baoguandan = '${baoguandan}'
+    </if>
+    <if test="qacertificate != null and qacertificate != ''" >
+      and b.qacertificate = '${qacertificate}'
+    </if>
+    order by a.cargo_id desc
+    limit ${start},${limit}
+  </select>
+  <select id="getTotalStoreInInfo" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.CargoParam" >
+    select sum(a.invoice_amount) as totalInvoiceWeight,sum(a.boxes) as totalInvoiceBoxes
+    from cargo_info a
+    inner join contract_base_info b on a.contract_id = b.contract_id
+    where 1=1
+    <if test="contractNo != null and contractNo != ''" >
+      and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="insideContract != null and insideContract != ''" >
+      and b.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and b.warehouse like '%${warehouse}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and b.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="containerNo != null" >
+      and b.container_no like '%${containerNo}%'
+    </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and b.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and b.store_date &lt;= '${storeEndDate}'
+    </if>
+    <if test="level != null and level != ''" >
+      and a.level = '${level}'
+    </if>
+    <if test="status != null and status != ''" >
+      and a.status = '${status}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and a.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="baoguandan != null and baoguandan != ''" >
+      and b.baoguandan = '${baoguandan}'
+    </if>
+    <if test="qacertificate != null and qacertificate != ''" >
+      and b.qacertificate = '${qacertificate}'
     </if>
   </select>
 </mapper>

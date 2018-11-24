@@ -438,6 +438,20 @@ public class MainController {
         return "trade/queryFuhui";
     }
 
+    @GetMapping("/trade/query/fuhuiRZ")
+    public String queryFuhuiRZ(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryFuhuiRZ";
+    }
+
+    @GetMapping("/trade/query/fuhuiKZ")
+    public String queryFuhuiKZ(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/queryFuhuiKZ";
+    }
+
     @GetMapping(value="/trade/queryCargo/output")
     public ResponseEntity<Resource> queryCargoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,
                                            @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,

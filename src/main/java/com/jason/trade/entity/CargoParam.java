@@ -23,8 +23,26 @@ public class CargoParam {
     private String businessMode;
     private String minBox;
     private String maxBox;
+    private String baoguandan;
+    private String qacertificate;
     private int start;
     private int limit;
+
+    public String getBaoguandan() {
+        return baoguandan;
+    }
+
+    public void setBaoguandan(String baoguandan) {
+        this.baoguandan = baoguandan;
+    }
+
+    public String getQacertificate() {
+        return qacertificate;
+    }
+
+    public void setQacertificate(String qacertificate) {
+        this.qacertificate = qacertificate;
+    }
 
     public String getImportContractNo() {
         return importContractNo;

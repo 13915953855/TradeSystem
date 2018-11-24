@@ -351,6 +351,12 @@
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jason.trade.entity.ContractParam" >
     select a.* from contract_base_info a
     where 1 = 1
+    <if test="isFinancing != null and isFinancing != ''" >
+      and a.is_financing = '${isFinancing}'
+    </if>
+    <if test="isYahui != null and isYahui != ''" >
+      and a.is_yahui = '${isYahui}'
+    </if>
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
@@ -433,6 +439,12 @@
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.ContractParam" >
     select count(1) from contract_base_info a
     where 1 = 1
+    <if test="isFinancing != null and isFinancing != ''" >
+      and a.is_financing = '${isFinancing}'
+    </if>
+    <if test="isYahui != null and isYahui != ''" >
+      and a.is_yahui = '${isYahui}'
+    </if>
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
@@ -511,9 +523,17 @@
     select sum(a.total_contract_money) as totalContractMoney,
     sum(a.total_contract_amount) as totalContractAmount,
     sum(a.total_invoice_money) as totalInvoiceMoney,
-    sum(a.total_invoice_amount) as totalInvoiceAmount, currency
+    sum(a.total_invoice_amount) as totalInvoiceAmount, currency,
+    sum(a.financing_money) as totalFinancingMoney,
+    sum(a.yahui_money) as totalYahuiMoney
     from contract_base_info a
     where 1 = 1
+    <if test="isFinancing != null and isFinancing != ''" >
+      and a.is_financing = '${isFinancing}'
+    </if>
+    <if test="isYahui != null and isYahui != ''" >
+      and a.is_yahui = '${isYahui}'
+    </if>
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>

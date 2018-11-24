@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>库存信息-JOC系统</title>
+    <title>付汇信息-JOC系统</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
@@ -36,7 +36,7 @@
     <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
     <script src="/assets/js/common.js"></script>
-    <script src="/assets/js/queryStoreInfo.js"></script>
+    <script src="/assets/js/queryFuhui.js"></script>
     <script>
         $(function(){
             //获取警示数目
@@ -74,10 +74,12 @@
                                 <li><a href="/trade/query/contract">订单数据统计(台账)</a></li>
                                 <li><a href="/trade/query/cargo">订单数据统计(商品)</a></li>
                                 <li><a href="/trade/query/duty">付税信息</a></li>
-                                <li><a href="/trade/query/fuhui">付汇信息</a></li><li><a href="/trade/query/fuhuiRZ">付汇信息(融资)</a></li><li><a href="/trade/query/fuhuiKZ">付汇信息(开证)</a></li>
+                                <li><a href="/trade/query/fuhui" class="active">付汇信息</a></li>
+                                <li><a href="/trade/query/fuhuiRZ">付汇信息(融资)</a></li>
+                                <li><a href="/trade/query/fuhuiKZ">付汇信息(开证)</a></li>
                                 <li><a href="/trade/query/baoguan">报关信息</a></li>
                                 <li><a href="/trade/query/storeIn">入库信息</a></li>
-                                <li><a href="/trade/query/storeInfo" class="active">库存信息</a></li>
+                                <li><a href="/trade/query/storeInfo">库存信息</a></li>
                                 <li><a href="/trade/query/storeOut">出库信息</a></li>
                             </ul>
                         </div>
@@ -99,48 +101,17 @@
                         <div id="collapseOne" class="panel-body panel-collapse collapse in" style="padding-top:10px;padding-bottom:0;">
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">外商</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control select2" id="externalCompany" multiple="multiple">
-                                            <option>全部</option>
-                                        </select>
-                                    </div>
-                                    <label class="control-label col-sm-1">产品名称</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control select2" id="cargoName">
-                                            <option>全部</option>
-                                        </select>
-                                    </div>
-                                    <label class="control-label col-sm-1">产品级别</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control select2" id="level" multiple="multiple">
-                                            <option>全部</option>
-
-                                        </select>
-                                    </div>
-                                    <label class="control-label col-sm-1">厂号</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="companyNo" />
-                                    </div>
-                                </div>
-                                <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">业务模式</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control select2" id="businessMode" multiple="multiple">
-                                            <option>全部</option>
-                                        </select>
-                                    </div>
                                     <label class="control-label col-sm-1">状态</label>
                                     <div class="col-sm-2">
                                         <select class="form-control" id="status" multiple="multiple">
                                             <option>全部</option>
                                             <option>已下单</option>
+                                            <option>已装船</option>
+                                            <option>已到港</option>
                                             <option>已入库</option>
                                             <option>已售完</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group" style="">
                                     <label class="control-label col-sm-1">合同日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
@@ -165,39 +136,19 @@
                             </form>
                         </div>
                     </div>
-                    <div class="panel panel-default" style="margin-bottom: -5px;">
+                    <div id="totalInfoDiv" class="panel panel-default" style="margin-bottom: -5px;">
                         <form class="form-horizontal">
                             <div class="panel-body">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">发票总重量:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="totalInvoiceWeight"></span>
+                                    <label class="control-label col-sm-2">发票总金额(CNY):<br/>(USD):<br/>(AUD):</label>
+                                    <div class="col-sm-1" style="padding-top:6px;">
+                                        <span id="totalCNYInvoiceMoney"></span><br/>
+                                        <span id="totalUSDInvoiceMoney"></span><br/>
+                                        <span id="totalAUDInvoiceMoney"></span>
                                     </div>
-                                    <label class="control-label col-sm-1">发票总箱数:</label>
+                                    <label class="control-label col-sm-1">融资总金额:</label>
                                     <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="totalInvoiceBoxes"></span>
-                                    </div>
-                                    <label class="control-label col-sm-1">预库存总重量:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="expectStoreWeight"></span>
-                                    </div>
-                                    <label class="control-label col-sm-1">预库存总箱数:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="expectStoreBoxes"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">现库存总重量:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="realStoreWeight"></span>
-                                    </div>
-                                    <label class="control-label col-sm-1">现库存总箱数:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="realStoreBoxes"></span>
-                                    </div>
-                                    <label class="control-label col-sm-1">现库存成本:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="realStoreMoney"></span>
+                                        <span id="totalFinancingMoney"></span>
                                     </div>
                                 </div>
                             </div>

@@ -139,7 +139,9 @@ public class TradeService {
         cargoInfo.setRealStoreWeight(realSaleWeight);
         cargoInfo.setRealStoreBoxes(realSaleBoxes);
         cargoInfoMapper.updateByCargoId(cargoInfo);
-        autoUpdateStatus(saleInfo.getCargoId(),status);
+        if(realSaleBoxes <= 0) {
+            autoUpdateStatus(saleInfo.getCargoId(), status);
+        }
         SaleInfo data = saleRepository.save(saleInfo);
         return data;
     }
@@ -395,7 +397,11 @@ public class TradeService {
             Float totalAUDInvoiceMoney = 0F;
             Float totalContractAmount = 0F;
             Float totalInvoiceAmount = 0F;
+            Float totalFinancingMoney = 0F;
+            Float totalYahuiMoney = 0F;
             for (ContractTotalInfo totalInfo : record) {
+                totalFinancingMoney += totalInfo.getTotalFinancingMoney();
+                totalYahuiMoney += totalInfo.getTotalYahuiMoney();
                 switch(totalInfo.getCurrency()){
                     case "CNY":
                         totalCNYContractMoney = totalInfo.getTotalContractMoney();
@@ -426,6 +432,8 @@ public class TradeService {
             result.put("totalAUDInvoiceMoney", totalAUDInvoiceMoney);
             result.put("totalContractAmount", totalContractAmount);
             result.put("totalInvoiceAmount", totalInvoiceAmount);
+            result.put("totalFinancingMoney", totalFinancingMoney);
+            result.put("totalYahuiMoney", totalYahuiMoney);
         }else{
             result.put("totalCNYContractMoney", "0");
             result.put("totalCNYInvoiceMoney", "0");
@@ -435,6 +443,8 @@ public class TradeService {
             result.put("totalAUDInvoiceMoney", "0");
             result.put("totalContractAmount", "0");
             result.put("totalInvoiceAmount", "0");
+            result.put("totalFinancingMoney", "0");
+            result.put("totalYahuiMoney", "0");
         }
         result.put("status","1");
         return result;
@@ -591,6 +601,39 @@ public class TradeService {
             result.put("totalStoreMoney", "0");
         }
         result.put("status","1");
+        return result;
+    }
+
+    public JSONObject queryCargoStoreInfo(CargoParam cargoParam){
+        String status = cargoParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
+        }
+        cargoParam.setStatus(status);
+        String baoguandan = cargoParam.getBaoguandan();
+        if(baoguandan.equals("是")){
+            baoguandan = "1";
+        }else if(baoguandan.equals("否")){
+            baoguandan = "0";
+        }
+        cargoParam.setBaoguandan(baoguandan);
+        String qacertificate = cargoParam.getQacertificate();
+        if(qacertificate.equals("是")){
+            qacertificate = "1";
+        }else if(qacertificate.equals("否")){
+            qacertificate = "0";
+        }
+        cargoParam.setQacertificate(qacertificate);
+        Integer count = cargoInfoMapper.countStoreList(cargoParam);
+        JSONObject result = new JSONObject();
+        result.put("total",count);
+        result.put("rows",cargoInfoMapper.getStoreList(cargoParam));
         return result;
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>库存信息-JOC系统</title>
+    <title>入库信息-JOC系统</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
@@ -36,7 +36,7 @@
     <script src="/assets/scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="/assets/scripts/klorofil-common.js"></script>
     <script src="/assets/js/common.js"></script>
-    <script src="/assets/js/queryStoreInfo.js"></script>
+    <script src="/assets/js/queryStoreIn.js"></script>
     <script>
         $(function(){
             //获取警示数目
@@ -76,8 +76,8 @@
                                 <li><a href="/trade/query/duty">付税信息</a></li>
                                 <li><a href="/trade/query/fuhui">付汇信息</a></li><li><a href="/trade/query/fuhuiRZ">付汇信息(融资)</a></li><li><a href="/trade/query/fuhuiKZ">付汇信息(开证)</a></li>
                                 <li><a href="/trade/query/baoguan">报关信息</a></li>
-                                <li><a href="/trade/query/storeIn">入库信息</a></li>
-                                <li><a href="/trade/query/storeInfo" class="active">库存信息</a></li>
+                                <li><a href="/trade/query/storeIn" class="active">入库信息</a></li>
+                                <li><a href="/trade/query/storeInfo">库存信息</a></li>
                                 <li><a href="/trade/query/storeOut">出库信息</a></li>
                             </ul>
                         </div>
@@ -99,12 +99,36 @@
                         <div id="collapseOne" class="panel-body panel-collapse collapse in" style="padding-top:10px;padding-bottom:0;">
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">外商</label>
+                                    <label class="control-label col-sm-1">外合同编号</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control select2" id="externalCompany" multiple="multiple">
+                                        <input type="text" class="form-control" id="contractNo"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">内合同编号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="insideContract"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">库号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="cargoNo"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">仓库</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" id="warehouse">
                                             <option>全部</option>
+                                            <option>名联</option>
+                                            <option>领升</option>
+                                            <option>普菲斯（外高桥）</option>
+                                            <option>普菲斯（洋山）</option>
+                                            <option>太古</option>
+                                            <option>保翔</option>
+                                            <option>大宛</option>
+                                            <option>鑫汇洋</option>
+                                            <option>瑞源</option>
+                                            <option>库外</option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="form-group" style="">
                                     <label class="control-label col-sm-1">产品名称</label>
                                     <div class="col-sm-2">
                                         <select class="form-control select2" id="cargoName">
@@ -113,47 +137,59 @@
                                     </div>
                                     <label class="control-label col-sm-1">产品级别</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control select2" id="level" multiple="multiple">
-                                            <option>全部</option>
-
-                                        </select>
-                                    </div>
-                                    <label class="control-label col-sm-1">厂号</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="companyNo" />
-                                    </div>
-                                </div>
-                                <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">业务模式</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control select2" id="businessMode" multiple="multiple">
+                                        <select class="form-control select2" id="level">
                                             <option>全部</option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-1">状态</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control" id="status" multiple="multiple">
-                                            <option>全部</option>
-                                            <option>已下单</option>
-                                            <option>已入库</option>
-                                            <option>已售完</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">合同日期从:</label>
+                                    <label class="control-label col-sm-1">入库日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractStartDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="storeStartDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
                                     <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractEndDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="storeEndDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">柜号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="containerNo"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">提单号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="ladingbillNo"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">状态</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="status">
+                                            <option>全部</option>
+                                            <option>已入库</option>
+                                            <option>已售完</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-1">是否上传报关单</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="baoguandan">
+                                            <option>全部</option>
+                                            <option>是</option>
+                                            <option>否</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">是否上传检疫证</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="qacertificate">
+                                            <option>全部</option>
+                                            <option>是</option>
+                                            <option>否</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group" style="">
@@ -169,40 +205,23 @@
                         <form class="form-horizontal">
                             <div class="panel-body">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">发票总重量:</label>
+                                    <label class="control-label col-sm-2">发票总重量:</label>
                                     <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="totalInvoiceWeight"></span>
+                                        <span id="totalInvoiceAmount"></span>
                                     </div>
-                                    <label class="control-label col-sm-1">发票总箱数:</label>
+                                    <label class="control-label col-sm-2">发票总箱数:</label>
                                     <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="totalInvoiceBoxes"></span>
-                                    </div>
-                                    <label class="control-label col-sm-1">预库存总重量:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="expectStoreWeight"></span>
-                                    </div>
-                                    <label class="control-label col-sm-1">预库存总箱数:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="expectStoreBoxes"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">现库存总重量:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="realStoreWeight"></span>
-                                    </div>
-                                    <label class="control-label col-sm-1">现库存总箱数:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="realStoreBoxes"></span>
-                                    </div>
-                                    <label class="control-label col-sm-1">现库存成本:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="realStoreMoney"></span>
+                                        <span id="totalBoxes"></span>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
+                    <!--<div id="toolbar" class="btn-group">
+                        <button id="btn_output" type="button" class="btn btn-default">
+                            <span class="fa fa-download" aria-hidden="true"></span>导出EXCEL
+                        </button>
+                    </div>-->
                     <table id="tb_contract"></table>
                 </div>
             </div>
