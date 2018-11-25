@@ -114,7 +114,24 @@ function initCargoList(){
     $("#cargoName").append(cargoList);
 }
 
-
+function initBank(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>光大银行</option>";
+    opts += "<option>广发银行</option>";
+    opts += "<option>工商银行</option>";
+    opts += "<option>建设银行</option>";
+    opts += "<option>江苏银行</option>";
+    opts += "<option>交通银行</option>";
+    opts += "<option>南京银行</option>";
+    opts += "<option>农业发展银行</option>";
+    opts += "<option>浦发银行</option>";
+    opts += "<option>紫金农商银行</option>";
+    opts += "<option>招商银行</option>";
+    $("#prePayBank").append(opts);
+    $("#finalPayBank").append(opts);
+    $("#issuingBank").append(opts);
+}
 
 function initOriginCountry(){
     var opts = "";

@@ -461,7 +461,7 @@ public class MainController {
     }
 
     @GetMapping(value="/trade/queryCargo/output")
-    public ResponseEntity<Resource> queryCargoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,
+    public ResponseEntity<Resource> queryCargoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
                                            @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
                                            @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,
                                            @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
@@ -470,6 +470,7 @@ public class MainController {
                                            @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
+        contractParam.setOriginCountry(originCountry);
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
         contractParam.setBusinessMode(businessMode);
