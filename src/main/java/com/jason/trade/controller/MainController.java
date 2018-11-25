@@ -200,17 +200,24 @@ public class MainController {
         Map<String, Object> map = new HashMap<>();
         UserInfo userInfo = userRepository.findByAccount(username);
         if(userInfo != null && userInfo.getPasswd().equals(password)){
-            // 设置session
-            session.setAttribute(WebSecurityConfig.SESSION_KEY, userInfo);
-            map.put("status", "1");
-            map.put("message", "登录成功");
+            Date now = new Date();
+            Date end = DateUtil.stringToDate("2021-12-31 00:00:00");
+            if(now.before(end)) {
+                // 设置session
+                session.setAttribute(WebSecurityConfig.SESSION_KEY, userInfo);
+                map.put("status", "1");
+                map.put("message", "登录成功");
 
-            SysLog sysLog = new SysLog();
-            sysLog.setDetail("");
-            sysLog.setOperation("登录");
-            sysLog.setUser(userInfo.getAccount());
-            sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
-            sysLogRepository.save(sysLog);
+                SysLog sysLog = new SysLog();
+                sysLog.setDetail("");
+                sysLog.setOperation("登录");
+                sysLog.setUser(userInfo.getAccount());
+                sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+                sysLogRepository.save(sysLog);
+            }else{
+                map.put("status", "-1");
+                map.put("message", "系统已失效");
+            }
             return map;
         }else{
             map.put("status", "-1");

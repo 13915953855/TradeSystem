@@ -25,6 +25,7 @@ $(function () {
     initBusinessMode();
     initExternalCompany();
     initCargoList();
+    initOriginCountry();
 
     getTotalInfo();
 });
@@ -171,7 +172,20 @@ var TableInit = function () {
         if(businessMode.length > 1){
             businessMode = businessMode.substring(0,businessMode.length-1);
         }
-
+        var originCountryArr = $("#originCountry").val();
+        var originCountry = "";
+        if(originCountryArr != null){
+            for(var i=0;i<originCountryArr.length;i++){
+                if(originCountryArr[i] != '全部'){
+                    originCountry += "'"+originCountryArr[i] + "',";
+                }else{
+                    originCountry = "";break;
+                }
+            }
+        }
+        if(originCountry.length > 1){
+            originCountry = originCountry.substring(0,originCountry.length-1);
+        }
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
@@ -187,7 +201,8 @@ var TableInit = function () {
             level: level,
             companyNo: $("#companyNo").val(),
             businessMode: businessMode,
-            externalCompany: externalCompany
+            externalCompany: externalCompany,
+            originCountry: originCountry
         };
         return temp;
     };
@@ -252,7 +267,20 @@ var ButtonInit = function () {
             if(businessMode.length > 1){
                 businessMode = businessMode.substring(0,businessMode.length-1);
             }
-
+            var originCountryArr = $("#originCountry").val();
+            var originCountry = "";
+            if(originCountryArr != null){
+                for(var i=0;i<originCountryArr.length;i++){
+                    if(originCountryArr[i] != '全部'){
+                        originCountry += "'"+originCountryArr[i] + "',";
+                    }else{
+                        originCountry = "";break;
+                    }
+                }
+            }
+            if(originCountry.length > 1){
+                originCountry = originCountry.substring(0,originCountry.length-1);
+            }
             var params = "?externalCompany="+externalCompany;
             params += "&businessMode="+businessMode;
             params += "&companyNo="+$("#companyNo").val();
@@ -266,6 +294,7 @@ var ButtonInit = function () {
             params += "&etdEndDate="+$("#etdEndDate").val();
             params += "&contractEndDate="+$("#contractEndDate").val();
             params += "&contractStartDate="+$("#contractStartDate").val();
+            params += "&originCountry="+originCountry;
             var url = "/trade/queryCargo/output"+params;
             window.open(url);
         });
@@ -282,6 +311,7 @@ function resetQuery(){
     $("#externalCompany").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
+    $("#originCountry").val("全部").trigger("change");
     $("#startDate").val("");
     $("#endDate").val("");
     $("#etaStartDate").val("");
@@ -334,7 +364,20 @@ function getTotalInfo(){
         if(businessMode.length > 1){
             businessMode = businessMode.substring(0,businessMode.length-1);
         }
-
+        var originCountryArr = $("#originCountry").val();
+        var originCountry = "";
+        if(originCountryArr != null){
+            for(var i=0;i<originCountryArr.length;i++){
+                if(originCountryArr[i] != '全部'){
+                    originCountry += "'"+originCountryArr[i] + "',";
+                }else{
+                    originCountry = "";break;
+                }
+            }
+        }
+        if(originCountry.length > 1){
+            originCountry = originCountry.substring(0,originCountry.length-1);
+        }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractStartDate: $("#contractStartDate").val(),
         contractEndDate: $("#contractEndDate").val(),
@@ -348,7 +391,8 @@ function getTotalInfo(){
         level: level,
         companyNo: $("#companyNo").val(),
         businessMode: businessMode,
-        externalCompany: externalCompany
+        externalCompany: externalCompany,
+        originCountry: originCountry
     };
 
     $.ajax({

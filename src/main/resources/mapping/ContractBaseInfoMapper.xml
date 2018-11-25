@@ -685,6 +685,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
+    </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
     </if>
@@ -738,6 +741,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
+    </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
     </if>
@@ -788,6 +794,9 @@
     where 1 = 1 and a.status != '0'
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
+    </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
