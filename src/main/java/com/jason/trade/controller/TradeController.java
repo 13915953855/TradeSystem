@@ -561,16 +561,9 @@ public class TradeController {
     @RequestMapping(value = "/queryDutyList")
     public String queryDutyList(ContractParam contractParam) throws JSONException {
         JSONObject result = new JSONObject();
-        String start = contractParam.getTaxPayDateStart();
-        String end = contractParam.getTaxPayDateEnd();
-        if(StringUtils.isBlank(start)){
-            start = "2000-01-01";
-        }
-        if(StringUtils.isBlank(end)){
-            end = "2099-12-31";
-        }
-        result.put("total",contractRepository.countByTaxPayDateBetween(start,end));
-        List<ContractBaseInfo> data = contractRepository.findByTaxPayDateBetweenOrderByTaxPayDateDesc(start,end);
+        result.put("total",contractBaseInfoMapper.selectCountByExample(contractParam));
+        List<ContractBaseInfo> data = contractBaseInfoMapper.selectByExample(contractParam);
+
         Double totalTariff = 0.0;
         Double totalAddedValueTax = 0.0;
         for (ContractBaseInfo contractBaseInfo : data) {
@@ -586,15 +579,7 @@ public class TradeController {
     @RequestMapping(value = "/queryDutyTotal")
     public String queryDutyTotal(ContractParam contractParam) throws JSONException {
         JSONObject result = new JSONObject();
-        String start = contractParam.getTaxPayDateStart();
-        String end = contractParam.getTaxPayDateEnd();
-        if(StringUtils.isBlank(start)){
-            start = "2000-01-01";
-        }
-        if(StringUtils.isBlank(end)){
-            end = "2099-12-31";
-        }
-        List<ContractBaseInfo> data = contractRepository.findByTaxPayDateBetweenOrderByTaxPayDateDesc(start,end);
+        List<ContractBaseInfo> data = contractBaseInfoMapper.selectByExample(contractParam);
         Double totalTariff = 0.0;
         Double totalAddedValueTax = 0.0;
         for (ContractBaseInfo contractBaseInfo : data) {

@@ -446,6 +446,12 @@
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
     </if>
+    <if test="taxPayDateStart != null and taxPayDateStart != ''" >
+      and a.tax_pay_date &gt;= '${taxPayDateStart}'
+    </if>
+    <if test="taxPayDateEnd != null and taxPayDateEnd != ''" >
+      and a.tax_pay_date &lt;= '${taxPayDateEnd}'
+    </if>
     <if test="etaStartDate != null and etaStartDate != ''" >
       and a.eta &gt;= '${etaStartDate}'
     </if>
@@ -478,8 +484,9 @@
       </if>
       )
     </if>
-
-    order by a.${sortName} ${sortOrder}
+    <if test="sortName != null and sortOrder != null" >
+      order by a.${sortName} ${sortOrder}
+    </if>
     <if test="start != null and limit != null" >
       limit ${start},${limit}
     </if>
@@ -533,6 +540,12 @@
     </if>
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="taxPayDateStart != null and taxPayDateStart != ''" >
+      and a.tax_pay_date &gt;= '${taxPayDateStart}'
+    </if>
+    <if test="taxPayDateEnd != null and taxPayDateEnd != ''" >
+      and a.tax_pay_date &lt;= '${taxPayDateEnd}'
     </if>
     <if test="etaStartDate != null and etaStartDate != ''" >
       and a.eta &gt;= '${etaStartDate}'

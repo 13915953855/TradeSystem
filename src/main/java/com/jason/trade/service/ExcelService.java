@@ -35,6 +35,70 @@ public class ExcelService {
     private int secondSize = 0;
     private int thirdSize = 0;
 
+    public XSSFWorkbook writeDutyExcel(List<ContractBaseInfo> data){
+        //创建工作簿
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        //创建工作表
+        XSSFSheet sheet = workBook.createSheet();
+        //创建样式
+        XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+
+        //set date format
+        CellStyle dateCellStyle = workBook.createCellStyle();
+        CreationHelper createHelper = workBook.getCreationHelper();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/m/d"));
+
+        List<List<Object>> result = convertDutyList(data);
+
+        //创建头
+        //创建第一行
+        XSSFRow row = sheet.createRow(0);
+        //创建单元格
+        XSSFCell cell = null;
+        //创建单元格
+        for (int j = 0; j < GlobalConst.HEAD_DUTY_ARRAY.length; j++) {
+            cell = row.createCell(j, CellType.STRING);
+            cell.setCellValue(GlobalConst.HEAD_DUTY_ARRAY[j]);
+            cell.setCellStyle(styleNoColor);
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            //创建行
+            row = sheet.createRow(i+1);
+            List<Object> rowData = result.get(i);
+            for (int k = 0; k < GlobalConst.HEAD_DUTY_ARRAY.length; k++) {
+                cell = row.createCell(k, CellType.STRING);
+                if(rowData.get(k) == null){
+                    cell.setCellValue("");
+                }else {
+                    cell.setCellValue(rowData.get(k).toString());
+                }
+                cell.setCellStyle(styleNoColor);
+            }
+        }
+        return workBook;
+    }
+    private List<List<Object>> convertDutyList(List<ContractBaseInfo> data) {
+        List<List<Object>> result = new ArrayList<>();
+        for (ContractBaseInfo dutyInfo : data) {
+            List<Object> list = new ArrayList<>();
+            list.add(dutyInfo.getExternalContract());// "外合同编号",
+            list.add(dutyInfo.getInsideContract());// "内合同编号",
+            list.add(dutyInfo.getExternalCompany());//"外商",
+            list.add(dutyInfo.getTariffNo());// "报关单号",
+            list.add(dutyInfo.getTaxPayDate());// "付税日期",
+            list.add(dutyInfo.getTariff());// "关税",
+            list.add(dutyInfo.getAddedValueTax());// "增值税",
+            list.add(dutyInfo.getAgent());// "货代",
+            list.add(dutyInfo.getAgentPassDate());// "放行日期"
+            list.add(dutyInfo.getWarehouse());// "仓库",
+            list.add(dutyInfo.getStoreDate());// "入库时间",
+
+            result.add(list);
+        }
+        return result;
+    }
+
     public XSSFWorkbook writeStoreInfoExcel(List<QueryContractInfo> data){
         //创建工作簿
         XSSFWorkbook workBook = new XSSFWorkbook();

@@ -23,9 +23,8 @@ $(function () {
     });
     initLevel();
     initBusinessMode();
-    initExternalCompany();
     initCargoList();*/
-
+    initExternalCompany();
     getTotalInfo();
 });
 
@@ -80,6 +79,9 @@ var TableInit = function () {
                 field: 'insideContract',
                 title: '内合同编号'
             }, {
+                field: 'externalCompany',
+                title: '外商'
+            }, {
                 field: 'tariffNo',
                 title: '报关单号'
             }, {
@@ -109,9 +111,24 @@ var TableInit = function () {
 
     //得到查询的参数
     oTableInit.queryParams = function (params) {
+    var externalCompanyArr = $("#externalCompany").val();
+            var externalCompany = "";
+            if(externalCompanyArr != null){
+                for(var i=0;i<externalCompanyArr.length;i++){
+                    if(externalCompanyArr[i] != '全部'){
+                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                    }else{
+                        externalCompany = "";break;
+                    }
+                }
+            }
+            if(externalCompany.length > 1){
+                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+            }
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             taxPayDateStart: $("#taxPayDateStart").val(),
             taxPayDateEnd: $("#taxPayDateEnd").val(),
+            externalCompany: externalCompany
         };
         return temp;
     };
@@ -132,6 +149,27 @@ var ButtonInit = function () {
             resetQuery();
             getTotalInfo();
         });
+        $("#btn_output").click(function(){
+            var externalCompanyArr = $("#externalCompany").val();
+            var externalCompany = "";
+            if(externalCompanyArr != null){
+                for(var i=0;i<externalCompanyArr.length;i++){
+                    if(externalCompanyArr[i] != '全部'){
+                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                    }else{
+                        externalCompany = "";break;
+                    }
+                }
+            }
+            if(externalCompany.length > 1){
+                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+            }
+            var params = "?externalCompany="+externalCompany;
+            params += "&taxPayDateStart="+$("#taxPayDateStart").val();
+            params += "&taxPayDateEnd="+$("#taxPayDateEnd").val();
+            var url = "/trade/queryDuty/output"+params;
+            window.open(url);
+        });
     };
 
     return oInit;
@@ -143,9 +181,24 @@ function resetQuery(){
 }
 
 function getTotalInfo(){
+var externalCompanyArr = $("#externalCompany").val();
+        var externalCompany = "";
+        if(externalCompanyArr != null){
+            for(var i=0;i<externalCompanyArr.length;i++){
+                if(externalCompanyArr[i] != '全部'){
+                    externalCompany += "'"+externalCompanyArr[i] + "',";
+                }else{
+                    externalCompany = "";break;
+                }
+            }
+        }
+        if(externalCompany.length > 1){
+            externalCompany = externalCompany.substring(0,externalCompany.length-1);
+        }
     var queryParams = {
         taxPayDateStart: $("#taxPayDateStart").val(),
         taxPayDateEnd: $("#taxPayDateEnd").val(),
+        externalCompany: externalCompany
     };
     $.ajax({
         url:"/trade/queryDutyTotal",

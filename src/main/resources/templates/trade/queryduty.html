@@ -148,21 +148,27 @@
                                     </div>
                                 </div>-->
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-2">付税日期从:</label>
+                                    <label class="control-label col-sm-1">付税日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
                                             <input size="16" type="text" value="" id="taxPayDateStart" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                    <label class="control-label col-sm-2">到:</label>
+                                    <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
                                             <input size="16" type="text" value="" id="taxPayDateEnd" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4" style="text-align:right;">
+                                    <label class="control-label col-sm-1">外商</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="externalCompany" multiple="multiple">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3" style="text-align:right;">
                                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                                         <button type="button" id="btn_reset" class="btn btn-default">重置</button>
                                     </div>
@@ -185,6 +191,11 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    <div id="toolbar" class="btn-group">
+                        <button id="btn_output" type="button" class="btn btn-default">
+                            <span class="fa fa-download" aria-hidden="true"></span>导出EXCEL
+                        </button>
                     </div>
                     <table id="tb_contract"></table>
                 </div>

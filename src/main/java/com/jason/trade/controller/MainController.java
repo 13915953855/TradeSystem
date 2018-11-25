@@ -520,7 +520,19 @@ public class MainController {
         return null;
     }
 
-
+    /**
+     * 库存信息
+     * @param session
+     * @param externalCompany
+     * @param businessMode
+     * @param companyNo
+     * @param level
+     * @param cargoName
+     * @param contractEndDate
+     * @param contractStartDate
+     * @param status
+     * @return
+     */
     @GetMapping(value="/trade/queryStoreInfo/output")
     public ResponseEntity<Resource> queryStoreInfoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,
                                                      @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
@@ -553,6 +565,58 @@ public class MainController {
         String fileName = "库存信息"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
         try {
             Workbook workbook = excelService.writeStoreInfoExcel(data);
+            bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            workbook.close();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            headers.add("charset", "utf-8");
+            //设置下载文件名
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            headers.add("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+
+            SysLog sysLog = new SysLog();
+            sysLog.setDetail("导出Excel记录");
+            sysLog.setOperation("导出");
+            sysLog.setUser(userInfo.getAccount());
+            sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+            sysLogRepository.save(sysLog);
+
+
+            Resource resource = new InputStreamResource(new ByteArrayInputStream(bos.toByteArray()));
+
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/x-msdownload")).body(resource);
+
+        } catch (IOException e) {
+            if (null != bos) {
+                try {
+                    bos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    @GetMapping(value="/trade/queryDuty/output")
+    public ResponseEntity<Resource> queryDutyOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,
+                                                         @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        ContractParam contractParam = new ContractParam();
+        contractParam.setTaxPayDateStart(taxPayDateStart);
+        contractParam.setTaxPayDateEnd(taxPayDateEnd);
+        contractParam.setExternalCompany(externalCompany);
+
+        ByteArrayOutputStream bos = null;
+        List<ContractBaseInfo> data = contractBaseInfoMapper.selectByExample(contractParam);
+        String fileName = "付税信息"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
+        try {
+            Workbook workbook = excelService.writeDutyExcel(data);
             bos = new ByteArrayOutputStream();
             workbook.write(bos);
             workbook.close();

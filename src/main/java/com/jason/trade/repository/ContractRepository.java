@@ -38,8 +38,4 @@ public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integ
     //select * from contract_base_info where eta < '2018-10-20' and status = '3';
     List<ContractBaseInfo> findByEtaLessThanAndStatus(String date,String status);
     Integer countByEtaLessThanAndStatus(String date,String status);
-
-    //根据付税日期来统计
-    List<ContractBaseInfo> findByTaxPayDateBetweenOrderByTaxPayDateDesc(String start,String end);
-    Integer countByTaxPayDateBetween(String start,String end);
 }
