@@ -519,4 +519,75 @@ public class MainController {
         }
         return null;
     }
+
+
+    @GetMapping(value="/trade/queryStoreInfo/output")
+    public ResponseEntity<Resource> queryStoreInfoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,
+                                                     @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
+                                                     @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,
+                                                     @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
+                                                     @RequestParam(value="status") String status){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        ContractParam contractParam = new ContractParam();
+        contractParam.setContractStartDate(contractStartDate);
+        contractParam.setContractEndDate(contractEndDate);
+        contractParam.setBusinessMode(businessMode);
+        contractParam.setExternalCompany(externalCompany);
+        contractParam.setCompanyNo(companyNo);
+        contractParam.setCargoName(cargoName);
+        contractParam.setLevel(level);
+        //0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
+        }
+        contractParam.setStatus(status);
+
+        ByteArrayOutputStream bos = null;
+        List<QueryContractInfo> data = contractBaseInfoMapper.queryStoreInfoListByExample(contractParam);
+        String fileName = "库存信息"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
+        try {
+            Workbook workbook = excelService.writeStoreInfoExcel(data);
+            bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            workbook.close();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            headers.add("charset", "utf-8");
+            //设置下载文件名
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            headers.add("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+
+            SysLog sysLog = new SysLog();
+            sysLog.setDetail("导出Excel记录");
+            sysLog.setOperation("导出");
+            sysLog.setUser(userInfo.getAccount());
+            sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+            sysLogRepository.save(sysLog);
+
+
+            Resource resource = new InputStreamResource(new ByteArrayInputStream(bos.toByteArray()));
+
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/x-msdownload")).body(resource);
+
+        } catch (IOException e) {
+            if (null != bos) {
+                try {
+                    bos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
 }

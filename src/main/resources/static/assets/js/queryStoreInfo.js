@@ -231,6 +231,76 @@ var ButtonInit = function () {
             resetQuery();
             getTotalInfo();
         });
+        $("#btn_output").click(function(){
+                    var externalCompanyArr = $("#externalCompany").val();
+                            var externalCompany = "";
+                            if(externalCompanyArr != null){
+                                for(var i=0;i<externalCompanyArr.length;i++){
+                                    if(externalCompanyArr[i] != '全部'){
+                                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                                    }else{
+                                        externalCompany = "";break;
+                                    }
+                                }
+                            }
+                            if(externalCompany.length > 1){
+                                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+                            }
+                            var levelArr = $("#level").val();
+                            var level = "";
+                            if(levelArr != null){
+                                for(var i=0;i<levelArr.length;i++){
+                                    if(levelArr[i] != '全部'){
+                                        level += "'"+levelArr[i] + "',";
+                                    }else{
+                                        level = "";break;
+                                    }
+                                }
+                            }
+                            if(level.length > 1){
+                                level = level.substring(0,level.length-1);
+                            }
+                            var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
+                            var businessModeArr = $("#businessMode").val();
+                            var businessMode = "";
+                            if(businessModeArr != null){
+                                for(var i=0;i<businessModeArr.length;i++){
+                                    if(businessModeArr[i] != '全部'){
+                                        businessMode += "'"+businessModeArr[i] + "',";
+                                    }else{
+                                        businessMode = "";break;
+                                    }
+                                }
+                            }
+                            if(businessMode.length > 1){
+                                businessMode = businessMode.substring(0,businessMode.length-1);
+                            }
+                            var statusArr = $("#status").val();
+                                    var status = "";
+                                    if(statusArr != null){
+                                        for(var i=0;i<statusArr.length;i++){
+                                            if(statusArr[i] != '全部'){
+                                                status += statusArr[i] + ",";
+                                            }else{
+                                                status = "";break;
+                                            }
+                                        }
+                                    }
+                                    if(status.length > 1){
+                                        status = status.substring(0,status.length-1);
+                                    }
+
+                    var params = "?externalCompany="+externalCompany;
+                    params += "&businessMode="+businessMode;
+                    params += "&companyNo="+$("#companyNo").val();
+                    params += "&level="+level;
+                    params += "&status="+status;
+                    params += "&cargoName="+cargoName;
+                    params += "&contractEndDate="+$("#contractEndDate").val();
+                    params += "&contractStartDate="+$("#contractStartDate").val();
+                    var url = "/trade/queryStoreInfo/output"+params;
+                    window.open(url);
+                });
     };
 
     return oInit;

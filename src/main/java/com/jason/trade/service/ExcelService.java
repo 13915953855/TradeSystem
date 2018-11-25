@@ -35,12 +35,51 @@ public class ExcelService {
     private int secondSize = 0;
     private int thirdSize = 0;
 
-    public XSSFWorkbook writeCargoExcel(List<QueryContractInfo> data){
+    public XSSFWorkbook writeStoreInfoExcel(List<QueryContractInfo> data){
         //创建工作簿
         XSSFWorkbook workBook = new XSSFWorkbook();
         //创建工作表
         XSSFSheet sheet = workBook.createSheet();
         //创建样式
+        XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+
+        //set date format
+        CellStyle dateCellStyle = workBook.createCellStyle();
+        CreationHelper createHelper = workBook.getCreationHelper();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/m/d"));
+
+        List<List<Object>> result = convertQueryStoreInfoList(data);
+
+        //创建头
+        //创建第一行
+        XSSFRow row = sheet.createRow(0);
+        //创建单元格
+        XSSFCell cell = null;
+        //创建单元格
+        for (int j = 0; j < GlobalConst.HEAD_STOREINFO_QUERY_ARRAY.length; j++) {
+            cell = row.createCell(j, CellType.STRING);
+            cell.setCellValue(GlobalConst.HEAD_STOREINFO_QUERY_ARRAY[j]);
+            cell.setCellStyle(styleNoColor);
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            //创建行
+            row = sheet.createRow(i+1);
+            List<Object> rowData = result.get(i);
+            for (int k = 0; k < GlobalConst.HEAD_STOREINFO_QUERY_ARRAY.length; k++) {
+                cell = row.createCell(k, CellType.STRING);
+                if(rowData.get(k) == null){
+                    cell.setCellValue("");
+                }else {
+                    cell.setCellValue(rowData.get(k).toString());
+                }
+                cell.setCellStyle(styleNoColor);
+            }
+        }
+        return workBook;
+    }
+
+    private XSSFCellStyle createXssfCellStyle(XSSFWorkbook workBook) {
         XSSFCellStyle styleNoColor = workBook.createCellStyle();
         styleNoColor.setAlignment(HorizontalAlignment.CENTER);
         styleNoColor.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -49,6 +88,41 @@ public class ExcelService {
         styleNoColor.setBorderRight(BorderStyle.THIN);
         styleNoColor.setBorderTop(BorderStyle.THIN);
         styleNoColor.setWrapText(true);
+        return styleNoColor;
+    }
+    private List<List<Object>> convertQueryStoreInfoList(List<QueryContractInfo> data) {
+        List<List<Object>> result = new ArrayList<>();
+        for (QueryContractInfo storeInfo : data) {
+            List<Object> list = new ArrayList<>();
+            list.add(storeInfo.getCargoName());//"商品",
+            list.add(storeInfo.getLevel());// "级别",
+            list.add(storeInfo.getCompanyNo());// "厂号",
+            list.add(storeInfo.getCargoNo());// "库号",
+            list.add(storeInfo.getExternalContract());// "外合同编号",
+            list.add(storeInfo.getInsideContract());// "内合同编号",
+            list.add(storeInfo.getContainerNo());// "柜号",
+            list.add(storeInfo.getLadingbillNo());// "提单号",
+            list.add(storeInfo.getStoreDate());// "入库时间",
+            list.add(storeInfo.getWarehouse());// "仓库",
+            list.add(storeInfo.getInvoiceAmount());// "发票重量",
+            list.add(storeInfo.getBoxes());// "发票箱数",
+            list.add(storeInfo.getExpectStoreWeight());// "预库存重量",
+            list.add(storeInfo.getExpectStoreBoxes());// "预库存箱数",
+            list.add(storeInfo.getRealStoreWeight());// "现库存重量",
+            list.add(storeInfo.getRealStoreBoxes());// "现库存箱数",
+            list.add(storeInfo.getRealStoreMoney());// "库存成本"
+
+            result.add(list);
+        }
+        return result;
+    }
+    public XSSFWorkbook writeCargoExcel(List<QueryContractInfo> data){
+        //创建工作簿
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        //创建工作表
+        XSSFSheet sheet = workBook.createSheet();
+        //创建样式
+        XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
 
         //set date format
         CellStyle dateCellStyle = workBook.createCellStyle();
@@ -120,14 +194,7 @@ public class ExcelService {
         //创建工作表
         XSSFSheet sheet = workBook.createSheet();
         //创建样式
-        XSSFCellStyle styleNoColor = workBook.createCellStyle();
-        styleNoColor.setAlignment(HorizontalAlignment.CENTER);
-        styleNoColor.setVerticalAlignment(VerticalAlignment.CENTER);
-        styleNoColor.setBorderBottom(BorderStyle.THIN);
-        styleNoColor.setBorderLeft(BorderStyle.THIN);
-        styleNoColor.setBorderRight(BorderStyle.THIN);
-        styleNoColor.setBorderTop(BorderStyle.THIN);
-        styleNoColor.setWrapText(true);
+        XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
 
         //set date format
         CellStyle dateCellStyle = workBook.createCellStyle();
