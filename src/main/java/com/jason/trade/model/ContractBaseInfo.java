@@ -182,6 +182,46 @@ public class ContractBaseInfo {
     private String storageCondition;
     @Column(name="cargo_match")
     private Integer cargoMatch;
+    @Column(name="customer_name")
+    private String customerName;
+    @Column(name="expect_sale_date")
+    private String expectSaleDate;
+    @Column(name="expect_sale_unit_price")
+    private Double expectSaleUnitPrice;
+    @Column(name="expect_sale_weight")
+    private Double expectSaleWeight;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getExpectSaleDate() {
+        return expectSaleDate;
+    }
+
+    public void setExpectSaleDate(String expectSaleDate) {
+        this.expectSaleDate = expectSaleDate;
+    }
+
+    public Double getExpectSaleUnitPrice() {
+        return expectSaleUnitPrice;
+    }
+
+    public void setExpectSaleUnitPrice(Double expectSaleUnitPrice) {
+        this.expectSaleUnitPrice = expectSaleUnitPrice;
+    }
+
+    public Double getExpectSaleWeight() {
+        return expectSaleWeight;
+    }
+
+    public void setExpectSaleWeight(Double expectSaleWeight) {
+        this.expectSaleWeight = expectSaleWeight;
+    }
 
     public String getCargoType() {
         return cargoType;

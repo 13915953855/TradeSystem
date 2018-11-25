@@ -547,6 +547,10 @@ function saveContract(){
     contract.warehouse = $("#warehouse").val();
     contract.storeDate = $("#storeDate").val();
     contract.remark = $("#remark").val();
+    contract.customerName = $("#customerName").val();
+    contract.expectSaleDate = $("#expectSaleDate").val();
+    contract.expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == "" ? 0:toFloat($("#expectSaleUnitPrice").val());
+    contract.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:toFloat($("#expectSaleWeight").val());
     contract.cargoType = $("#cargoType").val();
     contract.zhixiangfei = $("#zhixiangfei").val() == "" ? 0:toFloat($("#zhixiangfei").val());
     contract.zhigangfei = $("#zhigangfei").val() == "" ? 0:toFloat($("#zhigangfei").val());

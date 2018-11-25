@@ -385,6 +385,11 @@ public class ExcelService {
         list.add(baseInfo.getTotalInvoiceAmount());//发票总数量
         list.add(baseInfo.getTotalInvoiceMoney());//发票总金额(元)
 
+        list.add(baseInfo.getCustomerName());//客户名称
+        list.add(baseInfo.getExpectSaleDate());//预售时间
+        list.add(baseInfo.getExpectSaleUnitPrice());//预售单价(元/KG)
+        list.add(baseInfo.getExpectSaleWeight());//预售重量(kg)
+
         list.add(baseInfo.getIssuingBank());//开证行
         list.add(baseInfo.getIssuingDate());//开证日期
         list.add(baseInfo.getLcno());//LC NO.
@@ -465,11 +470,6 @@ public class ExcelService {
             list.add(saleInfo.getPickupUser());//销售经理
             list.add(saleInfo.getSaleContractNo());//销售合同编号
             list.add(saleInfo.getCustomerName());//客户名称
-            list.add(saleInfo.getExpectSaleUnitPrice());//预售单价(元/kg)
-            list.add(saleInfo.getExpectSaleWeight());//预售重量(kg)
-            list.add(saleInfo.getExpectSaleMoney());//预售金额(元)
-            list.add(saleInfo.getExpectSaleBoxes());//预售箱数
-            list.add(saleInfo.getExpectSaleDate());//预出库时间
             list.add(saleInfo.getRealSaleUnitPrice());//实售单价(元/kg)
             list.add(saleInfo.getRealSaleWeight());//实售重量(kg)
             list.add(saleInfo.getRealSaleBoxes());//实售箱数

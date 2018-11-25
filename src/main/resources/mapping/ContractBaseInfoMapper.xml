@@ -135,7 +135,19 @@
       <if test="lcno != null" >
         lcno = #{lcno,jdbcType=VARCHAR},
       </if>
-      <if test="qacertificate != null" >
+        <if test="customerName != null" >
+            customer_name = #{customerName,jdbcType=VARCHAR},
+        </if>
+        <if test="expectSaleDate != null" >
+            expect_sale_date = #{expectSaleDate,jdbcType=VARCHAR},
+        </if>
+        <if test="expectSaleUnitPrice != null" >
+            expect_sale_unit_price = #{expectSaleUnitPrice,jdbcType=DOUBLE},
+        </if>
+        <if test="expectSaleWeight != null" >
+            expect_sale_weight = #{expectSaleWeight,jdbcType=DOUBLE},
+        </if>
+        <if test="qacertificate != null" >
         qacertificate = #{qacertificate,jdbcType=INTEGER},
       </if>
       <if test="addedValueTax != null" >

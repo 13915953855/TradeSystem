@@ -443,7 +443,36 @@
                                     <table id="tb_cargo" class="table table-striped"></table>
                                 </div>
                             </div>
-
+                            <div class="panel panel-default">
+                                <div class="panel-heading">预售信息</div>
+                                <div class="panel-body">
+                                    <form class="form-horizontal">
+                                    <div class="form-group" style="">
+                                        <label class="control-label col-sm-2">客户名称</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="customerName" th:value="${contract.customerName}"/>
+                                        </div>
+                                        <label class="control-label col-sm-3">预售时间</label>
+                                        <div class="col-sm-3">
+                                            <div class="input-append date form-date">
+                                                <input class="form-control" size="16" id="expectSaleDate" type="text" readonly="readonly" th:value="${contract.expectSaleDate}"/>
+                                                <span class="add-on"><i class="icon-th"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="">
+                                        <label class="control-label col-sm-2">预售单价(CNY/KG)</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="expectSaleUnitPrice" th:value="${contract.expectSaleUnitPrice}"/>
+                                        </div>
+                                        <label class="control-label col-sm-3">预售重量(KG)</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="expectSaleWeight" th:value="${contract.expectSaleWeight}"/>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
                             <div id="LCDiv" class="panel panel-default">
                                 <div class="panel-heading">付款信息(L/C)</div>
                                 <div class="panel-body">
@@ -881,6 +910,7 @@
                                     </form>
                                 </div>
                             </div>
+
                             <div class="panel panel-default">
                                 <div class="panel-heading">附件</div>
                                 <div class="panel-body">

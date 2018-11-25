@@ -265,7 +265,8 @@ public class MainController {
         contractParam.setLadingbillNo(ladingbillNo);
         contractParam.setEtaStartDate(etaStartDate);
         contractParam.setEtaEndDate(etaEndDate);
-
+        contractParam.setSortName("contract_date");
+        contractParam.setSortOrder("desc");
         ByteArrayOutputStream bos = null;
         List<ContractBaseInfo> data = tradeService.getContractBaseInfoList(contractParam);
         String fileName = "业务台账"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
