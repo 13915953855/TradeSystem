@@ -25,6 +25,7 @@ $(function () {
     initBusinessMode();
     initExternalCompany();
     initCargoList();
+    initWarehouse();
 
     getTotalInfo();
 });
@@ -71,7 +72,7 @@ var TableInit = function () {
             clickToSelect: true,                //是否启用点击选中行
             height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
             uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
-            showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+            showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
             detailView: false,                   //是否显示父子表
             columns: [{
@@ -85,19 +86,20 @@ var TableInit = function () {
                  title: '厂号'
              }, {
                  field: 'cargoNo',
-                 title: '库号'
+                 title: '库号',
+                 visible: false
              }, {
                 field: 'externalContract',
-                title: '外合同编号'
+                title: '外合同编号',
+                visible: false
             }, {
                 field: 'insideContract',
-                title: '内合同编号'
+                title: '内合同编号',
+                visible: false
             }, {
                 field: 'containerNo',
-                title: '柜号'
-            }, {
-                field: 'ladingbillNo',
-                title: '提单号'
+                title: '柜号',
+                visible: false
             }, {
                 field: 'storeDate',
                 title: '入库时间'
@@ -200,6 +202,20 @@ var TableInit = function () {
                 if(status.length > 1){
                     status = status.substring(0,status.length-1);
                 }
+        var originCountryArr = $("#originCountry").val();
+        var originCountry = "";
+        if(originCountryArr != null){
+            for(var i=0;i<originCountryArr.length;i++){
+                if(originCountryArr[i] != '全部'){
+                    originCountry += "'"+originCountryArr[i] + "',";
+                }else{
+                    originCountry = "";break;
+                }
+            }
+        }
+        if(originCountry.length > 1){
+            originCountry = originCountry.substring(0,originCountry.length-1);
+        }
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
@@ -210,7 +226,15 @@ var TableInit = function () {
             status: status,
             companyNo: $("#companyNo").val(),
             businessMode: businessMode,
-            externalCompany: externalCompany
+            externalCompany: externalCompany,
+            originCountry: originCountry,
+            warehouse: $("#warehouse").val() == '全部'?"":$("#warehouse").val(),
+            containerNo: $("#containerNo").val(),
+            minBox: $("#minBox").val(),
+            maxBox: $("#maxBox").val(),
+            minWeight: $("#minWeight").val(),
+            maxWeight: $("#maxWeight").val()
+
         };
         return temp;
     };
@@ -233,63 +257,76 @@ var ButtonInit = function () {
         });
         $("#btn_output").click(function(){
                     var externalCompanyArr = $("#externalCompany").val();
-                            var externalCompany = "";
-                            if(externalCompanyArr != null){
-                                for(var i=0;i<externalCompanyArr.length;i++){
-                                    if(externalCompanyArr[i] != '全部'){
-                                        externalCompany += "'"+externalCompanyArr[i] + "',";
-                                    }else{
-                                        externalCompany = "";break;
-                                    }
-                                }
+                    var externalCompany = "";
+                    if(externalCompanyArr != null){
+                        for(var i=0;i<externalCompanyArr.length;i++){
+                            if(externalCompanyArr[i] != '全部'){
+                                externalCompany += "'"+externalCompanyArr[i] + "',";
+                            }else{
+                                externalCompany = "";break;
                             }
-                            if(externalCompany.length > 1){
-                                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+                        }
+                    }
+                    if(externalCompany.length > 1){
+                        externalCompany = externalCompany.substring(0,externalCompany.length-1);
+                    }
+                    var levelArr = $("#level").val();
+                    var level = "";
+                    if(levelArr != null){
+                        for(var i=0;i<levelArr.length;i++){
+                            if(levelArr[i] != '全部'){
+                                level += "'"+levelArr[i] + "',";
+                            }else{
+                                level = "";break;
                             }
-                            var levelArr = $("#level").val();
-                            var level = "";
-                            if(levelArr != null){
-                                for(var i=0;i<levelArr.length;i++){
-                                    if(levelArr[i] != '全部'){
-                                        level += "'"+levelArr[i] + "',";
-                                    }else{
-                                        level = "";break;
-                                    }
-                                }
+                        }
+                    }
+                    if(level.length > 1){
+                        level = level.substring(0,level.length-1);
+                    }
+                    var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
+                    var businessModeArr = $("#businessMode").val();
+                    var businessMode = "";
+                    if(businessModeArr != null){
+                        for(var i=0;i<businessModeArr.length;i++){
+                            if(businessModeArr[i] != '全部'){
+                                businessMode += "'"+businessModeArr[i] + "',";
+                            }else{
+                                businessMode = "";break;
                             }
-                            if(level.length > 1){
-                                level = level.substring(0,level.length-1);
+                        }
+                    }
+                    if(businessMode.length > 1){
+                        businessMode = businessMode.substring(0,businessMode.length-1);
+                    }
+                    var statusArr = $("#status").val();
+                    var status = "";
+                    if(statusArr != null){
+                        for(var i=0;i<statusArr.length;i++){
+                            if(statusArr[i] != '全部'){
+                                status += statusArr[i] + ",";
+                            }else{
+                                status = "";break;
                             }
-                            var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
-                            var businessModeArr = $("#businessMode").val();
-                            var businessMode = "";
-                            if(businessModeArr != null){
-                                for(var i=0;i<businessModeArr.length;i++){
-                                    if(businessModeArr[i] != '全部'){
-                                        businessMode += "'"+businessModeArr[i] + "',";
-                                    }else{
-                                        businessMode = "";break;
-                                    }
-                                }
+                        }
+                    }
+                    if(status.length > 1){
+                        status = status.substring(0,status.length-1);
+                    }
+                    var originCountryArr = $("#originCountry").val();
+                    var originCountry = "";
+                    if(originCountryArr != null){
+                        for(var i=0;i<originCountryArr.length;i++){
+                            if(originCountryArr[i] != '全部'){
+                                originCountry += "'"+originCountryArr[i] + "',";
+                            }else{
+                                originCountry = "";break;
                             }
-                            if(businessMode.length > 1){
-                                businessMode = businessMode.substring(0,businessMode.length-1);
-                            }
-                            var statusArr = $("#status").val();
-                                    var status = "";
-                                    if(statusArr != null){
-                                        for(var i=0;i<statusArr.length;i++){
-                                            if(statusArr[i] != '全部'){
-                                                status += statusArr[i] + ",";
-                                            }else{
-                                                status = "";break;
-                                            }
-                                        }
-                                    }
-                                    if(status.length > 1){
-                                        status = status.substring(0,status.length-1);
-                                    }
-
+                        }
+                    }
+                    if(originCountry.length > 1){
+                        originCountry = originCountry.substring(0,originCountry.length-1);
+                    }
                     var params = "?externalCompany="+externalCompany;
                     params += "&businessMode="+businessMode;
                     params += "&companyNo="+$("#companyNo").val();
@@ -298,6 +335,13 @@ var ButtonInit = function () {
                     params += "&cargoName="+cargoName;
                     params += "&contractEndDate="+$("#contractEndDate").val();
                     params += "&contractStartDate="+$("#contractStartDate").val();
+                    params += "&originCountry="+originCountry;
+                    params += "&warehouse="+$("#warehouse").val() == '全部'?"":$("#warehouse").val();
+                    params += "&containerNo="+$("#containerNo").val();
+                    params += "&minBox="+$("#minBox").val();
+                    params += "&maxBox="+$("#maxBox").val();
+                    params += "&minWeight="+$("#minWeight").val();
+                    params += "&maxWeight="+$("#maxWeight").val();
                     var url = "/trade/queryStoreInfo/output"+params;
                     window.open(url);
                 });
@@ -374,6 +418,20 @@ var statusArr = $("#status").val();
                 if(status.length > 1){
                     status = status.substring(0,status.length-1);
                 }
+        var originCountryArr = $("#originCountry").val();
+        var originCountry = "";
+        if(originCountryArr != null){
+            for(var i=0;i<originCountryArr.length;i++){
+                if(originCountryArr[i] != '全部'){
+                    originCountry += "'"+originCountryArr[i] + "',";
+                }else{
+                    originCountry = "";break;
+                }
+            }
+        }
+        if(originCountry.length > 1){
+            originCountry = originCountry.substring(0,originCountry.length-1);
+        }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractStartDate: $("#contractStartDate").val(),
         contractEndDate: $("#contractEndDate").val(),
@@ -382,7 +440,14 @@ var statusArr = $("#status").val();
         status: status,
         companyNo: $("#companyNo").val(),
         businessMode: businessMode,
-        externalCompany: externalCompany
+        externalCompany: externalCompany,
+        originCountry: originCountry,
+        warehouse: $("#warehouse").val() == '全部'?"":$("#warehouse").val(),
+        containerNo: $("#containerNo").val(),
+        minBox: $("#minBox").val(),
+        maxBox: $("#maxBox").val(),
+        minWeight: $("#minWeight").val(),
+        maxWeight: $("#maxWeight").val()
     };
 
     $.ajax({

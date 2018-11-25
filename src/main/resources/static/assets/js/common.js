@@ -114,6 +114,21 @@ function initCargoList(){
     $("#cargoName").append(cargoList);
 }
 
+function initWarehouse(){
+    var opts = "";
+    opts += "<option>名联</option>";
+    opts += "<option>领升</option>";
+    opts += "<option>普菲斯（外高桥）</option>";
+    opts += "<option>普菲斯（洋山）</option>";
+    opts += "<option>太古</option>";
+    opts += "<option>保翔</option>";
+    opts += "<option>大宛</option>";
+    opts += "<option>鑫汇洋</option>";
+    opts += "<option>瑞源</option>";
+    opts += "<option>库外</option>";
+    $("#warehouse").append(opts);
+}
+
 function initBank(){
     var opts = "";
     opts += "<option></option>";

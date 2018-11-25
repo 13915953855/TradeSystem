@@ -113,6 +113,15 @@
     <if test="cargoNo != null" >
       and b.cargo_no like '%${cargoNo}%'
     </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+    <if test="minWeight != null and minWeight != ''" >
+      and b.real_store_weight &gt;= '${minWeight}'
+    </if>
+    <if test="maxWeight != null and maxWeight != ''" >
+      and b.real_store_weight &lt;= '${maxWeight}'
+    </if>
     <if test="customerName != null and customerName != ''" >
       and b.cargo_id in (
       select cargo_id from sale_info where 1=1
@@ -171,6 +180,15 @@
     <if test="cargoNo != null" >
       and b.cargo_no like '%${cargoNo}%'
     </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+    <if test="minWeight != null and minWeight != ''" >
+      and b.real_store_weight &gt;= '${minWeight}'
+    </if>
+    <if test="maxWeight != null and maxWeight != ''" >
+      and b.real_store_weight &lt;= '${maxWeight}'
+    </if>
     <if test="customerName != null and customerName != ''" >
       and b.cargo_id in (
       select cargo_id from sale_info where 1=1
@@ -222,6 +240,15 @@
     </if>
     <if test="maxBox != null and maxBox != ''" >
       and a.real_store_boxes &lt;= '${maxBox}'
+    </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+    <if test="minWeight != null and minWeight != ''" >
+      and b.real_store_weight &gt;= '${minWeight}'
+    </if>
+    <if test="maxWeight != null and maxWeight != ''" >
+      and b.real_store_weight &lt;= '${maxWeight}'
     </if>
     <if test="customerName != null and customerName != ''" >
       and a.cargo_id in (
@@ -679,6 +706,9 @@
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
     </if>
+    <if test="companyNo != null" >
+      and a.company_no like '%${companyNo}%'
+    </if>
     <if test="baoguandan != null and baoguandan != ''" >
       and b.baoguandan = '${baoguandan}'
     </if>
@@ -724,6 +754,9 @@
     </if>
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="companyNo != null" >
+      and a.company_no like '%${companyNo}%'
     </if>
     <if test="baoguandan != null and baoguandan != ''" >
       and b.baoguandan = '${baoguandan}'
@@ -771,6 +804,9 @@
     </if>
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="companyNo != null" >
+      and a.company_no like '%${companyNo}%'
     </if>
     <if test="baoguandan != null and baoguandan != ''" >
       and b.baoguandan = '${baoguandan}'

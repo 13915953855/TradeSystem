@@ -139,8 +139,42 @@
                                             <option>已售完</option>
                                         </select>
                                     </div>
+                                    <label class="control-label col-sm-1">原产地</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="originCountry"  multiple="multiple"></select>
+                                    </div>
+                                    <label class="control-label col-sm-1">仓库</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="warehouse">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">柜号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="containerNo" />
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">现库存箱数最小值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="minBox"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">现库存箱数最大值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="maxBox"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">现库存重量最小值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="minWeight"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">现库存重量最大值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="maxWeight"/>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group" style="">
                                     <label class="control-label col-sm-1">合同日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
@@ -155,7 +189,7 @@
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group" style="">
                                     <div class="col-sm-12" style="text-align:right;">
                                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>

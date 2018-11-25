@@ -38,6 +38,51 @@ public class ContractParam {
     private String endDate;
     private String isFinancing;
     private String isYahui;
+    private String warehouse;
+    private Double minBox;
+    private Double maxBox;
+    private Double minWeight;
+    private Double maxWeight;
+
+    public String getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(String warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public Double getMinBox() {
+        return minBox;
+    }
+
+    public void setMinBox(Double minBox) {
+        this.minBox = minBox;
+    }
+
+    public Double getMaxBox() {
+        return maxBox;
+    }
+
+    public void setMaxBox(Double maxBox) {
+        this.maxBox = maxBox;
+    }
+
+    public Double getMinWeight() {
+        return minWeight;
+    }
+
+    public void setMinWeight(Double minWeight) {
+        this.minWeight = minWeight;
+    }
+
+    public Double getMaxWeight() {
+        return maxWeight;
+    }
+
+    public void setMaxWeight(Double maxWeight) {
+        this.maxWeight = maxWeight;
+    }
 
     public String getIsYahui() {
         return isYahui;

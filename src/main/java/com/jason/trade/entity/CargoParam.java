@@ -23,10 +23,37 @@ public class CargoParam {
     private String businessMode;
     private String minBox;
     private String maxBox;
+    private String companyNo;
+    private String minWeight;
+    private String maxWeight;
     private String baoguandan;
     private String qacertificate;
     private int start;
     private int limit;
+
+    public String getCompanyNo() {
+        return companyNo;
+    }
+
+    public void setCompanyNo(String companyNo) {
+        this.companyNo = companyNo;
+    }
+
+    public String getMinWeight() {
+        return minWeight;
+    }
+
+    public void setMinWeight(String minWeight) {
+        this.minWeight = minWeight;
+    }
+
+    public String getMaxWeight() {
+        return maxWeight;
+    }
+
+    public void setMaxWeight(String maxWeight) {
+        this.maxWeight = maxWeight;
+    }
 
     public String getBaoguandan() {
         return baoguandan;

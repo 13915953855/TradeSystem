@@ -855,6 +855,27 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and a.warehouse = '${warehouse}'
+    </if>
+    <if test="containerNo != null and containerNo != ''" >
+      and a.container_no = '${containerNo}'
+    </if>
+    <if test="minWeight != null and minWeight != ''" >
+      and b.real_store_weight &gt;= '${minWeight}'
+    </if>
+    <if test="maxWeight != null and maxWeight != ''" >
+      and b.real_store_weight &lt;= '${maxWeight}'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and b.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and b.real_store_boxes &lt;= '${maxBox}'
+    </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
     </if>
@@ -887,6 +908,27 @@
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
+    </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and a.warehouse = '${warehouse}'
+    </if>
+    <if test="containerNo != null and containerNo != ''" >
+      and a.container_no = '${containerNo}'
+    </if>
+    <if test="minWeight != null and minWeight != ''" >
+      and b.real_store_weight &gt;= '${minWeight}'
+    </if>
+    <if test="maxWeight != null and maxWeight != ''" >
+      and b.real_store_weight &lt;= '${maxWeight}'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and b.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and b.real_store_boxes &lt;= '${maxBox}'
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
@@ -934,6 +976,27 @@
     where 1 = 1 and a.status != '0'
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
+    </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and a.warehouse = '${warehouse}'
+    </if>
+    <if test="containerNo != null and containerNo != ''" >
+      and a.container_no = '${containerNo}'
+    </if>
+    <if test="minWeight != null and minWeight != ''" >
+      and b.real_store_weight &gt;= '${minWeight}'
+    </if>
+    <if test="maxWeight != null and maxWeight != ''" >
+      and b.real_store_weight &lt;= '${maxWeight}'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and b.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and b.real_store_boxes &lt;= '${maxBox}'
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'

@@ -28,6 +28,7 @@ $(function () {
         $("#btn_query").click();
     });
     initCargoList();
+    initWarehouse();
 });
 
 
@@ -144,11 +145,13 @@ var TableInit = function () {
             cargoNo: $("#cargoNo").val(),
             customerName: $("#customerName").val(),
             containerNo: $("#containerNo").val(),
-            ladingbillNo: $("#ladingbillNo").val(),
+            companyNo: $("#companyNo").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),
             businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
             minBox: $("#minBox").val(),
-            maxBox: $("#maxBox").val()
+            maxBox: $("#maxBox").val(),
+            minWeight: $("#minWeight").val(),
+            maxWeight: $("#maxWeight").val()
         };
         return temp;
     };
@@ -169,7 +172,7 @@ function getTotalStore(){
         cargoNo: $("#cargoNo").val(),
         customerName: $("#customerName").val(),
         containerNo: $("#containerNo").val(),
-        ladingbillNo: $("#ladingbillNo").val()
+        companyNo: $("#companyNo").val()
     };
     $.ajax({
         url:"/trade/cargo/getTotalStore",
@@ -217,7 +220,7 @@ function resetQuery(){
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
     $("#containerNo").val("");
-    $("#ladingbillNo").val("");
+    $("#companyNo").val("");
     $("#customerName").val("");
 
     $("#totalStoreWeight").html("");

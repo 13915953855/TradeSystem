@@ -546,7 +546,10 @@ public class MainController {
                                                      @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
                                                      @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,
                                                      @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
-                                                     @RequestParam(value="status") String status){
+                                                     @RequestParam(value="status") String status,@RequestParam(value="originCountry") String originCountry,
+                                                         @RequestParam(value="warehouse") String warehouse,@RequestParam(value="containerNo") String containerNo,
+                                                         @RequestParam(value="minBox") Double minBox,@RequestParam(value="maxBox") Double maxBox,
+                                                         @RequestParam(value="minWeight") Double minWeight,@RequestParam(value="maxWeight") Double maxWeight){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setContractStartDate(contractStartDate);
@@ -555,6 +558,13 @@ public class MainController {
         contractParam.setExternalCompany(externalCompany);
         contractParam.setCompanyNo(companyNo);
         contractParam.setCargoName(cargoName);
+        contractParam.setOriginCountry(originCountry);
+        contractParam.setWarehouse(warehouse);
+        contractParam.setContainerNo(containerNo);
+        contractParam.setMinBox(minBox);
+        contractParam.setMaxBox(maxBox);
+        contractParam.setMinWeight(minWeight);
+        contractParam.setMaxWeight(maxWeight);
         contractParam.setLevel(level);
         //0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
         if(status.indexOf("全部") >= 0){
