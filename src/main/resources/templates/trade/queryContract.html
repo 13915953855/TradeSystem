@@ -107,7 +107,7 @@
                                     </div>
                                     <label class="control-label col-sm-1">原产地</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control select2" id="originCountry"></select>
+                                        <select class="form-control select2" id="originCountry" multiple="multiple"></select>
                                     </div>
                                     <label class="control-label col-sm-1">状态</label>
                                     <div class="col-sm-2">
@@ -118,6 +118,14 @@
                                             <option>已到港</option>
                                             <option>已入库</option>
                                             <option>已售完</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">合同归属公司</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" id="ownerCompany">
+                                            <option>全部</option>
+                                            <option>海企长城</option>
+                                            <option>紫荆华美</option>
                                         </select>
                                     </div>
                                 </div>
@@ -218,6 +226,11 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    <div id="toolbar" class="btn-group">
+                        <button id="btn_output" type="button" class="btn btn-default">
+                            <span class="fa fa-download" aria-hidden="true"></span>导出EXCEL
+                        </button>
                     </div>
                     <table id="tb_contract"></table>
                 </div>

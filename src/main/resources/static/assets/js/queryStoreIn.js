@@ -7,7 +7,9 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-
+$("select").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -145,6 +147,7 @@ var TableInit = function () {
             ladingbillNo: $("#ladingbillNo").val(),
             baoguandan: $("#baoguandan").val() == "全部"?"":$("#baoguandan").val(),
             qacertificate: $("#qacertificate").val() == "全部"?"":$("#qacertificate").val(),
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             status: $("#status").val() == "全部"?"":$("#status").val()
         };
         return temp;
@@ -181,6 +184,7 @@ function resetQuery(){
     $("#status").val("全部").trigger("change");
     $("#baoguandan").val("全部").trigger("change");
     $("#qacertificate").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
     $("#containerNo").val("");
@@ -199,6 +203,7 @@ function getTotalInfo(){
          insideContract: $("#insideContract").val(),
          level: $("#level").val() == "全部"?"":$("#level").val(),
          cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
+         ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
          cargoNo: $("#cargoNo").val(),
          containerNo: $("#containerNo").val(),
          ladingbillNo: $("#ladingbillNo").val(),

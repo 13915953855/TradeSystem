@@ -7,7 +7,9 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-
+$("select").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -171,6 +173,7 @@ var TableInit = function () {
             offset: params.offset,  //页码
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             agent: agent,
             status: status,
             destinationPort: destinationPort
@@ -203,6 +206,7 @@ function resetQuery(){
     $("#destinationPort").val("全部").trigger("change");
     $("#agent").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
 }
@@ -256,6 +260,7 @@ function getTotalInfo(){
        etaEndDate: $("#etaEndDate").val(),
        agent: agent,
        status: status,
+       ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
        destinationPort: destinationPort
     };
 

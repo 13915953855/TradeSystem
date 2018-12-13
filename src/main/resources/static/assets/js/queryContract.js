@@ -7,7 +7,9 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-
+$("select").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -162,6 +164,20 @@ var TableInit = function () {
         if(status.length > 1){
             status = status.substring(0,status.length-1);
         }
+        var originCountryArr = $("#originCountry").val();
+                var originCountry = "";
+                if(originCountryArr != null){
+                    for(var i=0;i<originCountryArr.length;i++){
+                        if(originCountryArr[i] != '全部'){
+                            originCountry += "'"+originCountryArr[i] + "',";
+                        }else{
+                            originCountry = "";break;
+                        }
+                    }
+                }
+                if(originCountry.length > 1){
+                    originCountry = originCountry.substring(0,originCountry.length-1);
+                }
 
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
@@ -175,7 +191,8 @@ var TableInit = function () {
             etdStartDate: $("#etdStartDate").val(),
             etdEndDate: $("#etdEndDate").val(),
             status: status,
-            originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val(),
+            originCountry:originCountry,
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             externalCompany: externalCompany
         };
         return temp;
@@ -197,6 +214,67 @@ var ButtonInit = function () {
             resetQuery();
             getTotalInfo();
         });
+        $("#btn_output").click(function(){
+            var externalCompanyArr = $("#externalCompany").val();
+            var externalCompany = "";
+            if(externalCompanyArr != null){
+                for(var i=0;i<externalCompanyArr.length;i++){
+                    if(externalCompanyArr[i] != '全部'){
+                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                    }else{
+                        externalCompany = "";break;
+                    }
+                }
+            }
+            if(externalCompany.length > 1){
+                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+            }
+            var originCountryArr = $("#originCountry").val();
+                var originCountry = "";
+                if(originCountryArr != null){
+                    for(var i=0;i<originCountryArr.length;i++){
+                        if(originCountryArr[i] != '全部'){
+                            originCountry += "'"+originCountryArr[i] + "',";
+                        }else{
+                            originCountry = "";break;
+                        }
+                    }
+                }
+                if(originCountry.length > 1){
+                    originCountry = originCountry.substring(0,originCountry.length-1);
+                }
+
+            var statusArr = $("#status").val();
+                var status = "";
+                if(statusArr != null){
+                    for(var i=0;i<statusArr.length;i++){
+                        if(statusArr[i] != '全部'){
+                            status += statusArr[i] + ",";
+                        }else{
+                            status = "";break;
+                        }
+                    }
+                }
+                if(status.length > 1){
+                    status = status.substring(0,status.length-1);
+                }
+
+            var params = "?externalCompany="+externalCompany;
+            params += "&status="+status;
+            params += "&etaEndDate="+$("#etaStartDate").val();
+            params += "&etaStartDate="+$("#etaEndDate").val();
+            params += "&endDate="+$("#endDate").val();
+            params += "&startDate="+$("#startDate").val();
+            params += "&etdStartDate="+$("#etdStartDate").val();
+            params += "&etdEndDate="+$("#etdEndDate").val();
+            params += "&contractEndDate="+$("#contractEndDate").val();
+            params += "&contractStartDate="+$("#contractStartDate").val();
+            params += "&originCountry="+originCountry;
+            var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
+            params += "&ownerCompany="+ownerCompany;
+            var url = "/trade/queryContract/output"+params;
+            window.open(url);
+        });
     };
 
     return oInit;
@@ -208,6 +286,7 @@ function resetQuery(){
     $("#externalCompany").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
     $("#startDate").val("");
     $("#endDate").val("");
     $("#etaStartDate").val("");
@@ -231,6 +310,20 @@ function getTotalInfo(){
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
+        var originCountryArr = $("#originCountry").val();
+                var originCountry = "";
+                if(originCountryArr != null){
+                    for(var i=0;i<originCountryArr.length;i++){
+                        if(originCountryArr[i] != '全部'){
+                            originCountry += "'"+originCountryArr[i] + "',";
+                        }else{
+                            originCountry = "";break;
+                        }
+                    }
+                }
+                if(originCountry.length > 1){
+                    originCountry = originCountry.substring(0,originCountry.length-1);
+                }
 
         var statusArr = $("#status").val();
                 var status = "";
@@ -256,7 +349,8 @@ function getTotalInfo(){
         etaEndDate: $("#etaEndDate").val(),
         etdStartDate: $("#etdStartDate").val(),
         etdEndDate: $("#etdEndDate").val(),
-        originCountry:$("#originCountry").val() == "全部" ? "":$("#originCountry").val(),
+        originCountry:originCountry,
+        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         status: status,
         externalCompany: externalCompany
     };

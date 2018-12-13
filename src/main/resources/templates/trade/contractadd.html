@@ -547,6 +547,102 @@
                             </div>
 
                             <div class="panel panel-default">
+                                <div class="panel-heading">付税信息
+                                    <div style="float:right;">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">展开/收起</a>
+                                    </div>
+                                </div>
+                                <div id="collapseOne" class="panel-body collapse">
+                                    <form class="form-horizontal">
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">付税日期</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="taxPayDate" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                            <label class="control-label col-sm-3">报关单号</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariffNo"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">关税合计(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariff"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">增值税合计(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="addedValueTax"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">关税1(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariff1"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">增值税1(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="addedValueTax1"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">关税2(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariff2"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">增值税2(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="addedValueTax2"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">关税3(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariff3"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">增值税3(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="addedValueTax3"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">关税4(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariff4"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">增值税4(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="addedValueTax4"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">关税5(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariff5"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">增值税5(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="addedValueTax5"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">关税6(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tariff6"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">增值税6(元)</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="addedValueTax6"/>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
                                 <div class="panel-heading">单据信息</div>
                                 <div class="panel-body">
                                     <form class="form-horizontal">
@@ -653,6 +749,7 @@
                                                     <option>捷嘉</option>
                                                     <option>源丰祥</option>
                                                     <option>同华</option>
+                                                    <option>亚东</option>
                                                 </select>
                                             </div>
                                             <label class="control-label col-sm-3">单据寄给货代日期</label>
@@ -663,89 +760,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">付税日期</label>
-                                            <div class="col-sm-3">
-                                                <div class="input-append date form-date">
-                                                    <input class="form-control" size="16" id="taxPayDate" type="text" />
-                                                    <span class="add-on"><i class="icon-th"></i></span>
-                                                </div>
-                                            </div>
-                                            <label class="control-label col-sm-3">报关单号</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariffNo"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税合计(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">增值税合计(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税1(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff1"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">增值税1(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax1"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税2(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff2"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">增值税2(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax2"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税3(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff3"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">增值税3(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax3"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税4(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff4"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">增值税4(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax4"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税5(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff5"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">增值税5(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax5"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">关税6(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="tariff6"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">增值税6(元)</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="addedValueTax6"/>
-                                            </div>
-                                        </div>
+
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">放行日期</label>
                                             <div class="col-sm-3">
@@ -798,6 +813,7 @@
                                     </form>
                                 </div>
                             </div>
+
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">附件</div>

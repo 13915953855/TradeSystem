@@ -7,7 +7,9 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-
+$("select").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -149,6 +151,7 @@ var TableInit = function () {
             offset: params.offset,  //页码
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             status: status,
             isYahui: "1"
         };
@@ -178,6 +181,7 @@ var ButtonInit = function () {
 
 function resetQuery(){
     $("#status").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
 }
@@ -201,6 +205,7 @@ function getTotalInfo(){
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
        contractStartDate: $("#contractStartDate").val(),
        contractEndDate: $("#contractEndDate").val(),
+       ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
        status: status,
        isYahui: "1"
     };

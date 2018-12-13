@@ -7,7 +7,9 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-
+$("select").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -24,6 +26,7 @@ $(function () {
     initLevel();
     initBusinessMode();
     initExternalCompany();
+    initOriginCountry();
     initCargoList();
     initWarehouse();
 
@@ -219,8 +222,8 @@ var TableInit = function () {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
-            contractStartDate: $("#contractStartDate").val(),
-            contractEndDate: $("#contractEndDate").val(),
+            storeStartDate: $("#storeStartDate").val(),
+            storeEndDate: $("#storeEndDate").val(),
             cargoName: cargoName,
             level: level,
             status: status,
@@ -229,6 +232,7 @@ var TableInit = function () {
             externalCompany: externalCompany,
             originCountry: originCountry,
             warehouse: $("#warehouse").val() == '全部'?"":$("#warehouse").val(),
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             containerNo: $("#containerNo").val(),
             minBox: $("#minBox").val(),
             maxBox: $("#maxBox").val(),
@@ -333,10 +337,13 @@ var ButtonInit = function () {
                     params += "&level="+level;
                     params += "&status="+status;
                     params += "&cargoName="+cargoName;
-                    params += "&contractEndDate="+$("#contractEndDate").val();
-                    params += "&contractStartDate="+$("#contractStartDate").val();
+                    params += "&storeStartDate="+$("#storeStartDate").val();
+                    params += "&storeEndDate="+$("#storeEndDate").val();
                     params += "&originCountry="+originCountry;
-                    params += "&warehouse="+$("#warehouse").val() == '全部'?"":$("#warehouse").val();
+                    var warehouse = $("#warehouse").val() == '全部'?"":$("#warehouse").val();
+                    params += "&warehouse="+warehouse;
+                    var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
+                    params += "&ownerCompany="+ownerCompany;
                     params += "&containerNo="+$("#containerNo").val();
                     params += "&minBox="+$("#minBox").val();
                     params += "&maxBox="+$("#maxBox").val();
@@ -358,6 +365,7 @@ function resetQuery(){
     $("#externalCompany").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
 }
 
 function getTotalInfo(){
@@ -433,8 +441,8 @@ var statusArr = $("#status").val();
             originCountry = originCountry.substring(0,originCountry.length-1);
         }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-        contractStartDate: $("#contractStartDate").val(),
-        contractEndDate: $("#contractEndDate").val(),
+        storeStartDate: $("#storeStartDate").val(),
+        storeEndDate: $("#storeEndDate").val(),
         cargoName: cargoName,
         level: level,
         status: status,
@@ -444,6 +452,7 @@ var statusArr = $("#status").val();
         originCountry: originCountry,
         warehouse: $("#warehouse").val() == '全部'?"":$("#warehouse").val(),
         containerNo: $("#containerNo").val(),
+        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         minBox: $("#minBox").val(),
         maxBox: $("#maxBox").val(),
         minWeight: $("#minWeight").val(),

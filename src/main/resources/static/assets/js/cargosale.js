@@ -17,6 +17,7 @@ $(function () {
         language: 'zh-CN'
     });
     initLevel();
+    initUser();
     $("#cargoDiv input[type=text]").attr('disabled','disabled');
 
     $("#expectSaleUnitPrice").blur(function(){
@@ -152,18 +153,6 @@ var TableInit = function () {
              }, {
                 field: 'customerType',
                 title: '客户属性'
-            }, {
-                field: 'expectSaleWeight',
-                title: '预销售<br>重量(KG)'
-            }, {
-                field: 'expectSaleUnitPrice',
-                title: '预销售<br>单价(CNY/KG)'
-            }, {
-                field: 'expectSaleMoney',
-                title: '预销售<br>金额'
-            }, {
-                field: 'expectSaleDate',
-                title: '预出库<br>时间'
             }, {
                 field: 'realSaleWeight',
                 title: '实际销售<br>重量(KG)'
@@ -332,11 +321,11 @@ var ButtonInit = function () {
             sale.saleContractNo = $("#saleContractNo").val();//合同序号
             sale.customerName = $("#customerName").val();
             sale.customerType = $("#customerType").val();
-            sale.expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == "" ? 0:toFloat($("#expectSaleUnitPrice").val());
-            sale.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:toFloat4($("#expectSaleWeight").val());
-            sale.expectSaleBoxes = $("#expectSaleBoxes").val() == "" ? 0:parseInt($("#expectSaleBoxes").val());
-            sale.expectSaleMoney = $("#expectSaleMoney").val() == "" ? 0:toFloat($("#expectSaleMoney").val());
-            sale.expectSaleDate = $("#expectSaleDate").val();
+            //sale.expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == "" ? 0:toFloat($("#expectSaleUnitPrice").val());
+            //sale.expectSaleWeight = $("#expectSaleWeight").val() == "" ? 0:toFloat4($("#expectSaleWeight").val());
+            //sale.expectSaleBoxes = $("#expectSaleBoxes").val() == "" ? 0:parseInt($("#expectSaleBoxes").val());
+            //sale.expectSaleMoney = $("#expectSaleMoney").val() == "" ? 0:toFloat($("#expectSaleMoney").val());
+            //sale.expectSaleDate = $("#expectSaleDate").val();
             sale.realSaleUnitPrice = $("#realSaleUnitPrice").val() == "" ? 0:toFloat($("#realSaleUnitPrice").val());
             sale.realSaleWeight = $("#realSaleWeight").val() == "" ? 0:toFloat4($("#realSaleWeight").val());
             sale.realSaleBoxes = $("#realSaleBoxes").val() == "" ? 0:parseInt($("#realSaleBoxes").val());
@@ -414,7 +403,7 @@ function setFormData(data){
     $("#pickupWeight").val(data.pickupWeight);
     $("#pickupBoxes").val(data.pickupBoxes);
     $("#pickupDate").val(data.pickupDate);
-    $("#pickupUser").val(data.pickupUser);
+    $("#pickupUser").val(data.pickupUser).trigger("change");
     $("#saleContractNo").val(data.saleContractNo);
     $("#customerName").val(data.customerName);
     $("#customerType").val(data.customerType).trigger("change");
@@ -480,4 +469,16 @@ function checkStore(){
                 window.location.href = window.location.href;
             }
         });
+}
+
+function initUser(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>董建</option>";
+    opts += "<option>徐舰艇</option>";
+    opts += "<option>陶静</option>";
+    opts += "<option>唐誉天</option>";
+    opts += "<option>凌骁</option>";
+    opts += "<option>景远方</option>";
+    $("#pickupUser").append(opts);
 }

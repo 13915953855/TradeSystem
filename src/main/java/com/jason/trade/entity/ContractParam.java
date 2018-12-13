@@ -4,6 +4,9 @@ package com.jason.trade.entity;
  * 查询Bean
  */
 public class ContractParam {
+    private String storeStartDate;
+    private String storeEndDate;
+    private String ownerCompany;
     private String externalContract;
     private String insideContract;
     private String businessMode;
@@ -11,6 +14,12 @@ public class ContractParam {
     private String contractEndDate;
     private String etaStartDate;
     private String etaEndDate;
+    private String prePaymentStartDate;
+    private String prePaymentEndDate;
+    private String finalPaymentStartDate;
+    private String finalPaymentEndDate;
+    private String prePayBank;
+    private String finalPayBank;
     private String etdStartDate;
     private String etdEndDate;
     private String externalCompany;
@@ -43,6 +52,78 @@ public class ContractParam {
     private Double maxBox;
     private Double minWeight;
     private Double maxWeight;
+
+    public String getStoreStartDate() {
+        return storeStartDate;
+    }
+
+    public void setStoreStartDate(String storeStartDate) {
+        this.storeStartDate = storeStartDate;
+    }
+
+    public String getStoreEndDate() {
+        return storeEndDate;
+    }
+
+    public void setStoreEndDate(String storeEndDate) {
+        this.storeEndDate = storeEndDate;
+    }
+
+    public String getOwnerCompany() {
+        return ownerCompany;
+    }
+
+    public void setOwnerCompany(String ownerCompany) {
+        this.ownerCompany = ownerCompany;
+    }
+
+    public String getPrePaymentStartDate() {
+        return prePaymentStartDate;
+    }
+
+    public void setPrePaymentStartDate(String prePaymentStartDate) {
+        this.prePaymentStartDate = prePaymentStartDate;
+    }
+
+    public String getPrePaymentEndDate() {
+        return prePaymentEndDate;
+    }
+
+    public void setPrePaymentEndDate(String prePaymentEndDate) {
+        this.prePaymentEndDate = prePaymentEndDate;
+    }
+
+    public String getFinalPaymentStartDate() {
+        return finalPaymentStartDate;
+    }
+
+    public void setFinalPaymentStartDate(String finalPaymentStartDate) {
+        this.finalPaymentStartDate = finalPaymentStartDate;
+    }
+
+    public String getFinalPaymentEndDate() {
+        return finalPaymentEndDate;
+    }
+
+    public void setFinalPaymentEndDate(String finalPaymentEndDate) {
+        this.finalPaymentEndDate = finalPaymentEndDate;
+    }
+
+    public String getPrePayBank() {
+        return prePayBank;
+    }
+
+    public void setPrePayBank(String prePayBank) {
+        this.prePayBank = prePayBank;
+    }
+
+    public String getFinalPayBank() {
+        return finalPayBank;
+    }
+
+    public void setFinalPayBank(String finalPayBank) {
+        this.finalPayBank = finalPayBank;
+    }
 
     public String getWarehouse() {
         return warehouse;

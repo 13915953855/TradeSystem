@@ -402,14 +402,23 @@
     <if test="isFinancing != null and isFinancing != ''" >
       and a.is_financing = '${isFinancing}'
     </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
     <if test="isYahui != null and isYahui != ''" >
       and a.is_yahui = '${isYahui}'
+    </if>
+    <if test="prePayBank != null and prePayBank != ''" >
+      and a.pre_pay_bank = '${prePayBank}'
+    </if>
+    <if test="finalPayBank != null and finalPayBank != ''" >
+      and a.final_pay_bank = '${finalPayBank}'
     </if>
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
     <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country in (${originCountry})
+      and a.origin_country = '${originCountry}'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -445,6 +454,18 @@
     </if>
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="prePaymentStartDate != null and prePaymentStartDate != ''" >
+      and a.pre_payment_date &gt;= '${prePaymentStartDate}'
+    </if>
+    <if test="prePaymentEndDate != null and prePaymentEndDate != ''" >
+      and a.pre_payment_date &lt;= '${prePaymentEndDate}'
+    </if>
+    <if test="finalPaymentStartDate != null and finalPaymentStartDate != ''" >
+      and a.final_payment_date &gt;= '${finalPaymentStartDate}'
+    </if>
+    <if test="finalPaymentEndDate != null and finalPaymentEndDate != ''" >
+      and a.final_payment_date &lt;= '${finalPaymentEndDate}'
     </if>
     <if test="taxPayDateStart != null and taxPayDateStart != ''" >
       and a.tax_pay_date &gt;= '${taxPayDateStart}'
@@ -497,14 +518,23 @@
     <if test="isFinancing != null and isFinancing != ''" >
       and a.is_financing = '${isFinancing}'
     </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
     <if test="isYahui != null and isYahui != ''" >
       and a.is_yahui = '${isYahui}'
+    </if>
+    <if test="prePayBank != null and prePayBank != ''" >
+      and a.pre_pay_bank = '${prePayBank}'
+    </if>
+    <if test="finalPayBank != null and finalPayBank != ''" >
+      and a.final_pay_bank = '${finalPayBank}'
     </if>
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
     <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country in (${originCountry})
+      and a.origin_country = '${originCountry}'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -540,6 +570,18 @@
     </if>
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="prePaymentStartDate != null and prePaymentStartDate != ''" >
+      and a.pre_payment_date &gt;= '${prePaymentStartDate}'
+    </if>
+    <if test="prePaymentEndDate != null and prePaymentEndDate != ''" >
+      and a.pre_payment_date &lt;= '${prePaymentEndDate}'
+    </if>
+    <if test="finalPaymentStartDate != null and finalPaymentStartDate != ''" >
+      and a.final_payment_date &gt;= '${finalPaymentStartDate}'
+    </if>
+    <if test="finalPaymentEndDate != null and finalPaymentEndDate != ''" >
+      and a.final_payment_date &lt;= '${finalPaymentEndDate}'
     </if>
     <if test="taxPayDateStart != null and taxPayDateStart != ''" >
       and a.tax_pay_date &gt;= '${taxPayDateStart}'
@@ -586,11 +628,15 @@
     sum(a.total_invoice_money) as totalInvoiceMoney,
     sum(a.total_invoice_amount) as totalInvoiceAmount, currency,
     sum(a.financing_money) as totalFinancingMoney,
-    sum(a.yahui_money) as totalYahuiMoney
+    sum(a.yahui_money) as totalYahuiMoney,
+    sum(pre_payment) as totalPrePayment,sum(final_payment) as totalFinalPayment
     from contract_base_info a
     where 1 = 1
     <if test="isFinancing != null and isFinancing != ''" >
       and a.is_financing = '${isFinancing}'
+    </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
     </if>
     <if test="isYahui != null and isYahui != ''" >
       and a.is_yahui = '${isYahui}'
@@ -685,6 +731,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
     </if>
@@ -741,6 +790,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
     </if>
@@ -789,11 +841,14 @@
 
   <select id="getTotalInfoForQueryContract" resultType="com.jason.trade.entity.ContractTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
     select sum(b.contract_money) as totalContractMoney,sum(b.contract_amount) as totalContractAmount,
-    sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceAmount
+    sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceAmount,a.currency
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
+    </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
     </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
@@ -839,6 +894,7 @@
       </if>
       )
     </if>
+    group by a.currency
   </select>
 
 
@@ -855,6 +911,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
     </if>
@@ -870,10 +929,10 @@
     <if test="maxWeight != null and maxWeight != ''" >
       and b.real_store_weight &lt;= '${maxWeight}'
     </if>
-    <if test="minBox != null and minBox != ''" >
+    <if test="minBox != null" >
       and b.real_store_boxes &gt;= '${minBox}'
     </if>
-    <if test="maxBox != null and maxBox != ''" >
+    <if test="maxBox != null" >
       and b.real_store_boxes &lt;= '${maxBox}'
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
@@ -881,6 +940,12 @@
     </if>
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and a.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and a.store_date &lt;= '${storeEndDate}'
     </if>
     <if test="cargoName != null and cargoName != ''" >
       and b.cargo_name = '${cargoName}'
@@ -909,6 +974,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
     </if>
@@ -924,10 +992,10 @@
     <if test="maxWeight != null and maxWeight != ''" >
       and b.real_store_weight &lt;= '${maxWeight}'
     </if>
-    <if test="minBox != null and minBox != ''" >
+    <if test="minBox != null" >
       and b.real_store_boxes &gt;= '${minBox}'
     </if>
-    <if test="maxBox != null and maxBox != ''" >
+    <if test="maxBox != null" >
       and b.real_store_boxes &lt;= '${maxBox}'
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
@@ -935,6 +1003,12 @@
     </if>
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and a.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and a.store_date &lt;= '${storeEndDate}'
     </if>
     <if test="startDate != null and startDate != ''" >
       and a.expect_sailing_date &gt;= '${startDate}'
@@ -977,6 +1051,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
     </if>
@@ -997,6 +1074,121 @@
     </if>
     <if test="maxBox != null and maxBox != ''" >
       and b.real_store_boxes &lt;= '${maxBox}'
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and a.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and a.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and a.store_date &lt;= '${storeEndDate}'
+    </if>
+    <if test="startDate != null and startDate != ''" >
+      and a.expect_sailing_date &gt;= '${startDate}'
+    </if>
+    <if test="endDate != null and endDate != ''" >
+      and a.expect_sailing_date &lt;= '${endDate}'
+    </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and a.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level in (${level})
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode in (${businessMode})
+    </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+  </select>
+
+
+
+
+  <select id="queryCargoList" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
+    select a.id,a.eta,a.etd,a.expect_sailing_date,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
+    b.cargo_name,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
+    from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
+    where 1 = 1 and a.status != '0'
+    <if test="externalCompany != null and externalCompany != ''" >
+      and a.external_company in (${externalCompany})
+    </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and a.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="startDate != null and startDate != ''" >
+      and a.expect_sailing_date &gt;= '${startDate}'
+    </if>
+    <if test="endDate != null and endDate != ''" >
+      and a.expect_sailing_date &lt;= '${endDate}'
+    </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and a.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
+    </if>
+      <if test="cargoName != null and cargoName != ''" >
+        and b.cargo_name = '${cargoName}'
+      </if>
+      <if test="level != null and level != ''" >
+        and b.level in (${level})
+      </if>
+      <if test="businessMode != null and businessMode != ''" >
+        and b.business_mode in (${businessMode})
+      </if>
+      <if test="companyNo != null" >
+        and b.company_no like '%${companyNo}%'
+      </if>
+    order by a.id desc
+    <if test="start != null and limit != null" >
+      limit ${start},${limit}
+    </if>
+  </select>
+  <select id="countCargoList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.ContractParam" >
+    select count(1)
+    from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
+    where 1 = 1 and a.status != '0'
+    <if test="externalCompany != null and externalCompany != ''" >
+      and a.external_company in (${externalCompany})
+    </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'

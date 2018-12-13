@@ -113,19 +113,19 @@ public class TradeService {
         //商品的库存进行减操作
         String cargoId = saleInfo.getCargoId();
         CargoInfo cargoInfo = cargoInfoMapper.selectByCargoId(cargoId);
-        double expectSaleWeight = 0;
-        Integer expectSaleBoxes = 0;
+        //double expectSaleWeight = 0;
+        //Integer expectSaleBoxes = 0;
         double realSaleWeight =0;
         Integer realSaleBoxes = 0;
         if(saleInfo.getSaleId() != null){
             SaleInfo saleInfoOld = saleRepository.findOne(saleInfo.getSaleId());
-            expectSaleWeight = cargoInfo.getExpectStoreWeight() - saleInfo.getExpectSaleWeight() + saleInfoOld.getExpectSaleWeight();
-            expectSaleBoxes = cargoInfo.getExpectStoreBoxes() - saleInfo.getExpectSaleBoxes() + saleInfoOld.getExpectSaleBoxes();
+            //expectSaleWeight = cargoInfo.getExpectStoreWeight() - saleInfo.getExpectSaleWeight() + saleInfoOld.getExpectSaleWeight();
+            //expectSaleBoxes = cargoInfo.getExpectStoreBoxes() - saleInfo.getExpectSaleBoxes() + saleInfoOld.getExpectSaleBoxes();
             realSaleWeight = cargoInfo.getRealStoreWeight() - saleInfo.getRealSaleWeight() + saleInfoOld.getRealSaleWeight();
             realSaleBoxes = cargoInfo.getRealStoreBoxes() - saleInfo.getRealSaleBoxes() + saleInfoOld.getRealSaleBoxes();
         }else {
-            expectSaleWeight = cargoInfo.getExpectStoreWeight() - saleInfo.getExpectSaleWeight();
-            expectSaleBoxes = cargoInfo.getExpectStoreBoxes() - saleInfo.getExpectSaleBoxes();
+            //expectSaleWeight = cargoInfo.getExpectStoreWeight() - saleInfo.getExpectSaleWeight();
+            //expectSaleBoxes = cargoInfo.getExpectStoreBoxes() - saleInfo.getExpectSaleBoxes();
             realSaleWeight = cargoInfo.getRealStoreWeight() - saleInfo.getRealSaleWeight();
             realSaleBoxes = cargoInfo.getRealStoreBoxes() - saleInfo.getRealSaleBoxes();
         }
@@ -134,8 +134,8 @@ public class TradeService {
             status = GlobalConst.SELLOUT;
         }
         cargoInfo.setStatus(status);
-        cargoInfo.setExpectStoreWeight(expectSaleWeight);
-        cargoInfo.setExpectStoreBoxes(expectSaleBoxes);
+        //cargoInfo.setExpectStoreWeight(expectSaleWeight);
+        //cargoInfo.setExpectStoreBoxes(expectSaleBoxes);
         cargoInfo.setRealStoreWeight(realSaleWeight);
         cargoInfo.setRealStoreBoxes(realSaleBoxes);
         cargoInfoMapper.updateByCargoId(cargoInfo);
@@ -222,22 +222,22 @@ public class TradeService {
             String[] arr = saleId.split(",");
             List<String> saleIdList = Arrays.asList(arr);
 
-            double expectSaleWeight = 0;
-            Integer expectSaleBoxes = 0;
+            //double expectSaleWeight = 0;
+            //Integer expectSaleBoxes = 0;
             double realSaleWeight = 0;
             Integer realSaleBoxes = 0;
             String cargoId = "";
             for(String id:saleIdList){
                 SaleInfo saleInfo = saleRepository.findOne(Integer.valueOf(id));
                 cargoId = saleInfo.getCargoId();
-                expectSaleWeight += saleInfo.getExpectSaleWeight();
-                expectSaleBoxes += saleInfo.getExpectSaleBoxes();
+                //expectSaleWeight += saleInfo.getExpectSaleWeight();
+                //expectSaleBoxes += saleInfo.getExpectSaleBoxes();
                 realSaleWeight += saleInfo.getRealSaleWeight();
                 realSaleBoxes += saleInfo.getRealSaleBoxes();
             }
             CargoInfo cargoInfo = cargoInfoMapper.selectByCargoId(cargoId);
-            cargoInfo.setExpectStoreWeight(cargoInfo.getExpectStoreWeight() + expectSaleWeight);
-            cargoInfo.setExpectStoreBoxes(cargoInfo.getExpectStoreBoxes() + expectSaleBoxes);
+            //cargoInfo.setExpectStoreWeight(cargoInfo.getExpectStoreWeight() + expectSaleWeight);
+            //cargoInfo.setExpectStoreBoxes(cargoInfo.getExpectStoreBoxes() + expectSaleBoxes);
             cargoInfo.setRealStoreWeight(cargoInfo.getRealStoreWeight() + realSaleWeight);
             cargoInfo.setRealStoreBoxes(cargoInfo.getRealStoreBoxes() + realSaleBoxes);
             if((cargoInfo.getRealStoreBoxes() + realSaleBoxes) > 0){
@@ -269,10 +269,10 @@ public class TradeService {
     }
 
     public JSONObject queryCargoListForQuery(ContractParam contractParam){
-        Integer count = contractBaseInfoMapper.queryCargoTotalByExample(contractParam);
+        Integer count = contractBaseInfoMapper.countCargoList(contractParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
-        result.put("rows",contractBaseInfoMapper.queryCargoListByExample(contractParam));
+        result.put("rows",contractBaseInfoMapper.queryCargoList(contractParam));
         return result;
     }
 
@@ -399,9 +399,94 @@ public class TradeService {
             Float totalInvoiceAmount = 0F;
             Float totalFinancingMoney = 0F;
             Float totalYahuiMoney = 0F;
+            Float totalCNYPrePaymentMoney = 0F;
+            Float totalUSDPrePaymentMoney = 0F;
+            Float totalAUDPrePaymentMoney = 0F;
+            Float totalCNYFinalPaymentMoney = 0F;
+            Float totalUSDFinalPaymentMoney = 0F;
+            Float totalAUDFinalPaymentMoney = 0F;
             for (ContractTotalInfo totalInfo : record) {
                 totalFinancingMoney += totalInfo.getTotalFinancingMoney();
                 totalYahuiMoney += totalInfo.getTotalYahuiMoney();
+                switch(totalInfo.getCurrency()){
+                    case "CNY":
+                        totalCNYContractMoney = totalInfo.getTotalContractMoney();
+                        totalCNYInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalContractAmount += totalInfo.getTotalContractAmount();
+                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalCNYPrePaymentMoney += totalInfo.getTotalPrePayment();
+                        totalCNYFinalPaymentMoney += totalInfo.getTotalFinalPayment();
+                        break;
+                    case "USD":
+                        totalUSDContractMoney = totalInfo.getTotalContractMoney();
+                        totalUSDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalContractAmount += totalInfo.getTotalContractAmount();
+                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalUSDPrePaymentMoney += totalInfo.getTotalPrePayment();
+                        totalUSDFinalPaymentMoney += totalInfo.getTotalFinalPayment();
+                        break;
+                    case "AUD":
+                        totalAUDContractMoney = totalInfo.getTotalContractMoney();
+                        totalAUDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalContractAmount += totalInfo.getTotalContractAmount();
+                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalAUDPrePaymentMoney += totalInfo.getTotalPrePayment();
+                        totalAUDFinalPaymentMoney += totalInfo.getTotalFinalPayment();
+                        break;
+                    default:break;
+                }
+            }
+            result.put("totalCNYContractMoney", totalCNYContractMoney);
+            result.put("totalCNYInvoiceMoney", totalCNYInvoiceMoney);
+            result.put("totalUSDContractMoney", totalUSDContractMoney);
+            result.put("totalUSDInvoiceMoney", totalUSDInvoiceMoney);
+            result.put("totalAUDContractMoney", totalAUDContractMoney);
+            result.put("totalAUDInvoiceMoney", totalAUDInvoiceMoney);
+            result.put("totalContractAmount", totalContractAmount);
+            result.put("totalInvoiceAmount", totalInvoiceAmount);
+            result.put("totalFinancingMoney", totalFinancingMoney);
+            result.put("totalYahuiMoney", totalYahuiMoney);
+            result.put("totalCNYPrePaymentMoney", totalCNYPrePaymentMoney);
+            result.put("totalUSDPrePaymentMoney", totalUSDPrePaymentMoney);
+            result.put("totalAUDPrePaymentMoney", totalAUDPrePaymentMoney);
+            result.put("totalCNYFinalPaymentMoney", totalCNYFinalPaymentMoney);
+            result.put("totalUSDFinalPaymentMoney", totalUSDFinalPaymentMoney);
+            result.put("totalAUDFinalPaymentMoney", totalAUDFinalPaymentMoney);
+        }else{
+            result.put("totalCNYContractMoney", "0");
+            result.put("totalCNYInvoiceMoney", "0");
+            result.put("totalUSDContractMoney", "0");
+            result.put("totalUSDInvoiceMoney", "0");
+            result.put("totalAUDContractMoney", "0");
+            result.put("totalAUDInvoiceMoney", "0");
+            result.put("totalContractAmount", "0");
+            result.put("totalInvoiceAmount", "0");
+            result.put("totalFinancingMoney", "0");
+            result.put("totalYahuiMoney", "0");
+            result.put("totalCNYPrePaymentMoney", "0");
+            result.put("totalUSDPrePaymentMoney", "0");
+            result.put("totalAUDPrePaymentMoney", "0");
+            result.put("totalCNYFinalPaymentMoney", "0");
+            result.put("totalUSDFinalPaymentMoney", "0");
+            result.put("totalAUDFinalPaymentMoney", "0");
+        }
+        result.put("status","1");
+        return result;
+    }
+    public JSONObject getTotalInfoForQuery(ContractParam contractParam){
+        JSONObject result = new JSONObject();
+
+        List<ContractTotalInfo> record = contractBaseInfoMapper.getTotalInfoForQueryContract(contractParam);
+        if(record != null && record.size() > 0) {
+            Float totalCNYContractMoney = 0F;
+            Float totalCNYInvoiceMoney = 0F;
+            Float totalUSDContractMoney = 0F;
+            Float totalUSDInvoiceMoney = 0F;
+            Float totalAUDContractMoney = 0F;
+            Float totalAUDInvoiceMoney = 0F;
+            Float totalContractAmount = 0F;
+            Float totalInvoiceAmount = 0F;
+            for (ContractTotalInfo totalInfo : record) {
                 switch(totalInfo.getCurrency()){
                     case "CNY":
                         totalCNYContractMoney = totalInfo.getTotalContractMoney();
@@ -432,8 +517,7 @@ public class TradeService {
             result.put("totalAUDInvoiceMoney", totalAUDInvoiceMoney);
             result.put("totalContractAmount", totalContractAmount);
             result.put("totalInvoiceAmount", totalInvoiceAmount);
-            result.put("totalFinancingMoney", totalFinancingMoney);
-            result.put("totalYahuiMoney", totalYahuiMoney);
+
         }else{
             result.put("totalCNYContractMoney", "0");
             result.put("totalCNYInvoiceMoney", "0");
@@ -441,25 +525,6 @@ public class TradeService {
             result.put("totalUSDInvoiceMoney", "0");
             result.put("totalAUDContractMoney", "0");
             result.put("totalAUDInvoiceMoney", "0");
-            result.put("totalContractAmount", "0");
-            result.put("totalInvoiceAmount", "0");
-            result.put("totalFinancingMoney", "0");
-            result.put("totalYahuiMoney", "0");
-        }
-        result.put("status","1");
-        return result;
-    }
-    public JSONObject getTotalInfoForQuery(ContractParam contractParam){
-        JSONObject result = new JSONObject();
-        ContractTotalInfo record = contractBaseInfoMapper.getTotalInfoForQueryContract(contractParam);
-        if(record != null) {
-            result.put("totalContractMoney", record.getTotalContractMoney());
-            result.put("totalInvoiceMoney", record.getTotalInvoiceMoney());
-            result.put("totalContractAmount", record.getTotalContractAmount());
-            result.put("totalInvoiceAmount", record.getTotalInvoiceAmount());
-        }else{
-            result.put("totalContractMoney", "0");
-            result.put("totalInvoiceMoney", "0");
             result.put("totalContractAmount", "0");
             result.put("totalInvoiceAmount", "0");
         }

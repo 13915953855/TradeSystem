@@ -18,7 +18,9 @@ $(function () {
         todayHighlight: true,
         language: 'zh-CN'
     });
-
+    $("select").select2({
+        tags: true
+    });
     $("select").on("change",function(){
         $("#btn_query").click();
     });
@@ -80,7 +82,6 @@ function getTotalInfo(){
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
-
         var originCountryArr = $("#originCountry").val();
                 var originCountry = "";
                 if(originCountryArr != null){
@@ -110,20 +111,7 @@ function getTotalInfo(){
         if(level.length > 1){
             level = level.substring(0,level.length-1);
         }
-        /*var cargoNameArr = $("#cargoName").val();
-        var cargoName = "";
-        if(cargoNameArr != null){
-            for(var i=0;i<cargoNameArr.length;i++){
-                if(cargoNameArr[i] != '全部'){
-                    cargoName += "'"+cargoNameArr[i] + "',";
-                }else{
-                    cargoName = "";break;
-                }
-            }
-        }
-        if(cargoName.length > 1){
-            cargoName = cargoName.substring(0,cargoName.length-1);
-        }*/
+
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
         var businessMode = "";
@@ -201,7 +189,8 @@ function getTotalInfo(){
         externalCompany: externalCompany,
         status: status,
         type:queryType,
-        originCountry:originCountry
+        originCountry:originCountry,
+        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val()
     };
 
     $.ajax({
@@ -320,7 +309,7 @@ var TableInit = function () {
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
-        var originCountryArr = $("#originCountry").val();
+       var originCountryArr = $("#originCountry").val();
                         var originCountry = "";
                         if(originCountryArr != null){
                             for(var i=0;i<originCountryArr.length;i++){
@@ -348,20 +337,7 @@ var TableInit = function () {
         if(level.length > 1){
             level = level.substring(0,level.length-1);
         }
-        /*var cargoNameArr = $("#cargoName").val();
-        var cargoName = "";
-        if(cargoNameArr != null){
-            for(var i=0;i<cargoNameArr.length;i++){
-                if(cargoNameArr[i] != '全部'){
-                    cargoName += "'"+cargoNameArr[i] + "',";
-                }else{
-                    cargoName = "";break;
-                }
-            }
-        }
-        if(cargoName.length > 1){
-            cargoName = cargoName.substring(0,cargoName.length-1);
-        }*/
+
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
         var businessMode = "";
@@ -443,6 +419,7 @@ var TableInit = function () {
             status: status,
             type:queryType,
             originCountry:originCountry,
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             sortName:this.sortName,
             sortOrder:this.sortOrder,
         };
@@ -587,20 +564,7 @@ var ButtonInit = function () {
             if(level.length > 1){
                 level = level.substring(0,level.length-1);
             }
-            /*var cargoNameArr = $("#cargoName").val();
-            var cargoName = "";
-            if(cargoNameArr != null){
-                for(var i=0;i<cargoNameArr.length;i++){
-                    if(cargoNameArr[i] != '全部'){
-                        cargoName += "'"+cargoNameArr[i] + "',";
-                    }else{
-                        cargoName = "";break;
-                    }
-                }
-            }
-            if(cargoName.length > 1){
-                cargoName = cargoName.substring(0,cargoName.length-1);
-            }*/
+
             var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
             var businessModeArr = $("#businessMode").val();
             var businessMode = "";
@@ -696,6 +660,8 @@ var ButtonInit = function () {
             params += "&externalCompany="+externalCompany;
             params += "&status="+status;
             params += "&originCountry="+originCountry;
+            var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
+            params += "&ownerCompany="+ownerCompany;
             params += "&chk="+chk;
             params += "&type="+queryType;
         	var url = "/trade/contract/output"+params;
@@ -722,6 +688,7 @@ function resetQuery(){
     $("#level").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
     $("#cargoNo").val("");

@@ -247,7 +247,7 @@ public class MainController {
     @GetMapping(value="/trade/contract/output")
     public ResponseEntity<Resource> output(HttpSession session,@RequestParam(value="externalContract") String externalContract,
                @RequestParam(value="insideContract") String insideContract,@RequestParam(value="contractStartDate") String contractStartDate,
-               @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="agent") String agent,
+               @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="agent") String agent,@RequestParam(value="ownerCompany") String ownerCompany,
                @RequestParam(value="ladingbillNo") String ladingbillNo,@RequestParam(value="destinationPort") String destinationPort,
                @RequestParam(value="businessMode") String businessMode,@RequestParam(value="externalCompany") String externalCompany,
                @RequestParam(value="status") String status,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="level") String level,
@@ -269,6 +269,7 @@ public class MainController {
         contractParam.setCargoName(cargoName);
         contractParam.setLevel(level);
         contractParam.setAgent(agent);
+        contractParam.setOwnerCompany(ownerCompany);
         contractParam.setLadingbillNo(ladingbillNo);
         contractParam.setEtaStartDate(etaStartDate);
         contractParam.setEtaEndDate(etaEndDate);
@@ -463,7 +464,7 @@ public class MainController {
     @GetMapping(value="/trade/queryCargo/output")
     public ResponseEntity<Resource> queryCargoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
                                            @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
-                                           @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,
+                                           @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="ownerCompany") String ownerCompany,
                                            @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
                                            @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,
                                            @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,
@@ -471,6 +472,7 @@ public class MainController {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setOriginCountry(originCountry);
+        contractParam.setOwnerCompany(ownerCompany);
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
         contractParam.setBusinessMode(businessMode);
@@ -486,7 +488,7 @@ public class MainController {
         contractParam.setEndDate(endDate);
 
         ByteArrayOutputStream bos = null;
-        List<QueryContractInfo> data = contractBaseInfoMapper.queryCargoListByExample(contractParam);
+        List<QueryContractInfo> data = contractBaseInfoMapper.queryCargoList(contractParam);
         String fileName = "订单数据统计商品"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
         try {
             Workbook workbook = excelService.writeCargoExcel(data);
@@ -536,25 +538,24 @@ public class MainController {
      * @param companyNo
      * @param level
      * @param cargoName
-     * @param contractEndDate
-     * @param contractStartDate
      * @param status
      * @return
      */
     @GetMapping(value="/trade/queryStoreInfo/output")
-    public ResponseEntity<Resource> queryStoreInfoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,
+    public ResponseEntity<Resource> queryStoreInfoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="ownerCompany") String ownerCompany,
                                                      @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
                                                      @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,
-                                                     @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
+                                                     @RequestParam(value="storeStartDate") String storeStartDate,@RequestParam(value="storeEndDate") String storeEndDate,
                                                      @RequestParam(value="status") String status,@RequestParam(value="originCountry") String originCountry,
                                                          @RequestParam(value="warehouse") String warehouse,@RequestParam(value="containerNo") String containerNo,
                                                          @RequestParam(value="minBox") Double minBox,@RequestParam(value="maxBox") Double maxBox,
                                                          @RequestParam(value="minWeight") Double minWeight,@RequestParam(value="maxWeight") Double maxWeight){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
-        contractParam.setContractStartDate(contractStartDate);
-        contractParam.setContractEndDate(contractEndDate);
+        contractParam.setStoreStartDate(storeStartDate);
+        contractParam.setStoreEndDate(storeEndDate);
         contractParam.setBusinessMode(businessMode);
+        contractParam.setOwnerCompany(ownerCompany);
         contractParam.setExternalCompany(externalCompany);
         contractParam.setCompanyNo(companyNo);
         contractParam.setCargoName(cargoName);
@@ -622,11 +623,12 @@ public class MainController {
     }
 
     @GetMapping(value="/trade/queryDuty/output")
-    public ResponseEntity<Resource> queryDutyOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,
+    public ResponseEntity<Resource> queryDutyOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="ownerCompany") String ownerCompany,
                                                          @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setTaxPayDateStart(taxPayDateStart);
+        contractParam.setOwnerCompany(ownerCompany);
         contractParam.setTaxPayDateEnd(taxPayDateEnd);
         contractParam.setExternalCompany(externalCompany);
 
@@ -672,4 +674,79 @@ public class MainController {
         }
         return null;
     }
+
+    @GetMapping(value="/trade/queryContract/output")
+    public ResponseEntity<Resource> queryContractOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
+                                                     @RequestParam(value="ownerCompany") String ownerCompany,@RequestParam(value="status") String status,
+                                                     @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
+                                                     @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,
+                                                     @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,
+                                                     @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        ContractParam contractParam = new ContractParam();
+        if(status.indexOf("全部") >= 0){
+            status = "";
+        }else{
+            status = status.replaceAll("已下单","1");
+            status = status.replaceAll("已装船","2");
+            status = status.replaceAll("已到港","3");
+            status = status.replaceAll("已入库","4");
+            status = status.replaceAll("已售完","5");
+        }
+        contractParam.setStatus(status);
+        contractParam.setOriginCountry(originCountry);
+        contractParam.setOwnerCompany(ownerCompany);
+        contractParam.setContractStartDate(contractStartDate);
+        contractParam.setContractEndDate(contractEndDate);
+        contractParam.setExternalCompany(externalCompany);
+        contractParam.setEtaStartDate(etaStartDate);
+        contractParam.setEtaEndDate(etaEndDate);
+        contractParam.setEtdStartDate(etdStartDate);
+        contractParam.setEtdEndDate(etdEndDate);
+        contractParam.setStartDate(startDate);
+        contractParam.setEndDate(endDate);
+
+        ByteArrayOutputStream bos = null;
+        List<ContractBaseInfo> data = contractBaseInfoMapper.selectByExample(contractParam);
+        String fileName = "订单数据统计台账"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
+        try {
+            Workbook workbook = excelService.writeContractExcel(data);
+            bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            workbook.close();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            headers.add("charset", "utf-8");
+            //设置下载文件名
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            headers.add("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+
+            SysLog sysLog = new SysLog();
+            sysLog.setDetail("导出Excel记录");
+            sysLog.setOperation("导出");
+            sysLog.setUser(userInfo.getAccount());
+            sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+            sysLogRepository.save(sysLog);
+
+
+            Resource resource = new InputStreamResource(new ByteArrayInputStream(bos.toByteArray()));
+
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/x-msdownload")).body(resource);
+
+        } catch (IOException e) {
+            if (null != bos) {
+                try {
+                    bos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
 }

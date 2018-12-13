@@ -7,7 +7,9 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-
+$("select").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -83,16 +85,26 @@ var TableInit = function () {
                 title: '外商'
             }, {
                 field: 'tariffNo',
-                title: '报关单号'
+                title: '报关单号',
+                formatter: function(value, row, index){
+                    if(value.length >0) return value.substring(0,20)+"...";
+                    else return "";
+                }
             }, {
                 field: 'taxPayDate',
                 title: '付税日期'
             }, {
                 field: 'tariff',
-                title: '关税'
+                title: '关税',
+                formatter: function(value, row, index){
+                    return toFloat(value);
+                }
             }, {
                 field: 'addedValueTax',
-                title: '增值税'
+                title: '增值税',
+                formatter: function(value, row, index){
+                    return toFloat(value);
+                }
             }, {
                 field: 'agent',
                 title: '货代'
@@ -128,6 +140,7 @@ var TableInit = function () {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             taxPayDateStart: $("#taxPayDateStart").val(),
             taxPayDateEnd: $("#taxPayDateEnd").val(),
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             externalCompany: externalCompany
         };
         return temp;
@@ -167,6 +180,8 @@ var ButtonInit = function () {
             var params = "?externalCompany="+externalCompany;
             params += "&taxPayDateStart="+$("#taxPayDateStart").val();
             params += "&taxPayDateEnd="+$("#taxPayDateEnd").val();
+            var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
+                        params += "&ownerCompany="+ownerCompany;
             var url = "/trade/queryDuty/output"+params;
             window.open(url);
         });
@@ -198,6 +213,7 @@ var externalCompanyArr = $("#externalCompany").val();
     var queryParams = {
         taxPayDateStart: $("#taxPayDateStart").val(),
         taxPayDateEnd: $("#taxPayDateEnd").val(),
+        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         externalCompany: externalCompany
     };
     $.ajax({

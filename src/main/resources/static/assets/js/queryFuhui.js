@@ -7,7 +7,9 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-
+$("select").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -21,6 +23,8 @@ $(function () {
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    initBank();
+    initExternalCompany();
     getTotalInfo();
 });
 
@@ -76,6 +80,15 @@ var TableInit = function () {
                 field: 'insideContract',
                 title: '内合同编号'
             }, {
+                field: 'externalCompany',
+                title: '外商'
+            }, {
+                field: 'etd',
+                title: 'ETD'
+            }, {
+                field: 'eta',
+                title: 'ETA'
+            }, {
                 field: 'totalInvoiceMoney',
                 title: '发票总金额'
             }, {
@@ -99,59 +112,43 @@ var TableInit = function () {
             }, {
                 field: 'financingRate',
                 title: '尾款汇率'
-            }, {
-                field: 'finalPayment',
-                title: '实付差额',
-                formatter: function(value, row, index){
-                    var a = row.totalInvoiceMoney;
-                    var b = row.prePayment;
-                    return toFloat(toFloat(toFloat(b)-toFloat(a))+value);
-                }
-            },{
-              field: 'status',
-              title: '状态',
-              formatter: function(value, row, index){//0-作废，1-已下单，2-已装船，3-已到港，4-已入库,5-已售完
-                  if(value == "1"){
-                      return "已下单";
-                  }else if(value == "2"){
-                      return "已装船";
-                  }else if(value == "3"){
-                      return "已到港";
-                  }else if(value == "4"){
-                      return "已入库";
-                  }else if(value == "5"){
-                       return "已售完";
-                   }else{
-                      return "-";
-                  }
-              }
-          }]
+            }]
         });
     };
 
     //得到查询的参数
     oTableInit.queryParams = function (params) {
-        var statusArr = $("#status").val();
-        var status = "";
-        if(statusArr != null){
-            for(var i=0;i<statusArr.length;i++){
-                if(statusArr[i] != '全部'){
-                    status += statusArr[i] + ",";
+        var externalCompanyArr = $("#externalCompany").val();
+        var externalCompany = "";
+        if(externalCompanyArr != null){
+            for(var i=0;i<externalCompanyArr.length;i++){
+                if(externalCompanyArr[i] != '全部'){
+                    externalCompany += "'"+externalCompanyArr[i] + "',";
                 }else{
-                    status = "";break;
+                    externalCompany = "";break;
                 }
             }
         }
-        if(status.length > 1){
-            status = status.substring(0,status.length-1);
+        if(externalCompany.length > 1){
+            externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
 
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
-            contractStartDate: $("#contractStartDate").val(),
-            contractEndDate: $("#contractEndDate").val(),
-            status: status,
+            prePaymentStartDate: $("#prePaymentStartDate").val(),
+            prePaymentEndDate: $("#prePaymentEndDate").val(),
+            finalPaymentStartDate: $("#finalPaymentStartDate").val(),
+            finalPaymentEndDate: $("#finalPaymentEndDate").val(),
+            etdStartDate: $("#etdStartDate").val(),
+            etdEndDate: $("#etdEndDate").val(),
+            etaStartDate: $("#etaStartDate").val(),
+            etaEndDate: $("#etaEndDate").val(),
+            prePayBank: $("#prePayBank").val() == "全部" ? "":$("#prePayBank").val(),
+            finalPayBank: $("#finalPayBank").val() == "全部" ? "":$("#finalPayBank").val(),
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
+            externalCompany: externalCompany,
+            status: "全部",
             isFinancing: "1"
         };
         return temp;
@@ -180,30 +177,41 @@ var ButtonInit = function () {
 
 function resetQuery(){
     $("#status").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
 }
 
 function getTotalInfo(){
-        var statusArr = $("#status").val();
-        var status = "";
-        if(statusArr != null){
-            for(var i=0;i<statusArr.length;i++){
-                if(statusArr[i] != '全部'){
-                    status += statusArr[i] + ",";
+        var externalCompanyArr = $("#externalCompany").val();
+        var externalCompany = "";
+        if(externalCompanyArr != null){
+            for(var i=0;i<externalCompanyArr.length;i++){
+                if(externalCompanyArr[i] != '全部'){
+                    externalCompany += "'"+externalCompanyArr[i] + "',";
                 }else{
-                    status = "";break;
+                    externalCompany = "";break;
                 }
             }
         }
-        if(status.length > 1){
-            status = status.substring(0,status.length-1);
+        if(externalCompany.length > 1){
+            externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
 
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-       contractStartDate: $("#contractStartDate").val(),
-       contractEndDate: $("#contractEndDate").val(),
-       status: status,
+       prePaymentStartDate: $("#prePaymentStartDate").val(),
+       prePaymentEndDate: $("#prePaymentEndDate").val(),
+       finalPaymentStartDate: $("#finalPaymentStartDate").val(),
+       finalPaymentEndDate: $("#finalPaymentEndDate").val(),
+       etdStartDate: $("#etdStartDate").val(),
+       etdEndDate: $("#etdEndDate").val(),
+       etaStartDate: $("#etaStartDate").val(),
+       etaEndDate: $("#etaEndDate").val(),
+       prePayBank: $("#prePayBank").val() == "全部" ? "":$("#prePayBank").val(),
+       finalPayBank: $("#finalPayBank").val() == "全部" ? "":$("#finalPayBank").val(),
+       ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
+       externalCompany: externalCompany,
+       status: "全部",
        isFinancing: "1"
     };
 
@@ -214,10 +222,12 @@ function getTotalInfo(){
         data:queryParams,
         success:function(res){
             if(res.status == "1"){
-                $("#totalCNYInvoiceMoney").html(toFloat(res.totalCNYInvoiceMoney));
-                $("#totalUSDInvoiceMoney").html(toFloat(res.totalUSDInvoiceMoney));
-                $("#totalAUDInvoiceMoney").html(toFloat(res.totalAUDInvoiceMoney));
-                $("#totalFinancingMoney").html(toFloat4(res.totalFinancingMoney));
+                $("#totalCNYPrePaymentMoney").html(toFloat(res.totalCNYPrePaymentMoney));
+                $("#totalUSDPrePaymentMoney").html(toFloat(res.totalUSDPrePaymentMoney));
+                $("#totalAUDPrePaymentMoney").html(toFloat(res.totalAUDPrePaymentMoney));
+                $("#totalCNYFinalPaymentMoney").html(toFloat(res.totalCNYFinalPaymentMoney));
+                $("#totalUSDFinalPaymentMoney").html(toFloat(res.totalUSDFinalPaymentMoney));
+                $("#totalAUDFinalPaymentMoney").html(toFloat(res.totalAUDFinalPaymentMoney));
             }
         }
     });

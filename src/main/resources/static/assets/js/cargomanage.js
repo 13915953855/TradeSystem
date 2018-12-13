@@ -148,6 +148,7 @@ var TableInit = function () {
             companyNo: $("#companyNo").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),
             businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             minBox: $("#minBox").val(),
             maxBox: $("#maxBox").val(),
             minWeight: $("#minWeight").val(),
@@ -168,6 +169,7 @@ function getTotalStore(){
         level: $("#level").val() == "全部"?"":$("#level").val(),
         status: $("#status").val() == "全部"?"":$("#status").val(),
         businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
+        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
         cargoNo: $("#cargoNo").val(),
         customerName: $("#customerName").val(),
@@ -217,6 +219,7 @@ function resetQuery(){
     $("#level").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
     $("#businessMode").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
     $("#containerNo").val("");

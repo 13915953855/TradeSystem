@@ -14,9 +14,9 @@ $(function(){
         },300);
     });
 
-    $("select").select2({
+    /*$("select").select2({
         tags: true
-    });
+    });*/
 
     $.ajaxSetup({
                     contentType:"application/x-www-form-urlencoded;charset=utf-8",
@@ -45,9 +45,77 @@ function checkSelectOptionExist(id,val){
         $("#"+id).append("<option>"+val+"</option>");
     }
 }
-
-
 function initCargoList(){
+    var cargoList = "<option>保乐肩</option>";
+    cargoList += "<option>板腱</option>";
+    cargoList += "<option>脖骨</option>";
+    cargoList += "<option>板筋</option>";
+    cargoList += "<option>背肩</option>";
+    cargoList += "<option>边肉</option>";
+    cargoList += "<option>大米龙</option>";
+    cargoList += "<option>带骨胸排</option>";
+    cargoList += "<option>腹肉心</option>";
+    cargoList += "<option>隔膜</option>";
+    cargoList += "<option>厚裙</option>";
+    cargoList += "<option>后胸</option>";
+    cargoList += "<option>肩胛仔骨</option>";
+    cargoList += "<option>肩胛背肩</option>";
+    cargoList += "<option>肩胛</option>";
+    cargoList += "<option>肋排边</option>";
+    cargoList += "<option>肋条肉</option>";
+    cargoList += "<option>肋排肉</option>";
+    cargoList += "<option>肋脊肉</option>";
+    cargoList += "<option>脸肉</option>";
+    cargoList += "<option>牛霖</option>";
+    cargoList += "<option>嫩肩</option>";
+    cargoList += "<option>牛腱</option>";
+    cargoList += "<option>牛腩</option>";
+    cargoList += "<option>牛前</option>";
+    cargoList += "<option>牛柳</option>";
+    cargoList += "<option>牛心</option>";
+    cargoList += "<option>牛肾</option>";
+    cargoList += "<option>腩筋</option>";
+    cargoList += "<option>牛鞭</option>";
+    cargoList += "<option>牛尾</option>";
+    cargoList += "<option>牛唇</option>";
+    cargoList += "<option>牛舌</option>";
+    cargoList += "<option>排骨</option>";
+    cargoList += "<option>前胸</option>";
+    cargoList += "<option>去盖臀肉</option>";
+    cargoList += "<option>脐膯板</option>";
+    cargoList += "<option>裙膜</option>";
+    cargoList += "<option>上脑</option>";
+    cargoList += "<option>上脑心</option>";
+    cargoList += "<option>三角肩肉</option>";
+    cargoList += "<option>三角肉</option>";
+    cargoList += "<option>臀肉</option>";
+    cargoList += "<option>臀腰肉盖</option>";
+    cargoList += "<option>臀腰肉心</option>";
+    cargoList += "<option>碎肉</option>";
+    cargoList += "<option>腿骨</option>";
+    cargoList += "<option>蹄筋</option>";
+    cargoList += "<option>窝骨</option>";
+    cargoList += "<option>外裙</option>";
+    cargoList += "<option>西冷</option>";
+    cargoList += "<option>胸肉</option>";
+    cargoList += "<option>胸排肉</option>";
+    cargoList += "<option>胸肋排</option>";
+    cargoList += "<option>小排</option>";
+    cargoList += "<option>小米龙</option>";
+    cargoList += "<option>心片</option>";
+    cargoList += "<option>心管</option>";
+    cargoList += "<option>胸口油</option>";
+    cargoList += "<option>翼板肉</option>";
+    cargoList += "<option>眼肉</option>";
+    cargoList += "<option>眼肉盖</option>";
+    cargoList += "<option>仔骨</option>";
+    cargoList += "<option>战斧</option>";
+    cargoList += "<option>椎骨</option>";
+    cargoList += "<option>脂肪</option>";
+    cargoList += "<option>混柜</option>";
+    $("#cargoName").append(cargoList);
+}
+/*function initCargoList(){
     var cargoList = "<optgroup label='去骨'>";
     cargoList += "<option>前胸</option>";
     cargoList += "<option>后胸</option>";
@@ -112,20 +180,15 @@ function initCargoList(){
     cargoList += "<option>冷切脂肪</option>";
     cargoList += "</optgroup>";
     $("#cargoName").append(cargoList);
-}
+}*/
 
 function initWarehouse(){
     var opts = "";
+    opts += "<option>库外</option>";
     opts += "<option>名联</option>";
     opts += "<option>领升</option>";
-    opts += "<option>普菲斯（外高桥）</option>";
-    opts += "<option>普菲斯（洋山）</option>";
-    opts += "<option>太古</option>";
-    opts += "<option>保翔</option>";
-    opts += "<option>大宛</option>";
     opts += "<option>鑫汇洋</option>";
     opts += "<option>瑞源</option>";
-    opts += "<option>库外</option>";
     $("#warehouse").append(opts);
 }
 
@@ -155,11 +218,8 @@ function initOriginCountry(){
     opts += "<option>乌拉圭</option>";
     opts += "<option>巴西</option>";
     opts += "<option>加拿大</option>";
-    opts += "<option>美国</option>";
     opts += "<option>阿根廷</option>";
     opts += "<option>白俄罗斯</option>";
-    opts += "<option>南非</option>";
-    opts += "<option>哥斯达黎加</option>";
     opts += "<option>新西兰</option>";
     $("#originCountry").append(opts);
 }
@@ -195,6 +255,9 @@ function initDestinationPort(){
     opts += "<option>天津</option>";
     opts += "<option>深圳</option>";
     opts += "<option>连云港</option>";
+    opts += "<option>盐田</option>";
+    opts += "<option>南京</option>";
+    opts += "<option>太仓</option>";
     opts += "<option>张家港</option>";
     $("#destinationPort").append(opts);
 }
@@ -202,21 +265,22 @@ function initDestinationPort(){
 function initExternalCompany(){
     var opts = "";
     opts += "<option></option>";
-    opts += "<option>FRISA</option>";
-    opts += "<option>HARVEY</option>";
-    opts += "<option>GORINA</option>";
-    opts += "<option>JBS AUS</option>";
-    opts += "<option>JOC AUS</option>";
-    opts += "<option>KPC HK</option>";
-    opts += "<option>MATABOI</option>";
-    opts += "<option>MINEVER</option>";
-    opts += "<option>MOGILEV MEAT</option>";
-    opts += "<option>SANGER</option>";
-    opts += "<option>STANBROKE</option>";
-    opts += "<option>SWIFT</option>";
     opts += "<option>TEYS AUS</option>";
+    opts += "<option>SANGER</option>";
+    opts += "<option>FRISA</option>";
+    opts += "<option>JBS AUS</option>";
+    opts += "<option>KPC HK</option>";
+    opts += "<option>JOC AUS</option>";
+    opts += "<option>STANBROKE</option>";
     opts += "<option>THOMAS</option>";
+    opts += "<option>HARVEY</option>";
+    opts += "<option>MOGILEV MEAT</option>";
+    opts += "<option>MINEVER</option>";
+    opts += "<option>MATABOI</option>";
     opts += "<option>MARFRIG</option>";
+    opts += "<option>GORINA</option>";
+    opts += "<option>CARGILL</option>";
+    opts += "<option>ASHLEIGH PARK BEEF</option>";
     $("#externalCompany").append(opts);
 }
 

@@ -101,28 +101,89 @@
                         <div id="collapseOne" class="panel-body panel-collapse collapse in" style="padding-top:10px;padding-bottom:0;">
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">状态</label>
+                                    <label class="control-label col-sm-1">外商</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" id="status" multiple="multiple">
+                                        <select class="form-control select2" id="externalCompany" multiple="multiple">
                                             <option>全部</option>
-                                            <option>已下单</option>
-                                            <option>已装船</option>
-                                            <option>已到港</option>
-                                            <option>已入库</option>
-                                            <option>已售完</option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-1">合同日期从:</label>
+                                    <label class="control-label col-sm-1">预付款银行</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="prePayBank">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">尾款银行</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="finalPayBank">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">合同归属公司</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" id="ownerCompany">
+                                            <option>全部</option>
+                                            <option>海企长城</option>
+                                            <option>紫荆华美</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">预付款日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractStartDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="prePaymentStartDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
                                     <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractEndDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="prePaymentEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">尾款日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="finalPaymentStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="finalPaymentEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">ETD日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="etdStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="etdEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">ETA日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="etaStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="etaEndDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
@@ -140,15 +201,17 @@
                         <form class="form-horizontal">
                             <div class="panel-body">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-2">发票总金额(CNY):<br/>(USD):<br/>(AUD):</label>
+                                    <label class="control-label col-sm-2">预付款总金额(CNY):<br/>(USD):<br/>(AUD):</label>
                                     <div class="col-sm-1" style="padding-top:6px;">
-                                        <span id="totalCNYInvoiceMoney"></span><br/>
-                                        <span id="totalUSDInvoiceMoney"></span><br/>
-                                        <span id="totalAUDInvoiceMoney"></span>
+                                        <span id="totalCNYPrePaymentMoney"></span><br/>
+                                        <span id="totalUSDPrePaymentMoney"></span><br/>
+                                        <span id="totalAUDPrePaymentMoney"></span>
                                     </div>
-                                    <label class="control-label col-sm-1">融资总金额:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="totalFinancingMoney"></span>
+                                    <label class="control-label col-sm-2">尾款总金额(CNY):<br/>(USD):<br/>(AUD):</label>
+                                    <div class="col-sm-1" style="padding-top:6px;">
+                                        <span id="totalCNYFinalPaymentMoney"></span><br/>
+                                        <span id="totalUSDFinalPaymentMoney"></span><br/>
+                                        <span id="totalAUDFinalPaymentMoney"></span>
                                     </div>
                                 </div>
                             </div>

@@ -141,7 +141,9 @@
                                     </div>
                                     <label class="control-label col-sm-1">原产地</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control select2" id="originCountry"  multiple="multiple"></select>
+                                        <select class="form-control select2" id="originCountry"  multiple="multiple">
+                                            <option>全部</option>
+                                        </select>
                                     </div>
                                     <label class="control-label col-sm-1">仓库</label>
                                     <div class="col-sm-2">
@@ -154,6 +156,28 @@
                                     <label class="control-label col-sm-1">柜号</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="containerNo" />
+                                    </div>
+                                    <label class="control-label col-sm-1">合同归属公司</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" id="ownerCompany">
+                                            <option>全部</option>
+                                            <option>海企长城</option>
+                                            <option>紫荆华美</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">入库日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="storeStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="storeEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group" style="">
@@ -174,22 +198,6 @@
                                         <input type="text" class="form-control" id="maxWeight"/>
                                     </div>
                                 </div>
-                                <!--<div class="form-group" style="">
-                                    <label class="control-label col-sm-1">合同日期从:</label>
-                                    <div class="col-sm-2">
-                                        <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractStartDate" class="form-control" />
-                                            <span class="add-on"><i class="icon-th"></i></span>
-                                        </div>
-                                    </div>
-                                    <label class="control-label col-sm-1">到:</label>
-                                    <div class="col-sm-2">
-                                        <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractEndDate" class="form-control" />
-                                            <span class="add-on"><i class="icon-th"></i></span>
-                                        </div>
-                                    </div>
-                                </div>-->
                                 <div class="form-group" style="">
                                     <div class="col-sm-12" style="text-align:right;">
                                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>

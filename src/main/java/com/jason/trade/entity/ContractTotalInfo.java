@@ -7,7 +7,25 @@ public class ContractTotalInfo {
     private Float totalInvoiceAmount;
     private Float totalFinancingMoney;
     private Float totalYahuiMoney;
+    private Float totalPrePayment;
+    private Float totalFinalPayment;
     private String currency;
+
+    public Float getTotalPrePayment() {
+        return totalPrePayment;
+    }
+
+    public void setTotalPrePayment(Float totalPrePayment) {
+        this.totalPrePayment = totalPrePayment;
+    }
+
+    public Float getTotalFinalPayment() {
+        return totalFinalPayment;
+    }
+
+    public void setTotalFinalPayment(Float totalFinalPayment) {
+        this.totalFinalPayment = totalFinalPayment;
+    }
 
     public Float getTotalYahuiMoney() {
         return totalYahuiMoney;

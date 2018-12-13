@@ -28,8 +28,17 @@ public class CargoParam {
     private String maxWeight;
     private String baoguandan;
     private String qacertificate;
+    private String ownerCompany;
     private int start;
     private int limit;
+
+    public String getOwnerCompany() {
+        return ownerCompany;
+    }
+
+    public void setOwnerCompany(String ownerCompany) {
+        this.ownerCompany = ownerCompany;
+    }
 
     public String getCompanyNo() {
         return companyNo;

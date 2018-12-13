@@ -39,7 +39,7 @@ public class SaleInfo {
     private String customerPayDate5;
     @Column(name="customer_pay_money5")
     private Double customerPayMoney5;
-    @Column(name="expect_sale_boxes")
+    /*@Column(name="expect_sale_boxes")
     private Integer expectSaleBoxes;
     @Column(name="expect_sale_date")
     private String expectSaleDate;
@@ -48,7 +48,7 @@ public class SaleInfo {
     @Column(name="expect_sale_unit_price")
     private Double expectSaleUnitPrice;
     @Column(name="expect_sale_weight")
-    private Double expectSaleWeight;
+    private Double expectSaleWeight;*/
     @Column(name="money_clear")
     private Integer moneyClear;
     @Column(name="payment_diff")
@@ -224,7 +224,7 @@ public class SaleInfo {
         this.customerPayMoney = customerPayMoney;
     }
 
-    public Integer getExpectSaleBoxes() {
+    /*public Integer getExpectSaleBoxes() {
         return expectSaleBoxes;
     }
 
@@ -262,7 +262,7 @@ public class SaleInfo {
 
     public void setExpectSaleWeight(Double expectSaleWeight) {
         this.expectSaleWeight = expectSaleWeight;
-    }
+    }*/
 
     public Integer getMoneyClear() {
         return moneyClear;

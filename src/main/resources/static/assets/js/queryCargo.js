@@ -7,7 +7,9 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-
+$("select").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,
@@ -202,6 +204,7 @@ var TableInit = function () {
             companyNo: $("#companyNo").val(),
             businessMode: businessMode,
             externalCompany: externalCompany,
+            ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             originCountry: originCountry
         };
         return temp;
@@ -295,6 +298,8 @@ var ButtonInit = function () {
             params += "&contractEndDate="+$("#contractEndDate").val();
             params += "&contractStartDate="+$("#contractStartDate").val();
             params += "&originCountry="+originCountry;
+            var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
+            params += "&ownerCompany="+ownerCompany;
             var url = "/trade/queryCargo/output"+params;
             window.open(url);
         });
@@ -312,6 +317,7 @@ function resetQuery(){
     $("#level").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
+    $("#ownerCompany").val("全部").trigger("change");
     $("#startDate").val("");
     $("#endDate").val("");
     $("#etaStartDate").val("");
@@ -392,6 +398,7 @@ function getTotalInfo(){
         companyNo: $("#companyNo").val(),
         businessMode: businessMode,
         externalCompany: externalCompany,
+        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         originCountry: originCountry
     };
 
@@ -402,8 +409,12 @@ function getTotalInfo(){
         data:queryParams,
         success:function(res){
             if(res.status == "1"){
-                $("#totalContractMoney").html(toFloat(res.totalContractMoney));
-                $("#totalInvoiceMoney").html(toFloat(res.totalInvoiceMoney));
+                $("#totalCNYContractMoney").html(toFloat(res.totalCNYContractMoney));
+                $("#totalCNYInvoiceMoney").html(toFloat(res.totalCNYInvoiceMoney));
+                $("#totalUSDContractMoney").html(toFloat(res.totalUSDContractMoney));
+                $("#totalUSDInvoiceMoney").html(toFloat(res.totalUSDInvoiceMoney));
+                $("#totalAUDContractMoney").html(toFloat(res.totalAUDContractMoney));
+                $("#totalAUDInvoiceMoney").html(toFloat(res.totalAUDInvoiceMoney));
                 $("#totalContractAmount").html(toFloat4(res.totalContractAmount));
                 $("#totalInvoiceAmount").html(toFloat4(res.totalInvoiceAmount));
             }

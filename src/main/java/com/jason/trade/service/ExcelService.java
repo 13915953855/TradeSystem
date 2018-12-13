@@ -180,6 +180,50 @@ public class ExcelService {
         }
         return result;
     }
+    public XSSFWorkbook writeContractExcel(List<ContractBaseInfo> data){
+        //创建工作簿
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        //创建工作表
+        XSSFSheet sheet = workBook.createSheet();
+        //创建样式
+        XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+
+        //set date format
+        CellStyle dateCellStyle = workBook.createCellStyle();
+        CreationHelper createHelper = workBook.getCreationHelper();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/m/d"));
+
+        List<List<Object>> result = convertQueryContractList(data);
+
+        //创建头
+        //创建第一行
+        XSSFRow row = sheet.createRow(0);
+        //创建单元格
+        XSSFCell cell = null;
+        //创建单元格
+        for (int j = 0; j < GlobalConst.HEAD_CONTRACT_QUERY_ARRAY.length; j++) {
+            cell = row.createCell(j, CellType.STRING);
+            cell.setCellValue(GlobalConst.HEAD_CONTRACT_QUERY_ARRAY[j]);
+            cell.setCellStyle(styleNoColor);
+        }
+
+
+        for (int i = 0; i < result.size(); i++) {
+            //创建行
+            row = sheet.createRow(i+1);
+            List<Object> rowData = result.get(i);
+            for (int k = 0; k < GlobalConst.HEAD_CONTRACT_QUERY_ARRAY.length; k++) {
+                cell = row.createCell(k, CellType.STRING);
+                if(rowData.get(k) == null){
+                    cell.setCellValue("");
+                }else {
+                    cell.setCellValue(rowData.get(k).toString());
+                }
+                cell.setCellStyle(styleNoColor);
+            }
+        }
+        return workBook;
+    }
     public XSSFWorkbook writeCargoExcel(List<QueryContractInfo> data){
         //创建工作簿
         XSSFWorkbook workBook = new XSSFWorkbook();
@@ -225,6 +269,35 @@ public class ExcelService {
         return workBook;
     }
 
+    private List<List<Object>> convertQueryContractList(List<ContractBaseInfo> data) {
+        List<List<Object>> result = new ArrayList<>();
+        for (ContractBaseInfo contractBaseInfo : data) {
+            List<Object> list = new ArrayList<>();
+            list.add(contractBaseInfo.getExternalContract());//"外合同编号",
+            list.add(contractBaseInfo.getInsideContract());// "内合同编号",
+            list.add(contractBaseInfo.getExternalCompany());// "外商",
+            list.add(contractBaseInfo.getContractDate());// "合同日期",
+            list.add(contractBaseInfo.getTotalContractAmount());// "合同总重量",
+            list.add(contractBaseInfo.getTotalContractMoney());// "合同总金额",
+            list.add(contractBaseInfo.getTotalInvoiceAmount());// "发票总重量",
+            list.add(contractBaseInfo.getTotalInvoiceMoney());// "发票总金额",
+            list.add(contractBaseInfo.getOriginCountry());// "原产地",
+            list.add(contractBaseInfo.getEta());// "ETA",
+            list.add(contractBaseInfo.getEtd());// "ETD",
+            list.add(contractBaseInfo.getExpectSailingDate());// "预计船期",
+            String status = contractBaseInfo.getStatus();
+            switch (status){
+                case "1":status = "已下单";break;
+                case "2":status = "已装船";break;
+                case "3":status = "已到港";break;
+                case "4":status = "已入库";break;
+                case "5":status = "已售完";break;
+            }
+            list.add(status);// "状态"
+            result.add(list);
+        }
+        return result;
+    }
     private List<List<Object>> convertQueryCargoList(List<QueryContractInfo> data) {
         List<List<Object>> result = new ArrayList<>();
         for (QueryContractInfo cargoInfo : data) {
