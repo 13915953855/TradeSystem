@@ -49,8 +49,10 @@ function initCargoList(){
     var cargoList = "<option>保乐肩</option>";
     cargoList += "<option>板腱</option>";
     cargoList += "<option>脖骨</option>";
+    cargoList += "<option>脖肉</option>";
     cargoList += "<option>板筋</option>";
     cargoList += "<option>背肩</option>";
+    cargoList += "<option>背肋排</option>";
     cargoList += "<option>边肉</option>";
     cargoList += "<option>大米龙</option>";
     cargoList += "<option>带骨胸排</option>";
@@ -61,6 +63,7 @@ function initCargoList(){
     cargoList += "<option>肩胛仔骨</option>";
     cargoList += "<option>肩胛背肩</option>";
     cargoList += "<option>肩胛</option>";
+    cargoList += "<option>肩肉</option>";
     cargoList += "<option>肋排边</option>";
     cargoList += "<option>肋条肉</option>";
     cargoList += "<option>肋排肉</option>";
@@ -98,6 +101,7 @@ function initCargoList(){
     cargoList += "<option>外裙</option>";
     cargoList += "<option>西冷</option>";
     cargoList += "<option>胸肉</option>";
+    cargoList += "<option>胸肉块</option>";
     cargoList += "<option>胸排肉</option>";
     cargoList += "<option>胸肋排</option>";
     cargoList += "<option>小排</option>";
