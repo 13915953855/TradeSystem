@@ -418,7 +418,7 @@
       and a.external_contract like '%${externalContract}%'
     </if>
     <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country = '${originCountry}'
+      and a.origin_country in (${originCountry})
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -534,7 +534,7 @@
       and a.external_contract like '%${externalContract}%'
     </if>
     <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country = '${originCountry}'
+      and a.origin_country in (${originCountry})
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
@@ -902,7 +902,7 @@
   <select id="queryStoreInfoListByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
     select a.id,a.eta,a.etd,a.expect_sailing_date,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,b.boxes,
     b.cargo_name,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country,b.cargo_no,
-    a.container_no,a.ladingbill_no,a.store_date,a.warehouse,b.expect_store_weight,b.expect_store_boxes,b.real_store_weight,b.real_store_boxes,b.real_store_money
+    a.container_no,a.ladingbill_no,a.store_date,a.warehouse,b.real_store_weight,b.real_store_boxes,b.real_store_money
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <if test="status != null and status != ''" >
@@ -921,7 +921,7 @@
       and a.warehouse = '${warehouse}'
     </if>
     <if test="containerNo != null and containerNo != ''" >
-      and a.container_no = '${containerNo}'
+      and a.container_no like '%${containerNo}%'
     </if>
     <if test="minWeight != null and minWeight != ''" >
       and b.real_store_weight &gt;= '${minWeight}'
@@ -959,7 +959,7 @@
     <if test="companyNo != null" >
       and b.company_no like '%${companyNo}%'
     </if>
-    order by b.cargo_id desc
+    order by b.real_store_weight desc,b.real_store_boxes desc
     <if test="start != null and limit != null" >
       limit ${start},${limit}
     </if>
@@ -984,7 +984,7 @@
       and a.warehouse = '${warehouse}'
     </if>
     <if test="containerNo != null and containerNo != ''" >
-      and a.container_no = '${containerNo}'
+      and a.container_no like '%${containerNo}%'
     </if>
     <if test="minWeight != null and minWeight != ''" >
       and b.real_store_weight &gt;= '${minWeight}'
@@ -1061,7 +1061,7 @@
       and a.warehouse = '${warehouse}'
     </if>
     <if test="containerNo != null and containerNo != ''" >
-      and a.container_no = '${containerNo}'
+      and a.container_no like '%${containerNo}%'
     </if>
     <if test="minWeight != null and minWeight != ''" >
       and b.real_store_weight &gt;= '${minWeight}'

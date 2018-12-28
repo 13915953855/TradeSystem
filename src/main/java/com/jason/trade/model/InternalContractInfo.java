@@ -17,6 +17,8 @@ public class InternalContractInfo {
     private String contractId;
     @Column(name="supplier")
     private String supplier;
+    @Column(name="container_no")
+    private String containerNo;
     @Column(name="pay_date")
     private String payDate;
     @Column(name="pay_money")
@@ -51,6 +53,14 @@ public class InternalContractInfo {
     private String ownerCompany;
     @Column(name="import_contract_no")
     private String importContractNo;
+
+    public String getContainerNo() {
+        return containerNo;
+    }
+
+    public void setContainerNo(String containerNo) {
+        this.containerNo = containerNo;
+    }
 
     public String getImportContractNo() {
         return importContractNo;

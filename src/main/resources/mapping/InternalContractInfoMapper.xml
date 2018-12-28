@@ -8,6 +8,7 @@
     <result column="contract_date" jdbcType="VARCHAR" property="contractDate" />
     <result column="contract_id" jdbcType="VARCHAR" property="contractId" />
     <result column="supplier" jdbcType="VARCHAR" property="supplier" />
+    <result column="container_no" jdbcType="VARCHAR" property="containerNo" />
     <result column="pay_date" jdbcType="VARCHAR" property="payDate" />
     <result column="pay_money" jdbcType="DOUBLE" property="payMoney" />
     <result column="receipt_date" jdbcType="VARCHAR" property="receiptDate" />
@@ -28,7 +29,7 @@
   <sql id="Base_Column_List" >
     id, contract_no, contract_date, contract_id, supplier, pay_date, pay_money, receipt_date,
     create_date_time, create_user, remark, status, total_boxes, total_amount, total_money,
-    real_amount, real_money, version, warehouse, store_date,owner_company,import_contract_no
+    real_amount, real_money, version, warehouse, store_date,owner_company,import_contract_no,container_no
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -57,6 +58,9 @@
       </if>
       <if test="supplier != null">
         supplier = #{supplier,jdbcType=VARCHAR},
+      </if>
+      <if test="containerNo != null">
+        container_no = #{containerNo,jdbcType=VARCHAR},
       </if>
       <if test="payDate != null">
         pay_date = #{payDate,jdbcType=VARCHAR},

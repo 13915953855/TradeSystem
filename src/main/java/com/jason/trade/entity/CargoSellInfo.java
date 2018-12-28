@@ -10,6 +10,7 @@ public class CargoSellInfo implements Serializable {
     private String level;
     private String warehouse;
     private String unit_price;
+    private String cost_price;
     private String real_store_weight;
     private String real_store_money;
     private String container_no;
@@ -23,6 +24,23 @@ public class CargoSellInfo implements Serializable {
     private String deposit;
     private String customer_pay_money;
     private String profit;
+    private String kaifapiao;
+
+    public String getKaifapiao() {
+        return kaifapiao;
+    }
+
+    public void setKaifapiao(String kaifapiao) {
+        this.kaifapiao = kaifapiao;
+    }
+
+    public String getCost_price() {
+        return cost_price;
+    }
+
+    public void setCost_price(String cost_price) {
+        this.cost_price = cost_price;
+    }
 
     public String getInside_contract() {
         return inside_contract;

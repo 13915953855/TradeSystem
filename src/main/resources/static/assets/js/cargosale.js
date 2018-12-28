@@ -334,10 +334,15 @@ var ButtonInit = function () {
             sale.depositDate = $("#depositDate").val();
             sale.remark = $("#remark").val();
             if($("#moneyClear").is(':checked')){
-                    sale.moneyClear = "1";
-                }else{
-                    sale.moneyClear = "0";
-                }
+                sale.moneyClear = "1";
+            }else{
+                sale.moneyClear = "0";
+            }
+            if($("#kaifapiao").is(':checked')){
+                sale.kaifapiao = "1";
+            }else{
+                sale.kaifapiao = "0";
+            }
             sale.customerPayDate = $("#customerPayDate").val();
             sale.customerPayMoney = $("#customerPayMoney").val() == "" ? 0:toFloat($("#customerPayMoney").val());
             sale.customerPayDate2 = $("#customerPayDate2").val();
@@ -435,6 +440,9 @@ function setFormData(data){
     if(data.moneyClear == 1){
         $("#moneyClear").attr("checked","checked");
     }
+    if(data.kaifapiao == 1){
+            $("#kaifapiao").attr("checked","checked");
+        }
 }
 
 function autoSetTotal(data){

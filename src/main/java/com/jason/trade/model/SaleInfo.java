@@ -51,6 +51,8 @@ public class SaleInfo {
     private Double expectSaleWeight;*/
     @Column(name="money_clear")
     private Integer moneyClear;
+    @Column(name="kaifapiao")
+    private Integer kaifapiao;
     @Column(name="payment_diff")
     private Double paymentDiff;
     @Column(name="pickup_date")
@@ -79,6 +81,14 @@ public class SaleInfo {
     private String depositDate;
     @Column(name="deposit")
     private Double deposit;
+
+    public Integer getKaifapiao() {
+        return kaifapiao;
+    }
+
+    public void setKaifapiao(Integer kaifapiao) {
+        this.kaifapiao = kaifapiao;
+    }
 
     public String getCustomerType() {
         return customerType;

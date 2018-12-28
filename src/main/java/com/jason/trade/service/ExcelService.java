@@ -170,8 +170,6 @@ public class ExcelService {
             list.add(storeInfo.getWarehouse());// "仓库",
             list.add(storeInfo.getInvoiceAmount());// "发票重量",
             list.add(storeInfo.getBoxes());// "发票箱数",
-            list.add(storeInfo.getExpectStoreWeight());// "预库存重量",
-            list.add(storeInfo.getExpectStoreBoxes());// "预库存箱数",
             list.add(storeInfo.getRealStoreWeight());// "现库存重量",
             list.add(storeInfo.getRealStoreBoxes());// "现库存箱数",
             list.add(storeInfo.getRealStoreMoney());// "库存成本"

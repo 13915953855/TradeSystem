@@ -23,6 +23,7 @@
     <result column="expect_sale_unit_price" property="expectSaleUnitPrice" jdbcType="DOUBLE" />
     <result column="expect_sale_weight" property="expectSaleWeight" jdbcType="DOUBLE" />
     <result column="money_clear" property="moneyClear" jdbcType="INTEGER" />
+    <result column="kaifapiao" property="kaifapiao" jdbcType="INTEGER" />
     <result column="payment_diff" property="paymentDiff" jdbcType="DOUBLE" />
     <result column="pickup_date" property="pickupDate" jdbcType="VARCHAR" />
     <result column="pickup_user" property="pickupUser" jdbcType="VARCHAR" />
@@ -44,7 +45,7 @@
     customer_pay_date5, customer_pay_money5,expect_sale_boxes, expect_sale_date, expect_sale_money, expect_sale_unit_price,
     expect_sale_weight, money_clear, payment_diff, pickup_date, pickup_user, profit, 
     real_sale_boxes, real_sale_date, real_sale_money, real_sale_unit_price, real_sale_weight, 
-    remark, sale_contract_no, status, deposit_date, deposit
+    remark, sale_contract_no, status, deposit_date, deposit, kaifapiao
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -76,7 +77,7 @@
       pickup_user, profit, real_sale_boxes, 
       real_sale_date, real_sale_money, real_sale_unit_price, 
       real_sale_weight, remark, sale_contract_no, deposit_date, deposit
-      status)
+      status,kaifapiao)
     values (#{saleId,jdbcType=INTEGER}, #{cargoId,jdbcType=VARCHAR}, #{createDateTime,jdbcType=VARCHAR}, 
       #{createUser,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerPayDate,jdbcType=VARCHAR}, #{customerPayMoney,jdbcType=DOUBLE},
       #{customerPayDate2,jdbcType=VARCHAR},#{customerPayMoney2,jdbcType=DOUBLE},
@@ -90,7 +91,7 @@
       #{realSaleDate,jdbcType=VARCHAR}, #{realSaleMoney,jdbcType=DOUBLE}, #{realSaleUnitPrice,jdbcType=DOUBLE}, 
       #{realSaleWeight,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR}, #{saleContractNo,jdbcType=VARCHAR},
       #{depositDate,jdbcType=VARCHAR}, #{deposit,jdbcType=DOUBLE},
-      #{status,jdbcType=VARCHAR})
+      #{status,jdbcType=VARCHAR},#{kaifapiao,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jason.trade.model.SaleInfo" >
     insert into sale_info
@@ -200,6 +201,9 @@
       <if test="deposit != null" >
         deposit,
       </if>
+      <if test="kaifapiao != null" >
+        kaifapiao,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="saleId != null" >
@@ -307,6 +311,9 @@
       <if test="deposit != null" >
         #{deposit,jdbcType=DOUBLE},
       </if>
+      <if test="kaifapiao != null" >
+        #{kaifapiao,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.SaleInfo" >
@@ -371,6 +378,9 @@
       </if>
       <if test="moneyClear != null" >
         money_clear = #{moneyClear,jdbcType=INTEGER},
+      </if>
+      <if test="kaifapiao != null" >
+        kaifapiao = #{kaifapiao,jdbcType=INTEGER},
       </if>
       <if test="paymentDiff != null" >
         payment_diff = #{paymentDiff,jdbcType=DOUBLE},
@@ -439,6 +449,7 @@
       expect_sale_unit_price = #{expectSaleUnitPrice,jdbcType=DOUBLE},
       expect_sale_weight = #{expectSaleWeight,jdbcType=DOUBLE},
       money_clear = #{moneyClear,jdbcType=INTEGER},
+      kaifapiao = #{kaifapiao,jdbcType=INTEGER},
       payment_diff = #{paymentDiff,jdbcType=DOUBLE},
       pickup_date = #{pickupDate,jdbcType=VARCHAR},
       pickup_user = #{pickupUser,jdbcType=VARCHAR},

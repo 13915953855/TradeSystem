@@ -30,5 +30,5 @@ public class GlobalConst {
     public static final String[] HEAD_CONTRACT_QUERY_ARRAY = new String[]{"外合同编号","内合同编号","外商","合同日期","合同总重量","合同总金额","发票总重量","发票总金额","原产地","ETA","ETD","预计船期","状态"};
     public static final String[] HEAD_CARGO_QUERY_ARRAY = new String[]{"外合同编号","内合同编号","外商","原产地","合同日期","厂号","商品","级别","单价","合同重量","合同金额","发票重量","发票金额","ETD","ETA","预计船期"};
     public static final String[] HEAD_DUTY_ARRAY = new String[]{"外合同编号","内合同编号","外商","报关单号","付税日期","关税","增值税","货代","放行日期","仓库","入库时间"};
-    public static final String[] HEAD_STOREINFO_QUERY_ARRAY = new String[]{"商品","级别","厂号","库号","外合同编号","内合同编号","柜号","提单号","入库时间","仓库","发票重量","发票箱数","预库存重量","预库存箱数","现库存重量","现库存箱数","库存成本"};
+    public static final String[] HEAD_STOREINFO_QUERY_ARRAY = new String[]{"商品","级别","厂号","库号","外合同编号","内合同编号","柜号","提单号","入库时间","仓库","发票重量","发票箱数","现库存重量","现库存箱数","库存成本"};
 }

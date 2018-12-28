@@ -180,12 +180,16 @@ public class MainController {
             model.addAttribute("ownerCompany", contractBaseInfo.getOwnerCompany());
             model.addAttribute("from","jinkou");
             model.addAttribute("type","进口台账");
+            model.addAttribute("containerNo",contractBaseInfo.getContainerNo());
+            model.addAttribute("warehouse",contractBaseInfo.getWarehouse());
         }else{
             InternalContractInfo internalContractInfo = internalContractRepository.findByContractId(cargoInfo.getContractId());
             model.addAttribute("externalContract", internalContractInfo.getContractNo());
             model.addAttribute("ownerCompany", internalContractInfo.getOwnerCompany());
             model.addAttribute("from","neimao");
             model.addAttribute("type","内贸台账");
+            model.addAttribute("containerNo",contractBaseInfo.getContainerNo());
+            model.addAttribute("warehouse",contractBaseInfo.getWarehouse());
         }
         return "trade/cargosaleview";
     }

@@ -353,7 +353,7 @@ public class TradeController {
     }
 
     @PostMapping(value="/contract/update")
-    public String contractUpdate(ContractBaseInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
+    public String contractUpdate(ContractBaseInfo contractBaseInfo, HttpSession session){
         Integer currentVersion = contractRepository.findOne(contractBaseInfo.getId()).getVersion();
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         if(currentVersion > contractBaseInfo.getVersion()){
@@ -374,6 +374,11 @@ public class TradeController {
             contractBaseInfo.setStatus(GlobalConst.STORED);
             //对应商品的状态也设为已入库
             cargoInfoMapper.storeByContractId(contractBaseInfo.getContractId());
+            //判断所有商品是否已售完
+            int avgStatus = cargoInfoMapper.getAvgStatusByContractId(contractBaseInfo.getContractId());
+            if(avgStatus == 5){
+                contractBaseInfo.setStatus(GlobalConst.SELLOUT);
+            }
         }
         contractBaseInfo.setVersion(contractBaseInfo.getVersion()+1);
 

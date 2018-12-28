@@ -29,8 +29,17 @@ public class CargoParam {
     private String baoguandan;
     private String qacertificate;
     private String ownerCompany;
+    private String kaifapiao;
     private int start;
     private int limit;
+
+    public String getKaifapiao() {
+        return kaifapiao;
+    }
+
+    public void setKaifapiao(String kaifapiao) {
+        this.kaifapiao = kaifapiao;
+    }
 
     public String getOwnerCompany() {
         return ownerCompany;

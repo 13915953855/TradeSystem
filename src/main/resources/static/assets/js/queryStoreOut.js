@@ -81,7 +81,8 @@ var TableInit = function () {
                 title: '内合同编号'
             }, {
                 field: 'external_company',
-                title: '外商'
+                title: '外商',
+                                           visible: false
             }, {
                 field: 'company_no',
                 title: '厂号'
@@ -96,22 +97,29 @@ var TableInit = function () {
                 title: '仓库'
             }, {
                 field: 'unit_price',
-                title: '单价'
+                title: '单价',
+                                           visible: false
+            }, {
+                field: 'cost_price',
+                title: '成本单价'
             }, {
                 field: 'real_store_weight',
                 title: '库存重量',
+                                             visible: false,
               formatter: function(value, row, index){
                   return toFloat4(value);
               }
             }, {
                 field: 'real_store_money',
-                title: '库存成本'
+                title: '库存成本',
+                                             visible: false
             }, {
                 field: 'container_no',
                 title: '柜号'
             }, {
                 field: 'ladingbill_no',
-                title: '提单号'
+                title: '提单号',
+                                            visible: false
             }, {
                 field: 'real_sale_date',
                 title: '出库时间'
@@ -132,14 +140,25 @@ var TableInit = function () {
                 title: '实售金额'
             }, {
                 field: 'deposit',
-                title: '定金'
+                title: '定金',
+                                           visible: false
             }, {
                 field: 'customer_pay_money',
-                title: '客户来款金额'
+                title: '客户来款金额',
+                                               visible: false
             }, {
                 field: 'profit',
                 title: '利润'
-            }]
+            }, {
+                 field: 'kaifapiao',
+                 title: '发票',
+                 //visible: false,
+                 formatter: function(value, row, index){
+                    if(value == 1) return '是';
+                    else if(value == 0) return '否';
+                    else return value;
+                 }
+             }]
         });
     };
 
@@ -161,6 +180,7 @@ var TableInit = function () {
             containerNo: $("#containerNo").val(),
             ladingbillNo: $("#ladingbillNo").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),
+            kaifapiao: $("#kaifapiao").val() == "全部"?"":$("#kaifapiao").val(),
             businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
             minBox: $("#minBox").val(),
             maxBox: $("#maxBox").val()
@@ -223,6 +243,7 @@ function getTotalInfo(){
          containerNo: $("#containerNo").val(),
          ladingbillNo: $("#ladingbillNo").val(),
          status: $("#status").val() == "全部"?"":$("#status").val(),
+         kaifapiao: $("#kaifapiao").val() == "全部"?"":$("#kaifapiao").val(),
          businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
          ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
          minBox: $("#minBox").val(),

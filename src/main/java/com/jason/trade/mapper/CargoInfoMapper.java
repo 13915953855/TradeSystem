@@ -27,4 +27,5 @@ public interface CargoInfoMapper {
     List<CargoStoreInfo> getStoreList(CargoParam cargoParam);
     Integer countStoreList(CargoParam cargoParam);
     CargoTotalInfo getTotalStoreInInfo(CargoParam cargoParam);
+    Integer getAvgStatusByContractId(String contractId);
 }

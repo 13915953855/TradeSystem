@@ -150,6 +150,16 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">柜号</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="containerNo" th:value="${containerNo}"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">仓库</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="warehouse" th:value="${warehouse}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
                                             <label class="control-label col-sm-2">发票箱数(小计)</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="boxes" th:value="${cargo.boxes}"/>
@@ -449,7 +459,13 @@
                                                                 <div class="col-sm-3">
                                                                     <input type="checkbox" id="moneyClear" />
                                                                 </div>
-                                                                <div id="deviationNotice" class="col-sm-12" style="display:none;">
+                                                                <label class="control-label col-sm-3">是否已开发票</label>
+                                                                <div class="col-sm-3">
+                                                                    <input type="checkbox" id="kaifapiao" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="">
+                                                                <div id="deviationNotice" class="col-sm-14" style="display:none;">
                                                                     <span style="color:red;">提醒：客户来款金额所填数额与实际销售金额有偏差，请确认！</span>
                                                                 </div>
                                                             </div>

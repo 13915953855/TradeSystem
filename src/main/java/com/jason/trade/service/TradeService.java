@@ -138,6 +138,7 @@ public class TradeService {
         //cargoInfo.setExpectStoreBoxes(expectSaleBoxes);
         cargoInfo.setRealStoreWeight(realSaleWeight);
         cargoInfo.setRealStoreBoxes(realSaleBoxes);
+        cargoInfo.setRealStoreMoney(realSaleWeight*cargoInfo.getCostPrice());
         cargoInfoMapper.updateByCargoId(cargoInfo);
         if(realSaleBoxes <= 0) {
             autoUpdateStatus(saleInfo.getCargoId(), status);

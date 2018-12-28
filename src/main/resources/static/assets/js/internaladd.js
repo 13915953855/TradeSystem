@@ -352,6 +352,7 @@ function saveContract(){
     contract.contractNo = $("#contractNo").val();
     contract.contractDate = $("#contractDate").val();
     contract.supplier = $("#supplier").val();
+    contract.containerNo = $("#containerNo").val();
     contract.payDate = $("#payDate").val();
     contract.receiptDate = $("#receiptDate").val();
     contract.payMoney = $("#payMoney").val() == "" ? 0:toFloat4($("#payMoney").val());

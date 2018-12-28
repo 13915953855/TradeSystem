@@ -528,13 +528,16 @@
 
   <select id="getSellList" resultType="com.jason.trade.entity.CargoSellInfo" parameterType="com.jason.trade.entity.CargoParam">
     select c.inside_contract,c.external_company,b.company_no,b.cargo_name,b.level,c.warehouse,
-    b.unit_price,b.real_store_weight,b.real_store_money,c.container_no,c.ladingbill_no,
+    b.unit_price,b.real_store_weight,b.real_store_money,c.container_no,c.ladingbill_no,a.kaifapiao,
     a.real_sale_date,a.customer_name,a.real_sale_weight,a.real_sale_boxes,a.real_sale_unit_price,a.real_sale_money,
-    a.deposit,(a.customer_pay_money+a.customer_pay_money2+a.customer_pay_money3+a.customer_pay_money4+a.customer_pay_money5) as customer_pay_money,a.profit
+    a.deposit,(a.customer_pay_money+a.customer_pay_money2+a.customer_pay_money3+a.customer_pay_money4+a.customer_pay_money5) as customer_pay_money,a.profit,b.cost_price
     from cargo_info b
     inner join sale_info a on a.cargo_id = b.cargo_id
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
+    <if test="kaifapiao != null and kaifapiao != ''" >
+      and a.kaifapiao = '${kaifapiao}'
+    </if>
     <if test="contractNo != null and contractNo != ''" >
       and c.external_contract like '%${contractNo}%'
     </if>
@@ -584,6 +587,9 @@
     inner join sale_info a on a.cargo_id = b.cargo_id
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
+    <if test="kaifapiao != null and kaifapiao != ''" >
+      and a.kaifapiao = '${kaifapiao}'
+    </if>
     <if test="contractNo != null and contractNo != ''" >
       and c.external_contract like '%${contractNo}%'
     </if>
@@ -826,5 +832,8 @@
     <if test="qacertificate != null and qacertificate != ''" >
       and b.qacertificate = '${qacertificate}'
     </if>
+  </select>
+  <select id="getAvgStatusByContractId" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select AVG(status) from cargo_info where contract_id = #{_parameter}
   </select>
 </mapper>

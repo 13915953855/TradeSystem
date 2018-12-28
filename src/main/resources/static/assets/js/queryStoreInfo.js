@@ -119,15 +119,6 @@ var TableInit = function () {
                 field: 'boxes',
                 title: '发票箱数'
             }, {
-                field: 'expectStoreWeight',
-                title: '预库存重量',
-                  formatter: function(value, row, index){
-                      return toFloat4(value);
-                  }
-            }, {
-                field: 'expectStoreBoxes',
-                title: '预库存箱数'
-            }, {
                 field: 'realStoreWeight',
                 title: '现库存重量',
                   formatter: function(value, row, index){
