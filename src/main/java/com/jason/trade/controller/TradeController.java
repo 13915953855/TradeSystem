@@ -397,7 +397,7 @@ public class TradeController {
         return GlobalConst.SUCCESS;
     }
     @PostMapping(value="/internal/contract/update")
-    public String internalContractUpdate(InternalContractInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
+    public String internalContractUpdate(InternalContractInfo contractBaseInfo, HttpSession session){
         Integer currentVersion = internalContractRepository.findOne(contractBaseInfo.getId()).getVersion();
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         if(currentVersion > contractBaseInfo.getVersion()){

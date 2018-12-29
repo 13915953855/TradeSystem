@@ -10,6 +10,10 @@ $(function () {
     initCargoList();
     initLevel();
 
+    $("#level").select2({
+        tags: true
+    });
+
     $("#unitPrice").blur(function(){
         var money = 0;
         var sjMoney = 0;
@@ -348,6 +352,7 @@ function saveContract(){
     }
 
     contract.ownerCompany = $("#ownerCompany").val();
+    contract.cargoType = $("#cargoType").val();
     contract.importContractNo = $("#importContractNo").val();
     contract.contractNo = $("#contractNo").val();
     contract.contractDate = $("#contractDate").val();

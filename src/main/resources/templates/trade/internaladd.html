@@ -128,7 +128,11 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">供货方</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="supplier" />
+                                                <select class="form-control" id="supplier">
+                                                    <option>山格（上海）贸易有限公司</option>
+                                                    <option>上海冠高商贸有限公司</option>
+                                                    <option>上海芸味食品有限公司</option>
+                                                </select>
                                             </div>
                                             <label class="control-label col-sm-3">柜号</label>
                                             <div class="col-sm-3">
@@ -159,6 +163,14 @@
                                             <label class="control-label col-sm-2">总箱数</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="totalBoxes"  disabled="disabled"/>
+                                            </div>
+                                            <label class="control-label col-sm-3">商品属性</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-control" id="cargoType">
+                                                    <option>牛产品</option>
+                                                    <option>猪产品</option>
+                                                    <option>禽产品</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
@@ -241,7 +253,7 @@
                                                                 </div>
                                                                 <label class="control-label col-sm-3">级别</label>
                                                                 <div class="col-sm-3">
-                                                                    <select class="form-control" id="level">
+                                                                    <select class="form-control select2" id="level">
 
                                                                     </select>
                                                                 </div>

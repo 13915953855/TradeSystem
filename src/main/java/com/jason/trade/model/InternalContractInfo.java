@@ -51,8 +51,18 @@ public class InternalContractInfo {
     private String storeDate;
     @Column(name="owner_company")
     private String ownerCompany;
+    @Column(name="cargo_type")
+    private String cargoType;
     @Column(name="import_contract_no")
     private String importContractNo;
+
+    public String getCargoType() {
+        return cargoType;
+    }
+
+    public void setCargoType(String cargoType) {
+        this.cargoType = cargoType;
+    }
 
     public String getContainerNo() {
         return containerNo;

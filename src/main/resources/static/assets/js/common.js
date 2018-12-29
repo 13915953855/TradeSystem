@@ -103,7 +103,7 @@ function initCargoList(){
     cargoList += "<option>胸肉</option>";
     cargoList += "<option>胸肉块</option>";
     cargoList += "<option>胸排肉</option>";
-    cargoList += "<option>胸肋排</option>";
+    cargoList += "<option>肩胛仔骨</option>";
     cargoList += "<option>小排</option>";
     cargoList += "<option>小米龙</option>";
     cargoList += "<option>心片</option>";
@@ -284,6 +284,7 @@ function initExternalCompany(){
     opts += "<option>MARFRIG</option>";
     opts += "<option>GORINA</option>";
     opts += "<option>CARGILL</option>";
+    opts += "<option>ARREBEEF</option>";
     opts += "<option>ASHLEIGH PARK BEEF</option>";
     $("#externalCompany").append(opts);
 }

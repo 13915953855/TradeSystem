@@ -959,7 +959,7 @@
     <if test="companyNo != null" >
       and b.company_no like '%${companyNo}%'
     </if>
-    order by b.real_store_weight desc,b.real_store_boxes desc
+    order by a.contract_id,a.store_date,b.real_store_weight desc,b.real_store_boxes desc
     <if test="start != null and limit != null" >
       limit ${start},${limit}
     </if>

@@ -733,7 +733,7 @@
     <if test="qacertificate != null and qacertificate != ''" >
       and b.qacertificate = '${qacertificate}'
     </if>
-    order by a.cargo_id desc
+    order by a.contract_id,b.store_date,a.real_store_weight desc,a.real_store_boxes desc
     limit ${start},${limit}
   </select>
   <select id="countStoreList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam">
@@ -782,8 +782,6 @@
     <if test="qacertificate != null and qacertificate != ''" >
       and b.qacertificate = '${qacertificate}'
     </if>
-    order by a.cargo_id desc
-    limit ${start},${limit}
   </select>
   <select id="getTotalStoreInInfo" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.CargoParam" >
     select sum(a.invoice_amount) as totalInvoiceWeight,sum(a.boxes) as totalInvoiceBoxes
