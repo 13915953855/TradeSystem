@@ -182,20 +182,7 @@ var TableInit = function () {
         if(businessMode.length > 1){
             businessMode = businessMode.substring(0,businessMode.length-1);
         }
-        var statusArr = $("#status").val();
-                var status = "";
-                if(statusArr != null){
-                    for(var i=0;i<statusArr.length;i++){
-                        if(statusArr[i] != '全部'){
-                            status += statusArr[i] + ",";
-                        }else{
-                            status = "";break;
-                        }
-                    }
-                }
-                if(status.length > 1){
-                    status = status.substring(0,status.length-1);
-                }
+        var status = $("#status").val();
         var originCountryArr = $("#originCountry").val();
         var originCountry = "";
         if(originCountryArr != null){
@@ -294,20 +281,7 @@ var ButtonInit = function () {
                     if(businessMode.length > 1){
                         businessMode = businessMode.substring(0,businessMode.length-1);
                     }
-                    var statusArr = $("#status").val();
-                    var status = "";
-                    if(statusArr != null){
-                        for(var i=0;i<statusArr.length;i++){
-                            if(statusArr[i] != '全部'){
-                                status += statusArr[i] + ",";
-                            }else{
-                                status = "";break;
-                            }
-                        }
-                    }
-                    if(status.length > 1){
-                        status = status.substring(0,status.length-1);
-                    }
+            var status = $("#status").val();
                     var originCountryArr = $("#originCountry").val();
                     var originCountry = "";
                     if(originCountryArr != null){
@@ -403,20 +377,7 @@ function getTotalInfo(){
         if(businessMode.length > 1){
             businessMode = businessMode.substring(0,businessMode.length-1);
         }
-var statusArr = $("#status").val();
-                var status = "";
-                if(statusArr != null){
-                    for(var i=0;i<statusArr.length;i++){
-                        if(statusArr[i] != '全部'){
-                            status += statusArr[i] + ",";
-                        }else{
-                            status = "";break;
-                        }
-                    }
-                }
-                if(status.length > 1){
-                    status = status.substring(0,status.length-1);
-                }
+    var status = $("#status").val();
         var originCountryArr = $("#originCountry").val();
         var originCountry = "";
         if(originCountryArr != null){
