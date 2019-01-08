@@ -245,7 +245,9 @@ var TableInit = function () {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
-                        return '<a href="/trade/cargo/view?id='+value+'">查看销售记录</a>';
+                    if($("#status").val() == 4) {
+                        return '<a href="/trade/cargo/view?id=' + value + '">查看销售记录</a>';
+                    }
                 }
             } ]
         });
