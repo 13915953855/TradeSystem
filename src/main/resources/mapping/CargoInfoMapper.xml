@@ -205,7 +205,7 @@
     </if>
   </select>
   <select id="getTotalStoreWeightByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
-    select sum(a.real_store_weight)
+    select sum(a.real_store_boxes)
     from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
     where 1=1 and a.status in ('4','5')
     <if test="contractId != null and contractId != ''" >
@@ -272,6 +272,9 @@
     select sum(a.real_store_boxes)
     from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
     where 1=1 and a.status in ('4','5')
+    <if test="contractId != null and contractId != ''" >
+      and b.contract_id = '${contractId}'
+    </if>
     <if test="contractNo != null and contractNo != ''" >
       and b.external_contract like '%${contractNo}%'
     </if>
@@ -490,7 +493,7 @@
 
 
   <select id="getInternalTotalStoreWeightByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
-    select sum(a.real_store_weight)
+    select sum(a.real_store_boxes)
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id
     where 1=1 and a.status in ('4','5')
     <if test="contractNo != null and contractNo != ''" >
@@ -510,6 +513,9 @@
     select sum(a.real_store_boxes)
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id
     where 1=1 and a.status in ('4','5')
+    <if test="contractId != null and contractId != ''" >
+      and b.contract_id = '${contractId}'
+    </if>
     <if test="contractNo != null and contractNo != ''" >
       and b.contract_no like '%${contractNo}%'
     </if>

@@ -4,9 +4,10 @@ import com.jason.trade.entity.ContractParam;
 import com.jason.trade.entity.InternalContractParam;
 import com.jason.trade.model.ContractBaseInfo;
 import com.jason.trade.model.InternalContractInfo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public interface InternalContractInfoMapper {
     InternalContractInfo selectByPrimaryKey(Integer id);
 

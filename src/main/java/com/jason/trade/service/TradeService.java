@@ -64,9 +64,9 @@ public class TradeService {
     @Transactional
     public ContractBaseInfo saveContract(ContractBaseInfo contractBaseInfo, String cargoId){
         contractBaseInfo.setStatus(GlobalConst.ENABLE);
-        if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
+        /*if(StringUtils.isNotBlank(contractBaseInfo.getContainerNo())){
             contractBaseInfo.setStatus(GlobalConst.SHIPPED);
-        }
+        }*/
         if(StringUtils.isNotBlank(contractBaseInfo.getEtd())){
             if(contractBaseInfo.getEtd().compareTo(DateUtil.DateToString(new Date())) <= 0){
                 contractBaseInfo.setStatus(GlobalConst.SHIPPED);
@@ -154,20 +154,20 @@ public class TradeService {
         //查询该合同对应的所有商品的库存。
         CargoParam cargoParam = new CargoParam();
         cargoParam.setContractId(contractId);
-        Integer totalRealStoreWeight = 0;
+        Integer totalRealStoreBoxes = 0;
         if(contractId.startsWith("in_")){
-            totalRealStoreWeight = cargoInfoMapper.getInternalTotalStoreWeightByExample(cargoParam);
+            totalRealStoreBoxes = cargoInfoMapper.getInternalTotalStoreBoxesByExample(cargoParam);
         }else{
-            totalRealStoreWeight = cargoInfoMapper.getTotalStoreWeightByExample(cargoParam);
+            totalRealStoreBoxes = cargoInfoMapper.getTotalStoreBoxesByExample(cargoParam);
         }
-        if(totalRealStoreWeight == null || totalRealStoreWeight <= 0) {
+        if(totalRealStoreBoxes == null || totalRealStoreBoxes <= 0) {
             List<String> id = new ArrayList<>();
             id.add(contractId);
             List<CargoInfo> cargoList = cargoRepository.findByContractId(cargoInfo.getContractId());
             if(status.equals(GlobalConst.SELLOUT)) {
                 int flag = 0;
                 for (CargoInfo cargo : cargoList) {
-                    if (cargo.getRealStoreWeight() > 0) {
+                    if (cargo.getRealStoreBoxes() > 0) {
                         flag = 1;
                     }
                 }

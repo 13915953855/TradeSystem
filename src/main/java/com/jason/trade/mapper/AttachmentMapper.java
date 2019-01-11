@@ -2,7 +2,9 @@ package com.jason.trade.mapper;
 
 import com.jason.trade.model.Attachment;
 import com.jason.trade.model.AttachmentKey;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface AttachmentMapper {
     int deleteByPrimaryKey(AttachmentKey key);
 

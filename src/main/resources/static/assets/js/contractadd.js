@@ -242,10 +242,24 @@ var TableInit = function () {
                 field: 'realStoreMoney',
                 title: '库存金额'
             }, {
+                field: 'status',
+                title: '状态',
+                formatter: function(value, row, index){
+                    if(value == 4) {
+                        return '已入库';
+                    }else if(value == 5){
+                        return '已售完';
+                    }else if(value == 1){
+                        return '已下单';
+                    }else{
+                        return '-';
+                    }
+                }
+            }, {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
-                    if($("#status").val() == 4) {
+                    if($("#status").val() == 4 || $("#status").val() == 5) {
                         return '<a href="/trade/cargo/view?id=' + value + '">查看销售记录</a>';
                     }
                 }
@@ -274,8 +288,13 @@ var ButtonInit = function () {
         $("#btn_edit").click(function(){
             var data = $("#tb_cargo").bootstrapTable("getSelections");
             if(data.length == 1){
-                $("#myModal").modal('show');
-                setFormData(data[0]);
+                var status = data[0].status;
+                if(status == 5){
+                    swal("已售完的商品不可修改!","","warning");
+                }else{
+                    $("#myModal").modal('show');
+                    setFormData(data[0]);
+                }
             }else if(data.length > 1){
                 swal("只能选择一项进行编辑!","","warning");
                 $("#myModal").modal('hide');
