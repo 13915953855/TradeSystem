@@ -361,8 +361,10 @@ function saveContract(){
     contract.payDate = $("#payDate").val();
     contract.receiptDate = $("#receiptDate").val();
     contract.payMoney = $("#payMoney").val() == "" ? 0:toFloat4($("#payMoney").val());
-    contract.totalAmount = $("#totalAmount").val() == "" ? 0:toFloat($("#totalAmount").val());
-    contract.totalMoney = $("#totalMoney").val() == "" ? 0:toFloat4($("#totalMoney").val());
+    //contract.totalAmount = $("#totalAmount").val() == "" ? 0:toFloat($("#totalAmount").val());
+    //contract.totalMoney = $("#totalMoney").val() == "" ? 0:toFloat4($("#totalMoney").val());
+    contract.totalAmount = 0;
+    contract.totalMoney = 0;
     contract.realAmount = $("#realAmount").val() == "" ? 0:toFloat($("#realAmount").val());
     contract.realMoney = $("#realMoney").val() == "" ? 0:toFloat4($("#realMoney").val());
     contract.totalBoxes = $("#totalBoxes").val() == "" ? 0:parseInt($("#totalBoxes").val());
