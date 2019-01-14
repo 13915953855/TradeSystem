@@ -288,13 +288,15 @@ var ButtonInit = function () {
         $("#btn_edit").click(function(){
             var data = $("#tb_cargo").bootstrapTable("getSelections");
             if(data.length == 1){
-                var status = data[0].status;
+                /*var status = data[0].status;
                 if(status == 5){
                     swal("已售完的商品不可修改!","","warning");
                 }else{
                     $("#myModal").modal('show');
                     setFormData(data[0]);
-                }
+                }*/
+                $("#myModal").modal('show');
+                setFormData(data[0]);
             }else if(data.length > 1){
                 swal("只能选择一项进行编辑!","","warning");
                 $("#myModal").modal('hide');
