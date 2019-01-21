@@ -235,11 +235,11 @@ public class TradeController {
             }
             Integer realStoreBoxes = cargoInfo.getBoxes() - saleBoxes;
             cargoInfo.setRealStoreBoxes(realStoreBoxes);
-            if(realStoreBoxes > 0){
+            /*if(realStoreBoxes > 0){
                 cargoInfo.setStatus(GlobalConst.STORED);
             }else if(realStoreBoxes <= 0){
                 cargoInfo.setStatus(GlobalConst.SELLOUT);
-            }
+            }*/
             cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount() - saleWeight);
             cargoInfo.setCreateUser(userInfo.getAccount());
             cargoInfo.setCreateDateTime(now);
