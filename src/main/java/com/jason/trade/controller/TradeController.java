@@ -365,11 +365,13 @@ public class TradeController {
         if(StringUtils.isNotBlank(contractBaseInfo.getEtd())){
             if(contractBaseInfo.getEtd().compareTo(DateUtil.DateToString(new Date())) <= 0){
                 contractBaseInfo.setStatus(GlobalConst.SHIPPED);
+                cargoInfoMapper.updateStatusByContractId(contractBaseInfo.getContractId(),GlobalConst.SHIPPED);
             }
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getEta())){
             if(contractBaseInfo.getEta().compareTo(DateUtil.DateToString(new Date())) <= 0){
                 contractBaseInfo.setStatus(GlobalConst.ARRIVED);
+                cargoInfoMapper.updateStatusByContractId(contractBaseInfo.getContractId(),GlobalConst.ARRIVED);
             }
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){

@@ -479,6 +479,10 @@
     update cargo_info set status = 4
     where contract_id = #{contractId,jdbcType=VARCHAR} and status != 5
   </update>
+  <update id="updateStatusByContractId" parameterType="java.lang.String" >
+    update cargo_info set status = #{status,jdbcType=VARCHAR}
+    where contract_id = #{contractId,jdbcType=VARCHAR} and status != 5
+  </update>
   <update id="selloutByCargoId" parameterType="java.lang.String" >
     update cargo_info set status = 5
     where cargo_id = #{cargoId,jdbcType=VARCHAR}

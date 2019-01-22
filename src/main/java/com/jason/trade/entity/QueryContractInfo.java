@@ -11,6 +11,7 @@ public class QueryContractInfo {
     private String companyNo;
     private String cargoName;
     private String cargoNo;
+    private String status;
     private String level;
     private String businessMode;
     private String boxes;
@@ -30,6 +31,14 @@ public class QueryContractInfo {
     private String realStoreWeight;
     private String realStoreBoxes;
     private String realStoreMoney;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getBoxes() {
         return boxes;

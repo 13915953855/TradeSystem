@@ -250,13 +250,11 @@ var TableInit = function () {
                     }else if(value == 5){
                         return '已售完';
                     }else if(value == 1){
-                        //return '已下单';
-                        if($("#status").val() == 1)
-                            return '已下单';
-                        else if($("#status").val() == 2)
-                            return '已装船';
-                        else if($("#status").val() == 3)
-                            return '已到港';
+                        return '已下单';
+                    }else if(value == 2){
+                        return '已装船';
+                    }else if(value == 3){
+                        return '已到港';
                     }else{
                         return '-';
                     }

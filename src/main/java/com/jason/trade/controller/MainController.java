@@ -9,6 +9,7 @@ import com.jason.trade.model.*;
 import com.jason.trade.repository.*;
 import com.jason.trade.service.ExcelService;
 import com.jason.trade.service.TradeService;
+import com.jason.trade.util.CommonUtil;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.WebSecurityConfig;
 import net.sf.json.JSONObject;
@@ -359,42 +360,6 @@ public class MainController {
         }
     }
 
-    /*@PostMapping("/trade/upload")
-    public void upload(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
-        String name = request.getParameter("name");// 文件名称
-        String type = name.substring(name.lastIndexOf(".") + 1);// 文件类型
-        name = DateUtil.DateToString(new Date(),"yyyyMMddHHmmss") + "." + type;// 重新定义图片名称，DateTools.getDateAndTime() 工具类，产生时间戳短码，可以自己根据需求重新定义
-
-        //String path = GlobalConst.FILE_PATH;//这里保存图片路径 D:\ 这样
-        String path = "D:";
-        path = path + File.separator + name;// 拼接路径
-        File uploadFile = new File(path);// 路径文件，一定要有文件夹，没有则创建，mkdir
-        ServletInputStream inputStream = null;// ***获取字节流，图片保存在这里,切记这里只可以获取一次。***
-        FileOutputStream outputStream = null;
-        try {
-            inputStream = request.getInputStream();
-            outputStream = new FileOutputStream(uploadFile);
-            FileCopyUtils.copy(inputStream, outputStream);// 复制图片
-        } catch (IOException e) {
-           log.error("获取字节流失败",e);
-        } finally {
-            try {
-                inputStream.close();
-                outputStream.close();
-            } catch (IOException e) {
-                log.error("关闭字节流失败",e);
-            }
-        }
-
-        String realPath= uploadFile.getPath();//realPath 为图片真路径
-        // 格式 ： http://192.1.1.1/xxxx/name 类似这样在公网显示
-        JSONObject json = new JSONObject();
-        json.put("path", realPath);// 引用路径
-        json.put("flag", "success");// 标识
-        //response(response, json);// 保存图片完成，返回前台进行回显
-    }*/
-
     @GetMapping("/trade/query/contract")
     public String queryContract(Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -470,7 +435,7 @@ public class MainController {
                                            @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
                                            @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="ownerCompany") String ownerCompany,
                                            @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
-                                           @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,
+                                           @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="status") String status,
                                            @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,
                                            @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -484,6 +449,7 @@ public class MainController {
         contractParam.setCompanyNo(companyNo);
         contractParam.setCargoName(cargoName);
         contractParam.setLevel(level);
+        contractParam.setStatus(CommonUtil.revertStatus(status));
         contractParam.setEtaStartDate(etaStartDate);
         contractParam.setEtaEndDate(etaEndDate);
         contractParam.setEtdStartDate(etdStartDate);
@@ -571,17 +537,7 @@ public class MainController {
         contractParam.setMinWeight(minWeight);
         contractParam.setMaxWeight(maxWeight);
         contractParam.setLevel(level);
-        //0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        contractParam.setStatus(status);
+        contractParam.setStatus(CommonUtil.revertStatus(status));
 
         ByteArrayOutputStream bos = null;
         List<QueryContractInfo> data = contractBaseInfoMapper.queryStoreInfoListByExample(contractParam);
@@ -688,16 +644,7 @@ public class MainController {
                                                      @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        contractParam.setStatus(status);
+        contractParam.setStatus(CommonUtil.revertStatus(status));
         contractParam.setOriginCountry(originCountry);
         contractParam.setOwnerCompany(ownerCompany);
         contractParam.setContractStartDate(contractStartDate);

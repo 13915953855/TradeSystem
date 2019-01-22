@@ -12,6 +12,7 @@ import com.jason.trade.model.ContractBaseInfo;
 import com.jason.trade.model.InternalContractInfo;
 import com.jason.trade.model.SaleInfo;
 import com.jason.trade.repository.*;
+import com.jason.trade.util.CommonUtil;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.SetStyleUtils;
 import com.jason.trade.util.WebSecurityConfig;
@@ -70,11 +71,13 @@ public class TradeService {
         if(StringUtils.isNotBlank(contractBaseInfo.getEtd())){
             if(contractBaseInfo.getEtd().compareTo(DateUtil.DateToString(new Date())) <= 0){
                 contractBaseInfo.setStatus(GlobalConst.SHIPPED);
+                cargoInfoMapper.updateStatusByContractId(contractBaseInfo.getContractId(),GlobalConst.SHIPPED);
             }
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getEta())){
             if(contractBaseInfo.getEta().compareTo(DateUtil.DateToString(new Date())) <= 0){
                 contractBaseInfo.setStatus(GlobalConst.ARRIVED);
+                cargoInfoMapper.updateStatusByContractId(contractBaseInfo.getContractId(),GlobalConst.ARRIVED);
             }
         }
         if(StringUtils.isNotBlank(contractBaseInfo.getStoreDate())){
@@ -251,17 +254,7 @@ public class TradeService {
     }
 
     public JSONObject queryContractListByMapper(ContractParam contractParam){
-        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        contractParam.setStatus(status);
+        revertStatus(contractParam);
         Integer count = contractBaseInfoMapper.selectCountByExample(contractParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
@@ -270,6 +263,7 @@ public class TradeService {
     }
 
     public JSONObject queryCargoListForQuery(ContractParam contractParam){
+        revertStatus(contractParam);
         Integer count = contractBaseInfoMapper.countCargoList(contractParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
@@ -278,17 +272,7 @@ public class TradeService {
     }
 
     public JSONObject queryStoreInfoList(ContractParam contractParam){
-        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        contractParam.setStatus(status);
+        revertStatus(contractParam);
         Integer count = contractBaseInfoMapper.countStoreInfoListByExample(contractParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
@@ -296,18 +280,14 @@ public class TradeService {
         return result;
     }
 
+    private void revertStatus(ContractParam contractParam) {
+        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
+        contractParam.setStatus(CommonUtil.revertStatus(status));
+    }
+
     public JSONObject queryCargoSellInfo(CargoParam cargoParam){
         String status = cargoParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        cargoParam.setStatus(status);
+        cargoParam.setStatus(CommonUtil.revertStatus(status));
         Integer count = cargoInfoMapper.countSellList(cargoParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
@@ -316,17 +296,7 @@ public class TradeService {
     }
 
     public JSONObject queryInternalContractListByMapper(InternalContractParam contractParam){
-        String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        switch (contractParam.getStatus()){
-            case "全部":  status = "";break;
-            case "已下单": status = "1";break;
-            case "已装船": status = "2";break;
-            case "已到港": status = "3";break;
-            case "已入库": status = "4";break;
-            case "已售完": status = "5";break;
-            default: break;
-        }
-        contractParam.setStatus(status);
+        contractParam.setStatus(CommonUtil.revertStatus(contractParam.getStatus()));
         Integer count = internalContractInfoMapper.selectCountByExample(contractParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
@@ -339,17 +309,7 @@ public class TradeService {
     }
 
     public JSONObject queryAllCargoList(CargoParam cargoParam){
-        String status = "";
-        switch (cargoParam.getStatus()){
-            case "全部":  status = "";break;
-            case "已下单": status = "1";break;
-            case "已装船": status = "2";break;
-            case "已到港": status = "3";break;
-            case "已入库": status = "4";break;
-            case "已售完": status = "5";break;
-            default: break;
-        }
-        cargoParam.setStatus(status);
+        cargoParam.setStatus(CommonUtil.revertStatus(cargoParam.getStatus()));
         List<CargoManageInfo> list = cargoInfoMapper.selectByExample(cargoParam);
         Integer count = cargoInfoMapper.selectCountByExample(cargoParam);
         JSONObject result = new JSONObject();
@@ -366,28 +326,7 @@ public class TradeService {
     }
     public JSONObject getTotalInfo(ContractParam contractParam){
         JSONObject result = new JSONObject();
-        //处理status
-        /*String status = "";//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        switch (contractParam.getStatus()){
-            case "全部":  status = "";break;
-            case "已下单": status = "1";break;
-            case "已装船": status = "2";break;
-            case "已到港": status = "3";break;
-            case "已入库": status = "4";break;
-            case "已售完": status = "5";break;
-            default: break;
-        }*/
-        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        contractParam.setStatus(status);
+        revertStatus(contractParam);
         List<ContractTotalInfo> record = contractBaseInfoMapper.getTotalInfo(contractParam);
         if(record != null && record.size() > 0) {
             Float totalCNYContractMoney = 0F;
@@ -476,7 +415,7 @@ public class TradeService {
     }
     public JSONObject getTotalInfoForQuery(ContractParam contractParam){
         JSONObject result = new JSONObject();
-
+        revertStatus(contractParam);
         List<ContractTotalInfo> record = contractBaseInfoMapper.getTotalInfoForQueryContract(contractParam);
         if(record != null && record.size() > 0) {
             Float totalCNYContractMoney = 0F;
@@ -609,17 +548,7 @@ public class TradeService {
     }
 
     public JSONObject getTotalStoreInfoForQuery(ContractParam contractParam){
-        String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        contractParam.setStatus(status);
+        revertStatus(contractParam);
         JSONObject result = new JSONObject();
         CargoTotalInfo record = contractBaseInfoMapper.getTotalStoreInfoForQuery(contractParam);
         if(record != null) {
@@ -647,16 +576,7 @@ public class TradeService {
 
     public JSONObject getTotalStoreOutForQuery(CargoParam cargoParam){
         String status = cargoParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        cargoParam.setStatus(status);
+        cargoParam.setStatus(CommonUtil.revertStatus(status));
         JSONObject result = new JSONObject();
         CargoTotalInfo record = cargoInfoMapper.getTotalStoreInfoForQuery(cargoParam);
         if(record != null) {
@@ -672,16 +592,7 @@ public class TradeService {
 
     public JSONObject queryCargoStoreInfo(CargoParam cargoParam){
         String status = cargoParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        if(status.indexOf("全部") >= 0){
-            status = "";
-        }else{
-            status = status.replaceAll("已下单","1");
-            status = status.replaceAll("已装船","2");
-            status = status.replaceAll("已到港","3");
-            status = status.replaceAll("已入库","4");
-            status = status.replaceAll("已售完","5");
-        }
-        cargoParam.setStatus(status);
+        cargoParam.setStatus(CommonUtil.revertStatus(status));
         String baoguandan = cargoParam.getBaoguandan();
         if(baoguandan.equals("是")){
             baoguandan = "1";

@@ -2,6 +2,7 @@ package com.jason.trade.mapper;
 
 import com.jason.trade.entity.*;
 import com.jason.trade.model.CargoInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public interface CargoInfoMapper {
     Integer getInternalTotalStoreBoxesByExample(CargoParam cargoParam);
     Integer selectCountByExample(CargoParam cargoParam);
     void storeByContractId(String contractId);
+    void updateStatusByContractId(@Param("contractId") String contractId, @Param("status") String status);
     void selloutByCargoId(String cargoId);
     void storeByCargoId(String cargoId);
     List<CargoSellInfo> getSellList(CargoParam cargoParam);

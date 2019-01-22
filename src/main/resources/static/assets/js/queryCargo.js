@@ -125,6 +125,24 @@ var TableInit = function () {
             }, {
                 field: 'expectSailingDate',
                 title: '预计船期'
+            }, {
+                field: 'status',
+                title: '商品状态',
+                formatter: function(value, row, index){
+                    if(value == 4) {
+                        return '已入库';
+                    }else if(value == 5){
+                        return '已售完';
+                    }else if(value == 1){
+                        return '已下单';
+                    }else if(value == 2){
+                        return '已装船';
+                    }else if(value == 3){
+                        return '已到港';
+                    }else{
+                        return '-';
+                    }
+                }
             }]
         });
     };
@@ -188,6 +206,20 @@ var TableInit = function () {
         if(originCountry.length > 1){
             originCountry = originCountry.substring(0,originCountry.length-1);
         }
+        var statusArr = $("#status").val();
+        var status = "";
+        if(statusArr != null){
+            for(var i=0;i<statusArr.length;i++){
+                if(statusArr[i] != '全部'){
+                    status += statusArr[i] + ",";
+                }else{
+                    status = "";break;
+                }
+            }
+        }
+        if(status.length > 1){
+            status = status.substring(0,status.length-1);
+        }
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
@@ -201,6 +233,7 @@ var TableInit = function () {
             etdEndDate: $("#etdEndDate").val(),
             cargoName: cargoName,
             level: level,
+            status: status,
             companyNo: $("#companyNo").val(),
             businessMode: businessMode,
             externalCompany: externalCompany,
@@ -284,10 +317,25 @@ var ButtonInit = function () {
             if(originCountry.length > 1){
                 originCountry = originCountry.substring(0,originCountry.length-1);
             }
+            var statusArr = $("#status").val();
+            var status = "";
+            if(statusArr != null){
+                for(var i=0;i<statusArr.length;i++){
+                    if(statusArr[i] != '全部'){
+                        status += statusArr[i] + ",";
+                    }else{
+                        status = "";break;
+                    }
+                }
+            }
+            if(status.length > 1){
+                status = status.substring(0,status.length-1);
+            }
             var params = "?externalCompany="+externalCompany;
             params += "&businessMode="+businessMode;
             params += "&companyNo="+$("#companyNo").val();
             params += "&level="+level;
+            params += "&status="+status;
             params += "&cargoName="+cargoName;
             params += "&etaEndDate="+$("#etaStartDate").val();
             params += "&etaStartDate="+$("#etaEndDate").val();
@@ -314,6 +362,7 @@ function resetQuery(){
     $("#companyNo").val("");
     $("#businessMode").val("全部").trigger("change");
     $("#externalCompany").val("全部").trigger("change");
+    $("#status").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
@@ -384,6 +433,20 @@ function getTotalInfo(){
         if(originCountry.length > 1){
             originCountry = originCountry.substring(0,originCountry.length-1);
         }
+    var statusArr = $("#status").val();
+    var status = "";
+    if(statusArr != null){
+        for(var i=0;i<statusArr.length;i++){
+            if(statusArr[i] != '全部'){
+                status += statusArr[i] + ",";
+            }else{
+                status = "";break;
+            }
+        }
+    }
+    if(status.length > 1){
+        status = status.substring(0,status.length-1);
+    }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractStartDate: $("#contractStartDate").val(),
         contractEndDate: $("#contractEndDate").val(),
@@ -395,6 +458,7 @@ function getTotalInfo(){
         etdEndDate: $("#etdEndDate").val(),
         cargoName: cargoName,
         level: level,
+        status: status,
         companyNo: $("#companyNo").val(),
         businessMode: businessMode,
         externalCompany: externalCompany,
