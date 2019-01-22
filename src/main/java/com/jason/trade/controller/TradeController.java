@@ -44,6 +44,8 @@ public class TradeController {
     @Autowired
     private CargoRepository cargoRepository;
     @Autowired
+    private OptionInfoRepository optionInfoRepository;
+    @Autowired
     private InternalContractRepository internalContractRepository;
     @Autowired
     private InternalCargoRepository internalCargoRepository;
@@ -630,6 +632,14 @@ public class TradeController {
         cargoParam.setStart(offset);
         cargoParam.setLimit(limit);
         JSONObject result = tradeService.queryCargoStoreInfo(cargoParam);
+        return result.toString();
+    }
+
+    @RequestMapping("/common/getOption")
+    public String getCommonOption(@RequestParam("type") String group) throws JSONException {
+        List<OptionInfo> data = optionInfoRepository.findByGroupEquals(group);
+        JSONObject result = new JSONObject();
+        result.put("data",data);
         return result.toString();
     }
 }

@@ -29,6 +29,8 @@ $(function(){
                         }
                     }
                 });
+
+
 });
 
 function checkSelectOptionExist(id,val){
@@ -46,145 +48,20 @@ function checkSelectOptionExist(id,val){
     }
 }
 function initCargoList(){
-    var cargoList = "<option>保乐肩</option>";
-    cargoList += "<option>板腱</option>";
-    cargoList += "<option>脖骨</option>";
-    cargoList += "<option>脖肉</option>";
-    cargoList += "<option>板筋</option>";
-    cargoList += "<option>背肩</option>";
-    cargoList += "<option>背肋排</option>";
-    cargoList += "<option>边肉</option>";
-    cargoList += "<option>大米龙</option>";
-    cargoList += "<option>带骨胸排</option>";
-    cargoList += "<option>腹肉心</option>";
-    cargoList += "<option>隔膜</option>";
-    cargoList += "<option>厚裙</option>";
-    cargoList += "<option>后胸</option>";
-    cargoList += "<option>肩胛仔骨</option>";
-    cargoList += "<option>肩胛背肩</option>";
-    cargoList += "<option>肩胛</option>";
-    cargoList += "<option>肩肉</option>";
-    cargoList += "<option>肋排边</option>";
-    cargoList += "<option>肋条肉</option>";
-    cargoList += "<option>肋排肉</option>";
-    cargoList += "<option>肋脊肉</option>";
-    cargoList += "<option>脸肉</option>";
-    cargoList += "<option>牛霖</option>";
-    cargoList += "<option>嫩肩</option>";
-    cargoList += "<option>牛腱</option>";
-    cargoList += "<option>牛腩</option>";
-    cargoList += "<option>牛前</option>";
-    cargoList += "<option>牛柳</option>";
-    cargoList += "<option>牛心</option>";
-    cargoList += "<option>牛肾</option>";
-    cargoList += "<option>腩筋</option>";
-    cargoList += "<option>牛鞭</option>";
-    cargoList += "<option>牛尾</option>";
-    cargoList += "<option>牛唇</option>";
-    cargoList += "<option>牛舌</option>";
-    cargoList += "<option>排骨</option>";
-    cargoList += "<option>前胸</option>";
-    cargoList += "<option>去盖臀肉</option>";
-    cargoList += "<option>脐膯板</option>";
-    cargoList += "<option>裙膜</option>";
-    cargoList += "<option>上脑</option>";
-    cargoList += "<option>上脑心</option>";
-    cargoList += "<option>三角肩肉</option>";
-    cargoList += "<option>三角肉</option>";
-    cargoList += "<option>臀肉</option>";
-    cargoList += "<option>臀腰肉盖</option>";
-    cargoList += "<option>臀腰肉心</option>";
-    cargoList += "<option>碎肉</option>";
-    cargoList += "<option>腿骨</option>";
-    cargoList += "<option>蹄筋</option>";
-    cargoList += "<option>窝骨</option>";
-    cargoList += "<option>外裙</option>";
-    cargoList += "<option>西冷</option>";
-    cargoList += "<option>胸肉</option>";
-    cargoList += "<option>胸肉块</option>";
-    cargoList += "<option>胸排肉</option>";
-    cargoList += "<option>肩胛仔骨</option>";
-    cargoList += "<option>小排</option>";
-    cargoList += "<option>小米龙</option>";
-    cargoList += "<option>心片</option>";
-    cargoList += "<option>心管</option>";
-    cargoList += "<option>胸口油</option>";
-    cargoList += "<option>翼板肉</option>";
-    cargoList += "<option>眼肉</option>";
-    cargoList += "<option>眼肉盖</option>";
-    cargoList += "<option>仔骨</option>";
-    cargoList += "<option>战斧</option>";
-    cargoList += "<option>椎骨</option>";
-    cargoList += "<option>脂肪</option>";
-    cargoList += "<option>混柜</option>";
-    $("#cargoName").append(cargoList);
+    var cargoList = '';
+    $.ajax({
+        url:'/trade/common/getOption',
+        type:"POST",
+        dataType:"json",
+        data:{'type':'cargo'},
+        success:function(res){
+            for(var i=0;i<res.data.length;i++){
+                cargoList += "<option>"+res.data[i].name+"</option>";
+            }
+            $("#cargoName").append(cargoList);
+        }
+    });
 }
-/*function initCargoList(){
-    var cargoList = "<optgroup label='去骨'>";
-    cargoList += "<option>前胸</option>";
-    cargoList += "<option>后胸</option>";
-    cargoList += "<option>肋条肉</option>";
-    cargoList += "<option>肋排边</option>";
-    cargoList += "<option>内裙肉</option>";
-    cargoList += "<option>外裙肉</option>";
-    cargoList += "<option>薄裙肉</option>";
-    cargoList += "<option>厚裙肉</option>";
-    cargoList += "<option>嫩肩</option>";
-    cargoList += "<option>台规腱</option>";
-    cargoList += "<option>前后腱</option>";
-    cargoList += "<option>牛霖</option>";
-    cargoList += "<option>牛柳</option>";
-    cargoList += "<option>牛腩</option>";
-    cargoList += "<option>牛腩排</option>";
-    cargoList += "<option>前胸盖</option>";
-    cargoList += "<option>三角肩肉</option>";
-    cargoList += "<option>后三角肉</option>";
-    cargoList += "<option>上脑心</option>";
-    cargoList += "<option>上脑</option>";
-    cargoList += "<option>臀肉</option>";
-    cargoList += "<option>臀腰肉心</option>";
-    cargoList += "<option>西冷</option>";
-    cargoList += "<option>眼肉</option>";
-    cargoList += "<option>小米龙</option>";
-    cargoList += "<option>大米龙</option>";
-    cargoList += "<option>翼板肉</option>";
-    cargoList += "<option>板腱</option>";
-    cargoList += "<option>保乐肩</option>";
-    cargoList += "<option>方切肩</option>";
-    cargoList += "<option>腹肉心</option>";
-    cargoList += "<option>牛小排</option>";
-    cargoList += "<option>50CL碎肉</option>";
-    cargoList += "<option>65CL碎肉</option>";
-    cargoList += "</optgroup>";
-    cargoList += "<optgroup label='带骨'>";
-    cargoList += "<option>肩胛骨</option>";
-    cargoList += "<option>肩胛仔骨</option>";
-    cargoList += "<option>仔骨</option>";
-    cargoList += "<option>战斧</option>";
-    cargoList += "<option>胸排</option>";
-    cargoList += "<option>椎骨</option>";
-    cargoList += "<option>脊骨</option>";
-    cargoList += "<option>腿骨</option>";
-    cargoList += "<option>窝骨</option>";
-    cargoList += "<option>脖骨</option>";
-    cargoList += "<option>肩脊骨</option>";
-    cargoList += "</optgroup>";
-    cargoList += "<optgroup label='牛副'>";
-    cargoList += "<option>腩筋</option>";
-    cargoList += "<option>腿筋</option>";
-    cargoList += "<option>板筋</option>";
-    cargoList += "<option>隔膜</option>";
-    cargoList += "<option>牛心</option>";
-    cargoList += "<option>牛肾</option>";
-    cargoList += "<option>牛尾</option>";
-    cargoList += "</optgroup>";
-    cargoList += "<optgroup label='脂肪'>";
-    cargoList += "<option>胸口油</option>";
-    cargoList += "<option>热切脂肪</option>";
-    cargoList += "<option>冷切脂肪</option>";
-    cargoList += "</optgroup>";
-    $("#cargoName").append(cargoList);
-}*/
 
 function initWarehouse(){
     var opts = "";
