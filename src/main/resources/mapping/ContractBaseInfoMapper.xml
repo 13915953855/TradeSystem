@@ -85,9 +85,11 @@
     <result column="external_company" property="externalCompany" jdbcType="VARCHAR" />
     <result column="external_contract" property="externalContract" jdbcType="VARCHAR" />
     <result column="inside_contract" property="insideContract" jdbcType="VARCHAR" />
+    <result column="container_no" property="containerNo" jdbcType="VARCHAR" />
     <result column="company_no" property="companyNo" jdbcType="VARCHAR" />
     <result column="cargo_no" property="cargoNo" jdbcType="VARCHAR" />
     <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
     <result column="unit_price" property="unitPrice" jdbcType="VARCHAR" />
@@ -1044,6 +1046,10 @@
       and b.company_no like '%${companyNo}%'
     </if>
   </select>
+
+
+
+
   <select id="getTotalStoreInfoForQuery" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
     select sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceWeight,
     sum(b.expect_store_weight) as expectStoreWeight,sum(b.expect_store_boxes) as expectStoreBoxes,
@@ -1051,6 +1057,12 @@
     sum(b.real_store_money) as realStoreMoney,sum(b.boxes) as totalInvoiceBoxes
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
+    <if test="externalContract != null" >
+      and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="insideContract != null" >
+      and a.inside_contract like '%${insideContract}%'
+    </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
@@ -1126,10 +1138,16 @@
 
 
   <select id="queryCargoList" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
-    select a.id,a.eta,a.etd,a.expect_sailing_date,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
+    select a.id,a.eta,a.etd,a.expect_sailing_date,b.company_no,a.container_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
     b.cargo_name,b.level,b.status,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
+    <if test="externalContract != null" >
+      and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="insideContract != null" >
+      and a.inside_contract like '%${insideContract}%'
+    </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
@@ -1187,6 +1205,12 @@
     select count(1)
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
+    <if test="externalContract != null" >
+      and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="insideContract != null" >
+      and a.inside_contract like '%${insideContract}%'
+    </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>

@@ -306,6 +306,7 @@ public class ExcelService {
             list.add(cargoInfo.getOriginCountry());//原产地
             list.add(cargoInfo.getContractDate());//合同日期
             list.add(cargoInfo.getCompanyNo());//厂号
+            list.add(cargoInfo.getContainerNo());//柜号
             list.add(cargoInfo.getCargoName());//商品
             list.add(cargoInfo.getLevel());//级别
             list.add(cargoInfo.getUnitPrice());//单价

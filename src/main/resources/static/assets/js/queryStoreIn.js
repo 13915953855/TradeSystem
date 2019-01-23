@@ -144,6 +144,7 @@ var TableInit = function () {
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
             cargoNo: $("#cargoNo").val(),
             containerNo: $("#containerNo").val(),
+            storageCondition: $("#storageCondition").val(),
             ladingbillNo: $("#ladingbillNo").val(),
             baoguandan: $("#baoguandan").val() == "全部"?"":$("#baoguandan").val(),
             qacertificate: $("#qacertificate").val() == "全部"?"":$("#qacertificate").val(),
@@ -184,6 +185,7 @@ function resetQuery(){
     $("#status").val("全部").trigger("change");
     $("#baoguandan").val("全部").trigger("change");
     $("#qacertificate").val("全部").trigger("change");
+    $("#storageCondition").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
@@ -209,6 +211,7 @@ function getTotalInfo(){
          ladingbillNo: $("#ladingbillNo").val(),
          baoguandan: $("#baoguandan").val(),
          qacertificate: $("#qacertificate").val(),
+         storageCondition: $("#storageCondition").val(),
          status: $("#status").val() == "全部"?"":$("#status").val()
      };
 

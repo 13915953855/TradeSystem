@@ -93,6 +93,10 @@ var TableInit = function () {
                 field: 'contractDate',
                 title: '合同日期'
             }, {
+                field: 'containerNo',
+                title: '柜号',
+                visible: false
+            }, {
                 field: 'companyNo',
                 title: '厂号'
             }, {
@@ -223,6 +227,9 @@ var TableInit = function () {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
+            externalContract: $("#externalContract").val(),
+            insideContract: $("#insideContract").val(),
+            storageCondition: $("#storageCondition").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
             startDate: $("#startDate").val(),
@@ -335,6 +342,9 @@ var ButtonInit = function () {
             params += "&businessMode="+businessMode;
             params += "&companyNo="+$("#companyNo").val();
             params += "&level="+level;
+            params += "&externalContract="+ $("#externalContract").val();
+            params += "&storageCondition="+ $("#storageCondition").val();
+            params += "&insideContract="+$("#insideContract").val();
             params += "&status="+status;
             params += "&cargoName="+cargoName;
             params += "&etaEndDate="+$("#etaStartDate").val();
@@ -367,6 +377,7 @@ function resetQuery(){
     $("#cargoName").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
+    $("#storageCondition").val("全部").trigger("change");
     $("#startDate").val("");
     $("#endDate").val("");
     $("#etaStartDate").val("");
@@ -449,7 +460,10 @@ function getTotalInfo(){
     }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractStartDate: $("#contractStartDate").val(),
+        storageCondition: $("#storageCondition").val(),
         contractEndDate: $("#contractEndDate").val(),
+        externalContract: $("#externalContract").val(),
+        insideContract: $("#insideContract").val(),
         startDate: $("#startDate").val(),
         endDate: $("#endDate").val(),
         etaStartDate: $("#etaStartDate").val(),

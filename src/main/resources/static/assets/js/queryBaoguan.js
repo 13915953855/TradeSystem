@@ -173,6 +173,7 @@ var TableInit = function () {
             offset: params.offset,  //页码
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
+            storageCondition: $("#storageCondition").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             agent: agent,
             status: status,
@@ -206,6 +207,7 @@ function resetQuery(){
     $("#destinationPort").val("全部").trigger("change");
     $("#agent").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
+    $("#storageCondition").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
@@ -259,6 +261,7 @@ function getTotalInfo(){
        etaStartDate: $("#etaStartDate").val(),
        etaEndDate: $("#etaEndDate").val(),
        agent: agent,
+        storageCondition: $("#storageCondition").val(),
        status: status,
        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
        destinationPort: destinationPort
