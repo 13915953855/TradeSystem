@@ -170,7 +170,7 @@ function getTotalInfo(){
             status = status.substring(0,status.length-1);
         }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-        storageCondition: $("#storageCondition").val(),
+        storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
         externalContract: $("#externalContract").val(),
         insideContract: $("#insideContract").val(),
         contractStartDate: $("#contractStartDate").val(),
@@ -401,7 +401,7 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             externalContract: $("#externalContract").val(),
-            storageCondition: $("#storageCondition").val(),
+            storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             insideContract: $("#insideContract").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
@@ -645,7 +645,7 @@ var ButtonInit = function () {
             });
 
             var params = "?externalContract="+externalContract;
-            params += "&storageCondition="+$("#storageCondition").val();
+            params += "&storageCondition="+$("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
             params += "&insideContract="+insideContract;
             params += "&contractStartDate="+contractStartDate;
             params += "&contractEndDate="+contractEndDate;

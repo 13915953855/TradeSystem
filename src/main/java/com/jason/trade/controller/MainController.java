@@ -257,7 +257,8 @@ public class MainController {
                @RequestParam(value="businessMode") String businessMode,@RequestParam(value="externalCompany") String externalCompany,
                @RequestParam(value="status") String status,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="level") String level,
                @RequestParam(value="containerNo") String containerNo,@RequestParam(value="companyNo") String companyNo,@RequestParam(value="chk") String[] chk,
-               @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
+               @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
+                                           @RequestParam(value="storageCondition") String storageCondition){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setExternalContract(externalContract);
@@ -269,6 +270,7 @@ public class MainController {
         contractParam.setBusinessMode(businessMode);
         contractParam.setExternalCompany(externalCompany);
         contractParam.setStatus(status);
+        contractParam.setStorageCondition(storageCondition);
         contractParam.setContainerNo(containerNo);
         contractParam.setCompanyNo(companyNo);
         contractParam.setCargoName(cargoName);
@@ -514,7 +516,7 @@ public class MainController {
     @GetMapping(value="/trade/queryStoreInfo/output")
     public ResponseEntity<Resource> queryStoreInfoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="ownerCompany") String ownerCompany,
                                                      @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
-                                                     @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,
+                                                     @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="storeStartDate") String storeStartDate,@RequestParam(value="storeEndDate") String storeEndDate,
                                                      @RequestParam(value="status") String status,@RequestParam(value="originCountry") String originCountry,
                                                          @RequestParam(value="warehouse") String warehouse,@RequestParam(value="containerNo") String containerNo,
@@ -523,6 +525,7 @@ public class MainController {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setStoreStartDate(storeStartDate);
+        contractParam.setStorageCondition(storageCondition);
         contractParam.setStoreEndDate(storeEndDate);
         contractParam.setBusinessMode(businessMode);
         contractParam.setOwnerCompany(ownerCompany);
@@ -639,7 +642,7 @@ public class MainController {
     public ResponseEntity<Resource> queryContractOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
                                                      @RequestParam(value="ownerCompany") String ownerCompany,@RequestParam(value="status") String status,
                                                      @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
-                                                     @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,
+                                                     @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,
                                                      @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -647,6 +650,7 @@ public class MainController {
         contractParam.setStatus(CommonUtil.revertStatus(status));
         contractParam.setOriginCountry(originCountry);
         contractParam.setOwnerCompany(ownerCompany);
+        contractParam.setStorageCondition(storageCondition);
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
         contractParam.setExternalCompany(externalCompany);

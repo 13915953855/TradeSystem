@@ -74,6 +74,9 @@
     <if test="contractNo != null" >
       and b.external_contract like '%${contractNo}%'
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
+    </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and b.owner_company = '${ownerCompany}'
     </if>
@@ -143,6 +146,9 @@
     where 1 = 1
     <if test="contractNo != null" >
       and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and b.owner_company = '${ownerCompany}'
@@ -214,6 +220,9 @@
     <if test="ownerCompany != null and ownerCompany != ''" >
       and b.owner_company = '${ownerCompany}'
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
+    </if>
     <if test="contractNo != null and contractNo != ''" >
       and b.external_contract like '%${contractNo}%'
     </if>
@@ -274,6 +283,9 @@
     where 1=1 and a.status in ('4','5')
     <if test="contractId != null and contractId != ''" >
       and b.contract_id = '${contractId}'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
     </if>
     <if test="contractNo != null and contractNo != ''" >
       and b.external_contract like '%${contractNo}%'
@@ -548,6 +560,9 @@
     <if test="kaifapiao != null and kaifapiao != ''" >
       and a.kaifapiao = '${kaifapiao}'
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and c.storage_condition = '${storageCondition}'
+    </if>
     <if test="contractNo != null and contractNo != ''" >
       and c.external_contract like '%${contractNo}%'
     </if>
@@ -599,6 +614,9 @@
     where 1=1
     <if test="kaifapiao != null and kaifapiao != ''" >
       and a.kaifapiao = '${kaifapiao}'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and c.storage_condition = '${storageCondition}'
     </if>
     <if test="contractNo != null and contractNo != ''" >
       and c.external_contract like '%${contractNo}%'
@@ -665,6 +683,9 @@
     <if test="containerNo != null" >
       and c.container_no like '%${containerNo}%'
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and c.storage_condition = '${storageCondition}'
+    </if>
     <if test="businessMode != null and businessMode != ''" >
       and b.business_mode = '${businessMode}'
     </if>
@@ -706,6 +727,9 @@
     </if>
     <if test="insideContract != null and insideContract != ''" >
       and b.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
     </if>
     <if test="warehouse != null and warehouse != ''" >
       and b.warehouse like '%${warehouse}%'
@@ -756,6 +780,9 @@
     <if test="insideContract != null and insideContract != ''" >
       and b.inside_contract like '%${insideContract}%'
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
+    </if>
     <if test="warehouse != null and warehouse != ''" >
       and b.warehouse like '%${warehouse}%'
     </if>
@@ -800,6 +827,9 @@
     where 1=1
     <if test="contractNo != null and contractNo != ''" >
       and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
     </if>
     <if test="insideContract != null and insideContract != ''" >
       and b.inside_contract like '%${insideContract}%'

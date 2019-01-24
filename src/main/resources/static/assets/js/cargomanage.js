@@ -146,7 +146,7 @@ var TableInit = function () {
             customerName: $("#customerName").val(),
             containerNo: $("#containerNo").val(),
             companyNo: $("#companyNo").val(),
-            storageCondition: $("#storageCondition").val(),
+            storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),
             businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
@@ -173,7 +173,7 @@ function getTotalStore(){
         ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
         cargoNo: $("#cargoNo").val(),
-        storageCondition: $("#storageCondition").val(),
+        storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
         customerName: $("#customerName").val(),
         containerNo: $("#containerNo").val(),
         companyNo: $("#companyNo").val()

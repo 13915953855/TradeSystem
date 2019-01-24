@@ -416,6 +416,9 @@
     <if test="finalPayBank != null and finalPayBank != ''" >
       and a.final_pay_bank = '${finalPayBank}'
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
+    </if>
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
@@ -522,6 +525,9 @@
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
     </if>
     <if test="isYahui != null and isYahui != ''" >
       and a.is_yahui = '${isYahui}'
@@ -636,6 +642,9 @@
     where 1 = 1
     <if test="isFinancing != null and isFinancing != ''" >
       and a.is_financing = '${isFinancing}'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
@@ -916,6 +925,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
+    </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
     </if>
@@ -975,6 +987,9 @@
     where 1 = 1 and a.status != '0'
     <if test="status != null and status != ''" >
       and b.status in (${status})
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
@@ -1066,6 +1081,9 @@
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
+    </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
     </if>
@@ -1154,6 +1172,9 @@
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
+    </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
     </if>
@@ -1216,6 +1237,9 @@
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
     </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})

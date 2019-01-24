@@ -206,7 +206,7 @@ var TableInit = function () {
             level: level,
             status: status,
             companyNo: $("#companyNo").val(),
-            storageCondition: $("#storageCondition").val(),
+            storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             businessMode: businessMode,
             externalCompany: externalCompany,
             originCountry: originCountry,
@@ -300,7 +300,7 @@ var ButtonInit = function () {
                     var params = "?externalCompany="+externalCompany;
                     params += "&businessMode="+businessMode;
                     params += "&companyNo="+$("#companyNo").val();
-                    params += "&storageCondition="+$("#storageCondition").val();
+                    params += "&storageCondition="+$("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
                     params += "&level="+level;
                     params += "&status="+status;
                     params += "&cargoName="+cargoName;
@@ -398,7 +398,7 @@ function getTotalInfo(){
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         storeStartDate: $("#storeStartDate").val(),
         storeEndDate: $("#storeEndDate").val(),
-        storageCondition: $("#storageCondition").val(),
+        storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
         cargoName: cargoName,
         level: level,
         status: status,

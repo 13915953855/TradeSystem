@@ -30,8 +30,17 @@ public class CargoParam {
     private String qacertificate;
     private String ownerCompany;
     private String kaifapiao;
+    private String storageCondition;
     private int start;
     private int limit;
+
+    public String getStorageCondition() {
+        return storageCondition;
+    }
+
+    public void setStorageCondition(String storageCondition) {
+        this.storageCondition = storageCondition;
+    }
 
     public String getKaifapiao() {
         return kaifapiao;

@@ -173,7 +173,7 @@ var TableInit = function () {
             offset: params.offset,  //页码
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
-            storageCondition: $("#storageCondition").val(),
+            storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             agent: agent,
             status: status,
@@ -261,7 +261,7 @@ function getTotalInfo(){
        etaStartDate: $("#etaStartDate").val(),
        etaEndDate: $("#etaEndDate").val(),
        agent: agent,
-        storageCondition: $("#storageCondition").val(),
+        storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
        status: status,
        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
        destinationPort: destinationPort

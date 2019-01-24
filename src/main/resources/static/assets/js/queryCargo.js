@@ -229,7 +229,7 @@ var TableInit = function () {
             offset: params.offset,  //页码
             externalContract: $("#externalContract").val(),
             insideContract: $("#insideContract").val(),
-            storageCondition: $("#storageCondition").val(),
+            storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
             startDate: $("#startDate").val(),
@@ -460,7 +460,7 @@ function getTotalInfo(){
     }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractStartDate: $("#contractStartDate").val(),
-        storageCondition: $("#storageCondition").val(),
+        storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
         contractEndDate: $("#contractEndDate").val(),
         externalContract: $("#externalContract").val(),
         insideContract: $("#insideContract").val(),
