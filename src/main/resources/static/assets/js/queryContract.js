@@ -270,7 +270,8 @@ var ButtonInit = function () {
             params += "&etdEndDate="+$("#etdEndDate").val();
             params += "&contractEndDate="+$("#contractEndDate").val();
             params += "&contractStartDate="+$("#contractStartDate").val();
-            params += "&storageCondition="+$("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
+            var storageCondition = $("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
+            params += "&storageCondition="+storageCondition;
             params += "&originCountry="+originCountry;
             var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
             params += "&ownerCompany="+ownerCompany;

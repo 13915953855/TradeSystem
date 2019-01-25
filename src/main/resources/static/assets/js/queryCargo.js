@@ -106,6 +106,9 @@ var TableInit = function () {
                 field: 'level',
                 title: '级别'
             }, {
+                field: 'storageCondition',
+                title: '存储条件'
+            }, {
                 field: 'unitPrice',
                 title: '单价'
             }, {

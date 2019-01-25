@@ -300,7 +300,8 @@ var ButtonInit = function () {
                     var params = "?externalCompany="+externalCompany;
                     params += "&businessMode="+businessMode;
                     params += "&companyNo="+$("#companyNo").val();
-                    params += "&storageCondition="+$("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
+                    var storageCondition = $("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
+                    params += "&storageCondition="+storageCondition;
                     params += "&level="+level;
                     params += "&status="+status;
                     params += "&cargoName="+cargoName;

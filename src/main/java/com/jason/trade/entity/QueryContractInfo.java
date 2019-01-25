@@ -31,6 +31,15 @@ public class QueryContractInfo {
     private String realStoreWeight;
     private String realStoreBoxes;
     private String realStoreMoney;
+    private String storageCondition;
+
+    public String getStorageCondition() {
+        return storageCondition;
+    }
+
+    public void setStorageCondition(String storageCondition) {
+        this.storageCondition = storageCondition;
+    }
 
     public String getStatus() {
         return status;

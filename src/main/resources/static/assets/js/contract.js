@@ -645,7 +645,8 @@ var ButtonInit = function () {
             });
 
             var params = "?externalContract="+externalContract;
-            params += "&storageCondition="+$("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
+            var storageCondition = $("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
+            params += "&storageCondition="+storageCondition;
             params += "&insideContract="+insideContract;
             params += "&contractStartDate="+contractStartDate;
             params += "&contractEndDate="+contractEndDate;
