@@ -20,12 +20,12 @@ $(function () {
     initUser();
     $("#cargoDiv input[type=text]").attr('disabled','disabled');
 
-    $("#expectSaleUnitPrice").blur(function(){
+   /* $("#expectSaleUnitPrice").blur(function(){
         autoSetExpectSaleMoney();
     });
     $("#expectSaleWeight").blur(function(){
         autoSetExpectSaleMoney();
-    });
+    });*/
     $("#realSaleUnitPrice").blur(function(){
         autoSetRealSaleMoney();
     });
@@ -62,8 +62,8 @@ $(function () {
     });
     var invoiceAmount = $("#invoiceAmount").val();
     $("#invoiceAmount").val(toFloat4(invoiceAmount));
-    var expectStoreWeight = $("#expectStoreWeight").val();
-    $("#expectStoreWeight").val(toFloat4(expectStoreWeight));
+    /*var expectStoreWeight = $("#expectStoreWeight").val();
+    $("#expectStoreWeight").val(toFloat4(expectStoreWeight));*/
     var realStoreWeight = $("#realStoreWeight").val();
     $("#realStoreWeight").val(toFloat4(realStoreWeight));
 });
@@ -92,13 +92,13 @@ function autoSetCustomerMoney(){
         $("#deviationNotice").hide();
     }
 }
-function autoSetExpectSaleMoney(){
+/*function autoSetExpectSaleMoney(){
     var expectSaleMoney = 0;
     var expectSaleWeight = $("#expectSaleWeight").val() == ""?0:$("#expectSaleWeight").val();
     var expectSaleUnitPrice = $("#expectSaleUnitPrice").val() == ""?0:$("#expectSaleUnitPrice").val();
     expectSaleMoney = toFloat(expectSaleWeight * expectSaleUnitPrice);
     $("#expectSaleMoney").val(expectSaleMoney);
-}
+}*/
 function autoSetRealSaleMoney(){
     var realSaleMoney = 0;
     var realSaleWeight = $("#realSaleWeight").val() == ""?0:$("#realSaleWeight").val();
@@ -412,11 +412,11 @@ function setFormData(data){
     $("#saleContractNo").val(data.saleContractNo);
     $("#customerName").val(data.customerName);
     $("#customerType").val(data.customerType).trigger("change");
-    $("#expectSaleUnitPrice").val(data.expectSaleUnitPrice);
+    /*$("#expectSaleUnitPrice").val(data.expectSaleUnitPrice);
     $("#expectSaleWeight").val(data.expectSaleWeight);
     $("#expectSaleBoxes").val(data.expectSaleBoxes);
     $("#expectSaleMoney").val(data.expectSaleMoney);
-    $("#expectSaleDate").val(data.expectSaleDate);
+    $("#expectSaleDate").val(data.expectSaleDate);*/
     $("#realSaleUnitPrice").val(data.realSaleUnitPrice);
     $("#realSaleWeight").val(data.realSaleWeight);
     $("#realSaleBoxes").val(data.realSaleBoxes);

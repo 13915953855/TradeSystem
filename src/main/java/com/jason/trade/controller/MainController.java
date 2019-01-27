@@ -168,6 +168,12 @@ public class MainController {
         model.addAttribute("user", userInfo);
         return "trade/cargomanage";
     }
+    @GetMapping("/trade/precargomanage")
+    public String precargomanage(Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        return "trade/precargomanage";
+    }
     @GetMapping("/trade/cargo/view")
     public String cargoview(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -193,6 +199,32 @@ public class MainController {
             model.addAttribute("warehouse",contractBaseInfo.getWarehouse());
         }
         return "trade/cargosaleview";
+    }
+    @GetMapping("/trade/cargo/presale")
+    public String cargopresale(@RequestParam(value="id") Integer id, Model model, HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        model.addAttribute("user", userInfo);
+        CargoInfo cargoInfo = cargoRepository.findOne(id);
+        model.addAttribute("cargo",cargoInfo);
+        model.addAttribute("action","view");
+        ContractBaseInfo contractBaseInfo = contractRepository.findByContractId(cargoInfo.getContractId());
+        if(contractBaseInfo != null) {
+            model.addAttribute("externalContract", contractBaseInfo.getExternalContract());
+            model.addAttribute("ownerCompany", contractBaseInfo.getOwnerCompany());
+            model.addAttribute("from","jinkou");
+            model.addAttribute("type","进口台账");
+            model.addAttribute("containerNo",contractBaseInfo.getContainerNo());
+            model.addAttribute("warehouse",contractBaseInfo.getWarehouse());
+        }else{
+            InternalContractInfo internalContractInfo = internalContractRepository.findByContractId(cargoInfo.getContractId());
+            model.addAttribute("externalContract", internalContractInfo.getContractNo());
+            model.addAttribute("ownerCompany", internalContractInfo.getOwnerCompany());
+            model.addAttribute("from","neimao");
+            model.addAttribute("type","内贸台账");
+            model.addAttribute("containerNo",contractBaseInfo.getContainerNo());
+            model.addAttribute("warehouse",contractBaseInfo.getWarehouse());
+        }
+        return "trade/cargopresaleview";
     }
     @GetMapping("/trade/agent")
     public String agent(Model model, HttpSession session) {

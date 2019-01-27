@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jason.trade.mapper.PreSaleInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jason.trade.model.PreSaleInfo" >
+    <id column="sale_id" property="saleId" jdbcType="INTEGER" />
+    <result column="cargo_id" property="cargoId" jdbcType="VARCHAR" />
+    <result column="create_date_time" property="createDateTime" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="expect_sale_date" property="expectSaleDate" jdbcType="VARCHAR" />
+    <result column="pickup_user" property="pickupUser" jdbcType="VARCHAR" />
+    <result column="expect_sale_unit_price" property="expectSaleUnitPrice" jdbcType="DOUBLE" />
+    <result column="expect_sale_weight" property="expectSaleWeight" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sale_id, cargo_id, create_date_time, create_user, customer_name, expect_sale_date, 
+    pickup_user, expect_sale_unit_price, expect_sale_weight, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from presale_info
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from presale_info
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jason.trade.model.PreSaleInfo" >
+    insert into presale_info (sale_id, cargo_id, create_date_time, 
+      create_user, customer_name, expect_sale_date, 
+      pickup_user, expect_sale_unit_price, expect_sale_weight, 
+      status)
+    values (#{saleId,jdbcType=INTEGER}, #{cargoId,jdbcType=VARCHAR}, #{createDateTime,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{expectSaleDate,jdbcType=VARCHAR}, 
+      #{pickupUser,jdbcType=VARCHAR}, #{expectSaleUnitPrice,jdbcType=DOUBLE}, #{expectSaleWeight,jdbcType=DOUBLE}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jason.trade.model.PreSaleInfo" >
+    insert into presale_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="saleId != null" >
+        sale_id,
+      </if>
+      <if test="cargoId != null" >
+        cargo_id,
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="expectSaleDate != null" >
+        expect_sale_date,
+      </if>
+      <if test="pickupUser != null" >
+        pickup_user,
+      </if>
+      <if test="expectSaleUnitPrice != null" >
+        expect_sale_unit_price,
+      </if>
+      <if test="expectSaleWeight != null" >
+        expect_sale_weight,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="saleId != null" >
+        #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="cargoId != null" >
+        #{cargoId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSaleDate != null" >
+        #{expectSaleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupUser != null" >
+        #{pickupUser,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSaleUnitPrice != null" >
+        #{expectSaleUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="expectSaleWeight != null" >
+        #{expectSaleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.PreSaleInfo" >
+    update presale_info
+    <set >
+      <if test="cargoId != null" >
+        cargo_id = #{cargoId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDateTime != null" >
+        create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSaleDate != null" >
+        expect_sale_date = #{expectSaleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupUser != null" >
+        pickup_user = #{pickupUser,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSaleUnitPrice != null" >
+        expect_sale_unit_price = #{expectSaleUnitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="expectSaleWeight != null" >
+        expect_sale_weight = #{expectSaleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jason.trade.model.PreSaleInfo" >
+    update presale_info
+    set cargo_id = #{cargoId,jdbcType=VARCHAR},
+      create_date_time = #{createDateTime,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      expect_sale_date = #{expectSaleDate,jdbcType=VARCHAR},
+      pickup_user = #{pickupUser,jdbcType=VARCHAR},
+      expect_sale_unit_price = #{expectSaleUnitPrice,jdbcType=DOUBLE},
+      expect_sale_weight = #{expectSaleWeight,jdbcType=DOUBLE},
+      status = #{status,jdbcType=VARCHAR}
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </update>
+  <select id="getPreSaleTotal" parameterType="java.lang.String" resultType="java.lang.Float">
+    select sum(expect_sale_weight) as yys from presale_info
+    where cargo_id = #{_parameter}
+  </select>
+</mapper>

@@ -263,9 +263,15 @@ var TableInit = function () {
                 field: 'id',
                 title: '操作',
                 formatter: function(value, row, index){
-                    if($("#status").val() == 4 || $("#status").val() == 5) {
-                        return '<a href="/trade/cargo/view?id=' + value + '">查看销售记录</a>';
+                    var link = '';
+                    if($("#status").val() < 4){
+                        link += '<a href="/trade/cargo/presale?id='+value+'">预售</a>';
                     }
+                    if($("#status").val() == 4 || $("#status").val() == 5) {
+                        link += '&nbsp;&nbsp;&nbsp;&nbsp;<a href="/trade/cargo/view?id='+value+'">销售</a>';
+                    }
+                    return link;
+
                 }
             } ]
         });

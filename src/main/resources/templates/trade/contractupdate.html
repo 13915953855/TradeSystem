@@ -172,7 +172,7 @@
                         <div id="subPages" class="collapse in">
                             <ul class="nav">
                                 <li><a href="/trade/contract" class="active">进口台账</a></li>
-                                <li><a href="/trade/cargomanage">进销存</a></li>
+                                <li><a href="/trade/cargomanage">进销存</a></li><li><a href="/trade/precargomanage">预售</a></li>
                                 <li><a href="/trade/internal">内贸台账</a></li>
                             </ul>
                         </div>
@@ -211,6 +211,7 @@
                                         <input type="hidden" id="id" th:value="${contract.id}"/>
                                         <input type="hidden" id="status" th:value="${contract.status}"/>
                                         <input type="hidden" id="action" th:value="${action}"/>
+                                        <input type="hidden" id="status" th:value="${contract.status}"/>
                                         <input type="hidden" id="contractId" th:value="${contract.contractId}"/>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2" style="color:red;">合同归属公司</label>

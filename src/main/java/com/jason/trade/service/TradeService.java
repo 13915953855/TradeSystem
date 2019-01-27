@@ -3,10 +3,7 @@ package com.jason.trade.service;
 import com.github.pagehelper.PageHelper;
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.*;
-import com.jason.trade.mapper.CargoInfoMapper;
-import com.jason.trade.mapper.ContractBaseInfoMapper;
-import com.jason.trade.mapper.InternalContractInfoMapper;
-import com.jason.trade.mapper.SaleInfoMapper;
+import com.jason.trade.mapper.*;
 import com.jason.trade.model.CargoInfo;
 import com.jason.trade.model.ContractBaseInfo;
 import com.jason.trade.model.InternalContractInfo;
@@ -55,6 +52,8 @@ public class TradeService {
     private SaleRepository saleRepository;
     @Autowired
     private CargoInfoMapper cargoInfoMapper;
+    @Autowired
+    private PreSaleInfoMapper preSaleInfoMapper;
     @Autowired
     private SaleInfoMapper saleInfoMapper;
     @Autowired
@@ -611,6 +610,16 @@ public class TradeService {
         JSONObject result = new JSONObject();
         result.put("total",count);
         result.put("rows",cargoInfoMapper.getStoreList(cargoParam));
+        return result;
+    }
+
+    public JSONObject getPreSaleTotal(String cargoId){
+        JSONObject result = new JSONObject();
+        CargoInfo cargoInfo = cargoInfoMapper.selectByCargoId(cargoId);
+        Float yys = preSaleInfoMapper.getPreSaleTotal(cargoId);
+        result.put("status","1");
+        result.put("yys",yys);
+        result.put("wys",cargoInfo.getInvoiceAmount() - yys);
         return result;
     }
 }

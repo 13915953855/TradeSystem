@@ -189,16 +189,6 @@
                                                 <input type="text" class="form-control" id="realStoreBoxes" th:value="${cargo.realStoreBoxes}"/>
                                             </div>
                                         </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">预库存重量</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="expectStoreWeight" th:value="${cargo.expectStoreWeight}"/>
-                                            </div>
-                                            <label class="control-label col-sm-3">预库存箱数</label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="expectStoreBoxes" th:value="${cargo.expectStoreBoxes}"/>
-                                            </div>
-                                        </div>
 
                                     </form>
                                 </div>
@@ -241,61 +231,6 @@
                                             </div>
                                             <div class="modal-body" style="height:450px;overflow-y:auto;">
                                                 <input type="hidden" id="saleId" value=""/>
-                                                <!--<div class="panel panel-default">
-                                                    <div class="panel-heading">预售信息</div>
-                                                    <div class="panel-body">
-                                                        <form class="form-horizontal" id="expectForm">
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">客户名称</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="customerName" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">客户属性</label>
-                                                                <div class="col-sm-3">
-                                                                    <select class="form-control select2" id="customerType">
-                                                                        <option>中式餐饮</option>
-                                                                        <option>西式餐饮</option>
-                                                                        <option>日韩餐饮</option>
-                                                                        <option>加工厂</option>
-                                                                        <option>批零</option>
-                                                                        <option>商超</option>
-                                                                        <option>酒店</option>
-                                                                        <option>电商</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">预售单价(CNY/KG)</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="expectSaleUnitPrice" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">预售重量(KG)</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="expectSaleWeight" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">预售金额</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="expectSaleMoney" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" style="">
-                                                                <label class="control-label col-sm-2">预售箱数</label>
-                                                                <div class="col-sm-3">
-                                                                    <input type="text" class="form-control" id="expectSaleBoxes" />
-                                                                </div>
-                                                                <label class="control-label col-sm-3">预出库时间</label>
-                                                                <div class="col-sm-3">
-                                                                    <div class="input-append date form-date">
-                                                                        <input class="form-control" size="16" id="expectSaleDate" type="text" readonly="readonly"/>
-                                                                        <span class="add-on"><i class="icon-th"></i></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>-->
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">实售信息</div>
                                                     <div class="panel-body">

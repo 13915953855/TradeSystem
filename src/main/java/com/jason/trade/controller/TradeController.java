@@ -30,10 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/trade")
@@ -53,6 +50,8 @@ public class TradeController {
     private AttachmentRepository attachmentRepository;
     @Autowired
     private SaleRepository saleRepository;
+    @Autowired
+    private PreSaleRepository preSaleRepository;
     @Autowired
     private TradeService tradeService;
     @Autowired
@@ -643,5 +642,48 @@ public class TradeController {
         JSONObject result = new JSONObject();
         result.put("data",data);
         return result.toString();
+    }
+
+    @RequestMapping(value = "/presale/total")
+    public String getpresale(@RequestParam("cargoId") String cargoId) throws JSONException {
+        JSONObject result = tradeService.getPreSaleTotal(cargoId);
+        return result.toString();
+    }
+    @PostMapping(value="/presale/add")
+    public String presaleAdd(PreSaleInfo saleInfo, HttpSession session){
+        saleInfo.setStatus(GlobalConst.ENABLE);
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        if(saleInfo.getSaleId() == null) {//新增
+            String now = DateUtil.DateTimeToString(new Date());
+            saleInfo.setCreateUser(userInfo.getAccount());
+            saleInfo.setCreateDateTime(now);
+        }
+        PreSaleInfo data = preSaleRepository.save(saleInfo);
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("新增预售记录"+data.getSaleId());
+        sysLog.setOperation("新增");
+        sysLog.setUser(userInfo.getAccount());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+        return RespUtil.respSuccess(data);
+    }
+
+    @PostMapping(value="/presale/delete")
+    public String presaleDel(@RequestParam("ids") String ids, HttpSession session){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        if(StringUtils.isNotBlank(ids)) {
+            String[] arr = ids.split(",");
+            List<String> saleIdList = Arrays.asList(arr);
+            preSaleRepository.deleteSaleInfo(saleIdList);
+        }
+
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("删除预售记录"+ids);
+        sysLog.setOperation("删除");
+        sysLog.setUser(userInfo.getAccount());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+        return GlobalConst.SUCCESS;
     }
 }
