@@ -219,7 +219,7 @@ public class TradeController {
             cargoInfo.setStatus(GlobalConst.ENABLE);
             cargoInfo.setCreateUser(userInfo.getAccount());
             cargoInfo.setCreateDateTime(now);
-            cargoInfo.setExpectStoreBoxes(cargoInfo.getBoxes());
+            cargoInfo.setExpectStoreBoxes(GlobalConst.UNPRESALED);
             cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
             log.info("保存商品开始");
             cargoRepository.save(cargoInfo);
@@ -236,16 +236,20 @@ public class TradeController {
             }
             Integer realStoreBoxes = cargoInfo.getBoxes() - saleBoxes;
             cargoInfo.setRealStoreBoxes(realStoreBoxes);
-            /*if(realStoreBoxes > 0){
-                cargoInfo.setStatus(GlobalConst.STORED);
-            }else if(realStoreBoxes <= 0){
-                cargoInfo.setStatus(GlobalConst.SELLOUT);
-            }*/
             cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount() - saleWeight);
             cargoInfo.setCreateUser(userInfo.getAccount());
             cargoInfo.setCreateDateTime(now);
-            cargoInfo.setExpectStoreBoxes(cargoInfo.getBoxes());
-            cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
+            List<PreSaleInfo> preSaleInfoList = preSaleRepository.findByCargoId(cargoId);
+            Double expectStoreWeight = cargoInfo.getInvoiceAmount();
+            for (PreSaleInfo preSaleInfo : preSaleInfoList) {
+                expectStoreWeight = expectStoreWeight - preSaleInfo.getExpectSaleWeight();
+            }
+            cargoInfo.setExpectStoreWeight(expectStoreWeight);
+            if(expectStoreWeight.equals(cargoInfo.getInvoiceAmount())){
+                cargoInfo.setExpectStoreBoxes(GlobalConst.UNPRESALED);
+            }else{
+                cargoInfo.setExpectStoreBoxes(GlobalConst.PRESALED);
+            }
             log.info("保存商品开始");
             cargoInfoMapper.updateByCargoId(cargoInfo);
             log.info("保存商品完毕");

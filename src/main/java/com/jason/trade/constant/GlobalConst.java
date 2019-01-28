@@ -16,6 +16,8 @@ public class GlobalConst {
     public static final String SELLOUT = "5";
     public static final String DISABLE = "0";
     public static final String EDITING = "9";
+    public static final Integer UNPRESALED = 0;
+    public static final Integer PRESALED = 1;
 
     public static final String FILE_PATH = "/home/uploadFile";
     //public static final String FILE_PATH = "D:";
