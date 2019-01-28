@@ -81,6 +81,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="eta" property="eta" jdbcType="VARCHAR" />
     <result column="etd" property="etd" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
     <result column="contract_date" property="contractDate" jdbcType="VARCHAR" />
     <result column="storage_condition" property="storageCondition" jdbcType="VARCHAR" />
     <result column="external_company" property="externalCompany" jdbcType="VARCHAR" />
@@ -420,6 +421,9 @@
     <if test="storageCondition != null and storageCondition != ''" >
       and a.storage_condition = '${storageCondition}'
     </if>
+    <if test="currency != null and currency != ''" >
+      and a.currency = '${currency}'
+    </if>
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
     </if>
@@ -529,6 +533,9 @@
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and a.storage_condition = '${storageCondition}'
+    </if>
+    <if test="currency != null and currency != ''" >
+      and a.currency = '${currency}'
     </if>
     <if test="isYahui != null and isYahui != ''" >
       and a.is_yahui = '${isYahui}'
@@ -646,6 +653,9 @@
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and a.storage_condition = '${storageCondition}'
+    </if>
+    <if test="currency != null and currency != ''" >
+      and a.currency = '${currency}'
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
@@ -860,8 +870,11 @@
       and a.external_company in (${externalCompany})
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
-    and a.storage_condition = '${storageCondition}'
-  </if>
+      and a.storage_condition = '${storageCondition}'
+    </if>
+    <if test="currency != null and currency != ''" >
+      and a.currency = '${currency}'
+    </if>
     <if test="status != null and status != ''" >
       and b.status in (${status})
     </if>
@@ -1160,7 +1173,7 @@
 
 
   <select id="queryCargoList" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
-    select a.id,a.eta,a.etd,a.storage_condition,a.expect_sailing_date,b.company_no,a.container_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
+    select a.id,a.eta,a.currency,a.etd,a.storage_condition,a.expect_sailing_date,b.company_no,a.container_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
     b.cargo_name,b.level,b.status,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
@@ -1178,6 +1191,9 @@
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and a.storage_condition = '${storageCondition}'
+    </if>
+    <if test="currency != null and currency != ''" >
+      and a.currency = '${currency}'
     </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
@@ -1232,6 +1248,9 @@
     where 1 = 1 and a.status != '0'
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="currency != null and currency != ''" >
+      and a.currency = '${currency}'
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'

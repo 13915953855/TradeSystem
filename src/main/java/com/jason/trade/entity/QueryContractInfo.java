@@ -9,6 +9,7 @@ public class QueryContractInfo {
     private String externalContract;
     private String insideContract;
     private String companyNo;
+    private String currency;
     private String cargoName;
     private String cargoNo;
     private String status;
@@ -32,6 +33,14 @@ public class QueryContractInfo {
     private String realStoreBoxes;
     private String realStoreMoney;
     private String storageCondition;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
     public String getStorageCondition() {
         return storageCondition;

@@ -466,7 +466,7 @@ public class MainController {
 
     @GetMapping(value="/trade/queryCargo/output")
     public ResponseEntity<Resource> queryCargoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
-                                           @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,
+                                           @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,@RequestParam(value="currency") String currency,
                                            @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="ownerCompany") String ownerCompany,
                                            @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
                                            @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="status") String status,
@@ -476,6 +476,7 @@ public class MainController {
         ContractParam contractParam = new ContractParam();
         contractParam.setOriginCountry(originCountry);
         contractParam.setOwnerCompany(ownerCompany);
+        contractParam.setCurrency(currency);
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
         contractParam.setBusinessMode(businessMode);
@@ -672,7 +673,7 @@ public class MainController {
 
     @GetMapping(value="/trade/queryContract/output")
     public ResponseEntity<Resource> queryContractOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
-                                                     @RequestParam(value="ownerCompany") String ownerCompany,@RequestParam(value="status") String status,
+                                                     @RequestParam(value="ownerCompany") String ownerCompany,@RequestParam(value="status") String status,@RequestParam(value="currency") String currency,
                                                      @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
                                                      @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,
@@ -681,6 +682,7 @@ public class MainController {
         ContractParam contractParam = new ContractParam();
         contractParam.setStatus(CommonUtil.revertStatus(status));
         contractParam.setOriginCountry(originCountry);
+        contractParam.setCurrency(currency);
         contractParam.setOwnerCompany(ownerCompany);
         contractParam.setStorageCondition(storageCondition);
         contractParam.setContractStartDate(contractStartDate);

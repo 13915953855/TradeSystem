@@ -280,6 +280,7 @@ public class ExcelService {
             list.add(contractBaseInfo.getTotalInvoiceAmount());// "发票总重量",
             list.add(contractBaseInfo.getTotalInvoiceMoney());// "发票总金额",
             list.add(contractBaseInfo.getOriginCountry());// "原产地",
+            list.add(contractBaseInfo.getCurrency());// "币种",
             list.add(contractBaseInfo.getEta());// "ETA",
             list.add(contractBaseInfo.getEtd());// "ETD",
             list.add(contractBaseInfo.getExpectSailingDate());// "预计船期",
@@ -307,6 +308,7 @@ public class ExcelService {
             list.add(cargoInfo.getContractDate());//合同日期
             list.add(cargoInfo.getCompanyNo());//厂号
             list.add(cargoInfo.getContainerNo());//柜号
+            list.add(cargoInfo.getCurrency());//币种
             list.add(cargoInfo.getCargoName());//商品
             list.add(cargoInfo.getLevel());//级别
             list.add(cargoInfo.getUnitPrice());//单价

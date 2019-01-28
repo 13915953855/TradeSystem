@@ -193,6 +193,7 @@ var TableInit = function () {
             status: status,
             originCountry:originCountry,
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
+            currency: $("#currency").val() == "全部"?"":$("#currency").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             externalCompany: externalCompany
         };
@@ -272,6 +273,8 @@ var ButtonInit = function () {
             params += "&contractStartDate="+$("#contractStartDate").val();
             var storageCondition = $("#storageCondition").val()=="全部"?"":$("#storageCondition").val();
             params += "&storageCondition="+storageCondition;
+            var currency = $("#currency").val()=="全部"?"":$("#currency").val();
+            params += "&currency="+currency;
             params += "&originCountry="+originCountry;
             var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
             params += "&ownerCompany="+ownerCompany;
@@ -290,6 +293,7 @@ function resetQuery(){
     $("#originCountry").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
     $("#storageCondition").val("全部").trigger("change");
+    $("#currency").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
     $("#startDate").val("");
     $("#endDate").val("");
@@ -355,6 +359,7 @@ function getTotalInfo(){
         etdEndDate: $("#etdEndDate").val(),
         originCountry:originCountry,
         storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
+        currency: $("#currency").val() == "全部"?"":$("#currency").val(),
         ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         status: status,
         externalCompany: externalCompany
