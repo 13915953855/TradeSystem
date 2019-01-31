@@ -316,6 +316,14 @@ public class TradeService {
         result.put("rows",list);
         return result;
     }
+    public JSONObject queryAllPreCargoList(CargoParam cargoParam){
+        List<CargoManageInfo> list = cargoInfoMapper.selectByExampleForPre(cargoParam);
+        Integer count = cargoInfoMapper.selectCountByExampleForPre(cargoParam);
+        JSONObject result = new JSONObject();
+        result.put("total",count);
+        result.put("rows",list);
+        return result;
+    }
     public JSONObject getTotalStore(CargoParam cargoParam){
         JSONObject result = new JSONObject();
         result.put("totalStoreWeight",cargoInfoMapper.getTotalStoreWeightByExample(cargoParam));

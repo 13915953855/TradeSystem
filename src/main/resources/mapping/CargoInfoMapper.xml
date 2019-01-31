@@ -874,4 +874,109 @@
   <select id="getAvgStatusByContractId" parameterType="java.lang.String" resultType="java.lang.Integer">
     select AVG(status) from cargo_info where contract_id = #{_parameter}
   </select>
+
+
+
+
+
+
+
+  <select id="selectByExampleForPre" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
+    select b.* from (
+    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    UNION select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3') ) b
+    where 1 = 1
+    <if test="contractNo != null" >
+      and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="expectStoreBoxes != null and expectStoreBoxes != ''" >
+      and b.expect_store_boxes = '${expectStoreBoxes}'
+    </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and b.owner_company = '${ownerCompany}'
+    </if>
+    <if test="insideContract != null" >
+      and b.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null" >
+      and b.warehouse like '%${warehouse}%'
+    </if>
+    <if test="containerNo != null" >
+      and b.container_no like '%${containerNo}%'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level = '${level}'
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode = '${businessMode}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and b.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+    <if test="customerName != null and customerName != ''" >
+      and b.cargo_id in (
+      select cargo_id from sale_info where 1=1
+      <if test="customerName != null and customerName != ''" >
+        and customer_name like '%${customerName}%'
+      </if>
+      )
+    </if>
+    order by b.id desc
+    limit ${start},${limit}
+  </select>
+  <select id="selectCountByExampleForPre" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
+    select count(1) from (
+    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    UNION select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3') ) b
+    where 1 = 1
+    <if test="contractNo != null" >
+      and b.external_contract like '%${contractNo}%'
+    </if>
+    <if test="expectStoreBoxes != null and expectStoreBoxes != ''" >
+      and b.expect_store_boxes = '${expectStoreBoxes}'
+    </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and b.owner_company = '${ownerCompany}'
+    </if>
+    <if test="insideContract != null" >
+      and b.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="warehouse != null" >
+      and b.warehouse like '%${warehouse}%'
+    </if>
+    <if test="containerNo != null" >
+      and b.container_no like '%${containerNo}%'
+    </if>
+    <if test="level != null and level != ''" >
+      and b.level = '${level}'
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode = '${businessMode}'
+    </if>
+    <if test="cargoName != null and cargoName != ''" >
+      and b.cargo_name = '${cargoName}'
+    </if>
+    <if test="cargoNo != null" >
+      and b.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="companyNo != null" >
+      and b.company_no like '%${companyNo}%'
+    </if>
+    <if test="customerName != null and customerName != ''" >
+      and b.cargo_id in (
+      select cargo_id from sale_info where 1=1
+      <if test="customerName != null and customerName != ''" >
+        and customer_name like '%${customerName}%'
+      </if>
+      )
+    </if>
+  </select>
+
+
 </mapper>

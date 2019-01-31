@@ -158,6 +158,14 @@ public class TradeController {
         return result.toString();
     }
 
+    @RequestMapping(value = "/cargo/preall")
+    public String getCargoPREAllList(@RequestParam("limit") int limit, @RequestParam("offset") int offset,CargoParam cargoParam) throws JSONException {
+        cargoParam.setStart(offset);
+        cargoParam.setLimit(limit);
+        JSONObject result = tradeService.queryAllPreCargoList(cargoParam);
+        return result.toString();
+    }
+
     @RequestMapping(value = "/contract/getTotalInfo")
     public String getTotalInfo(ContractParam contractParam) throws JSONException {
         JSONObject result = tradeService.getTotalInfo(contractParam);

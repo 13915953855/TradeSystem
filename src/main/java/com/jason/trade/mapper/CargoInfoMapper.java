@@ -15,11 +15,13 @@ public interface CargoInfoMapper {
     int deleteByContract(List<String> id);
     CargoInfo selectByCargoId(String cargoId);
     List<CargoManageInfo> selectByExample(CargoParam cargoParam);
+    List<CargoManageInfo> selectByExampleForPre(CargoParam cargoParam);
     Integer getTotalStoreWeightByExample(CargoParam cargoParam);
     Integer getInternalTotalStoreWeightByExample(CargoParam cargoParam);
     Integer getTotalStoreBoxesByExample(CargoParam cargoParam);
     Integer getInternalTotalStoreBoxesByExample(CargoParam cargoParam);
     Integer selectCountByExample(CargoParam cargoParam);
+    Integer selectCountByExampleForPre(CargoParam cargoParam);
     void storeByContractId(String contractId);
     void updateStatusByContractId(@Param("contractId") String contractId, @Param("status") String status);
     void selloutByCargoId(String cargoId);

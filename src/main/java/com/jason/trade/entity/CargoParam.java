@@ -33,6 +33,15 @@ public class CargoParam {
     private String storageCondition;
     private int start;
     private int limit;
+    private int expect_store_boxes;
+
+    public int getExpect_store_boxes() {
+        return expect_store_boxes;
+    }
+
+    public void setExpect_store_boxes(int expect_store_boxes) {
+        this.expect_store_boxes = expect_store_boxes;
+    }
 
     public String getStorageCondition() {
         return storageCondition;
