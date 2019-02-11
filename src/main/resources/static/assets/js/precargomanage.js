@@ -155,7 +155,7 @@ var TableInit = function () {
 };
 
 function getTotalStore(){
-    var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+    /*var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractNo: $("#contractNo").val(),
         warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
         storeStartDate: $("#storeStartDate").val(),
@@ -185,7 +185,7 @@ function getTotalStore(){
                 $("#totalStoreBoxes").html(res.totalStoreBoxes);
             }
         }
-    });
+    });*/
 }
 
 var ButtonInit = function () {

@@ -889,6 +889,12 @@
     <if test="contractNo != null" >
       and b.external_contract like '%${contractNo}%'
     </if>
+    <if test="status != '' and status == 0" >
+      and b.expect_store_boxes = '${status}'
+    </if>
+    <if test="status != '' and status == 1" >
+      and b.expect_store_boxes &gt;= '${status}'
+    </if>
     <if test="expectStoreBoxes != null and expectStoreBoxes != ''" >
       and b.expect_store_boxes = '${expectStoreBoxes}'
     </if>
@@ -919,6 +925,9 @@
     <if test="companyNo != null" >
       and b.company_no like '%${companyNo}%'
     </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
+    </if>
     <if test="customerName != null and customerName != ''" >
       and b.cargo_id in (
       select cargo_id from sale_info where 1=1
@@ -941,8 +950,17 @@
     <if test="expectStoreBoxes != null and expectStoreBoxes != ''" >
       and b.expect_store_boxes = '${expectStoreBoxes}'
     </if>
+    <if test="status != '' and status == 0" >
+      and b.expect_store_boxes = '${status}'
+    </if>
+    <if test="status != '' and status == 1" >
+      and b.expect_store_boxes &gt;= '${status}'
+    </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and b.owner_company = '${ownerCompany}'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and b.storage_condition = '${storageCondition}'
     </if>
     <if test="insideContract != null" >
       and b.inside_contract like '%${insideContract}%'

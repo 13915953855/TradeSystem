@@ -190,7 +190,14 @@ public class TradeController {
         result.put("rows",list);
         return result.toString();
     }
-
+    @RequestMapping(value = "/presale/list")
+    public String getPreSaleList(@RequestParam("cargoId") String cargoId) throws JSONException {
+        List<PreSaleInfo> list = preSaleRepository.findByCargoId(cargoId);
+        JSONObject result = new JSONObject();
+        result.put("total",list.size());
+        result.put("rows",list);
+        return result.toString();
+    }
     @PostMapping(value="/contract/add")
     public String contractAdd(ContractBaseInfo contractBaseInfo,@RequestParam("cargoId") String cargoId, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -671,6 +678,10 @@ public class TradeController {
             saleInfo.setCreateDateTime(now);
         }
         PreSaleInfo data = preSaleRepository.save(saleInfo);
+        CargoInfo cargoInfo = new CargoInfo();
+        cargoInfo.setCargoId(saleInfo.getCargoId());
+        cargoInfo.setExpectStoreBoxes(1);
+        cargoInfoMapper.updateByCargoId(cargoInfo);
 
         SysLog sysLog = new SysLog();
         sysLog.setDetail("新增预售记录"+data.getSaleId());
@@ -689,6 +700,13 @@ public class TradeController {
             List<String> saleIdList = Arrays.asList(arr);
             preSaleRepository.deleteSaleInfo(saleIdList);
         }
+
+        //todo 预售状态变更
+        /*CargoInfo cargoInfo = new CargoInfo();
+        cargoInfo.setCargoId(saleInfo.getCargoId());
+        cargoInfo.setExpectStoreBoxes(1);
+        cargoInfoMapper.updateByCargoId(cargoInfo);*/
+
 
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除预售记录"+ids);
