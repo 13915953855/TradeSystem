@@ -209,7 +209,8 @@ var TableInit = function () {
                 title: '库号'
             }, {
                 field: 'businessMode',
-                title: '业务模式'
+                title: '业务模式',
+                visible: false
             }, {
                 field: 'companyNo',
                 title: '厂号'
@@ -217,8 +218,12 @@ var TableInit = function () {
                 field: 'boxes',
                 title: '箱数(小计)'
             }, {
+                field: 'invoiceAmount',
+                title: '发票重量(小计)'
+            }, {
                 field: 'unitPrice',
-                title: '单价'
+                title: '单价',
+                visible: false
             }, {
                 field: 'contractAmount',
                 title: '合同重量(小计)',
@@ -226,10 +231,6 @@ var TableInit = function () {
             }, {
                 field: 'contractMoney',
                 title: '合同金额(小计)',
-                visible: false
-            }, {
-                field: 'invoiceAmount',
-                title: '发票重量(小计)',
                 visible: false
             }, {
                 field: 'invoiceMoney',

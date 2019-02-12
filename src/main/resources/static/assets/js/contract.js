@@ -175,6 +175,10 @@ function getTotalInfo(){
         insideContract: $("#insideContract").val(),
         contractStartDate: $("#contractStartDate").val(),
         contractEndDate: $("#contractEndDate").val(),
+        storeStartDate: $("#storeStartDate").val(),
+        storeEndDate: $("#storeEndDate").val(),
+        taxPayDateStart: $("#taxPayDateStart").val(),
+        taxPayDateEnd: $("#taxPayDateEnd").val(),
         etaStartDate: $("#etaStartDate").val(),
         etaEndDate: $("#etaEndDate").val(),
         cargoName: cargoName,
@@ -405,6 +409,10 @@ var TableInit = function () {
             insideContract: $("#insideContract").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
+            storeStartDate: $("#storeStartDate").val(),
+            storeEndDate: $("#storeEndDate").val(),
+            taxPayDateStart: $("#taxPayDateStart").val(),
+            taxPayDateEnd: $("#taxPayDateEnd").val(),
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
             cargoName: cargoName,
@@ -628,6 +636,10 @@ var ButtonInit = function () {
             var insideContract=$("#insideContract").val();
             var contractStartDate= $("#contractStartDate").val();
             var contractEndDate= $("#contractEndDate").val();
+            var storeStartDate = $("#storeStartDate").val();
+            var storeEndDate = $("#storeEndDate").val();
+            var taxPayDateStart = $("#taxPayDateStart").val();
+            var taxPayDateEnd = $("#taxPayDateEnd").val();
             var etaStartDate= $("#etaStartDate").val();
             var etaEndDate= $("#etaEndDate").val();
             var containerNo=$("#containerNo").val();
@@ -650,6 +662,10 @@ var ButtonInit = function () {
             params += "&insideContract="+insideContract;
             params += "&contractStartDate="+contractStartDate;
             params += "&contractEndDate="+contractEndDate;
+            params += "&storeStartDate="+storeStartDate;
+            params += "&storeEndDate="+storeEndDate;
+            params += "&taxPayDateStart="+taxPayDateStart;
+            params += "&taxPayDateEnd="+taxPayDateEnd;
             params += "&etaStartDate="+etaStartDate;
             params += "&etaEndDate="+etaEndDate;
             params += "&cargoName="+cargoName;

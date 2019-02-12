@@ -403,118 +403,7 @@
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jason.trade.entity.ContractParam" >
     select a.* from contract_base_info a
     where 1 = 1
-    <if test="isFinancing != null and isFinancing != ''" >
-      and a.is_financing = '${isFinancing}'
-    </if>
-    <if test="ownerCompany != null and ownerCompany != ''" >
-      and a.owner_company = '${ownerCompany}'
-    </if>
-    <if test="isYahui != null and isYahui != ''" >
-      and a.is_yahui = '${isYahui}'
-    </if>
-    <if test="prePayBank != null and prePayBank != ''" >
-      and a.pre_pay_bank = '${prePayBank}'
-    </if>
-    <if test="finalPayBank != null and finalPayBank != ''" >
-      and a.final_pay_bank = '${finalPayBank}'
-    </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and a.storage_condition = '${storageCondition}'
-    </if>
-    <if test="currency != null and currency != ''" >
-      and a.currency = '${currency}'
-    </if>
-    <if test="externalContract != null" >
-      and a.external_contract like '%${externalContract}%'
-    </if>
-    <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country in (${originCountry})
-    </if>
-    <if test="insideContract != null" >
-      and a.inside_contract like '%${insideContract}%'
-    </if>
-    <if test="agent != null and agent != ''" >
-      and a.agent in (${agent})
-    </if>
-    <if test="containerNo != null" >
-      and a.container_no like '%${containerNo}%'
-    </if>
-    <if test="ladingbillNo != null" >
-      and a.ladingbill_no like '%${ladingbillNo}%'
-    </if>
-    <if test="tariffNo != null" >
-      and a.tariff_no like '%${tariffNo}%'
-    </if>
-    <if test="externalCompany != null and externalCompany != ''" >
-      and a.external_company in (${externalCompany})
-    </if>
-    <choose>
-      <when test="status != null and status != ''">
-        and a.status in (${status})
-      </when>
-      <otherwise>
-        and a.status != '0'
-      </otherwise>
-    </choose>
-    <if test="destinationPort != null and destinationPort != ''" >
-      and a.destination_port in (${destinationPort})
-    </if>
-    <if test="contractStartDate != null and contractStartDate != ''" >
-      and a.contract_date &gt;= '${contractStartDate}'
-    </if>
-    <if test="contractEndDate != null and contractEndDate != ''" >
-      and a.contract_date &lt;= '${contractEndDate}'
-    </if>
-    <if test="prePaymentStartDate != null and prePaymentStartDate != ''" >
-      and a.pre_payment_date &gt;= '${prePaymentStartDate}'
-    </if>
-    <if test="prePaymentEndDate != null and prePaymentEndDate != ''" >
-      and a.pre_payment_date &lt;= '${prePaymentEndDate}'
-    </if>
-    <if test="finalPaymentStartDate != null and finalPaymentStartDate != ''" >
-      and a.final_payment_date &gt;= '${finalPaymentStartDate}'
-    </if>
-    <if test="finalPaymentEndDate != null and finalPaymentEndDate != ''" >
-      and a.final_payment_date &lt;= '${finalPaymentEndDate}'
-    </if>
-    <if test="taxPayDateStart != null and taxPayDateStart != ''" >
-      and a.tax_pay_date &gt;= '${taxPayDateStart}'
-    </if>
-    <if test="taxPayDateEnd != null and taxPayDateEnd != ''" >
-      and a.tax_pay_date &lt;= '${taxPayDateEnd}'
-    </if>
-    <if test="etaStartDate != null and etaStartDate != ''" >
-      and a.eta &gt;= '${etaStartDate}'
-    </if>
-    <if test="etaEndDate != null and etaEndDate != ''" >
-      and a.eta &lt;= '${etaEndDate}'
-    </if>
-    <if test="etdStartDate != null and etdStartDate != ''" >
-      and a.etd &gt;= '${etdStartDate}'
-    </if>
-    <if test="etdEndDate != null and etdEndDate != ''" >
-      and a.etd &lt;= '${etdEndDate}'
-    </if>
-    <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '') or (cargoNo != null and cargoNo != '')" >
-      and a.contract_id in (
-      select contract_id from cargo_info where 1=1
-      <if test="cargoName != null and cargoName != ''" >
-        and cargo_name = '${cargoName}'
-      </if>
-      <if test="level != null and level != ''" >
-        and level in (${level})
-      </if>
-      <if test="businessMode != null and businessMode != ''" >
-        and business_mode in (${businessMode})
-      </if>
-      <if test="companyNo != null" >
-        and company_no like '%${companyNo}%'
-      </if>
-      <if test="cargoNo != null" >
-        and cargo_no like '%${cargoNo}%'
-      </if>
-      )
-    </if>
+    <include refid="selectByExampleWhere"></include>
     <if test="sortName != null and sortOrder != null" >
       order by a.${sortName} ${sortOrder}
     </if>
@@ -525,118 +414,7 @@
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.ContractParam" >
     select count(1) from contract_base_info a
     where 1 = 1
-    <if test="isFinancing != null and isFinancing != ''" >
-      and a.is_financing = '${isFinancing}'
-    </if>
-    <if test="ownerCompany != null and ownerCompany != ''" >
-      and a.owner_company = '${ownerCompany}'
-    </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and a.storage_condition = '${storageCondition}'
-    </if>
-    <if test="currency != null and currency != ''" >
-      and a.currency = '${currency}'
-    </if>
-    <if test="isYahui != null and isYahui != ''" >
-      and a.is_yahui = '${isYahui}'
-    </if>
-    <if test="prePayBank != null and prePayBank != ''" >
-      and a.pre_pay_bank = '${prePayBank}'
-    </if>
-    <if test="finalPayBank != null and finalPayBank != ''" >
-      and a.final_pay_bank = '${finalPayBank}'
-    </if>
-    <if test="externalContract != null" >
-      and a.external_contract like '%${externalContract}%'
-    </if>
-    <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country in (${originCountry})
-    </if>
-    <if test="insideContract != null" >
-      and a.inside_contract like '%${insideContract}%'
-    </if>
-    <if test="agent != null and agent != ''" >
-      and a.agent in (${agent})
-    </if>
-    <if test="containerNo != null" >
-      and a.container_no like '%${containerNo}%'
-    </if>
-    <if test="ladingbillNo != null" >
-      and a.ladingbill_no like '%${ladingbillNo}%'
-    </if>
-    <if test="tariffNo != null" >
-      and a.tariff_no like '%${tariffNo}%'
-    </if>
-    <if test="externalCompany != null and externalCompany != ''" >
-      and a.external_company in (${externalCompany})
-    </if>
-    <choose>
-      <when test="status != null and status != ''">
-        and a.status in (${status})
-      </when>
-      <otherwise>
-        and a.status != '0'
-      </otherwise>
-    </choose>
-    <if test="destinationPort != null and destinationPort != ''" >
-      and a.destination_port in (${destinationPort})
-    </if>
-    <if test="contractStartDate != null and contractStartDate != ''" >
-      and a.contract_date &gt;= '${contractStartDate}'
-    </if>
-    <if test="contractEndDate != null and contractEndDate != ''" >
-      and a.contract_date &lt;= '${contractEndDate}'
-    </if>
-    <if test="prePaymentStartDate != null and prePaymentStartDate != ''" >
-      and a.pre_payment_date &gt;= '${prePaymentStartDate}'
-    </if>
-    <if test="prePaymentEndDate != null and prePaymentEndDate != ''" >
-      and a.pre_payment_date &lt;= '${prePaymentEndDate}'
-    </if>
-    <if test="finalPaymentStartDate != null and finalPaymentStartDate != ''" >
-      and a.final_payment_date &gt;= '${finalPaymentStartDate}'
-    </if>
-    <if test="finalPaymentEndDate != null and finalPaymentEndDate != ''" >
-      and a.final_payment_date &lt;= '${finalPaymentEndDate}'
-    </if>
-    <if test="taxPayDateStart != null and taxPayDateStart != ''" >
-      and a.tax_pay_date &gt;= '${taxPayDateStart}'
-    </if>
-    <if test="taxPayDateEnd != null and taxPayDateEnd != ''" >
-      and a.tax_pay_date &lt;= '${taxPayDateEnd}'
-    </if>
-    <if test="etaStartDate != null and etaStartDate != ''" >
-      and a.eta &gt;= '${etaStartDate}'
-    </if>
-    <if test="etaEndDate != null and etaEndDate != ''" >
-      and a.eta &lt;= '${etaEndDate}'
-    </if>
-    <if test="etdStartDate != null and etdStartDate != ''" >
-      and a.etd &gt;= '${etdStartDate}'
-    </if>
-    <if test="etdEndDate != null and etdEndDate != ''" >
-      and a.etd &lt;= '${etdEndDate}'
-    </if>
-    <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '') or (cargoNo != null and cargoNo != '')" >
-      and a.contract_id in (
-      select contract_id from cargo_info where 1=1
-      <if test="cargoName != null and cargoName != ''" >
-        and cargo_name = '${cargoName}'
-      </if>
-      <if test="level != null and level != ''" >
-        and level in (${level})
-      </if>
-      <if test="businessMode != null and businessMode != ''" >
-        and business_mode in (${businessMode})
-      </if>
-      <if test="companyNo != null" >
-        and company_no like '%${companyNo}%'
-      </if>
-      <if test="cargoNo != null" >
-        and cargo_no like '%${cargoNo}%'
-      </if>
-      )
-    </if>
+    <include refid="selectByExampleWhere"></include>
   </select>
   <select id="getTotalInfo" resultType="com.jason.trade.entity.ContractTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
     select sum(a.total_contract_money) as totalContractMoney,
@@ -648,89 +426,8 @@
     sum(pre_payment) as totalPrePayment,sum(final_payment) as totalFinalPayment
     from contract_base_info a
     where 1 = 1
-    <if test="isFinancing != null and isFinancing != ''" >
-      and a.is_financing = '${isFinancing}'
-    </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and a.storage_condition = '${storageCondition}'
-    </if>
-    <if test="currency != null and currency != ''" >
-      and a.currency = '${currency}'
-    </if>
-    <if test="ownerCompany != null and ownerCompany != ''" >
-      and a.owner_company = '${ownerCompany}'
-    </if>
-    <if test="isYahui != null and isYahui != ''" >
-      and a.is_yahui = '${isYahui}'
-    </if>
-    <if test="externalContract != null" >
-      and a.external_contract like '%${externalContract}%'
-    </if>
-    <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country in (${originCountry})
-    </if>
-    <if test="insideContract != null" >
-      and a.inside_contract like '%${insideContract}%'
-    </if>
-    <if test="agent != null and agent != ''" >
-      and a.agent in (${agent})
-    </if>
-    <if test="containerNo != null" >
-      and a.container_no like '%${containerNo}%'
-    </if>
-    <if test="ladingbillNo != null" >
-      and a.ladingbill_no like '%${ladingbillNo}%'
-    </if>
-    <if test="tariffNo != null" >
-      and a.tariff_no like '%${tariffNo}%'
-    </if>
-    <if test="externalCompany != null and externalCompany != ''" >
-      and a.external_company in (${externalCompany})
-    </if>
-    <choose>
-      <when test="status != null and status != ''">
-        and a.status in (${status})
-      </when>
-      <otherwise>
-        and a.status != '0'
-      </otherwise>
-    </choose>
-    <if test="destinationPort != null and destinationPort != ''" >
-      and a.destination_port in (${destinationPort})
-    </if>
-    <if test="contractStartDate != null and contractStartDate != ''" >
-      and a.contract_date &gt;= '${contractStartDate}'
-    </if>
-    <if test="contractEndDate != null and contractEndDate != ''" >
-      and a.contract_date &lt;= '${contractEndDate}'
-    </if>
-    <if test="etaStartDate != null and etaStartDate != ''" >
-      and a.eta &gt;= '${etaStartDate}'
-    </if>
-    <if test="etaEndDate != null and etaEndDate != ''" >
-      and a.eta &lt;= '${etaEndDate}'
-    </if>
-    <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '') or (cargoNo != null and cargoNo != '')" >
-      and a.contract_id in (
-      select contract_id from cargo_info where 1=1
-      <if test="cargoName != null and cargoName != ''" >
-        and cargo_name = '${cargoName}'
-      </if>
-      <if test="level != null and level != ''" >
-        and level in (${level})
-      </if>
-      <if test="businessMode != null and businessMode != ''" >
-        and business_mode in (${businessMode})
-      </if>
-      <if test="companyNo != null" >
-        and company_no like '%${companyNo}%'
-      </if>
-      <if test="cargoNo != null" >
-        and cargo_no like '%${cargoNo}%'
-      </if>
-      )
-    </if>
-      group by a.currency
+    <include refid="selectByExampleWhere"></include>
+    group by a.currency
     order by a.id desc
   </select>
   <select id="getTotalNumPerDay" resultType="com.jason.trade.entity.ContractForCharts">
@@ -1307,4 +1004,125 @@
       and b.company_no like '%${companyNo}%'
     </if>
   </select>
+
+  <sql id="selectByExampleWhere">
+    <if test="isFinancing != null and isFinancing != ''" >
+      and a.is_financing = '${isFinancing}'
+    </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and a.owner_company = '${ownerCompany}'
+    </if>
+    <if test="isYahui != null and isYahui != ''" >
+      and a.is_yahui = '${isYahui}'
+    </if>
+    <if test="prePayBank != null and prePayBank != ''" >
+      and a.pre_pay_bank = '${prePayBank}'
+    </if>
+    <if test="finalPayBank != null and finalPayBank != ''" >
+      and a.final_pay_bank = '${finalPayBank}'
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
+    </if>
+    <if test="currency != null and currency != ''" >
+      and a.currency = '${currency}'
+    </if>
+    <if test="externalContract != null" >
+      and a.external_contract like '%${externalContract}%'
+    </if>
+    <if test="originCountry != null and originCountry != ''" >
+      and a.origin_country in (${originCountry})
+    </if>
+    <if test="insideContract != null" >
+      and a.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="agent != null and agent != ''" >
+      and a.agent in (${agent})
+    </if>
+    <if test="containerNo != null" >
+      and a.container_no like '%${containerNo}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and a.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="tariffNo != null" >
+      and a.tariff_no like '%${tariffNo}%'
+    </if>
+    <if test="externalCompany != null and externalCompany != ''" >
+      and a.external_company in (${externalCompany})
+    </if>
+    <choose>
+      <when test="status != null and status != ''">
+        and a.status in (${status})
+      </when>
+      <otherwise>
+        and a.status != '0'
+      </otherwise>
+    </choose>
+    <if test="destinationPort != null and destinationPort != ''" >
+      and a.destination_port in (${destinationPort})
+    </if>
+    <if test="contractStartDate != null and contractStartDate != ''" >
+      and a.contract_date &gt;= '${contractStartDate}'
+    </if>
+    <if test="contractEndDate != null and contractEndDate != ''" >
+      and a.contract_date &lt;= '${contractEndDate}'
+    </if>
+    <if test="prePaymentStartDate != null and prePaymentStartDate != ''" >
+      and a.pre_payment_date &gt;= '${prePaymentStartDate}'
+    </if>
+    <if test="prePaymentEndDate != null and prePaymentEndDate != ''" >
+      and a.pre_payment_date &lt;= '${prePaymentEndDate}'
+    </if>
+    <if test="finalPaymentStartDate != null and finalPaymentStartDate != ''" >
+      and a.final_payment_date &gt;= '${finalPaymentStartDate}'
+    </if>
+    <if test="finalPaymentEndDate != null and finalPaymentEndDate != ''" >
+      and a.final_payment_date &lt;= '${finalPaymentEndDate}'
+    </if>
+    <if test="taxPayDateStart != null and taxPayDateStart != ''" >
+      and a.tax_pay_date &gt;= '${taxPayDateStart}'
+    </if>
+    <if test="taxPayDateEnd != null and taxPayDateEnd != ''" >
+      and a.tax_pay_date &lt;= '${taxPayDateEnd}'
+    </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and a.store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and a.store_date &lt;= '${storeEndDate}'
+    </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and a.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and a.eta &lt;= '${etaEndDate}'
+    </if>
+    <if test="etdStartDate != null and etdStartDate != ''" >
+      and a.etd &gt;= '${etdStartDate}'
+    </if>
+    <if test="etdEndDate != null and etdEndDate != ''" >
+      and a.etd &lt;= '${etdEndDate}'
+    </if>
+    <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '') or (cargoNo != null and cargoNo != '')" >
+      and a.contract_id in (
+      select contract_id from cargo_info where 1=1
+      <if test="cargoName != null and cargoName != ''" >
+        and cargo_name = '${cargoName}'
+      </if>
+      <if test="level != null and level != ''" >
+        and level in (${level})
+      </if>
+      <if test="businessMode != null and businessMode != ''" >
+        and business_mode in (${businessMode})
+      </if>
+      <if test="companyNo != null" >
+        and company_no like '%${companyNo}%'
+      </if>
+      <if test="cargoNo != null" >
+        and cargo_no like '%${cargoNo}%'
+      </if>
+      )
+    </if>
+  </sql>
 </mapper>

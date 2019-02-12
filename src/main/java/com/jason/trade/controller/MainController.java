@@ -290,6 +290,8 @@ public class MainController {
                @RequestParam(value="status") String status,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="level") String level,
                @RequestParam(value="containerNo") String containerNo,@RequestParam(value="companyNo") String companyNo,@RequestParam(value="chk") String[] chk,
                @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
+                                           @RequestParam(value="storeStartDate") String storeStartDate,@RequestParam(value="storeEndDate") String storeEndDate,
+                                           @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd,
                                            @RequestParam(value="storageCondition") String storageCondition){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
@@ -300,6 +302,10 @@ public class MainController {
         contractParam.setLadingbillNo(ladingbillNo);
         contractParam.setDestinationPort(destinationPort);
         contractParam.setBusinessMode(businessMode);
+        contractParam.setTaxPayDateStart(taxPayDateStart);
+        contractParam.setTaxPayDateEnd(taxPayDateEnd);
+        contractParam.setStoreStartDate(storeStartDate);
+        contractParam.setStoreEndDate(storeEndDate);
         contractParam.setExternalCompany(externalCompany);
         contractParam.setStatus(status);
         contractParam.setStorageCondition(storageCondition);
