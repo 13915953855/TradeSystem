@@ -222,8 +222,7 @@ var TableInit = function () {
                 title: '发票重量(小计)'
             }, {
                 field: 'unitPrice',
-                title: '单价',
-                visible: false
+                title: '单价'
             }, {
                 field: 'contractAmount',
                 title: '合同重量(小计)',
@@ -238,7 +237,8 @@ var TableInit = function () {
                 visible: false
             }, {
                 field: 'costPrice',
-                title: '成本单价(CNY/KG)'
+                title: '成本单价(CNY/KG)',
+                visible: false
             }, {
                 field: 'realStoreMoney',
                 title: '库存金额'
