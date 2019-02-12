@@ -282,8 +282,8 @@ public class ExcelService {
             list.add(contractBaseInfo.getTotalInvoiceMoney());// "发票总金额",
             list.add(contractBaseInfo.getOriginCountry());// "原产地",
             list.add(contractBaseInfo.getCurrency());// "币种",
-            list.add(contractBaseInfo.getEta());// "ETA",
             list.add(contractBaseInfo.getEtd());// "ETD",
+            list.add(contractBaseInfo.getEta());// "ETA",
             list.add(contractBaseInfo.getExpectSailingDate());// "预计船期",
             String status = contractBaseInfo.getStatus();
             switch (status){

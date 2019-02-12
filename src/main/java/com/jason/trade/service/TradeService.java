@@ -562,9 +562,7 @@ public class TradeService {
             Float totalCNYInvoiceMoney = 0F;
             Float totalUSDInvoiceMoney = 0F;
             Float totalAUDInvoiceMoney = 0F;
-            Float totalCNYRealStoreMoney = 0F;
-            Float totalUSDRealStoreMoney = 0F;
-            Float totalAUDRealStoreMoney = 0F;
+            Float realStoreMoney = 0F;
             Float totalInvoiceWeight = 0F;
             int totalInvoiceBoxes = 0;
             int totalContract = 0;
@@ -580,18 +578,16 @@ public class TradeService {
                 realStoreWeight += totalInfo.getRealStoreWeight();
                 expectStoreBoxes += totalInfo.getExpectStoreBoxes();
                 realStoreBoxes += totalInfo.getRealStoreBoxes();
+                realStoreMoney += totalInfo.getRealStoreMoney();
                 switch(totalInfo.getCurrency()){
                     case "CNY":
                         totalCNYInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalCNYRealStoreMoney = totalInfo.getRealStoreMoney();
                         break;
                     case "USD":
                         totalUSDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalUSDRealStoreMoney = totalInfo.getRealStoreMoney();
                         break;
                     case "AUD":
                         totalAUDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalAUDRealStoreMoney = totalInfo.getRealStoreMoney();
                         break;
                     default:break;
                 }
@@ -606,9 +602,7 @@ public class TradeService {
             result.put("totalCNYInvoiceMoney", totalCNYInvoiceMoney);
             result.put("totalUSDInvoiceMoney", totalUSDInvoiceMoney);
             result.put("totalAUDInvoiceMoney", totalAUDInvoiceMoney);
-            result.put("totalCNYRealStoreMoney", totalCNYRealStoreMoney);
-            result.put("totalUSDRealStoreMoney", totalUSDRealStoreMoney);
-            result.put("totalAUDRealStoreMoney", totalAUDRealStoreMoney);
+            result.put("realStoreMoney", realStoreMoney);
 
         }else{
             result.put("totalContract", "0");
@@ -621,9 +615,7 @@ public class TradeService {
             result.put("totalCNYInvoiceMoney", "0");
             result.put("totalUSDInvoiceMoney", "0");
             result.put("totalAUDInvoiceMoney", "0");
-            result.put("totalCNYRealStoreMoney", "0");
-            result.put("totalUSDRealStoreMoney", "0");
-            result.put("totalAUDRealStoreMoney", "0");
+            result.put("realStoreMoney", "0");
         }
         result.put("status","1");
         return result;

@@ -423,10 +423,7 @@ function getTotalInfo(){
         data:queryParams,
         success:function(res){
             if(res.status == "1"){
-                $("#totalCNYRealStoreMoney").html(toFloat(res.totalCNYRealStoreMoney));
-                $("#totalUSDRealStoreMoney").html(toFloat(res.totalUSDRealStoreMoney));
-                $("#totalAUDRealStoreMoney").html(toFloat(res.totalAUDRealStoreMoney));
-
+                $("#realStoreMoney").html(toFloat4(res.realStoreMoney));
                 $("#totalInvoiceWeight").html(toFloat(res.totalInvoiceWeight));
                 $("#totalInvoiceBoxes").html(toFloat(res.totalInvoiceBoxes));
                 $("#expectStoreWeight").html(toFloat(res.expectStoreWeight));
