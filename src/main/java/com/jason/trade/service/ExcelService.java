@@ -10,6 +10,7 @@ import com.jason.trade.model.SaleInfo;
 import com.jason.trade.repository.CargoRepository;
 import com.jason.trade.repository.ContractRepository;
 import com.jason.trade.repository.SaleRepository;
+import com.jason.trade.util.CommonUtil;
 import com.jason.trade.util.DateUtil;
 import com.jason.trade.util.SetStyleUtils;
 import org.apache.commons.lang.StringUtils;
@@ -319,6 +320,7 @@ public class ExcelService {
             list.add(cargoInfo.getEtd());//ETD
             list.add(cargoInfo.getEta());//ETA
             list.add(cargoInfo.getExpectSailingDate());//预计船期
+            list.add(CommonUtil.revertStatusToCHN(cargoInfo.getStatus()));//状态
             result.add(list);
         }
         return result;

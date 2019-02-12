@@ -216,15 +216,17 @@ function getTotalInfo(){
      };
 
     $.ajax({
-        url:"/trade/query/getTotalStoreIn",
+        url:"/trade/query/getTotalStoreInfo",
         type:"POST",
         dataType:"json",
         data:queryParams,
         success:function(res){
-            $("#totalInvoiceAmount").html("0");
-            $("#totalBoxes").html("0");
             if(res.status == "1"){
-                $("#totalInvoiceAmount").html(res.totalInvoiceWeight);
+                $("#totalCNYInvoiceMoney").html(toFloat(res.totalCNYInvoiceMoney));
+                $("#totalUSDInvoiceMoney").html(toFloat(res.totalUSDInvoiceMoney));
+                $("#totalAUDInvoiceMoney").html(toFloat(res.totalAUDInvoiceMoney));
+                $("#totalInvoiceWeight").html(toFloat4(res.totalInvoiceWeight));
+                $("#total").html(res.totalContract);
                 $("#totalBoxes").html(res.totalInvoiceBoxes);
             }
         }

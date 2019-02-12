@@ -9,6 +9,25 @@ public class CargoTotalInfo {
     private Float expectStoreBoxes;
     private Float realStoreBoxes;
     private Float realStoreMoney;
+    private int totalContract;
+    private String currency;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public int getTotalContract() {
+        return totalContract;
+    }
+
+    public void setTotalContract(int totalContract) {
+        this.totalContract = totalContract;
+    }
+
     public Float getTotalInvoiceMoney() {
         return totalInvoiceMoney;
     }

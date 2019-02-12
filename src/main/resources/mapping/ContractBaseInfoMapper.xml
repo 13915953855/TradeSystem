@@ -783,8 +783,10 @@
     select sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceWeight,
     sum(b.expect_store_weight) as expectStoreWeight,sum(b.expect_store_boxes) as expectStoreBoxes,
     sum(b.real_store_weight) as realStoreWeight,sum(b.real_store_boxes) as realStoreBoxes,
-    sum(b.real_store_money) as realStoreMoney,sum(b.boxes) as totalInvoiceBoxes
-    from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
+    sum(b.real_store_money) as realStoreMoney,sum(b.boxes) as totalInvoiceBoxes,
+    a.currency,
+    count(DISTINCT a.contract_id) as totalContract
+    from contract_base_info a  inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <if test="externalContract != null" >
       and a.external_contract like '%${externalContract}%'
@@ -864,6 +866,7 @@
     <if test="companyNo != null" >
       and b.company_no like '%${companyNo}%'
     </if>
+    group by a.currency
   </select>
 
 

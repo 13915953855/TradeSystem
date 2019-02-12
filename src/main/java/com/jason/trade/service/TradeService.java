@@ -557,25 +557,73 @@ public class TradeService {
     public JSONObject getTotalStoreInfoForQuery(ContractParam contractParam){
         revertStatus(contractParam);
         JSONObject result = new JSONObject();
-        CargoTotalInfo record = contractBaseInfoMapper.getTotalStoreInfoForQuery(contractParam);
+        List<CargoTotalInfo> record = contractBaseInfoMapper.getTotalStoreInfoForQuery(contractParam);
         if(record != null) {
-            result.put("totalInvoiceMoney", record.getTotalInvoiceMoney());
-            result.put("totalInvoiceWeight", record.getTotalInvoiceWeight());
-            result.put("totalInvoiceBoxes", record.getTotalInvoiceBoxes());
-            result.put("expectStoreWeight", record.getExpectStoreWeight());
-            result.put("realStoreWeight", record.getRealStoreWeight());
-            result.put("expectStoreBoxes", record.getExpectStoreBoxes());
-            result.put("realStoreBoxes", record.getRealStoreBoxes());
-            result.put("realStoreMoney", record.getRealStoreMoney());
+            Float totalCNYInvoiceMoney = 0F;
+            Float totalUSDInvoiceMoney = 0F;
+            Float totalAUDInvoiceMoney = 0F;
+            Float totalCNYRealStoreMoney = 0F;
+            Float totalUSDRealStoreMoney = 0F;
+            Float totalAUDRealStoreMoney = 0F;
+            Float totalInvoiceWeight = 0F;
+            int totalInvoiceBoxes = 0;
+            int totalContract = 0;
+            Float expectStoreWeight = 0F;
+            Float realStoreWeight = 0F;
+            int expectStoreBoxes = 0;
+            int realStoreBoxes = 0;
+            for (CargoTotalInfo totalInfo : record) {
+                totalContract += totalInfo.getTotalContract();
+                totalInvoiceBoxes += totalInfo.getTotalInvoiceBoxes();
+                totalInvoiceWeight += totalInfo.getTotalInvoiceWeight();
+                expectStoreWeight += totalInfo.getExpectStoreWeight();
+                realStoreWeight += totalInfo.getRealStoreWeight();
+                expectStoreBoxes += totalInfo.getExpectStoreBoxes();
+                realStoreBoxes += totalInfo.getRealStoreBoxes();
+                switch(totalInfo.getCurrency()){
+                    case "CNY":
+                        totalCNYInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalCNYRealStoreMoney = totalInfo.getRealStoreMoney();
+                        break;
+                    case "USD":
+                        totalUSDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalUSDRealStoreMoney = totalInfo.getRealStoreMoney();
+                        break;
+                    case "AUD":
+                        totalAUDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
+                        totalAUDRealStoreMoney = totalInfo.getRealStoreMoney();
+                        break;
+                    default:break;
+                }
+            }
+            result.put("totalContract", totalContract);
+            result.put("totalInvoiceWeight", totalInvoiceWeight);
+            result.put("totalInvoiceBoxes", totalInvoiceBoxes);
+            result.put("expectStoreWeight", expectStoreWeight);
+            result.put("realStoreWeight", realStoreWeight);
+            result.put("expectStoreBoxes", expectStoreBoxes);
+            result.put("realStoreBoxes", realStoreBoxes);
+            result.put("totalCNYInvoiceMoney", totalCNYInvoiceMoney);
+            result.put("totalUSDInvoiceMoney", totalUSDInvoiceMoney);
+            result.put("totalAUDInvoiceMoney", totalAUDInvoiceMoney);
+            result.put("totalCNYRealStoreMoney", totalCNYRealStoreMoney);
+            result.put("totalUSDRealStoreMoney", totalUSDRealStoreMoney);
+            result.put("totalAUDRealStoreMoney", totalAUDRealStoreMoney);
+
         }else{
-            result.put("totalInvoiceMoney", "0");
+            result.put("totalContract", "0");
             result.put("totalInvoiceWeight", "0");
             result.put("totalInvoiceBoxes", "0");
             result.put("expectStoreWeight", "0");
             result.put("realStoreWeight", "0");
             result.put("expectStoreBoxes", "0");
             result.put("realStoreBoxes", "0");
-            result.put("realStoreMoney", "0");
+            result.put("totalCNYInvoiceMoney", "0");
+            result.put("totalUSDInvoiceMoney", "0");
+            result.put("totalAUDInvoiceMoney", "0");
+            result.put("totalCNYRealStoreMoney", "0");
+            result.put("totalUSDRealStoreMoney", "0");
+            result.put("totalAUDRealStoreMoney", "0");
         }
         result.put("status","1");
         return result;

@@ -221,11 +221,21 @@
                         <form class="form-horizontal">
                             <div class="panel-body">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-2">发票总重量:</label>
-                                    <div class="col-sm-2" style="padding-top:6px;">
-                                        <span id="totalInvoiceAmount"></span>
+                                    <label class="control-label col-sm-1">发票总金额(CNY):<br/>(USD):<br/>(AUD):</label>
+                                    <div class="col-sm-1" style="padding-top:6px;">
+                                        <span id="totalCNYInvoiceMoney"></span><br/>
+                                        <span id="totalUSDInvoiceMoney"></span><br/>
+                                        <span id="totalAUDInvoiceMoney"></span>
                                     </div>
-                                    <label class="control-label col-sm-2">发票总箱数:</label>
+                                    <label class="control-label col-sm-1">发票总重量:</label>
+                                    <div class="col-sm-2" style="padding-top:6px;">
+                                        <span id="totalInvoiceWeight"></span>
+                                    </div>
+                                    <label class="control-label col-sm-1">总柜数:</label>
+                                    <div class="col-sm-2" style="padding-top:6px;">
+                                        <span id="total"></span>
+                                    </div>
+                                    <label class="control-label col-sm-1">总箱数:</label>
                                     <div class="col-sm-2" style="padding-top:6px;">
                                         <span id="totalBoxes"></span>
                                     </div>

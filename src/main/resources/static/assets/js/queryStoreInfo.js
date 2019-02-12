@@ -423,14 +423,16 @@ function getTotalInfo(){
         data:queryParams,
         success:function(res){
             if(res.status == "1"){
-                $("#totalInvoiceMoney").html(toFloat(res.totalInvoiceMoney));
+                $("#totalCNYRealStoreMoney").html(toFloat(res.totalCNYRealStoreMoney));
+                $("#totalUSDRealStoreMoney").html(toFloat(res.totalUSDRealStoreMoney));
+                $("#totalAUDRealStoreMoney").html(toFloat(res.totalAUDRealStoreMoney));
+
                 $("#totalInvoiceWeight").html(toFloat(res.totalInvoiceWeight));
                 $("#totalInvoiceBoxes").html(toFloat(res.totalInvoiceBoxes));
                 $("#expectStoreWeight").html(toFloat(res.expectStoreWeight));
                 $("#realStoreWeight").html(toFloat(res.realStoreWeight));
                 $("#expectStoreBoxes").html(toFloat4(res.expectStoreBoxes));
                 $("#realStoreBoxes").html(toFloat4(res.realStoreBoxes));
-                $("#realStoreMoney").html(toFloat4(res.realStoreMoney));
             }
         }
     });
