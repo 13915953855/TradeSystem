@@ -57,6 +57,17 @@
 
             var supplier = /*[[${contract.supplier}]]*/;
             $("#supplier").val(supplier).trigger("change");
+
+            var warehouse = /*[[${contract.warehouse}]]*/;
+            checkSelectOptionExist("warehouse",warehouse);
+            $("#warehouse").val(warehouse).trigger("change");
+
+            var action = /*[[${action}]]*/;
+            if(action == "view"){
+                $("button").attr("disabled","disabled");
+                $("#cancel").removeAttr("disabled");
+                $("#cancel").html("关闭");
+            }
             /*]]>*/
         }
     </script>
@@ -116,6 +127,7 @@
                                     <form class="form-horizontal">
                                         <input type="hidden" id="version" th:value="${contract.version}"/>
                                         <input type="hidden" id="id" th:value="${contract.id}"/>
+                                        <input type="hidden" id="action" th:value="${action}"/>
                                         <input type="hidden" id="contractId" th:value="${contract.contractId}"/>
                                         <div class="form-group" style="">
                                             <div class="form-group" style="">
@@ -216,7 +228,9 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">仓库</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="warehouse" th:value="${contract.warehouse}"/>
+                                                <select class="form-control" id="warehouse">
+                                                    <option></option>
+                                                </select>
                                             </div>
                                             <label class="control-label col-sm-3">入库时间</label>
                                             <div class="col-sm-3">

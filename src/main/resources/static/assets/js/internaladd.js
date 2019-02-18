@@ -9,6 +9,7 @@ $(function () {
 
     initCargoList();
     initLevel();
+    initWarehouse();
 
     $("#level").select2({
         tags: true
