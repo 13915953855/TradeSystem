@@ -28,7 +28,7 @@ $("select").select2({
     initExternalCompany();
     initCargoList();
     initOriginCountry();
-
+    initDestinationPort();
     getTotalInfo();
 });
 
@@ -133,6 +133,10 @@ var TableInit = function () {
                 field: 'expectSailingDate',
                 title: '预计船期'
             }, {
+                field: 'destinationPort',
+                title: '目的港',
+                visible: false
+            }, {
                 field: 'status',
                 title: '商品状态',
                 formatter: function(value, row, index){
@@ -169,6 +173,20 @@ var TableInit = function () {
         }
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
+        }
+        var destinationPortArr = $("#destinationPort").val();
+        var destinationPort = "";
+        if(destinationPortArr != null){
+            for(var i=0;i<destinationPortArr.length;i++){
+                if(destinationPortArr[i] != '全部'){
+                    destinationPort += "'"+destinationPortArr[i] + "',";
+                }else{
+                    destinationPort = "";break;
+                }
+            }
+        }
+        if(destinationPort.length > 1){
+            destinationPort = destinationPort.substring(0,destinationPort.length-1);
         }
         var levelArr = $("#level").val();
         var level = "";
@@ -248,6 +266,7 @@ var TableInit = function () {
             companyNo: $("#companyNo").val(),
             businessMode: businessMode,
             externalCompany: externalCompany,
+            destinationPort: destinationPort,
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             originCountry: originCountry
         };
@@ -299,6 +318,20 @@ var ButtonInit = function () {
             if(level.length > 1){
                 level = level.substring(0,level.length-1);
             }
+            var destinationPortArr = $("#destinationPort").val();
+            var destinationPort = "";
+            if(destinationPortArr != null){
+                for(var i=0;i<destinationPortArr.length;i++){
+                    if(destinationPortArr[i] != '全部'){
+                        destinationPort += "'"+destinationPortArr[i] + "',";
+                    }else{
+                        destinationPort = "";break;
+                    }
+                }
+            }
+            if(destinationPort.length > 1){
+                destinationPort = destinationPort.substring(0,destinationPort.length-1);
+            }
             var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
             var businessModeArr = $("#businessMode").val();
             var businessMode = "";
@@ -346,6 +379,7 @@ var ButtonInit = function () {
             params += "&businessMode="+businessMode;
             params += "&companyNo="+$("#companyNo").val();
             params += "&level="+level;
+            params += "&destinationPort="+destinationPort;
             params += "&externalContract="+ $("#externalContract").val();
             var storageCondition = $("#storageCondition").val() == "全部"?"":$("#storageCondition").val();
             params += "&storageCondition="+ storageCondition;
@@ -378,6 +412,7 @@ function resetQuery(){
     $("#contractEndDate").val("");
     $("#companyNo").val("");
     $("#businessMode").val("全部").trigger("change");
+    $("#destinationPort").val("全部").trigger("change");
     $("#externalCompany").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
@@ -409,6 +444,20 @@ function getTotalInfo(){
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
+    var destinationPortArr = $("#destinationPort").val();
+    var destinationPort = "";
+    if(destinationPortArr != null){
+        for(var i=0;i<destinationPortArr.length;i++){
+            if(destinationPortArr[i] != '全部'){
+                destinationPort += "'"+destinationPortArr[i] + "',";
+            }else{
+                destinationPort = "";break;
+            }
+        }
+    }
+    if(destinationPort.length > 1){
+        destinationPort = destinationPort.substring(0,destinationPort.length-1);
+    }
         var levelArr = $("#level").val();
         var level = "";
         if(levelArr != null){
@@ -480,6 +529,7 @@ function getTotalInfo(){
         etdStartDate: $("#etdStartDate").val(),
         etdEndDate: $("#etdEndDate").val(),
         cargoName: cargoName,
+        destinationPort: destinationPort,
         level: level,
         status: status,
         companyNo: $("#companyNo").val(),

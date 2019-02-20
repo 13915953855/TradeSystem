@@ -285,6 +285,7 @@ public class ExcelService {
             list.add(contractBaseInfo.getEtd());// "ETD",
             list.add(contractBaseInfo.getEta());// "ETA",
             list.add(contractBaseInfo.getExpectSailingDate());// "预计船期",
+            list.add(contractBaseInfo.getDestinationPort());// "目的港",
             String status = contractBaseInfo.getStatus();
             switch (status){
                 case "1":status = "已下单";break;
@@ -320,6 +321,7 @@ public class ExcelService {
             list.add(cargoInfo.getEtd());//ETD
             list.add(cargoInfo.getEta());//ETA
             list.add(cargoInfo.getExpectSailingDate());//预计船期
+            list.add(cargoInfo.getDestinationPort());//目的港
             list.add(CommonUtil.revertStatusToCHN(cargoInfo.getStatus()));//状态
             result.add(list);
         }

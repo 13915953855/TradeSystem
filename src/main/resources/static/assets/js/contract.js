@@ -181,6 +181,8 @@ function getTotalInfo(){
         taxPayDateEnd: $("#taxPayDateEnd").val(),
         etaStartDate: $("#etaStartDate").val(),
         etaEndDate: $("#etaEndDate").val(),
+        etdStartDate: $("#etdStartDate").val(),
+        etdEndDate: $("#etdEndDate").val(),
         cargoName: cargoName,
         cargoNo: $("#cargoNo").val(),
         tariffNo: $("#tariffNo").val(),
@@ -415,6 +417,8 @@ var TableInit = function () {
             taxPayDateEnd: $("#taxPayDateEnd").val(),
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
+            etdStartDate: $("#etdStartDate").val(),
+            etdEndDate: $("#etdEndDate").val(),
             cargoName: cargoName,
             cargoNo: $("#cargoNo").val(),
             tariffNo: $("#tariffNo").val(),
@@ -642,6 +646,8 @@ var ButtonInit = function () {
             var taxPayDateEnd = $("#taxPayDateEnd").val();
             var etaStartDate= $("#etaStartDate").val();
             var etaEndDate= $("#etaEndDate").val();
+            var etdStartDate= $("#etdStartDate").val();
+            var etdEndDate= $("#etdEndDate").val();
             var containerNo=$("#containerNo").val();
             var cargoNo=$("#cargoNo").val();
             var companyNo= $("#companyNo").val();
@@ -668,6 +674,8 @@ var ButtonInit = function () {
             params += "&taxPayDateEnd="+taxPayDateEnd;
             params += "&etaStartDate="+etaStartDate;
             params += "&etaEndDate="+etaEndDate;
+            params += "&etdStartDate="+etdStartDate;
+            params += "&etdEndDate="+etdEndDate;
             params += "&cargoName="+cargoName;
             params += "&level="+level;
             params += "&agent="+agent;
@@ -712,5 +720,7 @@ function resetQuery(){
     $("#ownerCompany").val("全部").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
+    $("#etdStartDate").val("");
+    $("#etdEndDate").val("");
     $("#cargoNo").val("");
 }

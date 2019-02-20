@@ -25,6 +25,7 @@ $("select").select2({
     });
     initExternalCompany();
     initOriginCountry();
+    initDestinationPort();
     getTotalInfo();
 });
 
@@ -111,6 +112,10 @@ var TableInit = function () {
             }, {
                 field: 'expectSailingDate',
                 title: '预计船期'
+            }, {
+                field: 'destinationPort',
+                title: '目的港',
+                visible: false
             },{
               field: 'status',
               title: '状态',
@@ -148,6 +153,21 @@ var TableInit = function () {
         }
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
+        }
+
+        var destinationPortArr = $("#destinationPort").val();
+        var destinationPort = "";
+        if(destinationPortArr != null){
+            for(var i=0;i<destinationPortArr.length;i++){
+                if(destinationPortArr[i] != '全部'){
+                    destinationPort += "'"+destinationPortArr[i] + "',";
+                }else{
+                    destinationPort = "";break;
+                }
+            }
+        }
+        if(destinationPort.length > 1){
+            destinationPort = destinationPort.substring(0,destinationPort.length-1);
         }
 
         var statusArr = $("#status").val();
@@ -195,7 +215,8 @@ var TableInit = function () {
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             currency: $("#currency").val() == "全部"?"":$("#currency").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
-            externalCompany: externalCompany
+            externalCompany: externalCompany,
+            destinationPort: destinationPort
         };
         return temp;
     };
@@ -260,9 +281,24 @@ var ButtonInit = function () {
                 if(status.length > 1){
                     status = status.substring(0,status.length-1);
                 }
+            var destinationPortArr = $("#destinationPort").val();
+            var destinationPort = "";
+            if(destinationPortArr != null){
+                for(var i=0;i<destinationPortArr.length;i++){
+                    if(destinationPortArr[i] != '全部'){
+                        destinationPort += "'"+destinationPortArr[i] + "',";
+                    }else{
+                        destinationPort = "";break;
+                    }
+                }
+            }
+            if(destinationPort.length > 1){
+                destinationPort = destinationPort.substring(0,destinationPort.length-1);
+            }
 
             var params = "?externalCompany="+externalCompany;
             params += "&status="+status;
+            params += "&destinationPort="+destinationPort;
             params += "&etaEndDate="+$("#etaStartDate").val();
             params += "&etaStartDate="+$("#etaEndDate").val();
             params += "&endDate="+$("#endDate").val();
@@ -290,6 +326,7 @@ function resetQuery(){
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
     $("#externalCompany").val("全部").trigger("change");
+    $("#destinationPort").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
     $("#storageCondition").val("全部").trigger("change");
@@ -318,6 +355,20 @@ function getTotalInfo(){
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
+    var destinationPortArr = $("#destinationPort").val();
+    var destinationPort = "";
+    if(destinationPortArr != null){
+        for(var i=0;i<destinationPortArr.length;i++){
+            if(destinationPortArr[i] != '全部'){
+                destinationPort += "'"+destinationPortArr[i] + "',";
+            }else{
+                destinationPort = "";break;
+            }
+        }
+    }
+    if(destinationPort.length > 1){
+        destinationPort = destinationPort.substring(0,destinationPort.length-1);
+    }
         var originCountryArr = $("#originCountry").val();
                 var originCountry = "";
                 if(originCountryArr != null){
@@ -356,6 +407,7 @@ function getTotalInfo(){
         etaStartDate: $("#etaStartDate").val(),
         etaEndDate: $("#etaEndDate").val(),
         etdStartDate: $("#etdStartDate").val(),
+        destinationPort: destinationPort,
         etdEndDate: $("#etdEndDate").val(),
         originCountry:originCountry,
         storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),

@@ -17,6 +17,7 @@ public class QueryContractInfo {
     private String businessMode;
     private String boxes;
     private String unitPrice;
+    private String destinationPort;
     private String contractAmount;
     private String contractMoney;
     private String invoiceAmount;
@@ -33,6 +34,14 @@ public class QueryContractInfo {
     private String realStoreBoxes;
     private String realStoreMoney;
     private String storageCondition;
+
+    public String getDestinationPort() {
+        return destinationPort;
+    }
+
+    public void setDestinationPort(String destinationPort) {
+        this.destinationPort = destinationPort;
+    }
 
     public String getCurrency() {
         return currency;

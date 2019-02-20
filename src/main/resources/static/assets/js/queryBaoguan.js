@@ -128,7 +128,7 @@ var TableInit = function () {
         if(agentArr != null){
             for(var i=0;i<agentArr.length;i++){
                 if(agentArr[i] != '全部'){
-                    agent += agentArr[i] + ",";
+                    agent += "'"+agentArr[i] + "',";
                 }else{
                     agent = "";break;
                 }
@@ -138,12 +138,12 @@ var TableInit = function () {
             agent = agent.substring(0,agent.length-1);
         }
 
-        var desArr = $("#destinationPort").val();
+        var destinationPortArr = $("#destinationPort").val();
         var destinationPort = "";
-        if(desArr != null){
-            for(var i=0;i<desArr.length;i++){
-                if(desArr[i] != '全部'){
-                    destinationPort += desArr[i] + ",";
+        if(destinationPortArr != null){
+            for(var i=0;i<destinationPortArr.length;i++){
+                if(destinationPortArr[i] != '全部'){
+                    destinationPort += "'"+destinationPortArr[i] + "',";
                 }else{
                     destinationPort = "";break;
                 }
@@ -219,7 +219,7 @@ function getTotalInfo(){
         if(agentArr != null){
             for(var i=0;i<agentArr.length;i++){
                 if(agentArr[i] != '全部'){
-                    agent += agentArr[i] + ",";
+                    agent += "'"+agentArr[i] + "',";
                 }else{
                     agent = "";break;
                 }
@@ -228,20 +228,20 @@ function getTotalInfo(){
         if(agent.length > 1){
             agent = agent.substring(0,agent.length-1);
         }
-        var desArr = $("#destinationPort").val();
-        var destinationPort = "";
-        if(desArr != null){
-            for(var i=0;i<desArr.length;i++){
-                if(desArr[i] != '全部'){
-                    destinationPort += desArr[i] + ",";
-                }else{
-                    destinationPort = "";break;
-                }
+    var destinationPortArr = $("#destinationPort").val();
+    var destinationPort = "";
+    if(destinationPortArr != null){
+        for(var i=0;i<destinationPortArr.length;i++){
+            if(destinationPortArr[i] != '全部'){
+                destinationPort += "'"+destinationPortArr[i] + "',";
+            }else{
+                destinationPort = "";break;
             }
         }
-        if(destinationPort.length > 1){
-            destinationPort = destinationPort.substring(0,destinationPort.length-1);
-        }
+    }
+    if(destinationPort.length > 1){
+        destinationPort = destinationPort.substring(0,destinationPort.length-1);
+    }
         var statusArr = $("#status").val();
         var status = "";
         if(statusArr != null){

@@ -93,6 +93,7 @@
     <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="destination_port" property="destinationPort" jdbcType="VARCHAR" />
     <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
     <result column="unit_price" property="unitPrice" jdbcType="VARCHAR" />
     <result column="contract_amount" property="contractAmount" jdbcType="VARCHAR" />
@@ -443,7 +444,7 @@
 
 
   <select id="queryCargoListByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
-    select a.id,a.eta,a.etd,a.expect_sailing_date,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
+    select a.id,a.eta,a.etd,a.expect_sailing_date,a.destination_port,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
     b.cargo_name,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
@@ -455,6 +456,9 @@
     </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
+    </if>
+    <if test="destinationPort != null and destinationPort != ''" >
+      and a.destination_port in (${destinationPort})
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
@@ -580,6 +584,9 @@
     </if>
     <if test="originCountry != null and originCountry != ''" >
       and a.origin_country in (${originCountry})
+    </if>
+    <if test="destinationPort != null and destinationPort != ''" >
+      and a.destination_port in (${destinationPort})
     </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
@@ -873,7 +880,7 @@
 
 
   <select id="queryCargoList" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
-    select a.id,a.eta,a.currency,a.etd,a.storage_condition,a.expect_sailing_date,b.company_no,a.container_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
+    select a.id,a.eta,a.currency,a.etd,a.storage_condition,a.expect_sailing_date,a.destination_port,b.company_no,a.container_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
     b.cargo_name,b.level,b.status,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
@@ -885,6 +892,9 @@
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
+    </if>
+    <if test="destinationPort != null and destinationPort != ''" >
+      and a.destination_port in (${destinationPort})
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
@@ -954,6 +964,9 @@
     </if>
     <if test="insideContract != null" >
       and a.inside_contract like '%${insideContract}%'
+    </if>
+    <if test="destinationPort != null and destinationPort != ''" >
+      and a.destination_port in (${destinationPort})
     </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
