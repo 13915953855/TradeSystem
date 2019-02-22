@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -293,7 +294,7 @@ public class MainController {
                @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
                                            @RequestParam(value="storeStartDate") String storeStartDate,@RequestParam(value="storeEndDate") String storeEndDate,
                                            @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd,
-                                           @RequestParam(value="storageCondition") String storageCondition){
+                                           @RequestParam(value="storageCondition") String storageCondition) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setExternalContract(externalContract);
@@ -301,22 +302,21 @@ public class MainController {
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
         contractParam.setLadingbillNo(ladingbillNo);
-        contractParam.setDestinationPort(destinationPort);
-        contractParam.setBusinessMode(businessMode);
+        contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
+        contractParam.setBusinessMode(URLDecoder.decode(businessMode, "UTF-8"));
         contractParam.setTaxPayDateStart(taxPayDateStart);
         contractParam.setTaxPayDateEnd(taxPayDateEnd);
         contractParam.setStoreStartDate(storeStartDate);
         contractParam.setStoreEndDate(storeEndDate);
-        contractParam.setExternalCompany(externalCompany);
-        contractParam.setStatus(status);
-        contractParam.setStorageCondition(storageCondition);
+        contractParam.setExternalCompany(URLDecoder.decode(externalCompany, "UTF-8"));
+        contractParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
+        contractParam.setStorageCondition(URLDecoder.decode(storageCondition, "UTF-8"));
         contractParam.setContainerNo(containerNo);
-        contractParam.setCompanyNo(companyNo);
-        contractParam.setCargoName(cargoName);
-        contractParam.setLevel(level);
-        contractParam.setAgent(agent);
-        contractParam.setOwnerCompany(ownerCompany);
-        contractParam.setLadingbillNo(ladingbillNo);
+        contractParam.setCompanyNo(URLDecoder.decode(companyNo, "UTF-8"));
+        contractParam.setCargoName(URLDecoder.decode(cargoName, "UTF-8"));
+        contractParam.setLevel(URLDecoder.decode(level, "UTF-8"));
+        contractParam.setAgent(URLDecoder.decode(agent, "UTF-8"));
+        contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
         contractParam.setEtaStartDate(etaStartDate);
         contractParam.setEtaEndDate(etaEndDate);
         contractParam.setEtdStartDate(etdStartDate);
@@ -480,21 +480,21 @@ public class MainController {
                                            @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
                                            @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="status") String status,
                                            @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
-                                           @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
+                                           @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
-        contractParam.setOriginCountry(originCountry);
-        contractParam.setOwnerCompany(ownerCompany);
-        contractParam.setDestinationPort(destinationPort);
+        contractParam.setOriginCountry(URLDecoder.decode(originCountry, "UTF-8"));
+        contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
+        contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
         contractParam.setCurrency(currency);
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
-        contractParam.setBusinessMode(businessMode);
-        contractParam.setExternalCompany(externalCompany);
+        contractParam.setBusinessMode(URLDecoder.decode(businessMode, "UTF-8"));
+        contractParam.setExternalCompany(URLDecoder.decode(externalCompany, "UTF-8"));
         contractParam.setCompanyNo(companyNo);
-        contractParam.setCargoName(cargoName);
-        contractParam.setLevel(level);
-        contractParam.setStatus(CommonUtil.revertStatus(status));
+        contractParam.setCargoName(URLDecoder.decode(cargoName, "UTF-8"));
+        contractParam.setLevel(URLDecoder.decode(level, "UTF-8"));
+        contractParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
         contractParam.setEtaStartDate(etaStartDate);
         contractParam.setEtaEndDate(etaEndDate);
         contractParam.setEtdStartDate(etdStartDate);
@@ -564,26 +564,26 @@ public class MainController {
                                                      @RequestParam(value="status") String status,@RequestParam(value="originCountry") String originCountry,
                                                          @RequestParam(value="warehouse") String warehouse,@RequestParam(value="containerNo") String containerNo,
                                                          @RequestParam(value="minBox") Double minBox,@RequestParam(value="maxBox") Double maxBox,
-                                                         @RequestParam(value="minWeight") Double minWeight,@RequestParam(value="maxWeight") Double maxWeight){
+                                                         @RequestParam(value="minWeight") Double minWeight,@RequestParam(value="maxWeight") Double maxWeight) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setStoreStartDate(storeStartDate);
-        contractParam.setStorageCondition(storageCondition);
+        contractParam.setStorageCondition(URLDecoder.decode(storageCondition, "UTF-8"));
         contractParam.setStoreEndDate(storeEndDate);
-        contractParam.setBusinessMode(businessMode);
-        contractParam.setOwnerCompany(ownerCompany);
-        contractParam.setExternalCompany(externalCompany);
+        contractParam.setBusinessMode(URLDecoder.decode(businessMode, "UTF-8"));
+        contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
+        contractParam.setExternalCompany(URLDecoder.decode(externalCompany, "UTF-8"));
         contractParam.setCompanyNo(companyNo);
-        contractParam.setCargoName(cargoName);
-        contractParam.setOriginCountry(originCountry);
-        contractParam.setWarehouse(warehouse);
+        contractParam.setCargoName(URLDecoder.decode(cargoName, "UTF-8"));
+        contractParam.setOriginCountry(URLDecoder.decode(originCountry, "UTF-8"));
+        contractParam.setWarehouse(URLDecoder.decode(warehouse, "UTF-8"));
         contractParam.setContainerNo(containerNo);
         contractParam.setMinBox(minBox);
         contractParam.setMaxBox(maxBox);
         contractParam.setMinWeight(minWeight);
         contractParam.setMaxWeight(maxWeight);
         contractParam.setLevel(level);
-        contractParam.setStatus(CommonUtil.revertStatus(status));
+        contractParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
 
         ByteArrayOutputStream bos = null;
         List<QueryContractInfo> data = contractBaseInfoMapper.queryStoreInfoListByExample(contractParam);
@@ -630,13 +630,13 @@ public class MainController {
 
     @GetMapping(value="/trade/queryDuty/output")
     public ResponseEntity<Resource> queryDutyOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="ownerCompany") String ownerCompany,
-                                                         @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd){
+                                                         @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setTaxPayDateStart(taxPayDateStart);
-        contractParam.setOwnerCompany(ownerCompany);
+        contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
         contractParam.setTaxPayDateEnd(taxPayDateEnd);
-        contractParam.setExternalCompany(externalCompany);
+        contractParam.setExternalCompany(URLDecoder.decode(externalCompany, "UTF-8"));
 
         ByteArrayOutputStream bos = null;
         List<ContractBaseInfo> data = contractBaseInfoMapper.selectByExample(contractParam);
@@ -687,18 +687,18 @@ public class MainController {
                                                      @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
                                                      @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
-                                                     @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate){
+                                                     @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
-        contractParam.setStatus(CommonUtil.revertStatus(status));
-        contractParam.setOriginCountry(originCountry);
+        contractParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
+        contractParam.setOriginCountry(URLDecoder.decode(originCountry, "UTF-8"));
         contractParam.setCurrency(currency);
-        contractParam.setDestinationPort(destinationPort);
-        contractParam.setOwnerCompany(ownerCompany);
-        contractParam.setStorageCondition(storageCondition);
+        contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
+        contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
+        contractParam.setStorageCondition(URLDecoder.decode(storageCondition, "UTF-8"));
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
-        contractParam.setExternalCompany(externalCompany);
+        contractParam.setExternalCompany(URLDecoder.decode(externalCompany, "UTF-8"));
         contractParam.setEtaStartDate(etaStartDate);
         contractParam.setEtaEndDate(etaEndDate);
         contractParam.setEtdStartDate(etdStartDate);

@@ -160,7 +160,7 @@ function getTotalInfo(){
         if(statusArr != null){
             for(var i=0;i<statusArr.length;i++){
                 if(statusArr[i] != '全部'){
-                    status += statusArr[i] + ",";
+                    status += "'"+statusArr[i] + "',";
                 }else{
                     status = "";break;
                 }
@@ -393,7 +393,7 @@ var TableInit = function () {
         if(statusArr != null){
             for(var i=0;i<statusArr.length;i++){
                 if(statusArr[i] != '全部'){
-                    status += statusArr[i] + ",";
+                    status += "'"+statusArr[i] + "',";
                 }else{
                     status = "";break;
                 }
@@ -627,7 +627,7 @@ var ButtonInit = function () {
             if(statusArr != null){
                 for(var i=0;i<statusArr.length;i++){
                     if(statusArr[i] != '全部'){
-                        status += statusArr[i] + ",";
+                        status += "'"+statusArr[i] + "',";
                     }else{
                         status = "";break;
                     }
