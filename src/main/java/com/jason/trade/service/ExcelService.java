@@ -313,6 +313,7 @@ public class ExcelService {
             list.add(cargoInfo.getCurrency());//币种
             list.add(cargoInfo.getCargoName());//商品
             list.add(cargoInfo.getLevel());//级别
+            list.add(cargoInfo.getRealStoreBoxes());//库存箱数
             list.add(cargoInfo.getUnitPrice());//单价
             list.add(cargoInfo.getContractAmount());//合同重量
             list.add(cargoInfo.getContractMoney());//合同金额

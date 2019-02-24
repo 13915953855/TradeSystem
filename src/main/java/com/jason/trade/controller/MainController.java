@@ -482,6 +482,7 @@ public class MainController {
                                            @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
                                            @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
                                            @RequestParam(value="externalContract") String externalContract,@RequestParam(value="insideContract") String insideContract,
+                                           @RequestParam(value="minBox") Double minBox,@RequestParam(value="maxBox") Double maxBox,
                                            @RequestParam(value="storageCondition") String storageCondition) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
@@ -489,6 +490,8 @@ public class MainController {
         contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
         contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
         contractParam.setCurrency(currency);
+        contractParam.setMinBox(minBox);
+        contractParam.setMaxBox(maxBox);
         contractParam.setExternalContract(externalContract);
         contractParam.setInsideContract(insideContract);
         contractParam.setStorageCondition(storageCondition);

@@ -820,7 +820,7 @@
 
   <select id="queryCargoList" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
     select a.id,a.eta,a.currency,a.etd,a.storage_condition,a.expect_sailing_date,a.destination_port,b.company_no,a.container_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
-    b.cargo_name,b.level,b.status,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
+    b.cargo_name,b.level,b.real_store_boxes,b.status,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <include refid="queryCargoListWhere"></include>
@@ -895,6 +895,12 @@
   </if>
   <if test="businessMode != null and businessMode != ''" >
     and b.business_mode in (${businessMode})
+  </if>
+  <if test="minBox != null" >
+    and b.real_store_boxes &gt;= '${minBox}'
+  </if>
+  <if test="maxBox != null" >
+    and b.real_store_boxes &lt;= '${maxBox}'
   </if>
   <if test="companyNo != null" >
     and b.company_no like '%${companyNo}%'

@@ -106,6 +106,10 @@ var TableInit = function () {
                 field: 'level',
                 title: '级别'
             }, {
+                field: 'realStoreBoxes',
+                title: '库存箱数',
+                visible: false
+            }, {
                 field: 'storageCondition',
                 title: '存储条件'
             }, {
@@ -263,6 +267,8 @@ var TableInit = function () {
             cargoName: cargoName,
             level: level,
             status: status,
+            minBox: $("#minBox").val(),
+                        maxBox: $("#maxBox").val(),
             companyNo: $("#companyNo").val(),
             businessMode: businessMode,
             externalCompany: externalCompany,
@@ -379,6 +385,8 @@ var ButtonInit = function () {
             params += "&businessMode="+businessMode;
             params += "&companyNo="+$("#companyNo").val();
             params += "&level="+level;
+            params += "&minBox="+$("#minBox").val();
+            params += "&maxBox="+$("#maxBox").val();
             params += "&destinationPort="+destinationPort;
             params += "&externalContract="+ $("#externalContract").val();
             var storageCondition = $("#storageCondition").val() == "全部"?"":$("#storageCondition").val();
@@ -529,6 +537,8 @@ function getTotalInfo(){
             etdStartDate: $("#etdStartDate").val(),
             etdEndDate: $("#etdEndDate").val(),
             cargoName: cargoName,
+            minBox: $("#minBox").val(),
+            maxBox: $("#maxBox").val(),
             level: level,
             status: status,
             companyNo: $("#companyNo").val(),
