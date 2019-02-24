@@ -101,6 +101,10 @@ var TableInit = function () {
                 field: 'totalInvoiceMoney',
                 title: '发票总金额'
             }, {
+                field: 'totalBoxes',
+                title: '总箱数',
+                visible:false
+            }, {
                 field: 'originCountry',
                 title: '原产地'
             }, {

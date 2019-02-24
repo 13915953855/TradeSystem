@@ -280,6 +280,7 @@ public class ExcelService {
             list.add(contractBaseInfo.getTotalContractMoney());// "合同总金额",
             list.add(contractBaseInfo.getTotalInvoiceAmount());// "发票总重量",
             list.add(contractBaseInfo.getTotalInvoiceMoney());// "发票总金额",
+            list.add(contractBaseInfo.getTotalBoxes());//总箱数
             list.add(contractBaseInfo.getOriginCountry());// "原产地",
             list.add(contractBaseInfo.getCurrency());// "币种",
             list.add(contractBaseInfo.getEtd());// "ETD",
