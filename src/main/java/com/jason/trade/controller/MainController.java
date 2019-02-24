@@ -480,13 +480,18 @@ public class MainController {
                                            @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
                                            @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="status") String status,
                                            @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
-                                           @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate) throws UnsupportedEncodingException {
+                                           @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
+                                           @RequestParam(value="externalContract") String externalContract,@RequestParam(value="insideContract") String insideContract,
+                                           @RequestParam(value="storageCondition") String storageCondition) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setOriginCountry(URLDecoder.decode(originCountry, "UTF-8"));
         contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
         contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
         contractParam.setCurrency(currency);
+        contractParam.setExternalContract(externalContract);
+        contractParam.setInsideContract(insideContract);
+        contractParam.setStorageCondition(storageCondition);
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
         contractParam.setBusinessMode(URLDecoder.decode(businessMode, "UTF-8"));
