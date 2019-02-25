@@ -66,10 +66,13 @@ function initCargoList(){
 function initWarehouse(){
     var opts = "";
     opts += "<option>库外</option>";
-    opts += "<option>名联</option>";
+    opts += "<option>名联纪丰</option>";
+    opts += "<option>名联青浦</option>";
     opts += "<option>领升</option>";
     opts += "<option>鑫汇洋</option>";
     opts += "<option>瑞源</option>";
+    opts += "<option>洋山普菲斯</option>";
+    opts += "<option>上港冷链</option>";
     $("#warehouse").append(opts);
 }
 

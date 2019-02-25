@@ -667,7 +667,7 @@ public class TradeService {
         Float yys = preSaleInfoMapper.getPreSaleTotal(cargoId);
         result.put("status","1");
         result.put("yys",yys);
-        result.put("wys",cargoInfo.getInvoiceAmount() - yys);
+        result.put("wys",cargoInfo.getContractAmount() - yys);
         return result;
     }
 }

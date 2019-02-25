@@ -45,10 +45,10 @@
             /*<![CDATA[*/
 
             var boxes = /*[[${cargo.boxes}]]*/;
-            var invoiceAmount = /*[[${cargo.invoiceAmount}]]*/;
+            var contractAmount = /*[[${cargo.contractAmount}]]*/;
             var ave = 0;
             if(parseInt(boxes) > 0){
-                ave = parseFloat(invoiceAmount) / boxes;
+                ave = parseFloat(contractAmount) / boxes;
                 ave = toFloat(ave);
             }
             $("#averageWeight").val(ave);
@@ -163,7 +163,7 @@
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">合同重量(小计)</label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="invoiceAmount" th:value="${cargo.invoiceAmount}"/>
+                                                <input type="text" class="form-control" id="contractAmount" th:value="${cargo.contractAmount}"/>
                                             </div>
                                             <label class="control-label col-sm-3">成本单价(CNY/KG)</label>
                                             <div class="col-sm-3">
