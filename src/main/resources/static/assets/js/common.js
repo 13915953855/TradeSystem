@@ -162,6 +162,7 @@ function initExternalCompany(){
     opts += "<option>MINEVER</option>";
     opts += "<option>MATABOI</option>";
     opts += "<option>MARFRIG</option>";
+    opts += "<option>MTT</option>";
     opts += "<option>GORINA</option>";
     opts += "<option>CARGILL</option>";
     opts += "<option>ARREBEEF</option>";

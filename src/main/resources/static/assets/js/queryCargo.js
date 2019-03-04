@@ -116,6 +116,10 @@ var TableInit = function () {
                 field: 'unitPrice',
                 title: '单价'
             }, {
+                field: 'costPrice',
+                title: '成本单价',
+                visible: false
+            }, {
                 field: 'contractAmount',
                 title: '合同重量'
             }, {

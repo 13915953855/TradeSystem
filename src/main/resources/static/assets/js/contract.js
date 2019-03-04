@@ -256,9 +256,6 @@ var TableInit = function () {
             columns: [{
                 checkbox: true
             }, {
-                field: 'id',
-                title: '序号'
-            }, {
                 field: 'externalContract',
                 title: '外合同编号'
             }, {
@@ -271,6 +268,18 @@ var TableInit = function () {
                 field: 'contractDate',
                 title: '合同日期',
                 sortable:true
+            }, {
+                field: 'expectSailingDate',
+                title: '预计船期'
+            }, {
+                field: 'etd',
+                title: 'ETD'
+            }, {
+                field: 'eta',
+                title: 'ETA'
+            }, {
+                field: 'totalBoxes',
+                title: '库存总箱数'
             }, {
                 field: 'status',
                 title: '状态',

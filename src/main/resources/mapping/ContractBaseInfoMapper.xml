@@ -97,6 +97,7 @@
     <result column="destination_port" property="destinationPort" jdbcType="VARCHAR" />
     <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
     <result column="unit_price" property="unitPrice" jdbcType="VARCHAR" />
+    <result column="cost_price" property="costPrice" jdbcType="VARCHAR" />
     <result column="contract_amount" property="contractAmount" jdbcType="VARCHAR" />
     <result column="contract_money" property="contractMoney" jdbcType="VARCHAR" />
     <result column="invoice_amount" property="invoiceAmount" jdbcType="VARCHAR" />
@@ -403,9 +404,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jason.trade.entity.ContractParam" >
-    select a.* from contract_base_info a
+    select a.id,a.external_contract,a.inside_contract,a.external_company,a.contract_date,a.status,
+    a.expect_sailing_date,a.etd,a.eta,sum(b.real_store_boxes) as total_boxes from contract_base_info a
+    inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
+    group by a.contract_id
     <if test="sortName != null and sortOrder != null" >
       order by a.${sortName} ${sortOrder}
     </if>
@@ -415,6 +419,7 @@
   </select>
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.ContractParam" >
     select count(1) from contract_base_info a
+    inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
   </select>
@@ -821,7 +826,7 @@
 
   <select id="queryCargoList" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
     select a.id,a.eta,a.currency,a.etd,a.storage_condition,a.expect_sailing_date,a.destination_port,b.company_no,a.container_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
-    b.cargo_name,b.level,b.real_store_boxes,b.status,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
+    b.cargo_name,b.level,b.real_store_boxes,b.status,b.business_mode,b.unit_price,b.cost_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <include refid="queryCargoListWhere"></include>

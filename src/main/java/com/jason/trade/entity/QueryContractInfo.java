@@ -18,6 +18,7 @@ public class QueryContractInfo {
     private String businessMode;
     private String boxes;
     private String unitPrice;
+    private String costPrice;
     private String destinationPort;
     private String contractAmount;
     private String contractMoney;
@@ -35,6 +36,14 @@ public class QueryContractInfo {
     private String realStoreBoxes;
     private String realStoreMoney;
     private String storageCondition;
+
+    public String getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(String costPrice) {
+        this.costPrice = costPrice;
+    }
 
     public String getCargoId() {
         return cargoId;
