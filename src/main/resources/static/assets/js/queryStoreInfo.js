@@ -102,7 +102,11 @@ var TableInit = function () {
             }, {
                 field: 'containerNo',
                 title: '柜号',
-                visible: false
+                visible: false,
+                formatter: function(value, row, index){
+                    var s = '<a href="/trade/cargo/view?id='+row.cargoId+'">'+value+'</a>';
+                    return s;
+                }
             }, {
                 field: 'storeDate',
                 title: '入库时间'

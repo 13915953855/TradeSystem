@@ -12,6 +12,7 @@ public class QueryContractInfo {
     private String currency;
     private String cargoName;
     private String cargoNo;
+    private String cargoId;
     private String status;
     private String level;
     private String businessMode;
@@ -34,6 +35,14 @@ public class QueryContractInfo {
     private String realStoreBoxes;
     private String realStoreMoney;
     private String storageCondition;
+
+    public String getCargoId() {
+        return cargoId;
+    }
+
+    public void setCargoId(String cargoId) {
+        this.cargoId = cargoId;
+    }
 
     public String getDestinationPort() {
         return destinationPort;

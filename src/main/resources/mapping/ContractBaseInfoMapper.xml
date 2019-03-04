@@ -90,6 +90,7 @@
     <result column="container_no" property="containerNo" jdbcType="VARCHAR" />
     <result column="company_no" property="companyNo" jdbcType="VARCHAR" />
     <result column="cargo_no" property="cargoNo" jdbcType="VARCHAR" />
+    <result column="cargo_id" property="cargoId" jdbcType="VARCHAR" />
     <result column="cargo_name" property="cargoName" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="VARCHAR" />
@@ -575,7 +576,7 @@
 
   <select id="queryStoreInfoListByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
     select a.id,a.eta,a.etd,a.expect_sailing_date,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,b.boxes,
-    b.cargo_name,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country,b.cargo_no,
+    b.cargo_name,b.id as cargo_id,b.level,b.business_mode,b.unit_price,b.contract_amount,b.contract_money,b.invoice_amount,b.invoice_money,a.origin_country,b.cargo_no,
     a.container_no,a.ladingbill_no,a.store_date,a.warehouse,b.real_store_weight,b.real_store_boxes,b.real_store_money
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'

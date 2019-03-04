@@ -123,6 +123,18 @@
     <include refid="Base_Column_List" />
     from internal_contract_info
     where 1 = 1
+    <include refid="selectByExampleWhere"></include>
+    order by id desc
+    <if test="start != null and limit != null" >
+      limit ${start},${limit}
+    </if>
+  </select>
+  <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.InternalContractParam" >
+  select count(1) from internal_contract_info
+  where 1 = 1
+  <include refid="selectByExampleWhere"></include>
+  </select>
+  <sql id="selectByExampleWhere">
     <if test="contractNo != null" >
       and contract_no like '%${contractNo}%'
     </if>
@@ -135,6 +147,23 @@
     <if test="contractEndDate != null and contractEndDate != ''" >
       and contract_date &lt;= '${contractEndDate}'
     </if>
+    <if test="storeStartDate != null and storeStartDate != ''" >
+      and store_date &gt;= '${storeStartDate}'
+    </if>
+    <if test="storeEndDate != null and storeEndDate != ''" >
+      and store_date &lt;= '${storeEndDate}'
+    </if>
+    <if test="warehouse != null and warehouse != ''" >
+      and warehouse = '${warehouse}'
+    </if>
+    <if test="(cargoName != null and cargoName != '')" >
+      and contract_id in (
+      select contract_id from cargo_info where 1=1
+      <if test="cargoName != null and cargoName != ''" >
+        and cargo_name = '${cargoName}'
+      </if>
+      )
+    </if>
     <choose>
       <when test="status != null and status != ''">
         and status in (${status})
@@ -143,34 +172,5 @@
         and status != '0'
       </otherwise>
     </choose>
-    order by id desc
-    <if test="start != null and limit != null" >
-      limit ${start},${limit}
-    </if>
-  </select>
-  <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.InternalContractParam" >
-  select count(1) from internal_contract_info
-  where 1 = 1
-  <if test="contractNo != null" >
-    and contract_no like '%${contractNo}%'
-  </if>
-    <if test="importContractNo != null" >
-      and import_contract_no like '%${importContractNo}%'
-    </if>
-  <if test="contractStartDate != null and contractStartDate != ''" >
-    and contract_date &gt;= '${contractStartDate}'
-  </if>
-  <if test="contractEndDate != null and contractEndDate != ''" >
-    and contract_date &lt;= '${contractEndDate}'
-  </if>
-  <choose>
-    <when test="status != null and status != ''">
-      and status in (${status})
-    </when>
-    <otherwise>
-      and status != '0'
-    </otherwise>
-  </choose>
-  order by id desc
-  </select>
+  </sql>
 </mapper>

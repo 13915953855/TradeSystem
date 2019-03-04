@@ -23,6 +23,8 @@ $("select").select2({
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    initWarehouse();
+    initCargoList();
 });
 
 var toFloat = function (value) {
@@ -85,8 +87,14 @@ var TableInit = function () {
                 field: 'importContractNo',
                 title: '进口合同号'
             }, {
+                field: 'warehouse',
+                title: '仓库'
+            }, {
                 field: 'contractDate',
                 title: '合同日期'
+            }, {
+                field: 'storeDate',
+                title: '入库日期'
             }, {
                 field: 'status',
                 title: '状态',
@@ -132,14 +140,20 @@ var TableInit = function () {
         if(status.length > 1){
             status = status.substring(0,status.length-1);
         }
+        var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
+        var warehouse = $("#warehouse").val() == "全部" ? "":$("#warehouse").val();
 
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
+            cargoName: cargoName,
+            warehouse: warehouse,
             contractNo: $("#contractNo").val(),
             importContractNo: $("#importContractNo").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
+            storeStartDate: $("#storeStartDate").val(),
+            storeEndDate: $("#storeEndDate").val(),
             status: status,
         };
         return temp;
@@ -218,5 +232,9 @@ function resetQuery(){
     $("#importContractNo").val("");
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
+    $("#storeStartDate").val("");
+    $("#storeEndDate").val("");
     $("#status").val("全部").trigger("change");
+    $("#warehouse").val("全部").trigger("change");
+    $("#cargoName").val("全部").trigger("change");
 }
