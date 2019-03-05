@@ -231,7 +231,17 @@ public class TradeController {
             log.info("新增商品cargoId="+cargoInfo.getCargoId());
             cargoInfo.setRealStoreBoxes(cargoInfo.getBoxes());
             cargoInfo.setRealStoreWeight(cargoInfo.getInvoiceAmount());
-            cargoInfo.setStatus(GlobalConst.ENABLE);
+            String status = GlobalConst.ENABLE;
+            //查询台账的状态
+            String contractId = cargoInfo.getContractId();
+            if(StringUtils.isNotBlank(contractId)){
+                ContractBaseInfo contract = contractRepository.findByContractId(contractId);
+                String contractStatus = contract.getStatus();
+                if(StringUtils.isNotBlank(contractStatus)){
+                    status = contractStatus;
+                }
+            }
+            cargoInfo.setStatus(status);
             cargoInfo.setCreateUser(userInfo.getAccount());
             cargoInfo.setCreateDateTime(now);
             cargoInfo.setExpectStoreBoxes(GlobalConst.UNPRESALED);

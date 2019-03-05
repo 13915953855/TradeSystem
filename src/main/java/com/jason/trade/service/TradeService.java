@@ -542,16 +542,22 @@ public class TradeService {
         contractParam.setFieldName("etd");
         contractParam.setToday(today);
         contractBaseInfoMapper.updateStatusByField(contractParam);
+        contractParam.setCargoStatus(GlobalConst.ENABLE);
+        contractBaseInfoMapper.updateCargoStatusByField(contractParam);
         //3已到港（填写了ETA，且真实日期到了ETA所填的日期
         contractParam.setStatus(GlobalConst.ARRIVED);
         contractParam.setFieldName("eta");
         contractParam.setToday(today);
         contractBaseInfoMapper.updateStatusByField(contractParam);
+        contractParam.setCargoStatus(GlobalConst.SHIPPED);
+        contractBaseInfoMapper.updateCargoStatusByField(contractParam);
         //4已入库 （填写了入库日期，且真实日期到了所填的入库日期）
         contractParam.setStatus(GlobalConst.STORED);
         contractParam.setFieldName("store_date");
         contractParam.setToday(today);
         contractBaseInfoMapper.updateStatusByField(contractParam);
+        contractParam.setCargoStatus(GlobalConst.ARRIVED);
+        contractBaseInfoMapper.updateCargoStatusByField(contractParam);
     }
 
     public JSONObject getTotalStoreInfoForQuery(ContractParam contractParam){

@@ -14,6 +14,7 @@ public interface ContractBaseInfoMapper {
     List<QueryContractInfo> queryCargoListByExample(ContractParam contractParam);
     Integer queryCargoTotalByExample(ContractParam contractParam);
     void updateStatusByField(ContractParam contractParam);
+    void updateCargoStatusByField(ContractParam contractParam);
     List<ContractTotalInfo> getTotalInfo(ContractParam contractParam);
     List<ContractTotalInfo> getTotalInfoForQueryContract(ContractParam contractParam);
     List<ContractForCharts> getTotalNumPerDay();

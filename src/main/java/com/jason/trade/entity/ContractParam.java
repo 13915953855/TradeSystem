@@ -25,6 +25,7 @@ public class ContractParam {
     private String externalCompany;
     private String cargoName;
     private String cargoNo;
+    private String cargoStatus;
     private String tariffNo;
     private String level;
     private String agent;
@@ -54,6 +55,14 @@ public class ContractParam {
     private Double maxWeight;
     private String storageCondition;
     private String currency;
+
+    public String getCargoStatus() {
+        return cargoStatus;
+    }
+
+    public void setCargoStatus(String cargoStatus) {
+        this.cargoStatus = cargoStatus;
+    }
 
     public String getCurrency() {
         return currency;

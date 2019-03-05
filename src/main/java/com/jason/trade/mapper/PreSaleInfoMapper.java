@@ -1,7 +1,9 @@
 package com.jason.trade.mapper;
 
 import com.jason.trade.model.PreSaleInfo;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface PreSaleInfoMapper {
     int deleteByPrimaryKey(Integer saleId);
 
