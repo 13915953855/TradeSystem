@@ -240,8 +240,15 @@ var TableInit = function () {
                 title: '成本单价(CNY/KG)',
                 visible: false
             }, {
+                field: 'realStoreBoxes',
+                title: '库存箱数'
+            }, {
+                field: 'realStoreWeight',
+                title: '库存重量'
+            }, {
                 field: 'realStoreMoney',
-                title: '库存金额'
+                title: '库存金额',
+                visible: false
             }, {
                 field: 'status',
                 title: '状态',
