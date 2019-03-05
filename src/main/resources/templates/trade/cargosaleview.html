@@ -52,6 +52,12 @@
                 ave = toFloat(ave);
             }
             $("#averageWeight").val(ave);
+
+            //预估库存重量=发票重量（小计）-平均箱重*该产品下所有销售记录的实售箱数
+            var expectStoreWeight = 0;
+            var realStoreBoxes = /*[[${cargo.realStoreBoxes}]]*/;
+            expectStoreWeight = invoiceAmount - ave * (boxes - realStoreBoxes);
+            $("#expectStoreWeight").val(toFloat(expectStoreWeight));
             /*]]>*/
 
         });
@@ -189,7 +195,12 @@
                                                 <input type="text" class="form-control" id="realStoreBoxes" th:value="${cargo.realStoreBoxes}"/>
                                             </div>
                                         </div>
-
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">预估库存重量</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="expectStoreWeight"/>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
