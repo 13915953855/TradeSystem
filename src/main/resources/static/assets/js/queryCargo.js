@@ -400,8 +400,8 @@ var ButtonInit = function () {
             params += "&insideContract="+$("#insideContract").val();
             params += "&status="+status;
             params += "&cargoName="+cargoName;
-            params += "&etaEndDate="+$("#etaStartDate").val();
-            params += "&etaStartDate="+$("#etaEndDate").val();
+            params += "&etaEndDate="+$("#etaEndDate").val();
+            params += "&etaStartDate="+$("#etaStartDate").val();
             params += "&endDate="+$("#endDate").val();
             params += "&startDate="+$("#startDate").val();
             params += "&etdStartDate="+$("#etdStartDate").val();

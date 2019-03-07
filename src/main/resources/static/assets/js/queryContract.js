@@ -303,8 +303,8 @@ var ButtonInit = function () {
             var params = "?externalCompany="+externalCompany;
             params += "&status="+status;
             params += "&destinationPort="+destinationPort;
-            params += "&etaEndDate="+$("#etaStartDate").val();
-            params += "&etaStartDate="+$("#etaEndDate").val();
+            params += "&etaEndDate="+$("#etaEndDate").val();
+            params += "&etaStartDate="+$("#etaStartDate").val();
             params += "&endDate="+$("#endDate").val();
             params += "&startDate="+$("#startDate").val();
             params += "&etdStartDate="+$("#etdStartDate").val();
