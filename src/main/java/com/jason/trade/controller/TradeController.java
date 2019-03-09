@@ -73,7 +73,7 @@ public class TradeController {
         String type = contractParam.getType();
         JSONObject result = new JSONObject();
         if(StringUtils.isBlank(type)){
-            result = tradeService.queryContractListByMapper(contractParam);
+            result = tradeService.queryContractList(contractParam);
         }else{
             switch (type){
                 case "n1":

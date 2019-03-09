@@ -317,7 +317,7 @@ public class MainController {
         contractParam.setSortName("contract_date");
         contractParam.setSortOrder("desc");
         ByteArrayOutputStream bos = null;
-        List<ContractBaseInfo> data = tradeService.getContractBaseInfoList(contractParam);
+        List<ContractBaseInfo> data = contractBaseInfoMapper.selectByExample(contractParam);
         String fileName = "业务台账"+ DateUtil.DateToString(new Date(),"yyyyMMddHHmmss")+".xlsx";
         try {
             Workbook workbook = excelService.writeExcel(data,chk);

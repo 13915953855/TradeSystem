@@ -257,10 +257,17 @@ public class TradeService {
         Integer count = contractBaseInfoMapper.selectCountByExample(contractParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
-        result.put("rows",getContractBaseInfoList(contractParam));
+        result.put("rows",contractBaseInfoMapper.selectByExample(contractParam));
         return result;
     }
-
+    public JSONObject queryContractList(ContractParam contractParam){
+        revertStatus(contractParam);
+        Integer count = contractBaseInfoMapper.selectCountByExample(contractParam);
+        JSONObject result = new JSONObject();
+        result.put("total",count);
+        result.put("rows",contractBaseInfoMapper.selectByExampleForList(contractParam));
+        return result;
+    }
     public JSONObject queryCargoListForQuery(ContractParam contractParam){
         revertStatus(contractParam);
         Integer count = contractBaseInfoMapper.countCargoList(contractParam);
@@ -301,10 +308,6 @@ public class TradeService {
         result.put("total",count);
         result.put("rows",internalContractInfoMapper.selectByExample(contractParam));
         return result;
-    }
-
-    public List<ContractBaseInfo> getContractBaseInfoList(ContractParam contractParam) {
-        return contractBaseInfoMapper.selectByExample(contractParam);
     }
 
     public JSONObject queryAllCargoList(CargoParam cargoParam){

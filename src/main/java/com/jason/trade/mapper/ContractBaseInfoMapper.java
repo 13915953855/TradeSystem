@@ -10,6 +10,7 @@ import java.util.List;
 public interface ContractBaseInfoMapper {
     int updateByPrimaryKeySelective(ContractBaseInfo record);
     List<ContractBaseInfo> selectByExample(ContractParam contractParam);
+    List<ContractBaseInfo> selectByExampleForList(ContractParam contractParam);
     Integer selectCountByExample(ContractParam contractParam);
     List<QueryContractInfo> queryCargoListByExample(ContractParam contractParam);
     Integer queryCargoTotalByExample(ContractParam contractParam);
