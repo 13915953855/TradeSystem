@@ -358,28 +358,24 @@ public class TradeService {
             for (ContractTotalInfo totalInfo : record) {
                 totalFinancingMoney += totalInfo.getTotalFinancingMoney();
                 totalYahuiMoney += totalInfo.getTotalYahuiMoney();
+                totalContractAmount += totalInfo.getTotalContractAmount();
+                totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
                 switch(totalInfo.getCurrency()){
                     case "CNY":
-                        totalCNYContractMoney = totalInfo.getTotalContractMoney();
-                        totalCNYInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalContractAmount += totalInfo.getTotalContractAmount();
-                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalCNYContractMoney += totalInfo.getTotalContractMoney();
+                        totalCNYInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         totalCNYPrePaymentMoney += totalInfo.getTotalPrePayment();
                         totalCNYFinalPaymentMoney += totalInfo.getTotalFinalPayment();
                         break;
                     case "USD":
-                        totalUSDContractMoney = totalInfo.getTotalContractMoney();
-                        totalUSDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalContractAmount += totalInfo.getTotalContractAmount();
-                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalUSDContractMoney += totalInfo.getTotalContractMoney();
+                        totalUSDInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         totalUSDPrePaymentMoney += totalInfo.getTotalPrePayment();
                         totalUSDFinalPaymentMoney += totalInfo.getTotalFinalPayment();
                         break;
                     case "AUD":
-                        totalAUDContractMoney = totalInfo.getTotalContractMoney();
-                        totalAUDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalContractAmount += totalInfo.getTotalContractAmount();
-                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalAUDContractMoney += totalInfo.getTotalContractMoney();
+                        totalAUDInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         totalAUDPrePaymentMoney += totalInfo.getTotalPrePayment();
                         totalAUDFinalPaymentMoney += totalInfo.getTotalFinalPayment();
                         break;
@@ -437,24 +433,20 @@ public class TradeService {
             Float totalContractAmount = 0F;
             Float totalInvoiceAmount = 0F;
             for (ContractTotalInfo totalInfo : record) {
+                totalContractAmount += totalInfo.getTotalContractAmount();
+                totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
                 switch(totalInfo.getCurrency()){
                     case "CNY":
-                        totalCNYContractMoney = totalInfo.getTotalContractMoney();
-                        totalCNYInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalContractAmount += totalInfo.getTotalContractAmount();
-                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalCNYContractMoney += totalInfo.getTotalContractMoney();
+                        totalCNYInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         break;
                     case "USD":
-                        totalUSDContractMoney = totalInfo.getTotalContractMoney();
-                        totalUSDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalContractAmount += totalInfo.getTotalContractAmount();
-                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalUSDContractMoney += totalInfo.getTotalContractMoney();
+                        totalUSDInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         break;
                     case "AUD":
-                        totalAUDContractMoney = totalInfo.getTotalContractMoney();
-                        totalAUDInvoiceMoney = totalInfo.getTotalInvoiceMoney();
-                        totalContractAmount += totalInfo.getTotalContractAmount();
-                        totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
+                        totalAUDContractMoney += totalInfo.getTotalContractMoney();
+                        totalAUDInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         break;
                     default:break;
                 }

@@ -431,25 +431,26 @@
     </if>
   </select>
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.ContractParam" >
-    select count(1) from contract_base_info a
+    select count(DISTINCT a.contract_id) from contract_base_info a
     left join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
   </select>
   <select id="getTotalInfo" resultType="com.jason.trade.entity.ContractTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
-    select sum(a.total_contract_money) as totalContractMoney,
-    sum(a.total_contract_amount) as totalContractAmount,
-    sum(a.total_invoice_money) as totalInvoiceMoney,
-    sum(a.total_invoice_amount) as totalInvoiceAmount, currency,
-    sum(a.financing_money) as totalFinancingMoney,
-    sum(a.yahui_money) as totalYahuiMoney,
-    sum(pre_payment) as totalPrePayment,sum(final_payment) as totalFinalPayment
+    select IFNULL(sum(b.contract_money),0) as totalContractMoney,
+    IFNULL(sum(b.contract_amount),0) as totalContractAmount,
+    IFNULL(sum(b.invoice_money),0) as totalInvoiceMoney,
+    IFNULL(sum(b.invoice_amount),0) as totalInvoiceAmount, currency,
+    IFNULL(sum(a.financing_money),0) as totalFinancingMoney,
+    IFNULL(sum(a.yahui_money),0) as totalYahuiMoney,
+    IFNULL(sum(a.pre_payment),0) as totalPrePayment,IFNULL(sum(a.final_payment),0) as totalFinalPayment
     from contract_base_info a
+    left join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
-    group by a.currency
-    order by a.id desc
+    group by a.contract_id
   </select>
+
   <select id="getTotalNumPerDay" resultType="com.jason.trade.entity.ContractForCharts">
     select count(id) as total,DATE_FORMAT( create_date_time, '%Y-%m-%d') as dateStr from contract_base_info
     where status != 0
@@ -586,8 +587,8 @@
   </select>
 
   <select id="getTotalInfoForQueryContract" resultType="com.jason.trade.entity.ContractTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
-    select sum(b.contract_money) as totalContractMoney,sum(b.contract_amount) as totalContractAmount,
-    sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceAmount,a.currency
+    select IFNULL(sum(b.contract_money),0) as totalContractMoney,IFNULL(sum(b.contract_amount),0) as totalContractAmount,
+    IFNULL(sum(b.invoice_money),0) as totalInvoiceMoney,IFNULL(sum(b.invoice_amount),0) as totalInvoiceAmount,a.currency
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <include refid="queryCargoListWhere"></include>
