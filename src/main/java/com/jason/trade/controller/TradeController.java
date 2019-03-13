@@ -236,8 +236,8 @@ public class TradeController {
             String contractId = cargoInfo.getContractId();
             if(StringUtils.isNotBlank(contractId)){
                 ContractBaseInfo contract = contractRepository.findByContractId(contractId);
-                String contractStatus = contract.getStatus();
-                if(StringUtils.isNotBlank(contractStatus)){
+                if(contract != null){
+                    String contractStatus = contract.getStatus();
                     status = contractStatus;
                 }
             }
