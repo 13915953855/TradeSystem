@@ -488,5 +488,6 @@ function initUser(){
     opts += "<option>唐誉天</option>";
     opts += "<option>凌骁</option>";
     opts += "<option>景远方</option>";
+    opts += "<option>张成飞</option>";
     $("#pickupUser").append(opts);
 }

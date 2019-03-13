@@ -206,6 +206,8 @@ var TableInit = function () {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
+            externalContract: $("#externalContract").val(),
+            insideContract: $("#insideContract").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
             startDate: $("#startDate").val(),
@@ -303,6 +305,8 @@ var ButtonInit = function () {
             var params = "?externalCompany="+externalCompany;
             params += "&status="+status;
             params += "&destinationPort="+destinationPort;
+            params += "&externalContract="+$("#externalContract").val();
+            params += "&insideContract="+$("#insideContract").val();
             params += "&etaEndDate="+$("#etaEndDate").val();
             params += "&etaStartDate="+$("#etaStartDate").val();
             params += "&endDate="+$("#endDate").val();
@@ -329,6 +333,8 @@ var ButtonInit = function () {
 function resetQuery(){
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
+    $("#externalContract").val("");
+    $("#insideContract").val("");
     $("#externalCompany").val("全部").trigger("change");
     $("#destinationPort").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
@@ -408,6 +414,8 @@ function getTotalInfo(){
         contractEndDate: $("#contractEndDate").val(),
         startDate: $("#startDate").val(),
         endDate: $("#endDate").val(),
+        externalContract: $("#externalContract").val(),
+        insideContract: $("#insideContract").val(),
         etaStartDate: $("#etaStartDate").val(),
         etaEndDate: $("#etaEndDate").val(),
         etdStartDate: $("#etdStartDate").val(),

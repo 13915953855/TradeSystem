@@ -236,7 +236,7 @@ public class MainController {
     @PostMapping("/login")
     public @ResponseBody Map<String, Object> loginPost(String username, String password, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
-        UserInfo userInfo = userRepository.findByAccount(username);
+        UserInfo userInfo = userRepository.findByAccountAndStatus(username,"1");
         if(userInfo != null && userInfo.getPasswd().equals(password)){
             // 设置session
             session.setAttribute(WebSecurityConfig.SESSION_KEY, userInfo);
@@ -264,7 +264,7 @@ public class MainController {
         return "redirect:/login";
     }
 
-   /* @GetMapping("/register")
+    @GetMapping("/register")
     public String register() {
         return "register";
     }
@@ -273,7 +273,7 @@ public class MainController {
     public @ResponseBody String register(UserInfo userInfo){
         userRepository.save(userInfo);
         return GlobalConst.SUCCESS;
-    }*/
+    }
 
     @GetMapping(value="/trade/contract/output")
     public ResponseEntity<Resource> output(HttpSession session,@RequestParam(value="externalContract") String externalContract,
@@ -686,6 +686,7 @@ public class MainController {
     public ResponseEntity<Resource> queryContractOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
                                                      @RequestParam(value="ownerCompany") String ownerCompany,@RequestParam(value="status") String status,@RequestParam(value="currency") String currency,
                                                      @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
+                                                     @RequestParam(value="insideContract") String insideContract,@RequestParam(value="externalContract") String externalContract,
                                                      @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
                                                      @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate) throws UnsupportedEncodingException {
@@ -694,6 +695,8 @@ public class MainController {
         contractParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
         contractParam.setOriginCountry(URLDecoder.decode(originCountry, "UTF-8"));
         contractParam.setCurrency(currency);
+        contractParam.setExternalContract(externalContract);
+        contractParam.setInsideContract(insideContract);
         contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
         contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
         contractParam.setStorageCondition(URLDecoder.decode(storageCondition, "UTF-8"));
