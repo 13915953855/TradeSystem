@@ -105,6 +105,7 @@ function initOriginCountry(){
     opts += "<option>阿根廷</option>";
     opts += "<option>白俄罗斯</option>";
     opts += "<option>新西兰</option>";
+    opts += "<option>法国</option>";
     $("#originCountry").append(opts);
 }
 
@@ -166,6 +167,7 @@ function initExternalCompany(){
     opts += "<option>GORINA</option>";
     opts += "<option>CARGILL</option>";
     opts += "<option>ARREBEEF</option>";
+    opts += "<option>TOMEX</option>";
     opts += "<option>ASHLEIGH PARK BEEF</option>";
     $("#externalCompany").append(opts);
 }
