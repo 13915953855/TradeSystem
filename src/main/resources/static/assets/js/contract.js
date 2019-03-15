@@ -28,6 +28,7 @@ $(function () {
     initBusinessMode();
     initExternalCompany();
     initCargoList();
+    initAgent();
     initOriginCountryQuery();
     if(queryType == "" || queryType == null || queryType == undefined){
         $("#totalInfoDiv").show();

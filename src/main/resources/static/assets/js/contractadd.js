@@ -16,6 +16,7 @@ $(function () {
     initExternalCompany();
     initBusinessMode();
     initLevel();
+    initAgent();
     initBank();
     initWarehouse();
 

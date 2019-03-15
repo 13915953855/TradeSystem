@@ -24,6 +24,7 @@ $("select").select2({
         $("#btn_query").click();
     });
     initDestinationPort();
+    initAgent();
     getTotalInfo();
 });
 

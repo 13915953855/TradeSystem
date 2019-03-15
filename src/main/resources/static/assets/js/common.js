@@ -109,6 +109,19 @@ function initOriginCountry(){
     $("#originCountry").append(opts);
 }
 
+function initAgent() {
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>佳克</option>";
+    opts += "<option>欧恒</option>";
+    opts += "<option>捷嘉</option>";
+    opts += "<option>源丰祥</option>";
+    opts += "<option>同华</option>";
+    opts += "<option>亚东</option>";
+    opts += "<option>创祥</option>";
+    $("#agent").append(opts);
+}
+
 function initStorageCondition(){
     var opts = "";
     opts += "<option></option>";
