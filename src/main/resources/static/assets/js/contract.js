@@ -303,7 +303,8 @@ var TableInit = function () {
                  field: 'id',
                  title: '操作',
                  formatter: function(value, row, index){
-                    var s = '<a href="/trade/contract/view?id='+value+'">查看</a>';
+                    var s = '<a href="/trade/contract/view?id='+value+'">查看 </a>';
+                    s += '\t\t<a href="/trade/contract/hesuan?id='+value+'">| 核算</a>';
                     return s;
                  }
              }  ]

@@ -753,4 +753,36 @@ public class MainController {
         return null;
     }
 
+    @GetMapping(value = "/trade/contract/hesuan")
+    public ResponseEntity<Resource> hesuan(@RequestParam(value="id") Integer id){
+        ByteArrayOutputStream bos = null;
+        ContractBaseInfo data = contractRepository.findById(id);
+        String fileName = "进口核算表.xlsx";
+        try {
+            Workbook workbook = excelService.hesuan(data);
+            bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            workbook.close();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            headers.add("charset", "utf-8");
+            //设置下载文件名
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            headers.add("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+            Resource resource = new InputStreamResource(new ByteArrayInputStream(bos.toByteArray()));
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/x-msdownload")).body(resource);
+        } catch (IOException e) {
+            if (null != bos) {
+                try {
+                    bos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
 }

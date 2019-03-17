@@ -13,6 +13,7 @@ public interface ContractRepository extends JpaRepository<ContractBaseInfo,Integ
     ContractBaseInfo findByExternalContractAndStatus(String externalContract, String status);
     ContractBaseInfo findByExternalContractAndStatusNot(String externalContract, String status);
     ContractBaseInfo findByContractId(String contractId);
+    ContractBaseInfo findById(Integer id);
     List<ContractBaseInfo> findByStatusNot(String status);
 
     @Query(value = "delete from contract_base_info where id in (?1)", nativeQuery = true)
