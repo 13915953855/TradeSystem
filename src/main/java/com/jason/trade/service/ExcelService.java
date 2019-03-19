@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -754,6 +755,11 @@ public class ExcelService {
         XSSFWorkbook workBook = new XSSFWorkbook();
         //创建工作表
         XSSFSheet sheet = workBook.createSheet();
+        //横向A4纸
+        PrintSetup printSetup = sheet.getPrintSetup();
+        printSetup.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE);
+        printSetup.setLandscape(true); // 打印方向，true：横向，false：纵向(默认) 
+
         //创建样式
         XSSFCellStyle style = workBook.createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
@@ -776,7 +782,13 @@ public class ExcelService {
             cell.setCellValue("进 口 核 算 表");
             cell.setCellStyle(style);
         }
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 9));
+        row = sheet.createRow(1);
+        for (int i = 0; i < 10; i++) {
+            cell = row.createCell(i, CellType.STRING);
+            cell.setCellValue("进 口 核 算 表");
+            cell.setCellStyle(style);
+        }
+        sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 9));
 
         XSSFFont textFont = workBook.createFont();
         textFont.setFontHeightInPoints((short)12);
@@ -788,14 +800,15 @@ public class ExcelService {
         textStyle.setWrapText(true);
         textStyle.setFont(textFont);
 
-        row = sheet.createRow(1);
+        int two = 2;
+        row = sheet.createRow(two);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("制表日期：");
         cell.setCellStyle(textStyle);
         cell = row.createCell(1,CellType.STRING);
         cell.setCellValue("制表日期：");
         cell.setCellStyle(textStyle);
-        sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 1));
+        sheet.addMergedRegion(new CellRangeAddress(two, two, 0, 1));
 
         cell = row.createCell(2,CellType.STRING);
         cell.setCellValue(DateUtil.DateToString(new Date()));
@@ -805,7 +818,7 @@ public class ExcelService {
         XSSFCellStyle blackStyle = createXssfCellStyle(workBook);
         blackStyle.setFont(textFont);
 
-        int three = 3;
+        int three = 4;
         row = sheet.createRow(three);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("外合同编号");
@@ -842,7 +855,7 @@ public class ExcelService {
         cell.setCellValue(contractBaseInfo.getExternalCompany());
         cell.setCellStyle(blackStyle);
 
-        int four = 4;
+        int four = 5;
         row = sheet.createRow(four);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("合同总重量(KG)");
@@ -879,7 +892,7 @@ public class ExcelService {
         cell.setCellValue(contractBaseInfo.getCurrency());
         cell.setCellStyle(blackStyle);
 
-        int five = 5;
+        int five = 6;
         row = sheet.createRow(five);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("价格条件");
@@ -916,7 +929,7 @@ public class ExcelService {
         cell.setCellValue(contractBaseInfo.getExchangeRate());
         cell.setCellStyle(blackStyle);
 
-        int six = 6;
+        int six = 7;
         row = sheet.createRow(six);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("储存条件");
@@ -953,7 +966,7 @@ public class ExcelService {
         cell.setCellValue(businessMode);
         cell.setCellStyle(blackStyle);
 
-        int seven = 7;
+        int seven = 8;
         row = sheet.createRow(seven);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("ETD");
@@ -990,7 +1003,7 @@ public class ExcelService {
         cell.setCellValue("");
         cell.setCellStyle(blackStyle);
 
-        int eight = 8;
+        int eight = 9;
         row = sheet.createRow(eight);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("关税");
@@ -1012,6 +1025,8 @@ public class ExcelService {
             tariff = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*0.12;
             zzs = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*1.12*0.01;
         }
+        tariff = (double)Math.round(tariff*100)/100;
+        zzs = (double)Math.round(zzs*100)/100;
         cell = row.createCell(2,CellType.STRING);
         cell.setCellValue(tariff);
         cell.setCellStyle(blackStyle);
@@ -1040,7 +1055,7 @@ public class ExcelService {
         cell.setCellValue(contractBaseInfo.getDestinationPort());
         cell.setCellStyle(blackStyle);
 
-        int nine = 9;
+        int nine = 10;
         row = sheet.createRow(nine);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("仓储费");
@@ -1050,10 +1065,10 @@ public class ExcelService {
         cell.setCellStyle(blackStyle);
         sheet.addMergedRegion(new CellRangeAddress(nine, nine, 0, 1));
         cell = row.createCell(2,CellType.STRING);
-        cell.setCellValue(140*contractBaseInfo.getTotalContractAmount());
+        cell.setCellValue((double)Math.round(0.09*contractBaseInfo.getTotalContractAmount()));
         cell.setCellStyle(blackStyle);
         cell = row.createCell(3,CellType.STRING);
-        cell.setCellValue(140*contractBaseInfo.getTotalContractAmount());
+        cell.setCellValue((double)Math.round(0.09*contractBaseInfo.getTotalContractAmount()));
         cell.setCellStyle(blackStyle);
         sheet.addMergedRegion(new CellRangeAddress(nine, nine, 2, 3));
         cell = row.createCell(4,CellType.STRING);
@@ -1064,20 +1079,20 @@ public class ExcelService {
         cell.setCellStyle(blackStyle);
         sheet.addMergedRegion(new CellRangeAddress(nine, nine, 4, 5));
         cell = row.createCell(6,CellType.STRING);
-        cell.setCellValue(0.3*contractBaseInfo.getTotalContractAmount());
+        cell.setCellValue((double)Math.round(0.3*contractBaseInfo.getTotalContractAmount()));
         cell.setCellStyle(blackStyle);
         cell = row.createCell(7,CellType.STRING);
-        cell.setCellValue(0.3*contractBaseInfo.getTotalContractAmount());
+        cell.setCellValue((double)Math.round(0.3*contractBaseInfo.getTotalContractAmount()));
         cell.setCellStyle(blackStyle);
         sheet.addMergedRegion(new CellRangeAddress(nine, nine, 6, 7));
         cell = row.createCell(8,CellType.STRING);
         cell.setCellValue("资金占用利息");
         cell.setCellStyle(blackStyle);
         cell = row.createCell(9,CellType.STRING);
-        cell.setCellValue(contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*0.007);
+        cell.setCellValue((double)Math.round(contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*0.007));
         cell.setCellStyle(blackStyle);
 
-        row = sheet.createRow(11);
+        row = sheet.createRow(13);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("产品名称");
         cell.setCellStyle(blackStyle);
@@ -1109,8 +1124,10 @@ public class ExcelService {
         cell.setCellValue("利润率(%)");
         cell.setCellStyle(blackStyle);
 
+        double total1 = 0;
+        double total2 = 0;
         for (int i = 0; i < cargoInfos.size(); i++) {
-            row = sheet.createRow(12 + i);
+            row = sheet.createRow(14 + i);
             CargoInfo cargoInfo = cargoInfos.get(i);
             cell = row.createCell(0,CellType.STRING);
             cell.setCellValue(cargoInfo.getCargoName());
@@ -1134,15 +1151,23 @@ public class ExcelService {
             cell = row.createCell(6,CellType.STRING);
             double a = 0;
             if(originCountry.equals("澳大利亚")){
-                a = unitPrice*contractBaseInfo.getExchangeRate()*1.06*1.1+0.7;
+                a = unitPrice*contractBaseInfo.getExchangeRate()*1.06*1.1+0.6;
             }else if(originCountry.equals("新西兰") || originCountry.equals("哥斯达黎加")){
-                a = unitPrice*contractBaseInfo.getExchangeRate()*1.1+0.7;
+                a = unitPrice*contractBaseInfo.getExchangeRate()*1.1+0.6;
             }else{
-                a = unitPrice*contractBaseInfo.getExchangeRate()*1.12*1.1+0.7;
+                a = unitPrice*contractBaseInfo.getExchangeRate()*1.12*1.1+0.6;
             }
-            double b = a*1.03;
+            a = Math.round(a*100)/100;
+            double b = (double)Math.round(a*1.03*100)/100;
             double c = (b-a)/1.1*cargoInfo.getContractAmount();
+            c = (double)Math.round(c*100)/100;
             double d = (b-a)/a*100;
+            d = (double)Math.round(d*100)/100;
+
+            total1 += cargoInfo.getContractAmount()*a;
+            total2 += cargoInfo.getContractAmount()*b;
+            total1 = Math.round(total1*100)/100;
+            total2 = Math.round(total2*100)/100;
 
             cell.setCellValue(a);
             cell.setCellStyle(blackStyle);
@@ -1156,8 +1181,39 @@ public class ExcelService {
             cell.setCellValue(d);
             cell.setCellStyle(blackStyle);
         }
-        
-        int begin = cargoInfos.size()+14;
+
+        int ten = 11;
+        row = sheet.createRow(ten);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("含税成本总计");
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellValue("含税成本总计");
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 0, 1));
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellValue(total1);
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellValue(total1);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 2, 3));
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellValue("预计销售额总计");
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(5,CellType.STRING);
+        cell.setCellValue("预计销售额总计");
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 4, 5));
+        cell = row.createCell(6,CellType.STRING);
+        cell.setCellValue(total2);
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(7,CellType.STRING);
+        cell.setCellValue(total2);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 6, 7));
+
+        int begin = cargoInfos.size()+16;
         row = sheet.createRow(begin);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("经办人:");
