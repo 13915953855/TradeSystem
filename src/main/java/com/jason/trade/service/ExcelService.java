@@ -356,7 +356,7 @@ public class ExcelService {
             ContractBaseInfo baseInfo = data.get(i);
             List<Object> contractList = convertContractList(baseInfo,i);
             //获取单个合同的多个商品
-            List<CargoInfo> cargoData = cargoRepository.findByContractId(baseInfo.getContractId());
+            List<CargoInfo> cargoData = cargoRepository.findByContractIdOrderByIdAsc(baseInfo.getContractId());
             if(cargoData.size()>0) {
                 //获取单个商品的多个销售记录
                 for (int j = 0; j < cargoData.size(); j++) {
@@ -739,7 +739,7 @@ public class ExcelService {
 
 
     public XSSFWorkbook hesuan(ContractBaseInfo contractBaseInfo){
-        List<CargoInfo> cargoInfos = cargoRepository.findByContractId(contractBaseInfo.getContractId());
+        List<CargoInfo> cargoInfos = cargoRepository.findByContractIdOrderByIdAsc(contractBaseInfo.getContractId());
         Set<String> businessModeSet = new HashSet<>();
         for (CargoInfo cargoInfo : cargoInfos) {
             businessModeSet.add(cargoInfo.getBusinessMode());

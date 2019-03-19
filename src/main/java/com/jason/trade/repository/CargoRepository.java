@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface CargoRepository extends JpaRepository<CargoInfo,Integer>,JpaSpecificationExecutor<CargoInfo> {
-    List<CargoInfo> findByContractId(String contractId);
+    List<CargoInfo> findByContractIdOrderByIdAsc(String contractId);
     CargoInfo findByCargoId(String cargoId);
 
     @Query(value = "update cargo_info set real_store_weight = ?2,real_store_boxes = ?3 where cargo_id = ?1 ", nativeQuery = true)

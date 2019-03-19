@@ -284,7 +284,7 @@ public class MainController {
                @RequestParam(value="status") String status,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="level") String level,
                @RequestParam(value="containerNo") String containerNo,@RequestParam(value="companyNo") String companyNo,@RequestParam(value="chk") String[] chk,
                @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,
-               @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
+               @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,@RequestParam(value="originCountry") String originCountry,
                                            @RequestParam(value="storeStartDate") String storeStartDate,@RequestParam(value="storeEndDate") String storeEndDate,
                                            @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd,
                                            @RequestParam(value="storageCondition") String storageCondition) throws UnsupportedEncodingException {
@@ -298,6 +298,7 @@ public class MainController {
         contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
         contractParam.setBusinessMode(URLDecoder.decode(businessMode, "UTF-8"));
         contractParam.setTaxPayDateStart(taxPayDateStart);
+        contractParam.setOriginCountry(originCountry);
         contractParam.setTaxPayDateEnd(taxPayDateEnd);
         contractParam.setStoreStartDate(storeStartDate);
         contractParam.setStoreEndDate(storeEndDate);

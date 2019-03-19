@@ -108,7 +108,7 @@ public class TradeController {
     }
     @RequestMapping(value = "/cargo/list")
     public String getCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        List<CargoInfo> list = cargoRepository.findByContractId(contractId);
+        List<CargoInfo> list = cargoRepository.findByContractIdOrderByIdAsc(contractId);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -116,7 +116,7 @@ public class TradeController {
     }
     @RequestMapping(value = "/internal/cargo/list")
     public String getInternalCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        List<CargoInfo> list = cargoRepository.findByContractId(contractId);
+        List<CargoInfo> list = cargoRepository.findByContractIdOrderByIdAsc(contractId);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
         result.put("rows",list);
@@ -298,7 +298,7 @@ public class TradeController {
             CargoInfo cargoInfo = cargoRepository.findByCargoId(cargoId);
             List<String> id = new ArrayList<>();
             id.add(cargoInfo.getContractId());
-            List<CargoInfo> cargoList = cargoRepository.findByContractId(cargoInfo.getContractId());
+            List<CargoInfo> cargoList = cargoRepository.findByContractIdOrderByIdAsc(cargoInfo.getContractId());
             int flag = 0;
             for (CargoInfo cargo : cargoList) {
                 if(cargo.getRealStoreWeight() > 0){

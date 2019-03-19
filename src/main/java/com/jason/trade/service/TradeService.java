@@ -165,7 +165,7 @@ public class TradeService {
         if(totalRealStoreBoxes == null || totalRealStoreBoxes <= 0) {
             List<String> id = new ArrayList<>();
             id.add(contractId);
-            List<CargoInfo> cargoList = cargoRepository.findByContractId(cargoInfo.getContractId());
+            List<CargoInfo> cargoList = cargoRepository.findByContractIdOrderByIdAsc(cargoInfo.getContractId());
             if(status.equals(GlobalConst.SELLOUT)) {
                 int flag = 0;
                 for (CargoInfo cargo : cargoList) {
