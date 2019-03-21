@@ -1213,28 +1213,62 @@ public class ExcelService {
         cell.setCellStyle(blackStyle);
         sheet.addMergedRegion(new CellRangeAddress(ten, ten, 6, 7));
 
+        XSSFCellStyle leftTextStyle = workBook.createCellStyle();
+        leftTextStyle.setAlignment(HorizontalAlignment.LEFT);
+        leftTextStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        leftTextStyle.setWrapText(true);
+        leftTextStyle.setFont(textFont);
+
         int begin = cargoInfos.size()+16;
         row = sheet.createRow(begin);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("经办人:");
-        cell.setCellStyle(textStyle);
+        cell.setCellStyle(leftTextStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellValue("经办人:");
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin, begin, 0, 1));
+
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellValue("部门经理:");
+        cell.setCellStyle(leftTextStyle);
         cell = row.createCell(4,CellType.STRING);
         cell.setCellValue("部门经理:");
-        cell.setCellStyle(textStyle);
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin, begin, 3, 4));
+
         cell = row.createCell(7,CellType.STRING);
         cell.setCellValue("资金额度审批:");
-        cell.setCellStyle(textStyle);
+        cell.setCellStyle(leftTextStyle);
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellValue("资金额度审批:");
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin, begin, 7, 8));
 
         row = sheet.createRow(begin+2);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("贸管库管审核:");
-        cell.setCellStyle(textStyle);
+        cell.setCellStyle(leftTextStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellValue("贸管库管审核:");
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin+2, begin+2, 0, 1));
+
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellValue("财务审批:");
+        cell.setCellStyle(leftTextStyle);
         cell = row.createCell(4,CellType.STRING);
         cell.setCellValue("财务审批:");
-        cell.setCellStyle(textStyle);
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin+2, begin+2, 3, 4));
+
         cell = row.createCell(7,CellType.STRING);
         cell.setCellValue("业务审批:");
-        cell.setCellStyle(textStyle);
+        cell.setCellStyle(leftTextStyle);
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellValue("业务审批:");
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin+2, begin+2, 7, 8));
 
         for (int j = 0; j < 10; j++) {
             sheet.autoSizeColumn(j);
