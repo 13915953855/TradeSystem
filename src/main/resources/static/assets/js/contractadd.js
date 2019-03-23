@@ -7,7 +7,6 @@ $(function () {
     var oTable = new TableInit();
     oTable.Init();
 
-    initCargoList();
     initOriginCountry();
     initStorageCondition();
     initPriceCondition();
@@ -19,6 +18,7 @@ $(function () {
     initAgent();
     initBank();
     initWarehouse();
+    initCargoList();
 
     $("#level").select2({
         tags: true
@@ -29,6 +29,12 @@ $(function () {
     });
     $("#currency").change(function(){
         $("#currencyNotice").html("提示：当前选择的币种是 "+$("#currency").val());
+    });
+    $("#cargoType").change(function(){
+        $("#cargoName").empty();
+        initCargoList();
+        $("#externalCompany").empty();
+        initExternalCompany();
     });
 
     payTypeChange();

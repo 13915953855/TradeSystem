@@ -401,28 +401,30 @@ public class ExcelService {
                                 }
                             }
                             int cargoSize = 0;
-                            for (int k = 0; k < GlobalConst.HEAD_CARGO_ARRAY.length; k++) {
-                                if(chkArr[GlobalConst.HEAD_CONTRACT_ARRAY.length +k].equals("1")) {
-                                    //重复写入单条商品信息
-                                    Object value = cargoList.get(k);
-                                    if (value instanceof String) {
-                                        cell = row.createCell(firstSize + cargoSize++, CellType.STRING);//从商品的单元格开始写，下标是50
-                                        cell.setCellValue(String.valueOf(cargoList.get(k)));
-                                        if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
-                                            //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
-                                            cell.setCellStyle(dateCellStyle);
-                                        }
-                                    } else {
-                                        cell = row.createCell(firstSize + cargoSize++, CellType.NUMERIC);//从商品的单元格开始写，下标是50
-                                        if (value instanceof Integer) {
-                                            cell.setCellValue((Integer) value);
-                                        } else if (value instanceof Float) {
-                                            cell.setCellValue((Float) value);
+                            if(saleEnd == start+1) {
+                                for (int k = 0; k < GlobalConst.HEAD_CARGO_ARRAY.length; k++) {
+                                    if (chkArr[GlobalConst.HEAD_CONTRACT_ARRAY.length + k].equals("1")) {
+                                        //重复写入单条商品信息
+                                        Object value = cargoList.get(k);
+                                        if (value instanceof String) {
+                                            cell = row.createCell(firstSize + cargoSize++, CellType.STRING);//从商品的单元格开始写，下标是50
+                                            cell.setCellValue(String.valueOf(cargoList.get(k)));
+                                            if (String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")) {//日期
+                                                //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
+                                                cell.setCellStyle(dateCellStyle);
+                                            }
                                         } else {
-                                            if (value != null && StringUtils.isNotBlank(String.valueOf(value))) {
-                                                cell.setCellValue((Double) value);
+                                            cell = row.createCell(firstSize + cargoSize++, CellType.NUMERIC);//从商品的单元格开始写，下标是50
+                                            if (value instanceof Integer) {
+                                                cell.setCellValue((Integer) value);
+                                            } else if (value instanceof Float) {
+                                                cell.setCellValue((Float) value);
                                             } else {
-                                                cell.setCellValue(0.0);
+                                                if (value != null && StringUtils.isNotBlank(String.valueOf(value))) {
+                                                    cell.setCellValue((Double) value);
+                                                } else {
+                                                    cell.setCellValue(0.0);
+                                                }
                                             }
                                         }
                                     }
@@ -469,35 +471,33 @@ public class ExcelService {
                     }
                 }
                 //重复写入单个合同信息
-                for (int j = saleStart; j < saleEnd; j++) {
-                    //创建行
-                    XSSFRow row = sheet.getRow(j);
-                    //获取单元格
-                    XSSFCell cell = null;
-                    int contractSize = 0;
-                    for (int k = 0; k < GlobalConst.HEAD_CONTRACT_ARRAY.length; k++) {
-                        if(chkArr[k].equals("1")) {
-                            //重复写入单条合同信息
-                            Object value = contractList.get(k);
-                            if (value instanceof String) {
-                                cell = row.createCell(contractSize++, CellType.STRING);
-                                cell.setCellValue(String.valueOf(value));
-                                if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
-                                    //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
-                                    cell.setCellStyle(dateCellStyle);
-                                }
+                //创建行
+                XSSFRow row = sheet.getRow(saleStart);
+                //获取单元格
+                XSSFCell cell = null;
+                int contractSize = 0;
+                for (int k = 0; k < GlobalConst.HEAD_CONTRACT_ARRAY.length; k++) {
+                    if(chkArr[k].equals("1")) {
+                        //重复写入单条合同信息
+                        Object value = contractList.get(k);
+                        if (value instanceof String) {
+                            cell = row.createCell(contractSize++, CellType.STRING);
+                            cell.setCellValue(String.valueOf(value));
+                            if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
+                                //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
+                                cell.setCellStyle(dateCellStyle);
+                            }
+                        } else {
+                            cell = row.createCell(contractSize++, CellType.NUMERIC);
+                            if (value instanceof Integer) {
+                                cell.setCellValue((Integer) value);
+                            } else if (value instanceof Float) {
+                                cell.setCellValue((Float) value);
                             } else {
-                                cell = row.createCell(contractSize++, CellType.NUMERIC);
-                                if (value instanceof Integer) {
-                                    cell.setCellValue((Integer) value);
-                                } else if (value instanceof Float) {
-                                    cell.setCellValue((Float) value);
+                                if (value != null && StringUtils.isNotBlank(String.valueOf(value))) {
+                                    cell.setCellValue((Double) value);
                                 } else {
-                                    if (value != null && StringUtils.isNotBlank(String.valueOf(value))) {
-                                        cell.setCellValue((Double) value);
-                                    } else {
-                                        cell.setCellValue(0.0);
-                                    }
+                                    cell.setCellValue(0.0);
                                 }
                             }
                         }

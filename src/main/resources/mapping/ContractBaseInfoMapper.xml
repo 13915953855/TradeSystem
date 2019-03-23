@@ -937,6 +937,9 @@
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
     </if>
+    <if test="cargoType != null and cargoType != ''" >
+      and a.cargo_type = '${cargoType}'
+    </if>
     <if test="isYahui != null and isYahui != ''" >
       and a.is_yahui = '${isYahui}'
     </if>

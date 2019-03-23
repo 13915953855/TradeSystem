@@ -13,6 +13,16 @@ public class OptionInfo {
     private String name;
     @Column(name="group")
     private String group;
+    @Column(name="field")
+    private String field;
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
 
     public Integer getId() {
         return id;

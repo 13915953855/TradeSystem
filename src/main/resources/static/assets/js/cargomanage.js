@@ -27,6 +27,11 @@ $(function () {
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    $("#cargoType").change(function(){
+        $("#cargoName").empty();
+        $("#cargoName").append("<option>全部</option>");
+        initCargoList();
+    });
     initCargoList();
     initWarehouse();
 });
@@ -143,6 +148,7 @@ var TableInit = function () {
             level: $("#level").val() == "全部"?"":$("#level").val(),
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
             cargoNo: $("#cargoNo").val(),
+            cargoType: $("#cargoType").val(),
             customerName: $("#customerName").val(),
             containerNo: $("#containerNo").val(),
             companyNo: $("#companyNo").val(),
@@ -173,6 +179,7 @@ function getTotalStore(){
         ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
         cargoNo: $("#cargoNo").val(),
+        cargoType: $("#cargoType").val(),
         storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
         customerName: $("#customerName").val(),
         containerNo: $("#containerNo").val(),
@@ -223,6 +230,7 @@ function resetQuery(){
     $("#storageCondition").val("全部").trigger("change");
     $("#businessMode").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
+    $("#cargoType").val("").trigger("change");
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
     $("#containerNo").val("");

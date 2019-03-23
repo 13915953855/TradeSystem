@@ -24,12 +24,20 @@ $(function () {
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    $("#cargoType").change(function(){
+        $("#cargoName").empty();
+        $("#cargoName").append("<option>全部</option>");
+        initCargoList();
+        $("#externalCompany").empty();
+        $("#externalCompany").append("<option>全部</option>");
+        initExternalCompany();
+    });
     initLevel();
     initBusinessMode();
     initExternalCompany();
     initCargoList();
     initAgent();
-    initOriginCountryQuery();
+    initOriginCountry();
     if(queryType == "" || queryType == null || queryType == undefined){
         $("#totalInfoDiv").show();
         $("#btn_excel").show();
@@ -39,21 +47,6 @@ $(function () {
         $("#btn_excel").hide();
     }
 });
-function initOriginCountryQuery(){
-    var opts = "";
-    opts += "<option>全部</option>";
-    opts += "<option>澳大利亚</option>";
-    opts += "<option>乌拉圭</option>";
-    opts += "<option>巴西</option>";
-    opts += "<option>加拿大</option>";
-    opts += "<option>美国</option>";
-    opts += "<option>阿根廷</option>";
-    opts += "<option>白俄罗斯</option>";
-    opts += "<option>南非</option>";
-    opts += "<option>哥斯达黎加</option>";
-    opts += "<option>新西兰</option>";
-    $("#originCountry").append(opts);
-}
 var toFloat = function (value) {
     value = Math.round(parseFloat(value) * 100) / 100;
     if (value.toString().indexOf(".") < 0) {
@@ -186,6 +179,7 @@ function getTotalInfo(){
         etdEndDate: $("#etdEndDate").val(),
         cargoName: cargoName,
         cargoNo: $("#cargoNo").val(),
+        cargoType: $("#cargoType").val(),
         tariffNo: $("#tariffNo").val(),
         level: level,
         agent: agent,
@@ -432,6 +426,7 @@ var TableInit = function () {
             etdEndDate: $("#etdEndDate").val(),
             cargoName: cargoName,
             cargoNo: $("#cargoNo").val(),
+            cargoType: $("#cargoType").val(),
             tariffNo: $("#tariffNo").val(),
             level: level,
             agent: agent,
@@ -662,6 +657,7 @@ var ButtonInit = function () {
             var containerNo=$("#containerNo").val();
             var cargoNo=$("#cargoNo").val();
             var companyNo= $("#companyNo").val();
+            var cargoType= $("#cargoType").val();
             var ladingbillNo= $("#ladingbillNo").val();
 
             var chk = new Array();
@@ -691,6 +687,7 @@ var ButtonInit = function () {
             params += "&level="+level;
             params += "&agent="+agent;
             params += "&containerNo="+containerNo;
+            params += "&cargoType="+cargoType;
             params += "&cargoNo="+cargoNo;
             params += "&companyNo="+companyNo;
             params += "&ladingbillNo="+ladingbillNo;

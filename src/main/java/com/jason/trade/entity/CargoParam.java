@@ -11,6 +11,7 @@ public class CargoParam {
     private String level;
     private String cargoName;
     private String cargoNo;
+    private String cargoType;
     private String warehouse;
     private String storeStartDate;
     private String storeEndDate;
@@ -34,6 +35,14 @@ public class CargoParam {
     private int start;
     private int limit;
     private int expectStoreBoxes;
+
+    public String getCargoType() {
+        return cargoType;
+    }
+
+    public void setCargoType(String cargoType) {
+        this.cargoType = cargoType;
+    }
 
     public int getExpectStoreBoxes() {
         return expectStoreBoxes;

@@ -68,14 +68,17 @@
   </select>
   <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
-    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
-    UNION select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
+    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
+    UNION select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
     where 1 = 1
     <if test="contractNo != null" >
       and b.external_contract like '%${contractNo}%'
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and b.storage_condition = '${storageCondition}'
+    </if>
+    <if test="cargoType != null and cargoType != ''" >
+      and b.cargo_type = '${cargoType}'
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and b.owner_company = '${ownerCompany}'
@@ -141,8 +144,8 @@
   </select>
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
     select count(1) from (
-    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
-    UNION select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
+    select a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
+    UNION select a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
     where 1 = 1
     <if test="contractNo != null" >
       and b.external_contract like '%${contractNo}%'
@@ -152,6 +155,9 @@
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and b.owner_company = '${ownerCompany}'
+    </if>
+    <if test="cargoType != null and cargoType != ''" >
+      and b.cargo_type = '${cargoType}'
     </if>
     <if test="insideContract != null" >
       and b.inside_contract like '%${insideContract}%'
@@ -216,6 +222,9 @@
     where 1=1 and a.status in ('4','5')
     <if test="contractId != null and contractId != ''" >
       and b.contract_id = '${contractId}'
+    </if>
+    <if test="cargoType != null and cargoType != ''" >
+      and b.cargo_type = '${cargoType}'
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and b.owner_company = '${ownerCompany}'
@@ -286,6 +295,9 @@
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and b.storage_condition = '${storageCondition}'
+    </if>
+    <if test="cargoType != null and cargoType != ''" >
+      and b.cargo_type = '${cargoType}'
     </if>
     <if test="contractNo != null and contractNo != ''" >
       and b.external_contract like '%${contractNo}%'

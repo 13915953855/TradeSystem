@@ -48,12 +48,18 @@ function checkSelectOptionExist(id,val){
     }
 }
 function initCargoList(){
+    var group = "";
+    if($("#cargoType").val() == undefined || $("#cargoType").val() == null || $("#cargoType").val() == ''){
+        group = "牛产品";
+    }else{
+        group = $("#cargoType").val();
+    }
     var cargoList = '';
     $.ajax({
         url:'/trade/common/getOption',
         type:"POST",
         dataType:"json",
-        data:{'type':'cargo'},
+        data:{'group':group,'field':'cargoName'},
         success:function(res){
             for(var i=0;i<res.data.length;i++){
                 cargoList += "<option>"+res.data[i].name+"</option>";
@@ -66,6 +72,7 @@ function initCargoList(){
 function initWarehouse(){
     var opts = "";
     opts += "<option>库外</option>";
+    opts += "<option>澳米特</option>";
     opts += "<option>名联纪丰</option>";
     opts += "<option>名联青浦</option>";
     opts += "<option>领升</option>";
@@ -99,14 +106,44 @@ function initOriginCountry(){
     var opts = "";
     opts += "<option></option>";
     opts += "<option>澳大利亚</option>";
-    opts += "<option>乌拉圭</option>";
-    opts += "<option>巴西</option>";
-    opts += "<option>加拿大</option>";
+    opts += "<option>爱尔兰</option>";
     opts += "<option>阿根廷</option>";
     opts += "<option>白俄罗斯</option>";
-    opts += "<option>新西兰</option>";
+    opts += "<option>巴西</option>";
+    opts += "<option>比利时</option>";
+    opts += "<option>丹麦</option>";
+    opts += "<option>德国</option>";
     opts += "<option>法国</option>";
+    opts += "<option>荷兰</option>";
+    opts += "<option>加拿大</option>";
+    opts += "<option>美国</option>";
+    opts += "<option>葡萄牙</option>";
+    opts += "<option>乌拉圭</option>";
+    opts += "<option>西班牙</option>";
+    opts += "<option>匈牙利</option>";
+    opts += "<option>新西兰</option>";
+    opts += "<option>英国</option>";
+    opts += "<option>智利</option>";
     $("#originCountry").append(opts);
+    /*var group = "";
+    if($("#cargoType").val() == undefined || $("#cargoType").val() == null || $("#cargoType").val() == ''){
+        group = "牛产品";
+    }else{
+        group = $("#cargoType").val();
+    }
+    var opts = '';
+    $.ajax({
+        url:'/trade/common/getOption',
+        type:"POST",
+        dataType:"json",
+        data:{'group':group,'field':'originCountry'},
+        success:function(res){
+            for(var i=0;i<res.data.length;i++){
+                opts += "<option>"+res.data[i].name+"</option>";
+            }
+            $("#originCountry").append(opts);
+        }
+    });*/
 }
 
 function initAgent() {
@@ -161,28 +198,25 @@ function initDestinationPort(){
 }
 
 function initExternalCompany(){
+    var group = "";
+    if($("#cargoType").val() == undefined || $("#cargoType").val() == null || $("#cargoType").val() == ''){
+        group = "牛产品";
+    }else{
+        group = $("#cargoType").val();
+    }
     var opts = "";
-    opts += "<option></option>";
-    opts += "<option>TEYS AUS</option>";
-    opts += "<option>SANGER</option>";
-    opts += "<option>FRISA</option>";
-    opts += "<option>JBS AUS</option>";
-    opts += "<option>KPC HK</option>";
-    opts += "<option>JOC AUS</option>";
-    opts += "<option>STANBROKE</option>";
-    opts += "<option>THOMAS</option>";
-    opts += "<option>HARVEY</option>";
-    opts += "<option>MOGILEV MEAT</option>";
-    opts += "<option>MINEVER</option>";
-    opts += "<option>MATABOI</option>";
-    opts += "<option>MARFRIG</option>";
-    opts += "<option>MTT</option>";
-    opts += "<option>GORINA</option>";
-    opts += "<option>CARGILL</option>";
-    opts += "<option>ARREBEEF</option>";
-    opts += "<option>TOMEX</option>";
-    opts += "<option>ASHLEIGH PARK BEEF</option>";
-    $("#externalCompany").append(opts);
+    $.ajax({
+        url:'/trade/common/getOption',
+        type:"POST",
+        dataType:"json",
+        data:{'group':group,'field':'externalCompany'},
+        success:function(res){
+            for(var i=0;i<res.data.length;i++){
+                opts += "<option>"+res.data[i].name+"</option>";
+            }
+            $("#externalCompany").append(opts);
+        }
+    });
 }
 
 function initBusinessMode(){
@@ -295,4 +329,26 @@ function alarm(index){
     }else if(index == 5){
 
     }
+}
+
+function initOptions(id) {
+    var group = "";
+    if($("#cargoType").val() == undefined || $("#cargoType").val() == null || $("#cargoType").val() == ''){
+        group = "牛产品";
+    }else{
+        group = $("#cargoType").val();
+    }
+    var opts = "";
+    $.ajax({
+        url:'/trade/common/getOption',
+        type:"POST",
+        dataType:"json",
+        data:{'group':group,'field':id},
+        success:function(res){
+            for(var i=0;i<res.data.length;i++){
+                opts += "<option>"+res.data[i].name+"</option>";
+            }
+            $("#"+id).append(opts);
+        }
+    });
 }

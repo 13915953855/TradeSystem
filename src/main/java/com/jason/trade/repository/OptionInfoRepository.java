@@ -11,5 +11,5 @@ import java.util.List;
  * @Description:
  */
 public interface OptionInfoRepository extends JpaRepository<OptionInfo,Integer> {
-    List<OptionInfo> findByGroupEquals(String group);
+    List<OptionInfo> findByGroupEqualsAndFieldEqualsOrderByNameAsc(String group,String field);
 }

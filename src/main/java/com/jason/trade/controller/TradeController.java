@@ -70,6 +70,7 @@ public class TradeController {
         contractParam.setStart(offset);
         contractParam.setLimit(limit);
         contractParam.setSortName("contract_date");
+        contractParam.setSortOrder("desc");
         String type = contractParam.getType();
         JSONObject result = new JSONObject();
         if(StringUtils.isBlank(type)){
@@ -666,8 +667,8 @@ public class TradeController {
     }
 
     @RequestMapping("/common/getOption")
-    public String getCommonOption(@RequestParam("type") String group) throws JSONException {
-        List<OptionInfo> data = optionInfoRepository.findByGroupEquals(group);
+    public String getCommonOption(@RequestParam("group") String group, @RequestParam("field") String field) throws JSONException {
+        List<OptionInfo> data = optionInfoRepository.findByGroupEqualsAndFieldEqualsOrderByNameAsc(group,field);
         JSONObject result = new JSONObject();
         result.put("data",data);
         return result.toString();
