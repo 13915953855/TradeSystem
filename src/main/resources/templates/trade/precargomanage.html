@@ -112,26 +112,62 @@
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="cargoNo"/>
                                     </div>
-                                </div>
-                                <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">产品名称</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control select2" id="cargoName">
-                                            <option>全部</option>
-                                        </select>
-                                    </div>
-                                    <label class="control-label col-sm-1">产品级别</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control select2" id="level">
-                                            <option>全部</option>
-                                        </select>
-                                    </div>
                                     <label class="control-label col-sm-1">预售客户名称</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control" id="customerName"/>
                                     </div>
                                 </div>
                                 <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">商品属性</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="cargoType">
+                                            <option></option>
+                                            <option>牛产品</option>
+                                            <option>猪产品</option>
+                                            <option>禽产品</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">外商</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="externalCompany" multiple="multiple">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">原产地</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="originCountry" multiple="multiple">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">产品名称</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="cargoName">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">产品级别</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="level" multiple="multiple">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">目的港</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="destinationPort" multiple="multiple">
+                                            <option>全部</option>
+                                            <option>上海</option>
+                                            <option>天津</option>
+                                            <option>深圳</option>
+                                            <option>连云港</option>
+                                            <option>张家港</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">厂号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="companyNo"/>
+                                    </div>
                                     <label class="control-label col-sm-1">状态</label>
                                     <div class="col-sm-2">
                                         <select class="form-control select2" id="status">
@@ -140,16 +176,66 @@
                                             <option value="1">已预售</option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-1">厂号</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="companyNo"/>
-                                    </div>
 
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">合同日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="contractStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="contractEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">未预售重量最小值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="minWeight"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">未预售重量最大值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="maxWeight"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">ETD日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="etdStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="etdEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">ETA日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="etaStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="etaEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-1">业务模式</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control select2" id="businessMode">
+                                        <select class="form-control select2" id="businessMode" multiple="multiple">
                                             <option>全部</option>
                                         </select>
                                     </div>
@@ -170,24 +256,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!--<div class="form-group">
-                                    <label class="control-label col-sm-1">现库存箱数最小值:</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="minBox"/>
-                                    </div>
-                                    <label class="control-label col-sm-1">现库存箱数最大值:</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="maxBox"/>
-                                    </div>
-                                    <label class="control-label col-sm-1">现库存重量最小值:</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="minWeight"/>
-                                    </div>
-                                    <label class="control-label col-sm-1">现库存重量最大值:</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="maxWeight"/>
-                                    </div>
-                                </div>-->
                                 <div class="form-group" style="">
                                     <div class="col-sm-12" style="text-align:right;">
                                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
@@ -197,20 +265,20 @@
                             </form>
                         </div>
                     </div>
-                    <!--<div class="panel panel-default" style="margin-bottom: -5px;">
+                    <div class="panel panel-default" style="margin-bottom: -5px;">
                         <div class="panel-body">
                             <div class="form-group" style="">
-                                <label class="control-label col-sm-2">当前库存总重量:</label>
+                                <label class="control-label col-sm-2">未预售总重量:</label>
                                 <div class="col-sm-2">
-                                    <span id="totalStoreWeight"></span>
+                                    <span id="totalStoreAmount"></span>
                                 </div>
-                                <label class="control-label col-sm-2">当前库存总箱数:</label>
+                                <label class="control-label col-sm-2">合同总重量:</label>
                                 <div class="col-sm-2">
-                                    <span id="totalStoreBoxes"></span>
+                                    <span id="totalContractAmount"></span>
                                 </div>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                     <table id="tb_cargo"></table>
                 </div>
             </div>

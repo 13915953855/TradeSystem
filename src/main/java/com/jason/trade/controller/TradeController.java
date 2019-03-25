@@ -31,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/trade")
@@ -182,6 +183,12 @@ public class TradeController {
         JSONObject result = tradeService.getTotalStore(cargoParam);
         return result.toString();
     }
+    @RequestMapping(value = "/cargo/getPreTotal")
+    public String getPreTotal(CargoParam cargoParam) throws JSONException {
+        JSONObject result = tradeService.getPreTotal(cargoParam);
+        return result.toString();
+    }
+
 
     @RequestMapping(value = "/sale/list")
     public String getSaleList(@RequestParam("cargoId") String cargoId) throws JSONException {
@@ -690,8 +697,16 @@ public class TradeController {
         }
         PreSaleInfo data = preSaleRepository.save(saleInfo);
         CargoInfo cargoInfo = new CargoInfo();
-        cargoInfo.setCargoId(saleInfo.getCargoId());
+        String cargoId = saleInfo.getCargoId();
+        CargoInfo cargoInfoTmp = cargoRepository.findByCargoId(cargoId);
+        cargoInfo.setCargoId(cargoId);
         cargoInfo.setExpectStoreBoxes(1);
+
+        //获取已预售的重量
+        List<PreSaleInfo> record = preSaleRepository.findByCargoId(cargoId);
+        Double totalPreSaleWeight = record.stream().map(PreSaleInfo::getExpectSaleWeight).reduce(Double::sum).get();
+        Double expectStoreWeight = cargoInfoTmp.getExpectStoreWeight() - totalPreSaleWeight;
+        cargoInfo.setExpectStoreWeight(expectStoreWeight);//未预售重量
         cargoInfoMapper.updateByCargoId(cargoInfo);
 
         SysLog sysLog = new SysLog();

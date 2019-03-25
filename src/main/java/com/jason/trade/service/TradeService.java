@@ -334,6 +334,19 @@ public class TradeService {
         result.put("status","1");
         return result;
     }
+    public JSONObject getPreTotal(CargoParam cargoParam){
+        JSONObject result = new JSONObject();
+        List<CargoManageInfo> record = cargoInfoMapper.selectTotalByExampleForPre(cargoParam);
+        if(record.size() > 0) {
+            result.put("totalStoreAmount", record.get(0).getExpectStoreWeight());
+            result.put("totalContractAmount", record.get(0).getContractAmount());
+        }else{
+            result.put("totalStoreAmount", 0);
+            result.put("totalContractAmount",0);
+        }
+        result.put("status","1");
+        return result;
+    }
     public JSONObject getTotalInfo(ContractParam contractParam){
         JSONObject result = new JSONObject();
         revertStatus(contractParam);

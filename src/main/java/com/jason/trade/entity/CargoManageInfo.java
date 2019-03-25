@@ -8,8 +8,26 @@ public class CargoManageInfo extends CargoInfo {
     private String warehouse;
     private String storeDate;
     private String containerNo;
+    private String yysWeight;
     private String ladingbillNo;
     private String status;
+    private String expectSailingDate;
+
+    public String getExpectSailingDate() {
+        return expectSailingDate;
+    }
+
+    public void setExpectSailingDate(String expectSailingDate) {
+        this.expectSailingDate = expectSailingDate;
+    }
+
+    public String getYysWeight() {
+        return yysWeight;
+    }
+
+    public void setYysWeight(String yysWeight) {
+        this.yysWeight = yysWeight;
+    }
 
     public String getStatus() {
         return status;

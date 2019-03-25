@@ -7,6 +7,7 @@ public class CargoParam {
     private String contractId;
     private String contractNo;
     private String importContractNo;
+    private String externalCompany;
     private String insideContract;
     private String level;
     private String cargoName;
@@ -17,6 +18,10 @@ public class CargoParam {
     private String storeEndDate;
     private String contractStartDate;
     private String contractEndDate;
+    private String etaStartDate;
+    private String etaEndDate;
+    private String etdStartDate;
+    private String etdEndDate;
     private String customerName;
     private String containerNo;
     private String ladingbillNo;
@@ -32,9 +37,67 @@ public class CargoParam {
     private String ownerCompany;
     private String kaifapiao;
     private String storageCondition;
+    private String originCountry;
+    private String destinationPort;
     private int start;
     private int limit;
     private int expectStoreBoxes;
+
+    public String getEtaStartDate() {
+        return etaStartDate;
+    }
+
+    public void setEtaStartDate(String etaStartDate) {
+        this.etaStartDate = etaStartDate;
+    }
+
+    public String getEtaEndDate() {
+        return etaEndDate;
+    }
+
+    public void setEtaEndDate(String etaEndDate) {
+        this.etaEndDate = etaEndDate;
+    }
+
+    public String getEtdStartDate() {
+        return etdStartDate;
+    }
+
+    public void setEtdStartDate(String etdStartDate) {
+        this.etdStartDate = etdStartDate;
+    }
+
+    public String getEtdEndDate() {
+        return etdEndDate;
+    }
+
+    public void setEtdEndDate(String etdEndDate) {
+        this.etdEndDate = etdEndDate;
+    }
+
+    public String getDestinationPort() {
+        return destinationPort;
+    }
+
+    public void setDestinationPort(String destinationPort) {
+        this.destinationPort = destinationPort;
+    }
+
+    public String getOriginCountry() {
+        return originCountry;
+    }
+
+    public void setOriginCountry(String originCountry) {
+        this.originCountry = originCountry;
+    }
+
+    public String getExternalCompany() {
+        return externalCompany;
+    }
+
+    public void setExternalCompany(String externalCompany) {
+        this.externalCompany = externalCompany;
+    }
 
     public String getCargoType() {
         return cargoType;

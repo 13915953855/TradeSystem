@@ -210,6 +210,10 @@ public class MainController {
         CargoInfo cargoInfo = cargoRepository.findOne(id);
         model.addAttribute("cargo",cargoInfo);
         model.addAttribute("action","view");
+        Double contractAmount = cargoInfo.getContractAmount();
+        Double expectStoreWeight = cargoInfo.getExpectStoreWeight();
+        model.addAttribute("yysWeight",contractAmount - expectStoreWeight);
+        model.addAttribute("wysWeight",expectStoreWeight);
         ContractBaseInfo contractBaseInfo = contractRepository.findByContractId(cargoInfo.getContractId());
         if(contractBaseInfo != null) {
             model.addAttribute("externalContract", contractBaseInfo.getExternalContract());

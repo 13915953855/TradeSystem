@@ -16,6 +16,7 @@ public interface CargoInfoMapper {
     CargoInfo selectByCargoId(String cargoId);
     List<CargoManageInfo> selectByExample(CargoParam cargoParam);
     List<CargoManageInfo> selectByExampleForPre(CargoParam cargoParam);
+    List<CargoManageInfo> selectTotalByExampleForPre(CargoParam cargoParam);
     Integer getTotalStoreWeightByExample(CargoParam cargoParam);
     Integer getInternalTotalStoreWeightByExample(CargoParam cargoParam);
     Integer getTotalStoreBoxesByExample(CargoParam cargoParam);
