@@ -19,7 +19,6 @@ $(function () {
     initLevel();
     initUser();
     $("#cargoDiv input[type=text]").attr('disabled','disabled');
-    getPreSale();
 });
 
 var TableInit = function () {
@@ -212,19 +211,4 @@ function initUser(){
     opts += "<option>凌骁</option>";
     opts += "<option>景远方</option>";
     $("#pickupUser").append(opts);
-}
-
-function getPreSale(){
-    $.ajax({
-        url:"/trade/presale/total",
-        type:"POST",
-        dataType:"json",
-        data:{"cargoId":$("#cargoId").val()},
-        success:function(res){
-            if(res.status == "1"){
-                $("#yysweight").val(toFloat(res.yys));
-                $("#wysweight").val(toFloat(res.wys));
-            }
-        }
-    });
 }

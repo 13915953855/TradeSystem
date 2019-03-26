@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -681,11 +682,6 @@ public class TradeController {
         return result.toString();
     }
 
-    @RequestMapping(value = "/presale/total")
-    public String getpresale(@RequestParam("cargoId") String cargoId) throws JSONException {
-        JSONObject result = tradeService.getPreSaleTotal(cargoId);
-        return result.toString();
-    }
     @PostMapping(value="/presale/add")
     public String presaleAdd(PreSaleInfo saleInfo, HttpSession session){
         saleInfo.setStatus(GlobalConst.ENABLE);
@@ -700,7 +696,7 @@ public class TradeController {
         String cargoId = saleInfo.getCargoId();
         CargoInfo cargoInfoTmp = cargoRepository.findByCargoId(cargoId);
         cargoInfo.setCargoId(cargoId);
-        cargoInfo.setExpectStoreBoxes(1);
+        cargoInfo.setExpectStoreBoxes(1);//1-已预售，0-未预售
 
         //获取已预售的重量
         List<PreSaleInfo> record = preSaleRepository.findByCargoId(cargoId);
@@ -719,19 +715,31 @@ public class TradeController {
     }
 
     @PostMapping(value="/presale/delete")
+    @Transactional
     public String presaleDel(@RequestParam("ids") String ids, HttpSession session){
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         if(StringUtils.isNotBlank(ids)) {
             String[] arr = ids.split(",");
             List<String> saleIdList = Arrays.asList(arr);
+            List<PreSaleInfo> record = preSaleRepository.findBySaleId(saleIdList);
+            Double totalExpectSaleWeight = record.stream().map(PreSaleInfo::getExpectSaleWeight).reduce(Double::sum).get();
+
+            //预售状态变更
+            String cargoId = record.get(0).getCargoId();
+            CargoInfo cargoInfo = cargoRepository.findByCargoId(cargoId);
+            Double expectStoreWeight = cargoInfo.getExpectStoreWeight();
+            Double contractAmount = cargoInfo.getContractAmount();
+
+            cargoInfo.setExpectStoreWeight(expectStoreWeight + totalExpectSaleWeight);
+            if(contractAmount == cargoInfo.getExpectStoreWeight()){
+                cargoInfo.setExpectStoreBoxes(0);//1-已预售，0-未预售
+            }
+            cargoInfoMapper.updateByCargoId(cargoInfo);
+
             preSaleRepository.deleteSaleInfo(saleIdList);
         }
 
-        //todo 预售状态变更
-        /*CargoInfo cargoInfo = new CargoInfo();
-        cargoInfo.setCargoId(saleInfo.getCargoId());
-        cargoInfo.setExpectStoreBoxes(1);
-        cargoInfoMapper.updateByCargoId(cargoInfo);*/
+
 
 
         SysLog sysLog = new SysLog();

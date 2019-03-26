@@ -674,14 +674,4 @@ public class TradeService {
         result.put("rows",cargoInfoMapper.getStoreList(cargoParam));
         return result;
     }
-
-    public JSONObject getPreSaleTotal(String cargoId){
-        JSONObject result = new JSONObject();
-        CargoInfo cargoInfo = cargoInfoMapper.selectByCargoId(cargoId);
-        Float yys = preSaleInfoMapper.getPreSaleTotal(cargoId);
-        result.put("status","1");
-        result.put("yys",yys);
-        result.put("wys",cargoInfo.getContractAmount() - yys);
-        return result;
-    }
 }
