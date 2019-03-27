@@ -254,7 +254,7 @@ public class TradeController {
             cargoInfo.setCreateUser(userInfo.getAccount());
             cargoInfo.setCreateDateTime(now);
             cargoInfo.setExpectStoreBoxes(GlobalConst.UNPRESALED);
-            cargoInfo.setExpectStoreWeight(cargoInfo.getInvoiceAmount());
+            cargoInfo.setExpectStoreWeight(cargoInfo.getContractAmount());
             log.info("保存商品开始");
             cargoRepository.save(cargoInfo);
             log.info("保存商品完毕");
@@ -274,12 +274,12 @@ public class TradeController {
             cargoInfo.setCreateUser(userInfo.getAccount());
             cargoInfo.setCreateDateTime(now);
             List<PreSaleInfo> preSaleInfoList = preSaleRepository.findByCargoId(cargoId);
-            Double expectStoreWeight = cargoInfo.getInvoiceAmount();
+            Double expectStoreWeight = cargoInfo.getContractAmount();
             for (PreSaleInfo preSaleInfo : preSaleInfoList) {
                 expectStoreWeight = expectStoreWeight - preSaleInfo.getExpectSaleWeight();
             }
             cargoInfo.setExpectStoreWeight(expectStoreWeight);
-            if(expectStoreWeight.equals(cargoInfo.getInvoiceAmount())){
+            if(expectStoreWeight.equals(cargoInfo.getContractAmount())){
                 cargoInfo.setExpectStoreBoxes(GlobalConst.UNPRESALED);
             }else{
                 cargoInfo.setExpectStoreBoxes(GlobalConst.PRESALED);
@@ -696,7 +696,7 @@ public class TradeController {
         String cargoId = saleInfo.getCargoId();
         CargoInfo cargoInfoTmp = cargoRepository.findByCargoId(cargoId);
         cargoInfo.setCargoId(cargoId);
-        cargoInfo.setExpectStoreBoxes(1);//1-已预售，0-未预售
+        cargoInfo.setExpectStoreBoxes(GlobalConst.PRESALED);//1-已预售，0-未预售
 
         //获取已预售的重量
         List<PreSaleInfo> record = preSaleRepository.findByCargoId(cargoId);
@@ -732,15 +732,12 @@ public class TradeController {
 
             cargoInfo.setExpectStoreWeight(expectStoreWeight + totalExpectSaleWeight);
             if(contractAmount == cargoInfo.getExpectStoreWeight()){
-                cargoInfo.setExpectStoreBoxes(0);//1-已预售，0-未预售
+                cargoInfo.setExpectStoreBoxes(GlobalConst.UNPRESALED);//1-已预售，0-未预售
             }
             cargoInfoMapper.updateByCargoId(cargoInfo);
 
             preSaleRepository.deleteSaleInfo(saleIdList);
         }
-
-
-
 
         SysLog sysLog = new SysLog();
         sysLog.setDetail("删除预售记录"+ids);
