@@ -458,14 +458,12 @@
     ORDER BY id desc limit 0,15
   </select>
   <update id="updateStatusByField" parameterType="com.jason.trade.entity.ContractParam">
-    update contract_base_info set status = '${status}' where ${fieldName} != '' and ${fieldName} &lt;= '${today}'
+    update contract_base_info set status = '${status}' where ${fieldName} != '' and ${fieldName} &lt;= '${today}' and status &lt; '${status}'
   </update>
   <update id="updateCargoStatusByField" parameterType="com.jason.trade.entity.ContractParam">
     update cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id set a.status = '${status}'
     where b.${fieldName} != '' and b.${fieldName} &lt;= '${today}' and a.status = '${cargoStatus}'
   </update>
-
-
 
   <select id="queryCargoListByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
     select a.id,a.eta,a.etd,a.expect_sailing_date,a.destination_port,b.company_no,a.contract_date,a.external_contract,a.inside_contract,a.external_company,
