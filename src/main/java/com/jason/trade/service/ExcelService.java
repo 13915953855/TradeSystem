@@ -1017,13 +1017,13 @@ public class ExcelService {
         String originCountry = contractBaseInfo.getOriginCountry();
         if(originCountry.equals("澳大利亚")){
             tariff = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*0.06;
-            zzs = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*1.06*0.01;
+            zzs = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*1.06*0.09;
         }else if(originCountry.equals("新西兰") || originCountry.equals("哥斯达黎加")){
             tariff = 0;
-            zzs = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*0.1;
+            zzs = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*0.09;
         }else{
             tariff = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*0.12;
-            zzs = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*1.12*0.01;
+            zzs = contractBaseInfo.getTotalContractMoney()*contractBaseInfo.getExchangeRate()*1.12*0.09;
         }
         tariff = (double)Math.round(tariff*100)/100;
         zzs = (double)Math.round(zzs*100)/100;
@@ -1151,11 +1151,11 @@ public class ExcelService {
             cell = row.createCell(6,CellType.STRING);
             double a = 0;
             if(originCountry.equals("澳大利亚")){
-                a = unitPrice*contractBaseInfo.getExchangeRate()*1.06*1.1+0.6;
+                a = unitPrice*contractBaseInfo.getExchangeRate()*1.06*1.09+0.6;
             }else if(originCountry.equals("新西兰") || originCountry.equals("哥斯达黎加")){
-                a = unitPrice*contractBaseInfo.getExchangeRate()*1.1+0.6;
+                a = unitPrice*contractBaseInfo.getExchangeRate()*1.09+0.6;
             }else{
-                a = unitPrice*contractBaseInfo.getExchangeRate()*1.12*1.1+0.6;
+                a = unitPrice*contractBaseInfo.getExchangeRate()*1.12*1.09+0.6;
             }
             a = Math.round(a*100)/100;
             double b = (double)Math.round(a*1.03*100)/100;
