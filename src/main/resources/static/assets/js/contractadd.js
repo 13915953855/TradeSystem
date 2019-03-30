@@ -130,6 +130,11 @@ $(function () {
 
     //initChuanqi();
 });
+function rukudan(){
+    var id = $("#id").val();
+    var url = "/trade/contract/rukudan?id="+id;
+    window.open(url);
+}
 function initChuanqi(){
     var now = new Date();
     var date = new Date(now.getTime() + 60 * 24 * 3600 * 1000);
@@ -712,3 +717,4 @@ function deleteAttachment(id,contractId){
       }
     });
 }
+

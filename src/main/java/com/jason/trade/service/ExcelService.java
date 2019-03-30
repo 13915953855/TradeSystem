@@ -1275,4 +1275,352 @@ public class ExcelService {
         }
         return workBook;
     }
+
+    public XSSFWorkbook ruku(ContractBaseInfo contractBaseInfo){
+        List<CargoInfo> cargoInfos = cargoRepository.findByContractIdOrderByIdAsc(contractBaseInfo.getContractId());
+        Set<String> businessModeSet = new HashSet<>();
+        for (CargoInfo cargoInfo : cargoInfos) {
+            businessModeSet.add(cargoInfo.getBusinessMode());
+        }
+        String businessMode = "";
+        for (String bs : businessModeSet) {
+            businessMode += bs + ",";
+        }
+        if(businessMode.endsWith(",")){
+            businessMode = businessMode.substring(0,businessMode.length()-1);
+        }
+        //创建工作簿
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        //创建工作表
+        XSSFSheet sheet = workBook.createSheet();
+        //横向A4纸
+        PrintSetup printSetup = sheet.getPrintSetup();
+        printSetup.setPaperSize(HSSFPrintSetup.A4_PAPERSIZE);
+        printSetup.setLandscape(true); // 打印方向，true：横向，false：纵向(默认) 
+
+        //创建样式
+        XSSFCellStyle style = workBook.createCellStyle();
+        style.setAlignment(HorizontalAlignment.CENTER);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        style.setWrapText(true);
+        //新建font实体
+        XSSFFont hssfFont = workBook.createFont();
+        hssfFont.setFontHeightInPoints((short)20);
+        hssfFont.setFontName("宋体");
+        hssfFont.setBold(true);
+        style.setFont(hssfFont);
+
+        //创建头
+        //创建第一行
+        XSSFRow row = sheet.createRow(0);
+        //创建单元格
+        XSSFCell cell = null;
+        for (int i = 0; i < 10; i++) {
+            cell = row.createCell(i, CellType.STRING);
+            cell.setCellValue("进口商品入库申请单");
+            cell.setCellStyle(style);
+        }
+        row = sheet.createRow(1);
+        row = sheet.createRow(2);
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 9));
+
+        XSSFFont textFont = workBook.createFont();
+        textFont.setFontHeightInPoints((short)12);
+        textFont.setFontName("宋体");
+
+        XSSFCellStyle textStyle = workBook.createCellStyle();
+        textStyle.setAlignment(HorizontalAlignment.CENTER);
+        textStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        textStyle.setWrapText(true);
+        textStyle.setFont(textFont);
+        XSSFCellStyle leftTextStyle = workBook.createCellStyle();
+        leftTextStyle.setAlignment(HorizontalAlignment.LEFT);
+        leftTextStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        leftTextStyle.setWrapText(true);
+        leftTextStyle.setFont(textFont);
+        XSSFCellStyle blackStyle = createXssfCellStyle(workBook);
+        blackStyle.setFont(textFont);
+        XSSFCellStyle blackLeftStyle = createXssfCellStyle(workBook);
+        blackLeftStyle.setAlignment(HorizontalAlignment.LEFT);
+        blackLeftStyle.setFont(textFont);
+
+        int two = 3;
+        row = sheet.createRow(two);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("申请日期：");
+        cell.setCellStyle(leftTextStyle);
+        row.createCell(1,CellType.STRING);
+        sheet.addMergedRegion(new CellRangeAddress(two, two, 0, 1));
+
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellValue(DateUtil.DateToString(new Date()));
+        cell.setCellStyle(leftTextStyle);
+        cell = row.createCell(3,CellType.STRING);
+        sheet.addMergedRegion(new CellRangeAddress(two, two, 2, 3));
+        //sheet.autoSizeColumn(2);
+
+        int three = 4;
+        row = sheet.createRow(three);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("合同归属公司");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(three, three, 0, 1));
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getOwnerCompany());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(three, three, 2, 3));
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellValue("商品属性");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(5,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(three, three, 4, 5));
+        cell = row.createCell(6,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getCargoType());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(7,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(three, three, 6, 7));
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellValue("储存条件");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(9,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(three, three, 8, 9));
+        cell = row.createCell(10,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getStorageCondition());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(11,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(three, three, 10, 11));
+
+        int four = 5;
+        row = sheet.createRow(four);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("外合同号");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(four, four, 0, 1));
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getExternalContract());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(four, four, 2, 3));
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellValue("内合同号");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(5,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(four, four, 4, 5));
+        cell = row.createCell(6,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getInsideContract());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(7,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(four, four, 6, 7));
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellValue("柜号");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(9,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(four, four, 8, 9));
+        cell = row.createCell(10,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getContainerNo());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(11,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(four, four, 10, 11));
+
+        int five = 6;
+        row = sheet.createRow(five);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("发票总重量(KG）");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(five, five, 0, 1));
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getTotalInvoiceAmount());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(five, five, 2, 3));
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellValue("箱数合计");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(5,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(five, five, 4, 5));
+        cell = row.createCell(6,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getTotalBoxes());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(7,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(five, five, 6, 7));
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellValue("提单号");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(9,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(five, five, 8, 9));
+        cell = row.createCell(10,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getLadingbillNo());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(11,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(five, five, 10, 11));
+
+        int six = 7;
+        row = sheet.createRow(six);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("拟入仓库名称");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(six, six, 0, 1));
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getOwnerCompany());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(six, six, 2, 3));
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellValue("预计入库时间");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(5,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(six, six, 4, 5));
+        cell = row.createCell(6,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getCargoType());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(7,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(six, six, 6, 7));
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellValue("是否分拣");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(9,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(six, six, 8, 9));
+        cell = row.createCell(10,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(11,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(six, six, 10, 11));
+
+        int seven = 8;
+        row = sheet.createRow(seven);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("拟委托货代");
+        cell.setCellStyle(blackLeftStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellStyle(blackLeftStyle);
+        sheet.addMergedRegion(new CellRangeAddress(seven, seven, 0, 1));
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellValue(contractBaseInfo.getAgent());
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(seven, seven, 2, 3));
+
+        int ten = 10;
+        row = sheet.createRow(ten);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("库号");
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 0, 2));
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellValue("产品名称");
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 3, 4));
+        cell = row.createCell(5,CellType.STRING);
+        cell.setCellValue("级别");
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(6,CellType.STRING);
+        cell.setCellValue("箱数");
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(7,CellType.STRING);
+        cell.setCellValue("厂号");
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        cell = row.createCell(9,CellType.STRING);
+        cell.setCellStyle(blackStyle);
+        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 7, 9));
+
+
+        for (int i = 0; i < cargoInfos.size(); i++) {
+            CargoInfo cargoInfo = cargoInfos.get(i);
+            int index = ten+i+1;
+            row = sheet.createRow(index);
+            cell = row.createCell(0,CellType.STRING);
+            cell.setCellValue(cargoInfo.getCargoNo());
+            cell.setCellStyle(blackStyle);
+            cell = row.createCell(1,CellType.STRING);
+            cell.setCellStyle(blackStyle);
+            cell = row.createCell(2,CellType.STRING);
+            cell.setCellStyle(blackStyle);
+            sheet.addMergedRegion(new CellRangeAddress(index, index, 0, 2));
+            cell = row.createCell(3,CellType.STRING);
+            cell.setCellValue(cargoInfo.getCargoName());
+            cell.setCellStyle(blackStyle);
+            cell = row.createCell(4,CellType.STRING);
+            cell.setCellStyle(blackStyle);
+            sheet.addMergedRegion(new CellRangeAddress(index, index, 3, 4));
+            cell = row.createCell(5,CellType.STRING);
+            cell.setCellValue(cargoInfo.getLevel());
+            cell.setCellStyle(blackStyle);
+            cell = row.createCell(6,CellType.STRING);
+            cell.setCellValue(cargoInfo.getBoxes());
+            cell.setCellStyle(blackStyle);
+            cell = row.createCell(7,CellType.STRING);
+            cell.setCellValue(cargoInfo.getCompanyNo());
+            cell.setCellStyle(blackStyle);
+            cell = row.createCell(8,CellType.STRING);
+            cell.setCellStyle(blackStyle);
+            cell = row.createCell(9,CellType.STRING);
+            cell.setCellStyle(blackStyle);
+            sheet.addMergedRegion(new CellRangeAddress(index, index, 7, 9));
+        }
+
+        int begin = cargoInfos.size()+13;
+        row = sheet.createRow(begin);
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("经办人:");
+        cell.setCellStyle(leftTextStyle);
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin, begin, 0, 1));
+
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellValue("业务审批人:");
+        cell.setCellStyle(leftTextStyle);
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin, begin, 3, 4));
+
+        cell = row.createCell(7,CellType.STRING);
+        cell.setCellValue("库管员审核:");
+        cell.setCellStyle(leftTextStyle);
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellStyle(leftTextStyle);
+        sheet.addMergedRegion(new CellRangeAddress(begin, begin, 7, 8));
+
+        for (int j = 0; j < 10; j++) {
+            sheet.autoSizeColumn(j);
+        }
+        return workBook;
+    }
 }
