@@ -601,63 +601,7 @@
     a.container_no,a.ladingbill_no,a.store_date,a.warehouse,b.real_store_weight,b.real_store_boxes,b.real_store_money
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
-    <if test="status != null and status != ''" >
-      and b.status in (${status})
-    </if>
-    <if test="externalCompany != null and externalCompany != ''" >
-      and a.external_company in (${externalCompany})
-    </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and a.storage_condition = '${storageCondition}'
-    </if>
-    <if test="ownerCompany != null and ownerCompany != ''" >
-      and a.owner_company = '${ownerCompany}'
-    </if>
-    <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country in (${originCountry})
-    </if>
-    <if test="warehouse != null and warehouse != ''" >
-      and a.warehouse = '${warehouse}'
-    </if>
-    <if test="containerNo != null and containerNo != ''" >
-      and a.container_no like '%${containerNo}%'
-    </if>
-    <if test="minWeight != null and minWeight != ''" >
-      and b.real_store_weight &gt;= '${minWeight}'
-    </if>
-    <if test="maxWeight != null and maxWeight != ''" >
-      and b.real_store_weight &lt;= '${maxWeight}'
-    </if>
-    <if test="minBox != null" >
-      and b.real_store_boxes &gt;= '${minBox}'
-    </if>
-    <if test="maxBox != null" >
-      and b.real_store_boxes &lt;= '${maxBox}'
-    </if>
-    <if test="contractStartDate != null and contractStartDate != ''" >
-      and a.contract_date &gt;= '${contractStartDate}'
-    </if>
-    <if test="contractEndDate != null and contractEndDate != ''" >
-      and a.contract_date &lt;= '${contractEndDate}'
-    </if>
-    <if test="storeStartDate != null and storeStartDate != ''" >
-      and a.store_date &gt;= '${storeStartDate}'
-    </if>
-    <if test="storeEndDate != null and storeEndDate != ''" >
-      and a.store_date &lt;= '${storeEndDate}'
-    </if>
-    <if test="cargoName != null and cargoName != ''" >
-      and b.cargo_name = '${cargoName}'
-    </if>
-    <if test="level != null and level != ''" >
-      and b.level in (${level})
-    </if>
-    <if test="businessMode != null and businessMode != ''" >
-      and b.business_mode in (${businessMode})
-    </if>
-    <if test="companyNo != null" >
-      and b.company_no like '%${companyNo}%'
-    </if>
+    <include refid="storeInfoWhere"></include>
     order by a.contract_id,a.store_date,b.real_store_weight desc,b.real_store_boxes desc
     <if test="start != null and limit != null" >
       limit ${start},${limit}
@@ -667,14 +611,30 @@
     select count(1)
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
+    <include refid="storeInfoWhere"></include>
+  </select>
+  <select id="getTotalStoreInfoForQuery" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
+    select sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceWeight,
+    sum(b.expect_store_weight) as expectStoreWeight,sum(b.expect_store_boxes) as expectStoreBoxes,
+    sum(b.real_store_weight) as realStoreWeight,sum(b.real_store_boxes) as realStoreBoxes,
+    sum(b.real_store_money) as realStoreMoney,sum(b.boxes) as totalInvoiceBoxes,
+    a.currency,
+    count(DISTINCT a.contract_id) as totalContract
+    from contract_base_info a  inner join cargo_info b on a.contract_id = b.contract_id
+    where 1 = 1 and a.status != '0'
+    <include refid="storeInfoWhere"></include>
+    group by a.currency
+  </select>
+
+  <sql id="storeInfoWhere">
     <if test="status != null and status != ''" >
       and b.status in (${status})
     </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and a.storage_condition = '${storageCondition}'
-    </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
+    </if>
+    <if test="storageCondition != null and storageCondition != ''" >
+      and a.storage_condition = '${storageCondition}'
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
@@ -712,24 +672,6 @@
     <if test="storeEndDate != null and storeEndDate != ''" >
       and a.store_date &lt;= '${storeEndDate}'
     </if>
-    <if test="startDate != null and startDate != ''" >
-      and a.expect_sailing_date &gt;= '${startDate}'
-    </if>
-    <if test="endDate != null and endDate != ''" >
-      and a.expect_sailing_date &lt;= '${endDate}'
-    </if>
-    <if test="etaStartDate != null and etaStartDate != ''" >
-      and a.eta &gt;= '${etaStartDate}'
-    </if>
-    <if test="etaEndDate != null and etaEndDate != ''" >
-      and a.eta &lt;= '${etaEndDate}'
-    </if>
-    <if test="etdStartDate != null and etdStartDate != ''" >
-      and a.etd &gt;= '${etdStartDate}'
-    </if>
-    <if test="etdEndDate != null and etdEndDate != ''" >
-      and a.etd &lt;= '${etdEndDate}'
-    </if>
     <if test="cargoName != null and cargoName != ''" >
       and b.cargo_name = '${cargoName}'
     </if>
@@ -742,102 +684,7 @@
     <if test="companyNo != null" >
       and b.company_no like '%${companyNo}%'
     </if>
-  </select>
-
-
-
-
-  <select id="getTotalStoreInfoForQuery" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.ContractParam" >
-    select sum(b.invoice_money) as totalInvoiceMoney,sum(b.invoice_amount) as totalInvoiceWeight,
-    sum(b.expect_store_weight) as expectStoreWeight,sum(b.expect_store_boxes) as expectStoreBoxes,
-    sum(b.real_store_weight) as realStoreWeight,sum(b.real_store_boxes) as realStoreBoxes,
-    sum(b.real_store_money) as realStoreMoney,sum(b.boxes) as totalInvoiceBoxes,
-    a.currency,
-    count(DISTINCT a.contract_id) as totalContract
-    from contract_base_info a  inner join cargo_info b on a.contract_id = b.contract_id
-    where 1 = 1 and a.status != '0'
-    <if test="externalContract != null" >
-      and a.external_contract like '%${externalContract}%'
-    </if>
-    <if test="insideContract != null" >
-      and a.inside_contract like '%${insideContract}%'
-    </if>
-    <if test="externalCompany != null and externalCompany != ''" >
-      and a.external_company in (${externalCompany})
-    </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and a.storage_condition = '${storageCondition}'
-    </if>
-    <if test="ownerCompany != null and ownerCompany != ''" >
-      and a.owner_company = '${ownerCompany}'
-    </if>
-    <if test="originCountry != null and originCountry != ''" >
-      and a.origin_country in (${originCountry})
-    </if>
-    <if test="warehouse != null and warehouse != ''" >
-      and a.warehouse = '${warehouse}'
-    </if>
-    <if test="containerNo != null and containerNo != ''" >
-      and a.container_no like '%${containerNo}%'
-    </if>
-    <if test="minWeight != null and minWeight != ''" >
-      and b.real_store_weight &gt;= '${minWeight}'
-    </if>
-    <if test="maxWeight != null and maxWeight != ''" >
-      and b.real_store_weight &lt;= '${maxWeight}'
-    </if>
-    <if test="minBox != null and minBox != ''" >
-      and b.real_store_boxes &gt;= '${minBox}'
-    </if>
-    <if test="maxBox != null and maxBox != ''" >
-      and b.real_store_boxes &lt;= '${maxBox}'
-    </if>
-    <if test="contractStartDate != null and contractStartDate != ''" >
-      and a.contract_date &gt;= '${contractStartDate}'
-    </if>
-    <if test="contractEndDate != null and contractEndDate != ''" >
-      and a.contract_date &lt;= '${contractEndDate}'
-    </if>
-    <if test="storeStartDate != null and storeStartDate != ''" >
-      and a.store_date &gt;= '${storeStartDate}'
-    </if>
-    <if test="storeEndDate != null and storeEndDate != ''" >
-      and a.store_date &lt;= '${storeEndDate}'
-    </if>
-    <if test="startDate != null and startDate != ''" >
-      and a.expect_sailing_date &gt;= '${startDate}'
-    </if>
-    <if test="endDate != null and endDate != ''" >
-      and a.expect_sailing_date &lt;= '${endDate}'
-    </if>
-    <if test="etaStartDate != null and etaStartDate != ''" >
-      and a.eta &gt;= '${etaStartDate}'
-    </if>
-    <if test="etaEndDate != null and etaEndDate != ''" >
-      and a.eta &lt;= '${etaEndDate}'
-    </if>
-    <if test="etdStartDate != null and etdStartDate != ''" >
-      and a.etd &gt;= '${etdStartDate}'
-    </if>
-    <if test="etdEndDate != null and etdEndDate != ''" >
-      and a.etd &lt;= '${etdEndDate}'
-    </if>
-    <if test="cargoName != null and cargoName != ''" >
-      and b.cargo_name = '${cargoName}'
-    </if>
-    <if test="level != null and level != ''" >
-      and b.level in (${level})
-    </if>
-    <if test="businessMode != null and businessMode != ''" >
-      and b.business_mode in (${businessMode})
-    </if>
-    <if test="companyNo != null" >
-      and b.company_no like '%${companyNo}%'
-    </if>
-    group by a.currency
-  </select>
-
-
+  </sql>
 
 
   <select id="queryCargoList" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.ContractParam" >
