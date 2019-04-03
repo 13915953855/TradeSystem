@@ -1315,14 +1315,14 @@ public class ExcelService {
         XSSFRow row = sheet.createRow(0);
         //创建单元格
         XSSFCell cell = null;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 12; i++) {
             cell = row.createCell(i, CellType.STRING);
             cell.setCellValue("进口商品入库申请单");
             cell.setCellStyle(style);
         }
         row = sheet.createRow(1);
         row = sheet.createRow(2);
-        sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 9));
+        sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 11));
 
         XSSFFont textFont = workBook.createFont();
         textFont.setFontHeightInPoints((short)12);
