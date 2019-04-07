@@ -567,6 +567,8 @@ public class TradeController {
     public String queryCargoList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
         contractParam.setStart(offset);
         contractParam.setLimit(limit);
+        contractParam.setSortName("contract_date");
+        contractParam.setSortOrder("desc");
         JSONObject result = tradeService.queryCargoListForQuery(contractParam);
         return result.toString();
     }

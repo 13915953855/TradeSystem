@@ -36,6 +36,20 @@ $(function () {
     initWarehouse();
 });
 
+var toFloat = function (value) {
+    value = Math.round(parseFloat(value) * 100) / 100;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".00";
+    }
+    return value;
+}
+var toFloat4 = function (value) {
+    value = Math.round(parseFloat(value) * 10000) / 10000;
+    if (value.toString().indexOf(".") < 0) {
+        value = value.toString() + ".0000";
+    }
+    return value;
+}
 
 var TableInit = function () {
     var oTableInit = new Object();
@@ -174,16 +188,20 @@ function getTotalStore(){
         storeEndDate: $("#storeEndDate").val(),
         insideContract: $("#insideContract").val(),
         level: $("#level").val() == "全部"?"":$("#level").val(),
-        status: $("#status").val() == "全部"?"":$("#status").val(),
-        businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
-        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
         cargoNo: $("#cargoNo").val(),
         cargoType: $("#cargoType").val(),
-        storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
         customerName: $("#customerName").val(),
         containerNo: $("#containerNo").val(),
-        companyNo: $("#companyNo").val()
+        companyNo: $("#companyNo").val(),
+        storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
+        status: $("#status").val() == "全部"?"":$("#status").val(),
+        businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
+        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
+        minBox: $("#minBox").val(),
+        maxBox: $("#maxBox").val(),
+        minWeight: $("#minWeight").val(),
+        maxWeight: $("#maxWeight").val()
     };
     $.ajax({
         url:"/trade/cargo/getTotalStore",
@@ -194,7 +212,7 @@ function getTotalStore(){
             $("#totalStoreWeight").html("0");
             $("#totalStoreBoxes").html("0");
             if(res.status == "1"){
-                $("#totalStoreWeight").html(res.totalStoreWeight);
+                $("#totalStoreWeight").html(toFloat(res.totalStoreWeight));
                 $("#totalStoreBoxes").html(res.totalStoreBoxes);
             }
         }

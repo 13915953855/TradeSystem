@@ -693,7 +693,7 @@
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <include refid="queryCargoListWhere"></include>
-    order by a.id desc
+    order by a.${sortName} ${sortOrder}
     <if test="start != null and limit != null" >
       limit ${start},${limit}
     </if>

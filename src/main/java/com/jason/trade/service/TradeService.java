@@ -328,9 +328,17 @@ public class TradeService {
         return result;
     }
     public JSONObject getTotalStore(CargoParam cargoParam){
+        cargoParam.setStatus(CommonUtil.revertStatus(cargoParam.getStatus()));
         JSONObject result = new JSONObject();
-        result.put("totalStoreWeight",cargoInfoMapper.getTotalStoreWeightByExample(cargoParam));
-        result.put("totalStoreBoxes",cargoInfoMapper.getTotalStoreBoxesByExample(cargoParam));
+        List<CargoManageInfo> list = cargoInfoMapper.selectTotalByExample(cargoParam);
+        Double totalStoreWeight = 0.0;
+        Integer totalStoreBoxes = 0;
+        if(list != null && !list.isEmpty()){
+            totalStoreWeight = list.stream().map(CargoManageInfo::getRealStoreWeight).reduce(Double::sum).get();
+            totalStoreBoxes = list.stream().map(CargoManageInfo::getRealStoreBoxes).reduce(Integer::sum).get();
+        }
+        result.put("totalStoreWeight",totalStoreWeight);
+        result.put("totalStoreBoxes",totalStoreBoxes);
         result.put("status","1");
         return result;
     }

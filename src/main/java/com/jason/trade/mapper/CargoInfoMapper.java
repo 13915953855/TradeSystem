@@ -15,6 +15,7 @@ public interface CargoInfoMapper {
     int deleteByContract(List<String> id);
     CargoInfo selectByCargoId(String cargoId);
     List<CargoManageInfo> selectByExample(CargoParam cargoParam);
+    List<CargoManageInfo> selectTotalByExample(CargoParam cargoParam);
     List<CargoManageInfo> selectByExampleForPre(CargoParam cargoParam);
     List<CargoManageInfo> selectTotalByExampleForPre(CargoParam cargoParam);
     Integer getTotalStoreWeightByExample(CargoParam cargoParam);
