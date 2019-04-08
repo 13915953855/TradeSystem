@@ -518,44 +518,31 @@
     inner join sale_info a on a.cargo_id = b.cargo_id
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
-    <if test="kaifapiao != null and kaifapiao != ''" >
-      and a.kaifapiao = '${kaifapiao}'
-    </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and c.storage_condition = '${storageCondition}'
-    </if>
+    <include refid="sellListWhere"></include>
+    order by b.cargo_id desc
+    limit ${start},${limit}
+  </select>
+  <sql id="sellListWhere">
     <if test="contractNo != null and contractNo != ''" >
       and c.external_contract like '%${contractNo}%'
     </if>
     <if test="insideContract != null and insideContract != ''" >
       and c.inside_contract like '%${insideContract}%'
     </if>
-    <if test="warehouse != null and warehouse != ''" >
-      and c.warehouse like '%${warehouse}%'
-    </if>
-    <if test="ladingbillNo != null" >
-      and c.ladingbill_no like '%${ladingbillNo}%'
-    </if>
     <if test="containerNo != null" >
       and c.container_no like '%${containerNo}%'
     </if>
-    <if test="businessMode != null and businessMode != ''" >
-      and b.business_mode = '${businessMode}'
+    <if test="storageCondition != null and storageCondition != ''" >
+      and c.storage_condition = '${storageCondition}'
     </if>
-    <if test="level != null and level != ''" >
-      and b.level = '${level}'
+    <if test="warehouse != null and warehouse != ''" >
+      and c.warehouse like '%${warehouse}%'
     </if>
     <if test="cargoName != null and cargoName != ''" >
       and b.cargo_name = '${cargoName}'
     </if>
-    <if test="cargoNo != null" >
-      and b.cargo_no like '%${cargoNo}%'
-    </if>
-    <if test="minBox != null and minBox != ''" >
-      and b.real_store_boxes &gt;= '${minBox}'
-    </if>
-    <if test="maxBox != null and maxBox != ''" >
-      and b.real_store_boxes &lt;= '${maxBox}'
+    <if test="level != null and level != ''" >
+      and b.level = '${level}'
     </if>
     <if test="customerName != null and customerName != ''" >
       and b.cargo_id in (
@@ -565,63 +552,41 @@
       </if>
       )
     </if>
-    order by b.cargo_id desc
-    limit ${start},${limit}
-  </select>
+    <if test="cargoNo != null" >
+      and b.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and c.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    <if test="ladingbillNo != null" >
+      and c.ladingbill_no like '%${ladingbillNo}%'
+    </if>
+    and c.status in (4,5)
+    <if test="status != null and status != ''" >
+      and c.status = '${status}'
+    </if>
+    <if test="ownerCompany != null and ownerCompany != ''" >
+      and c.owner_company = #{ownerCompany}
+    </if>
+    <if test="kaifapiao != null and kaifapiao != ''" >
+      and a.kaifapiao = '${kaifapiao}'
+    </if>
+    <if test="businessMode != null and businessMode != ''" >
+      and b.business_mode = '${businessMode}'
+    </if>
+    <if test="minBox != null and minBox != ''" >
+      and b.real_store_boxes &gt;= '${minBox}'
+    </if>
+    <if test="maxBox != null and maxBox != ''" >
+      and b.real_store_boxes &lt;= '${maxBox}'
+    </if>
+  </sql>
   <select id="countSellList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam">
     select count(1) from cargo_info b
     inner join sale_info a on a.cargo_id = b.cargo_id
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
-    <if test="kaifapiao != null and kaifapiao != ''" >
-      and a.kaifapiao = '${kaifapiao}'
-    </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and c.storage_condition = '${storageCondition}'
-    </if>
-    <if test="contractNo != null and contractNo != ''" >
-      and c.external_contract like '%${contractNo}%'
-    </if>
-    <if test="insideContract != null and insideContract != ''" >
-      and c.inside_contract like '%${insideContract}%'
-    </if>
-    <if test="warehouse != null and warehouse != ''" >
-      and c.warehouse like '%${warehouse}%'
-    </if>
-    <if test="ladingbillNo != null" >
-      and c.ladingbill_no like '%${ladingbillNo}%'
-    </if>
-    <if test="containerNo != null" >
-      and c.container_no like '%${containerNo}%'
-    </if>
-    <if test="businessMode != null and businessMode != ''" >
-      and b.business_mode = '${businessMode}'
-    </if>
-    <if test="level != null and level != ''" >
-      and b.level = '${level}'
-    </if>
-    <if test="cargoName != null and cargoName != ''" >
-      and b.cargo_name = '${cargoName}'
-    </if>
-    <if test="cargoNo != null" >
-      and b.cargo_no like '%${cargoNo}%'
-    </if>
-    <if test="minBox != null and minBox != ''" >
-      and b.real_store_boxes &gt;= '${minBox}'
-    </if>
-    <if test="maxBox != null and maxBox != ''" >
-      and b.real_store_boxes &lt;= '${maxBox}'
-    </if>
-    <if test="customerName != null and customerName != ''" >
-      and b.cargo_id in (
-      select cargo_id from sale_info where 1=1
-      <if test="customerName != null and customerName != ''" >
-        and customer_name like '%${customerName}%'
-      </if>
-      )
-    </if>
-    order by b.cargo_id desc
-    limit ${start},${limit}
+    <include refid="sellListWhere"></include>
   </select>
   <select id="getTotalStoreInfoForQuery" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.CargoParam" >
     select sum(b.real_store_weight) as realStoreWeight,sum(b.real_store_money) as realStoreMoney
@@ -629,50 +594,7 @@
     inner join sale_info a on a.cargo_id = b.cargo_id
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
-    <if test="contractNo != null and contractNo != ''" >
-      and c.external_contract like '%${contractNo}%'
-    </if>
-    <if test="insideContract != null and insideContract != ''" >
-      and c.inside_contract like '%${insideContract}%'
-    </if>
-    <if test="warehouse != null and warehouse != ''" >
-      and c.warehouse like '%${warehouse}%'
-    </if>
-    <if test="ladingbillNo != null" >
-      and c.ladingbill_no like '%${ladingbillNo}%'
-    </if>
-    <if test="containerNo != null" >
-      and c.container_no like '%${containerNo}%'
-    </if>
-    <if test="storageCondition != null and storageCondition != ''" >
-      and c.storage_condition = '${storageCondition}'
-    </if>
-    <if test="businessMode != null and businessMode != ''" >
-      and b.business_mode = '${businessMode}'
-    </if>
-    <if test="level != null and level != ''" >
-      and b.level = '${level}'
-    </if>
-    <if test="cargoName != null and cargoName != ''" >
-      and b.cargo_name = '${cargoName}'
-    </if>
-    <if test="cargoNo != null" >
-      and b.cargo_no like '%${cargoNo}%'
-    </if>
-    <if test="minBox != null and minBox != ''" >
-      and b.real_store_boxes &gt;= '${minBox}'
-    </if>
-    <if test="maxBox != null and maxBox != ''" >
-      and b.real_store_boxes &lt;= '${maxBox}'
-    </if>
-    <if test="customerName != null and customerName != ''" >
-      and b.cargo_id in (
-      select cargo_id from sale_info where 1=1
-      <if test="customerName != null and customerName != ''" >
-        and customer_name like '%${customerName}%'
-      </if>
-      )
-    </if>
+    <include refid="sellListWhere"></include>
   </select>
 
 
@@ -708,8 +630,15 @@
 
   <select id="selectByExampleForPre" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
-    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
-    UNION select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3') ) b
+    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
+    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    UNION
+    select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
+    '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
+    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company
+    from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    ) b
     where 1 = 1
     <include refid="selectByExampleForPreWhere"></include>
     order by b.id desc
@@ -717,15 +646,29 @@
   </select>
   <select id="selectCountByExampleForPre" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
     select count(1) from (
-    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
-    UNION select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3') ) b
+    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
+    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    UNION
+    select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
+    '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
+    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company
+    from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    ) b
     where 1 = 1
     <include refid="selectByExampleForPreWhere"></include>
   </select>
   <select id="selectTotalByExampleForPre" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select sum(b.yys) as yys,sum(b.expect_store_weight) as expect_store_weight,sum(b.contract_amount) as contract_amount from (
-    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
-    UNION select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3') ) b
+    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
+    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    UNION
+    select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
+    '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
+    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company
+    from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    ) b
     where 1 = 1
     <include refid="selectByExampleForPreWhere"></include>
   </select>
@@ -771,11 +714,9 @@
     <if test="companyNo != null" >
       and b.company_no like '%${companyNo}%'
     </if>
-    <if test="status != '' and status == 0" >
-      and b.expect_store_boxes = '${status}'
-    </if>
-    <if test="status != '' and status == 1" >
-      and b.expect_store_boxes &gt;= '${status}'
+    and b.status in (1,2,3)
+    <if test="status != null and status != ''" >
+      and b.status = '${status}'
     </if>
     <if test="ownerCompany != null and ownerCompany != ''" >
       and b.owner_company = '${ownerCompany}'

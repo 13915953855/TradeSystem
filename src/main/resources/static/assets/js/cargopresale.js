@@ -69,7 +69,7 @@ var TableInit = function () {
                 title: '预售单价'
             }, {
                  field: 'expectSaleDate',
-                 title: '预出库时间'
+                 title: '预售时间'
              }]
         });
     };

@@ -599,7 +599,7 @@ public class ExcelService {
         list.add(baseInfo.getTotalInvoiceMoney());//发票总金额(元)
 
         list.add(baseInfo.getCustomerName());//客户名称
-        list.add(baseInfo.getExpectSaleDate());//预售时间
+        list.add("");//预售时间
         list.add(baseInfo.getExpectSaleUnitPrice());//预售单价(元/KG)
         list.add(baseInfo.getExpectSaleWeight());//预售重量(kg)
 
