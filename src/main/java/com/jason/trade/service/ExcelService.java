@@ -652,6 +652,7 @@ public class ExcelService {
         list.add(baseInfo.getZhixiangfei());//滞箱费
         list.add(baseInfo.getZhigangfei());//滞港费
         list.add(baseInfo.getRemark());//备注
+        list.add(baseInfo.getCargoType());//商品属性
         return list;
     }
 

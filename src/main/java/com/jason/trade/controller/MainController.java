@@ -293,13 +293,14 @@ public class MainController {
                @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,@RequestParam(value="originCountry") String originCountry,
                                            @RequestParam(value="storeStartDate") String storeStartDate,@RequestParam(value="storeEndDate") String storeEndDate,
                                            @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd,
-                                           @RequestParam(value="storageCondition") String storageCondition) throws UnsupportedEncodingException {
+                                           @RequestParam(value="cargoType") String cargoType,@RequestParam(value="storageCondition") String storageCondition) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setExternalContract(externalContract);
         contractParam.setInsideContract(insideContract);
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);
+        contractParam.setCargoType(URLDecoder.decode(cargoType, "UTF-8"));
         contractParam.setLadingbillNo(ladingbillNo);
         contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
         contractParam.setBusinessMode(URLDecoder.decode(businessMode, "UTF-8"));

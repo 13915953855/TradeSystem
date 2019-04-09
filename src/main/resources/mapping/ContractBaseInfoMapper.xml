@@ -17,6 +17,7 @@
     <result column="contract_id" property="contractId" jdbcType="VARCHAR" />
     <result column="create_date_time" property="createDateTime" jdbcType="VARCHAR" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="cargo_type" property="cargoType" jdbcType="VARCHAR" />
     <result column="currency" property="currency" jdbcType="VARCHAR" />
     <result column="destination_port" property="destinationPort" jdbcType="VARCHAR" />
     <result column="expect_sailing_date" property="expectSailingDate" jdbcType="VARCHAR" />
