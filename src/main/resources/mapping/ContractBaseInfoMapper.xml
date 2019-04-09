@@ -757,6 +757,9 @@
   <if test="cargoName != null and cargoName != ''" >
     and b.cargo_name = '${cargoName}'
   </if>
+  <if test="cargoType != null and cargoType != ''" >
+    and a.cargo_type = '${cargoType}'
+  </if>
   <if test="level != null and level != ''" >
     and b.level in (${level})
   </if>

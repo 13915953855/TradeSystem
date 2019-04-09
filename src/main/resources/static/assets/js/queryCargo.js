@@ -7,7 +7,7 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-$("select").select2({
+    $("select").select2({
         tags: true
     });
     $(".form_datetime").datetimepicker({
@@ -19,7 +19,14 @@ $("select").select2({
         todayHighlight: true,
         language: 'zh-CN'
     });
-
+    $("#cargoType").change(function(){
+        $("#cargoName").empty();
+        $("#cargoName").append("<option>全部</option>");
+        initCargoList();
+        $("#externalCompany").empty();
+        $("#externalCompany").append("<option>全部</option>");
+        initExternalCompany();
+    });
     $("select").on("change",function(){
         $("#btn_query").click();
     });
@@ -260,6 +267,7 @@ var TableInit = function () {
             insideContract: $("#insideContract").val(),
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             currency: $("#currency").val() == "全部"?"":$("#currency").val(),
+            cargoType: $("#cargoType").val() == "全部"?"":$("#cargoType").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
             startDate: $("#startDate").val(),
@@ -272,7 +280,7 @@ var TableInit = function () {
             level: level,
             status: status,
             minBox: $("#minBox").val(),
-                        maxBox: $("#maxBox").val(),
+            maxBox: $("#maxBox").val(),
             companyNo: $("#companyNo").val(),
             businessMode: businessMode,
             externalCompany: externalCompany,
@@ -385,10 +393,12 @@ var ButtonInit = function () {
             if(status.length > 1){
                 status = status.substring(0,status.length-1);
             }
+            var cargoType = $("#cargoType").val() == "全部" ? "":$("#cargoType").val();
             var params = "?externalCompany="+externalCompany;
             params += "&businessMode="+businessMode;
             params += "&companyNo="+$("#companyNo").val();
             params += "&level="+level;
+            params += "&cargoType="+cargoType;
             params += "&minBox="+$("#minBox").val();
             params += "&maxBox="+$("#maxBox").val();
             params += "&destinationPort="+destinationPort;
@@ -426,6 +436,7 @@ function resetQuery(){
     $("#businessMode").val("全部").trigger("change");
     $("#destinationPort").val("全部").trigger("change");
     $("#externalCompany").val("全部").trigger("change");
+    $("#cargoType").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
@@ -436,9 +447,9 @@ function resetQuery(){
     $("#startDate").val("");
     $("#endDate").val("");
     $("#etaStartDate").val("");
-        $("#etaEndDate").val("");
-        $("#etdStartDate").val("");
-        $("#etdEndDate").val("");
+    $("#etaEndDate").val("");
+    $("#etdStartDate").val("");
+    $("#etdEndDate").val("");
 }
 
 function getTotalInfo(){
@@ -532,6 +543,7 @@ function getTotalInfo(){
             insideContract: $("#insideContract").val(),
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             currency: $("#currency").val() == "全部"?"":$("#currency").val(),
+            cargoType: $("#cargoType").val() == "全部"?"":$("#cargoType").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
             startDate: $("#startDate").val(),

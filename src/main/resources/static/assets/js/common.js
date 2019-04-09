@@ -199,7 +199,7 @@ function initDestinationPort(){
 
 function initExternalCompany(){
     var group = "";
-    if($("#cargoType").val() == undefined || $("#cargoType").val() == null || $("#cargoType").val() == ''){
+    if($("#cargoType").val() == undefined || $("#cargoType").val() == null || $("#cargoType").val() == ''|| $("#cargoType").val() == '全部'){
         group = "牛产品";
     }else{
         group = $("#cargoType").val();
