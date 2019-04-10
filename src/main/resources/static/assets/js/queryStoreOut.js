@@ -171,6 +171,10 @@ var TableInit = function () {
             warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
             storeStartDate: $("#storeStartDate").val(),
             storeEndDate: $("#storeEndDate").val(),
+            pickupDateStart: $("#pickupDateStart").val(),
+            pickupDateEnd: $("#pickupDateEnd").val(),
+            realSaleDateStart: $("#realSaleDateStart").val(),
+            realSaleDateEnd: $("#realSaleDateEnd").val(),
             insideContract: $("#insideContract").val(),
             level: $("#level").val() == "全部"?"":$("#level").val(),
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
@@ -226,7 +230,10 @@ function resetQuery(){
     $("#containerNo").val("");
     $("#ladingbillNo").val("");
     $("#customerName").val("");
-
+    $("#pickupDateStart").val("");
+    $("#pickupDateEnd").val("");
+    $("#realSaleDateStart").val("");
+    $("#realSaleDateEnd").val("");
     $("#totalStoreWeight").html("");
     $("#totalStoreBoxes").html("");
 }
@@ -245,6 +252,10 @@ function getTotalInfo(){
          storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
          containerNo: $("#containerNo").val(),
          ladingbillNo: $("#ladingbillNo").val(),
+         pickupDateStart: $("#pickupDateStart").val(),
+         pickupDateEnd: $("#pickupDateEnd").val(),
+         realSaleDateStart: $("#realSaleDateStart").val(),
+         realSaleDateEnd: $("#realSaleDateEnd").val(),
          status: $("#status").val() == "全部"?"":$("#status").val(),
          kaifapiao: $("#kaifapiao").val() == "全部"?"":$("#kaifapiao").val(),
          businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),

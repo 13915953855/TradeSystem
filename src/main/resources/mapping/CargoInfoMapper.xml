@@ -580,6 +580,18 @@
     <if test="maxBox != null and maxBox != ''" >
       and b.real_store_boxes &lt;= '${maxBox}'
     </if>
+    <if test="pickupDateStart != null and pickupDateStart != ''" >
+      and a.pickup_date &gt;= '${pickupDateStart}'
+    </if>
+    <if test="pickupDateEnd != null and pickupDateEnd != ''" >
+      and a.pickup_date &lt;= '${pickupDateEnd}'
+    </if>
+    <if test="realSaleDateStart != null and realSaleDateStart != ''" >
+      and a.real_sale_date &gt;= '${realSaleDateStart}'
+    </if>
+    <if test="realSaleDateEnd != null and realSaleDateEnd != ''" >
+      and a.real_sale_date &lt;= '${realSaleDateEnd}'
+    </if>
   </sql>
   <select id="countSellList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam">
     select count(1) from cargo_info b

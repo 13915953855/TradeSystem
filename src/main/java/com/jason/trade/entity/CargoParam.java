@@ -18,6 +18,10 @@ public class CargoParam {
     private String storeEndDate;
     private String contractStartDate;
     private String contractEndDate;
+    private String pickupDateStart;
+    private String pickupDateEnd;
+    private String realSaleDateStart;
+    private String realSaleDateEnd;
     private String etaStartDate;
     private String etaEndDate;
     private String etdStartDate;
@@ -42,6 +46,150 @@ public class CargoParam {
     private int start;
     private int limit;
     private int expectStoreBoxes;
+
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
+    }
+
+    public String getContractNo() {
+        return contractNo;
+    }
+
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
+    }
+
+    public String getImportContractNo() {
+        return importContractNo;
+    }
+
+    public void setImportContractNo(String importContractNo) {
+        this.importContractNo = importContractNo;
+    }
+
+    public String getExternalCompany() {
+        return externalCompany;
+    }
+
+    public void setExternalCompany(String externalCompany) {
+        this.externalCompany = externalCompany;
+    }
+
+    public String getInsideContract() {
+        return insideContract;
+    }
+
+    public void setInsideContract(String insideContract) {
+        this.insideContract = insideContract;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getCargoName() {
+        return cargoName;
+    }
+
+    public void setCargoName(String cargoName) {
+        this.cargoName = cargoName;
+    }
+
+    public String getCargoNo() {
+        return cargoNo;
+    }
+
+    public void setCargoNo(String cargoNo) {
+        this.cargoNo = cargoNo;
+    }
+
+    public String getCargoType() {
+        return cargoType;
+    }
+
+    public void setCargoType(String cargoType) {
+        this.cargoType = cargoType;
+    }
+
+    public String getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(String warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public String getStoreStartDate() {
+        return storeStartDate;
+    }
+
+    public void setStoreStartDate(String storeStartDate) {
+        this.storeStartDate = storeStartDate;
+    }
+
+    public String getStoreEndDate() {
+        return storeEndDate;
+    }
+
+    public void setStoreEndDate(String storeEndDate) {
+        this.storeEndDate = storeEndDate;
+    }
+
+    public String getContractStartDate() {
+        return contractStartDate;
+    }
+
+    public void setContractStartDate(String contractStartDate) {
+        this.contractStartDate = contractStartDate;
+    }
+
+    public String getContractEndDate() {
+        return contractEndDate;
+    }
+
+    public void setContractEndDate(String contractEndDate) {
+        this.contractEndDate = contractEndDate;
+    }
+
+    public String getPickupDateStart() {
+        return pickupDateStart;
+    }
+
+    public void setPickupDateStart(String pickupDateStart) {
+        this.pickupDateStart = pickupDateStart;
+    }
+
+    public String getPickupDateEnd() {
+        return pickupDateEnd;
+    }
+
+    public void setPickupDateEnd(String pickupDateEnd) {
+        this.pickupDateEnd = pickupDateEnd;
+    }
+
+    public String getRealSaleDateStart() {
+        return realSaleDateStart;
+    }
+
+    public void setRealSaleDateStart(String realSaleDateStart) {
+        this.realSaleDateStart = realSaleDateStart;
+    }
+
+    public String getRealSaleDateEnd() {
+        return realSaleDateEnd;
+    }
+
+    public void setRealSaleDateEnd(String realSaleDateEnd) {
+        this.realSaleDateEnd = realSaleDateEnd;
+    }
 
     public String getEtaStartDate() {
         return etaStartDate;
@@ -75,68 +223,60 @@ public class CargoParam {
         this.etdEndDate = etdEndDate;
     }
 
-    public String getDestinationPort() {
-        return destinationPort;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setDestinationPort(String destinationPort) {
-        this.destinationPort = destinationPort;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getOriginCountry() {
-        return originCountry;
+    public String getContainerNo() {
+        return containerNo;
     }
 
-    public void setOriginCountry(String originCountry) {
-        this.originCountry = originCountry;
+    public void setContainerNo(String containerNo) {
+        this.containerNo = containerNo;
     }
 
-    public String getExternalCompany() {
-        return externalCompany;
+    public String getLadingbillNo() {
+        return ladingbillNo;
     }
 
-    public void setExternalCompany(String externalCompany) {
-        this.externalCompany = externalCompany;
+    public void setLadingbillNo(String ladingbillNo) {
+        this.ladingbillNo = ladingbillNo;
     }
 
-    public String getCargoType() {
-        return cargoType;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCargoType(String cargoType) {
-        this.cargoType = cargoType;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public int getExpectStoreBoxes() {
-        return expectStoreBoxes;
+    public String getBusinessMode() {
+        return businessMode;
     }
 
-    public void setExpectStoreBoxes(int expectStoreBoxes) {
-        this.expectStoreBoxes = expectStoreBoxes;
+    public void setBusinessMode(String businessMode) {
+        this.businessMode = businessMode;
     }
 
-    public String getStorageCondition() {
-        return storageCondition;
+    public String getMinBox() {
+        return minBox;
     }
 
-    public void setStorageCondition(String storageCondition) {
-        this.storageCondition = storageCondition;
+    public void setMinBox(String minBox) {
+        this.minBox = minBox;
     }
 
-    public String getKaifapiao() {
-        return kaifapiao;
+    public String getMaxBox() {
+        return maxBox;
     }
 
-    public void setKaifapiao(String kaifapiao) {
-        this.kaifapiao = kaifapiao;
-    }
-
-    public String getOwnerCompany() {
-        return ownerCompany;
-    }
-
-    public void setOwnerCompany(String ownerCompany) {
-        this.ownerCompany = ownerCompany;
+    public void setMaxBox(String maxBox) {
+        this.maxBox = maxBox;
     }
 
     public String getCompanyNo() {
@@ -179,116 +319,44 @@ public class CargoParam {
         this.qacertificate = qacertificate;
     }
 
-    public String getImportContractNo() {
-        return importContractNo;
+    public String getOwnerCompany() {
+        return ownerCompany;
     }
 
-    public void setImportContractNo(String importContractNo) {
-        this.importContractNo = importContractNo;
+    public void setOwnerCompany(String ownerCompany) {
+        this.ownerCompany = ownerCompany;
     }
 
-    public String getContractStartDate() {
-        return contractStartDate;
+    public String getKaifapiao() {
+        return kaifapiao;
     }
 
-    public void setContractStartDate(String contractStartDate) {
-        this.contractStartDate = contractStartDate;
+    public void setKaifapiao(String kaifapiao) {
+        this.kaifapiao = kaifapiao;
     }
 
-    public String getContractEndDate() {
-        return contractEndDate;
+    public String getStorageCondition() {
+        return storageCondition;
     }
 
-    public void setContractEndDate(String contractEndDate) {
-        this.contractEndDate = contractEndDate;
+    public void setStorageCondition(String storageCondition) {
+        this.storageCondition = storageCondition;
     }
 
-    public String getMinBox() {
-        return minBox;
+    public String getOriginCountry() {
+        return originCountry;
     }
 
-    public void setMinBox(String minBox) {
-        this.minBox = minBox;
+    public void setOriginCountry(String originCountry) {
+        this.originCountry = originCountry;
     }
 
-    public String getMaxBox() {
-        return maxBox;
+    public String getDestinationPort() {
+        return destinationPort;
     }
 
-    public void setMaxBox(String maxBox) {
-        this.maxBox = maxBox;
-    }
-
-    public String getBusinessMode() {
-        return businessMode;
-    }
-
-    public void setBusinessMode(String businessMode) {
-        this.businessMode = businessMode;
-    }
-
-    public String getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(String contractId) {
-        this.contractId = contractId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getContainerNo() {
-        return containerNo;
-    }
-
-    public void setContainerNo(String containerNo) {
-        this.containerNo = containerNo;
-    }
-
-    public String getLadingbillNo() {
-        return ladingbillNo;
-    }
-
-    public void setLadingbillNo(String ladingbillNo) {
-        this.ladingbillNo = ladingbillNo;
-    }
-
-    public String getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(String warehouse) {
-        this.warehouse = warehouse;
-    }
-
-    public String getStoreStartDate() {
-        return storeStartDate;
-    }
-
-    public void setStoreStartDate(String storeStartDate) {
-        this.storeStartDate = storeStartDate;
-    }
-
-    public String getStoreEndDate() {
-        return storeEndDate;
-    }
-
-    public void setStoreEndDate(String storeEndDate) {
-        this.storeEndDate = storeEndDate;
+    public void setDestinationPort(String destinationPort) {
+        this.destinationPort = destinationPort;
     }
 
     public int getStart() {
@@ -307,43 +375,11 @@ public class CargoParam {
         this.limit = limit;
     }
 
-    public String getInsideContract() {
-        return insideContract;
+    public int getExpectStoreBoxes() {
+        return expectStoreBoxes;
     }
 
-    public void setInsideContract(String insideContract) {
-        this.insideContract = insideContract;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getCargoName() {
-        return cargoName;
-    }
-
-    public void setCargoName(String cargoName) {
-        this.cargoName = cargoName;
-    }
-
-    public String getCargoNo() {
-        return cargoNo;
-    }
-
-    public void setCargoNo(String cargoNo) {
-        this.cargoNo = cargoNo;
-    }
-
-    public String getContractNo() {
-        return contractNo;
-    }
-
-    public void setContractNo(String contractNo) {
-        this.contractNo = contractNo;
+    public void setExpectStoreBoxes(int expectStoreBoxes) {
+        this.expectStoreBoxes = expectStoreBoxes;
     }
 }
