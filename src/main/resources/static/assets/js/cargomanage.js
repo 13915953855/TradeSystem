@@ -27,13 +27,21 @@ $(function () {
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    $("select").select2({
+        tags: true
+    });
     $("#cargoType").change(function(){
         $("#cargoName").empty();
         $("#cargoName").append("<option>全部</option>");
         initCargoList();
+        $("#externalCompany").empty();
+        $("#externalCompany").append("<option>全部</option>");
+        initExternalCompany();
     });
     initCargoList();
     initWarehouse();
+    initExternalCompany();
+    initOriginCountry();
 });
 
 var toFloat = function (value) {
@@ -116,6 +124,14 @@ var TableInit = function () {
                 title: '业务模式',
                 visible: false
             }, {
+                field: 'externalCompany',
+                title: '外商',
+                visible: false
+            }, {
+                field: 'originCountry',
+                title: '原产地',
+                visible: false
+            }, {
                 field: 'warehouse',
                 title: '仓库'
             }, {
@@ -151,9 +167,39 @@ var TableInit = function () {
 
     //得到查询的参数
     oTableInit.queryParams = function (params) {
+            var externalCompanyArr = $("#externalCompany").val();
+            var externalCompany = "";
+            if(externalCompanyArr != null){
+                for(var i=0;i<externalCompanyArr.length;i++){
+                    if(externalCompanyArr[i] != '全部'){
+                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                    }else{
+                        externalCompany = "";break;
+                    }
+                }
+            }
+            if(externalCompany.length > 1){
+                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+            }
+            var originCountryArr = $("#originCountry").val();
+                    var originCountry = "";
+                    if(originCountryArr != null){
+                        for(var i=0;i<originCountryArr.length;i++){
+                            if(originCountryArr[i] != '全部'){
+                                originCountry += "'"+originCountryArr[i] + "',";
+                            }else{
+                                originCountry = "";break;
+                            }
+                        }
+                    }
+                    if(originCountry.length > 1){
+                        originCountry = originCountry.substring(0,originCountry.length-1);
+                    }
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
+            externalCompany: externalCompany,
+            originCountry: originCountry,
             contractNo: $("#contractNo").val(),
             warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
             storeStartDate: $("#storeStartDate").val(),
@@ -181,8 +227,38 @@ var TableInit = function () {
 };
 
 function getTotalStore(){
+var externalCompanyArr = $("#externalCompany").val();
+        var externalCompany = "";
+        if(externalCompanyArr != null){
+            for(var i=0;i<externalCompanyArr.length;i++){
+                if(externalCompanyArr[i] != '全部'){
+                    externalCompany += "'"+externalCompanyArr[i] + "',";
+                }else{
+                    externalCompany = "";break;
+                }
+            }
+        }
+        if(externalCompany.length > 1){
+            externalCompany = externalCompany.substring(0,externalCompany.length-1);
+        }
+        var originCountryArr = $("#originCountry").val();
+                var originCountry = "";
+                if(originCountryArr != null){
+                    for(var i=0;i<originCountryArr.length;i++){
+                        if(originCountryArr[i] != '全部'){
+                            originCountry += "'"+originCountryArr[i] + "',";
+                        }else{
+                            originCountry = "";break;
+                        }
+                    }
+                }
+                if(originCountry.length > 1){
+                    originCountry = originCountry.substring(0,originCountry.length-1);
+                }
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractNo: $("#contractNo").val(),
+        externalCompany: externalCompany,
+        originCountry: originCountry,
         warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
         storeStartDate: $("#storeStartDate").val(),
         storeEndDate: $("#storeEndDate").val(),
@@ -248,6 +324,8 @@ function resetQuery(){
     $("#storageCondition").val("全部").trigger("change");
     $("#businessMode").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
+    $("#externalCompany").val("全部").trigger("change");
+    $("#originCountry").val("全部").trigger("change");
     $("#cargoType").val("").trigger("change");
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
