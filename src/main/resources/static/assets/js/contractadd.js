@@ -88,6 +88,19 @@ $(function () {
         invoiceMoney = toFloat(unitPrice * invoiceAmount);
         $("#contractMoney").val(contractMoney);
         $("#invoiceMoney").val(invoiceMoney);
+
+        //自动计算成本单价
+        var costPrice = 0;
+        var originCountry = $("#originCountry").val();
+        var exchangeRate = $("#exchangeRate").val();
+        if(originCountry == "澳大利亚"){
+            costPrice = unitPrice*exchangeRate*1.06*1.09+0.6;
+        }else if(originCountry == "新西兰" || originCountry == "哥斯达黎加"){
+            costPrice = unitPrice*exchangeRate*1.09+0.6;
+        }else{
+            costPrice = unitPrice*exchangeRate*1.12*1.09+0.6;
+        }
+        $("#costPrice").val(toFloat(costPrice));
     });
     $("#contractAmount").blur(function(){
         var contractMoney = 0;
