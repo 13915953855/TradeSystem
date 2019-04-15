@@ -524,7 +524,7 @@
       </if>
       )
     </if>
-    order by a.id desc
+    order by a.contract_date desc
     <if test="start != null and limit != null" >
       limit ${start},${limit}
     </if>
