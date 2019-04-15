@@ -241,6 +241,8 @@ var TableInit = function () {
             companyNo: $("#companyNo").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),
             contractStartDate: $("#contractStartDate").val(),
+            expectSaleDateStart: $("#expectSaleDateStart").val(),
+            expectSaleDateEnd: $("#expectSaleDateEnd").val(),
             contractEndDate: $("#contractEndDate").val(),
             minWeight: $("#minWeight").val(),
             maxWeight: $("#maxWeight").val(),
@@ -343,6 +345,8 @@ function getTotalStore(){
         level: level,
         destinationPort: destinationPort,
         companyNo: $("#companyNo").val(),
+        expectSaleDateStart: $("#expectSaleDateStart").val(),
+        expectSaleDateEnd: $("#expectSaleDateEnd").val(),
         status: $("#status").val() == "全部"?"":$("#status").val(),
         contractStartDate: $("#contractStartDate").val(),
         contractEndDate: $("#contractEndDate").val(),
@@ -428,6 +432,8 @@ function resetQuery(){
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
     $("#etdStartDate").val("");
+    $("#expectSaleDateStart").val("");
+    $("#expectSaleDateEnd").val("");
     $("#etdEndDate").val("");
     $("#cargoNo").val("");
 }

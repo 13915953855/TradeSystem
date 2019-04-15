@@ -6,6 +6,8 @@ package com.jason.trade.entity;
 public class CargoParam {
     private String contractId;
     private String contractNo;
+    private String expectSaleDateStart;
+    private String expectSaleDateEnd;
     private String importContractNo;
     private String externalCompany;
     private String insideContract;
@@ -46,6 +48,22 @@ public class CargoParam {
     private int start;
     private int limit;
     private int expectStoreBoxes;
+
+    public String getExpectSaleDateStart() {
+        return expectSaleDateStart;
+    }
+
+    public void setExpectSaleDateStart(String expectSaleDateStart) {
+        this.expectSaleDateStart = expectSaleDateStart;
+    }
+
+    public String getExpectSaleDateEnd() {
+        return expectSaleDateEnd;
+    }
+
+    public void setExpectSaleDateEnd(String expectSaleDateEnd) {
+        this.expectSaleDateEnd = expectSaleDateEnd;
+    }
 
     public String getContractId() {
         return contractId;

@@ -651,12 +651,13 @@
   <select id="selectByExampleForPre" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
-    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company,c.expect_sale_date
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
+    inner join presale_info c on c.cargo_id = a.cargo_id where 1 = 1 and b.status in ('1','2','3')
     UNION
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
     '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
-    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company
+    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company,'' as expect_sale_date
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
     ) b
     where 1 = 1
@@ -667,12 +668,13 @@
   <select id="selectCountByExampleForPre" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
     select count(1) from (
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
-    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company,c.expect_sale_date
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
+    inner join presale_info c on c.cargo_id = a.cargo_id where 1 = 1 and b.status in ('1','2','3')
     UNION
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
     '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
-    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company
+    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company,'' as expect_sale_date
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
     ) b
     where 1 = 1
@@ -681,12 +683,13 @@
   <select id="selectTotalByExampleForPre" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select sum(b.yys) as yys,sum(b.expect_store_weight) as expect_store_weight,sum(b.contract_amount) as contract_amount from (
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
-    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
+    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company,c.expect_sale_date
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
+    inner join presale_info c on c.cargo_id = a.cargo_id where 1 = 1 and b.status in ('1','2','3')
     UNION
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
     '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
-    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company
+    '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company,'' as expect_sale_date
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
     ) b
     where 1 = 1
@@ -743,6 +746,12 @@
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and b.storage_condition = '${storageCondition}'
+    </if>
+    <if test="expectSaleDateStart != null and expectSaleDateStart != ''" >
+      and b.expect_sale_date &gt;= '${expectSaleDateStart}'
+    </if>
+    <if test="expectSaleDateEnd != null and expectSaleDateEnd != ''" >
+      and b.expect_sale_date &lt;= '${expectSaleDateEnd}'
     </if>
     <if test="etaStartDate != null and etaStartDate != ''" >
       and b.eta &gt;= '${etaStartDate}'

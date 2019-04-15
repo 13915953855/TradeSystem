@@ -345,7 +345,7 @@ public class TradeService {
     public JSONObject getPreTotal(CargoParam cargoParam){
         JSONObject result = new JSONObject();
         List<CargoManageInfo> record = cargoInfoMapper.selectTotalByExampleForPre(cargoParam);
-        if(record.size() > 0) {
+        if(record.size() > 0 && record.get(0) != null) {
             result.put("totalStoreAmount", record.get(0).getExpectStoreWeight());
             result.put("totalContractAmount", record.get(0).getContractAmount());
         }else{
