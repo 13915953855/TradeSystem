@@ -19,7 +19,11 @@ $("select").select2({
         todayHighlight: true,
         language: 'zh-CN'
     });
-
+    $("#cargoType").change(function(){
+        $("#externalCompany").empty();
+        $("#externalCompany").append("<option>全部</option>");
+        initExternalCompany();
+    });
     $("select").on("change",function(){
         $("#btn_query").click();
     });
@@ -212,6 +216,7 @@ var TableInit = function () {
             contractEndDate: $("#contractEndDate").val(),
             startDate: $("#startDate").val(),
             endDate: $("#endDate").val(),
+            cargoType: $("#cargoType").val(),
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
             etdStartDate: $("#etdStartDate").val(),
@@ -310,6 +315,7 @@ var ButtonInit = function () {
             params += "&etaEndDate="+$("#etaEndDate").val();
             params += "&etaStartDate="+$("#etaStartDate").val();
             params += "&endDate="+$("#endDate").val();
+            params += "&cargoType="+$("#cargoType").val();
             params += "&startDate="+$("#startDate").val();
             params += "&etdStartDate="+$("#etdStartDate").val();
             params += "&etdEndDate="+$("#etdEndDate").val();
@@ -339,6 +345,7 @@ function resetQuery(){
     $("#destinationPort").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
+    $("#cargoType").val("").trigger("change");
     $("#storageCondition").val("全部").trigger("change");
     $("#currency").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
@@ -414,6 +421,7 @@ function getTotalInfo(){
         contractEndDate: $("#contractEndDate").val(),
         startDate: $("#startDate").val(),
         endDate: $("#endDate").val(),
+        cargoType: $("#cargoType").val(),
         externalContract: $("#externalContract").val(),
         insideContract: $("#insideContract").val(),
         etaStartDate: $("#etaStartDate").val(),

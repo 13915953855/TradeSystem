@@ -693,7 +693,7 @@ public class MainController {
     @GetMapping(value="/trade/queryContract/output")
     public ResponseEntity<Resource> queryContractOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
                                                      @RequestParam(value="ownerCompany") String ownerCompany,@RequestParam(value="status") String status,@RequestParam(value="currency") String currency,
-                                                     @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
+                                                     @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,@RequestParam(value="cargoType") String cargoType,
                                                      @RequestParam(value="insideContract") String insideContract,@RequestParam(value="externalContract") String externalContract,
                                                      @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
@@ -703,6 +703,7 @@ public class MainController {
         contractParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
         contractParam.setOriginCountry(URLDecoder.decode(originCountry, "UTF-8"));
         contractParam.setCurrency(currency);
+        contractParam.setCargoType(cargoType);
         contractParam.setExternalContract(externalContract);
         contractParam.setInsideContract(insideContract);
         contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
