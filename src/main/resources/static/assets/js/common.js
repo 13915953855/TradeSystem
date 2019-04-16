@@ -194,6 +194,7 @@ function initDestinationPort(){
     opts += "<option>南京</option>";
     opts += "<option>太仓</option>";
     opts += "<option>张家港</option>";
+    opts += "<option>上海空港</option>";
     $("#destinationPort").append(opts);
 }
 
