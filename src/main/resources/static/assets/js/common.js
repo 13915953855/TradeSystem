@@ -80,6 +80,7 @@ function initWarehouse(){
     opts += "<option>瑞源</option>";
     opts += "<option>洋山普菲斯</option>";
     opts += "<option>上港冷链</option>";
+    opts += "<option>华辰</option>";
     $("#warehouse").append(opts);
 }
 
