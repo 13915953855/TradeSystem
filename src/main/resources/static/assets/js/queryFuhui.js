@@ -23,6 +23,11 @@ $("select").select2({
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    $("#cargoType").change(function(){
+            $("#externalCompany").empty();
+            $("#externalCompany").append("<option>全部</option>");
+            initExternalCompany();
+        });
     initBank();
     initExternalCompany();
     getTotalInfo();
@@ -144,6 +149,7 @@ var TableInit = function () {
             etdEndDate: $("#etdEndDate").val(),
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
+            cargoType: $("#cargoType").val(),
             prePayBank: $("#prePayBank").val() == "全部" ? "":$("#prePayBank").val(),
             finalPayBank: $("#finalPayBank").val() == "全部" ? "":$("#finalPayBank").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
@@ -204,6 +210,7 @@ function getTotalInfo(){
        finalPaymentStartDate: $("#finalPaymentStartDate").val(),
        finalPaymentEndDate: $("#finalPaymentEndDate").val(),
        etdStartDate: $("#etdStartDate").val(),
+       cargoType: $("#cargoType").val(),
        etdEndDate: $("#etdEndDate").val(),
        etaStartDate: $("#etaStartDate").val(),
        etaEndDate: $("#etaEndDate").val(),

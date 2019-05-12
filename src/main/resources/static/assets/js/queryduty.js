@@ -27,6 +27,8 @@ $("select").select2({
     initBusinessMode();
     initCargoList();*/
     initExternalCompany();
+    initAgent();
+        initOriginCountry();
     getTotalInfo();
 });
 
@@ -137,11 +139,44 @@ var TableInit = function () {
             if(externalCompany.length > 1){
                 externalCompany = externalCompany.substring(0,externalCompany.length-1);
             }
+            var originCountryArr = $("#originCountry").val();
+            var originCountry = "";
+            if(originCountryArr != null){
+                for(var i=0;i<originCountryArr.length;i++){
+                    if(originCountryArr[i] != '全部'){
+                        originCountry += "'"+originCountryArr[i] + "',";
+                    }else{
+                        originCountry = "";break;
+                    }
+                }
+            }
+            if(originCountry.length > 1){
+                originCountry = originCountry.substring(0,originCountry.length-1);
+            }
+            var agentArr = $("#agent").val();
+            var agent = "";
+            if(agentArr != null){
+                for(var i=0;i<agentArr.length;i++){
+                    if(agentArr[i] != '全部'){
+                        agent += "'"+agentArr[i] + "',";
+                    }else{
+                        agent = "";break;
+                    }
+                }
+            }
+            if(agent.length > 1){
+                agent = agent.substring(0,agent.length-1);
+            }
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             taxPayDateStart: $("#taxPayDateStart").val(),
             taxPayDateEnd: $("#taxPayDateEnd").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
-            externalCompany: externalCompany
+            etaStartDate: $("#etaStartDate").val(),
+            etaEndDate: $("#etaEndDate").val(),
+            cargoType: $("#cargoType").val(),
+            externalCompany: externalCompany,
+            originCountry:originCountry,
+            agent:agent
         };
         return temp;
     };
@@ -177,11 +212,44 @@ var ButtonInit = function () {
             if(externalCompany.length > 1){
                 externalCompany = externalCompany.substring(0,externalCompany.length-1);
             }
+            var originCountryArr = $("#originCountry").val();
+            var originCountry = "";
+            if(originCountryArr != null){
+                for(var i=0;i<originCountryArr.length;i++){
+                    if(originCountryArr[i] != '全部'){
+                        originCountry += "'"+originCountryArr[i] + "',";
+                    }else{
+                        originCountry = "";break;
+                    }
+                }
+            }
+            if(originCountry.length > 1){
+                originCountry = originCountry.substring(0,originCountry.length-1);
+            }
+            var agentArr = $("#agent").val();
+            var agent = "";
+            if(agentArr != null){
+                for(var i=0;i<agentArr.length;i++){
+                    if(agentArr[i] != '全部'){
+                        agent += "'"+agentArr[i] + "',";
+                    }else{
+                        agent = "";break;
+                    }
+                }
+            }
+            if(agent.length > 1){
+                agent = agent.substring(0,agent.length-1);
+            }
             var params = "?externalCompany="+externalCompany;
             params += "&taxPayDateStart="+$("#taxPayDateStart").val();
             params += "&taxPayDateEnd="+$("#taxPayDateEnd").val();
             var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
-                        params += "&ownerCompany="+ownerCompany;
+            params += "&ownerCompany="+ownerCompany;
+            params += "&etaStartDate="+$("#etaStartDate").val();
+            params += "&etaEndDate="+$("#etaEndDate").val();
+            params += "&cargoType="+$("#cargoType").val();
+            params += "&agent="+agent;
+            params += "&originCountry="+originCountry;
             var url = "/trade/queryDuty/output"+params;
             window.open(url);
         });
@@ -210,11 +278,44 @@ var externalCompanyArr = $("#externalCompany").val();
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
+            var originCountryArr = $("#originCountry").val();
+            var originCountry = "";
+            if(originCountryArr != null){
+                for(var i=0;i<originCountryArr.length;i++){
+                    if(originCountryArr[i] != '全部'){
+                        originCountry += "'"+originCountryArr[i] + "',";
+                    }else{
+                        originCountry = "";break;
+                    }
+                }
+            }
+            if(originCountry.length > 1){
+                originCountry = originCountry.substring(0,originCountry.length-1);
+            }
+            var agentArr = $("#agent").val();
+            var agent = "";
+            if(agentArr != null){
+                for(var i=0;i<agentArr.length;i++){
+                    if(agentArr[i] != '全部'){
+                        agent += "'"+agentArr[i] + "',";
+                    }else{
+                        agent = "";break;
+                    }
+                }
+            }
+            if(agent.length > 1){
+                agent = agent.substring(0,agent.length-1);
+            }
     var queryParams = {
         taxPayDateStart: $("#taxPayDateStart").val(),
         taxPayDateEnd: $("#taxPayDateEnd").val(),
         ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
-        externalCompany: externalCompany
+        etaStartDate: $("#etaStartDate").val(),
+        etaEndDate: $("#etaEndDate").val(),
+        cargoType: $("#cargoType").val(),
+        externalCompany: externalCompany,
+        originCountry:originCountry,
+        agent:agent
     };
     $.ajax({
         url:"/trade/queryDutyTotal",

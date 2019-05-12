@@ -571,12 +571,13 @@ public class MainController {
                                                      @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="storeStartDate") String storeStartDate,@RequestParam(value="storeEndDate") String storeEndDate,
                                                      @RequestParam(value="status") String status,@RequestParam(value="originCountry") String originCountry,
-                                                         @RequestParam(value="warehouse") String warehouse,@RequestParam(value="containerNo") String containerNo,
+                                                         @RequestParam(value="cargoType") String cargoType,@RequestParam(value="warehouse") String warehouse,@RequestParam(value="containerNo") String containerNo,
                                                          @RequestParam(value="minBox") Double minBox,@RequestParam(value="maxBox") Double maxBox,
                                                          @RequestParam(value="minWeight") Double minWeight,@RequestParam(value="maxWeight") Double maxWeight) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setStoreStartDate(storeStartDate);
+        contractParam.setCargoType(cargoType);
         contractParam.setStorageCondition(URLDecoder.decode(storageCondition, "UTF-8"));
         contractParam.setStoreEndDate(storeEndDate);
         contractParam.setBusinessMode(URLDecoder.decode(businessMode, "UTF-8"));
@@ -639,12 +640,20 @@ public class MainController {
 
     @GetMapping(value="/trade/queryDuty/output")
     public ResponseEntity<Resource> queryDutyOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="ownerCompany") String ownerCompany,
+                                                    @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
+                                                    @RequestParam(value="cargoType") String cargoType,@RequestParam(value="agent") String agent,
+                                                    @RequestParam(value="originCountry") String originCountry,
                                                          @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setTaxPayDateStart(taxPayDateStart);
         contractParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
         contractParam.setTaxPayDateEnd(taxPayDateEnd);
+        contractParam.setEtaStartDate(etaStartDate);
+        contractParam.setEtaEndDate(etaEndDate);
+        contractParam.setAgent(agent);
+        contractParam.setOriginCountry(originCountry);
+        contractParam.setCargoType(cargoType);
         contractParam.setExternalCompany(URLDecoder.decode(externalCompany, "UTF-8"));
 
         ByteArrayOutputStream bos = null;

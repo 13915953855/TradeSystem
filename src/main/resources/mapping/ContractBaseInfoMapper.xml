@@ -631,6 +631,9 @@
     <if test="status != null and status != ''" >
       and b.status in (${status})
     </if>
+    <if test="cargoType != null and cargoType != ''" >
+      and a.cargo_type = '${cargoType}'
+    </if>
     <if test="externalCompany != null and externalCompany != ''" >
       and a.external_company in (${externalCompany})
     </if>

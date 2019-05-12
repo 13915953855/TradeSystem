@@ -29,7 +29,14 @@ $("select").select2({
     initOriginCountry();
     initCargoList();
     initWarehouse();
-
+$("#cargoType").change(function(){
+        $("#cargoName").empty();
+        $("#cargoName").append("<option>全部</option>");
+        initCargoList();
+        $("#externalCompany").empty();
+        $("#externalCompany").append("<option>全部</option>");
+        initExternalCompany();
+    });
     getTotalInfo();
 });
 
@@ -219,6 +226,7 @@ var TableInit = function () {
             containerNo: $("#containerNo").val(),
             minBox: $("#minBox").val(),
             maxBox: $("#maxBox").val(),
+            cargoType: $("#cargoType").val(),
             minWeight: $("#minWeight").val(),
             maxWeight: $("#maxWeight").val()
 
@@ -310,6 +318,7 @@ var ButtonInit = function () {
                     params += "&status="+status;
                     params += "&cargoName="+cargoName;
                     params += "&storeStartDate="+$("#storeStartDate").val();
+                    params += "&cargoType="+$("#cargoType").val();
                     params += "&storeEndDate="+$("#storeEndDate").val();
                     params += "&originCountry="+originCountry;
                     var warehouse = $("#warehouse").val() == '全部'?"":$("#warehouse").val();
@@ -416,6 +425,7 @@ function getTotalInfo(){
         ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
         minBox: $("#minBox").val(),
         maxBox: $("#maxBox").val(),
+        cargoType: $("#cargoType").val(),
         minWeight: $("#minWeight").val(),
         maxWeight: $("#maxWeight").val()
     };
