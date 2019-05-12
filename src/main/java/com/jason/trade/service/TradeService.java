@@ -288,12 +288,16 @@ public class TradeService {
 
     private void revertStatus(ContractParam contractParam) {
         String status = contractParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        contractParam.setStatus(CommonUtil.revertStatus(status));
+        if(StringUtils.isNotBlank(status)) {
+            contractParam.setStatus(CommonUtil.revertStatus(status));
+        }
     }
 
     public JSONObject queryCargoSellInfo(CargoParam cargoParam){
         String status = cargoParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
-        cargoParam.setStatus(CommonUtil.revertStatus(status));
+        if(StringUtils.isNotBlank(status)) {
+            cargoParam.setStatus(CommonUtil.revertStatus(status));
+        }
         Integer count = cargoInfoMapper.countSellList(cargoParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
@@ -311,7 +315,10 @@ public class TradeService {
     }
 
     public JSONObject queryAllCargoList(CargoParam cargoParam){
-        cargoParam.setStatus(CommonUtil.revertStatus(cargoParam.getStatus()));
+        if(StringUtils.isNotBlank(cargoParam.getStatus())) {
+            cargoParam.setStatus(CommonUtil.revertStatus(cargoParam.getStatus()));
+        }
+
         List<CargoManageInfo> list = cargoInfoMapper.selectByExample(cargoParam);
         Integer count = cargoInfoMapper.selectCountByExample(cargoParam);
         JSONObject result = new JSONObject();

@@ -100,17 +100,6 @@
                         <div id="collapseOne" class="panel-body panel-collapse collapse in" style="padding-top:10px;padding-bottom:0;">
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">状态</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control" id="status" multiple="multiple">
-                                            <option>全部</option>
-                                            <option>已下单</option>
-                                            <option>已装船</option>
-                                            <option>已到港</option>
-                                            <option>已入库</option>
-                                            <option>已售完</option>
-                                        </select>
-                                    </div>
                                     <label class="control-label col-sm-1">合同归属公司</label>
                                     <div class="col-sm-2">
                                         <select class="form-control" id="ownerCompany">
@@ -119,21 +108,58 @@
                                             <option>紫荆华美</option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-1">合同日期从:</label>
+                                    <label class="control-label col-sm-1">商品属性</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="cargoType">
+                                            <option></option>
+                                            <option>牛产品</option>
+                                            <option>猪产品</option>
+                                            <option>禽产品</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">外商</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="externalCompany" multiple="multiple">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">原产地</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="originCountry" multiple="multiple">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group" style="">
+                                    <label class="control-label col-sm-1">预付款日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractStartDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="storeStartDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
                                     <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractEndDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="storeEndDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                </div>
+                                    <label class="control-label col-sm-1">尾款日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="taxPayDateStart" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="taxPayDateEnd" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>-->
                                 <div class="form-group" style="">
                                     <div class="col-sm-12" style="text-align:right;">
                                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
