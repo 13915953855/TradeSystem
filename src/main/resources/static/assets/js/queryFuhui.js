@@ -85,6 +85,10 @@ var TableInit = function () {
                 field: 'insideContract',
                 title: '内合同编号'
             }, {
+                field: 'cargoType',
+                title: '商品属性',
+                visible: false
+            }, {
                 field: 'externalCompany',
                 title: '外商'
             }, {
@@ -150,6 +154,10 @@ var TableInit = function () {
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
             cargoType: $("#cargoType").val(),
+            prePaymentMin: $("#prePaymentMin").val(),
+            prePaymentMax: $("#prePaymentMax").val(),
+            finalPaymentMin: $("#finalPaymentMin").val(),
+            finalPaymentMax: $("#finalPaymentMax").val(),
             prePayBank: $("#prePayBank").val() == "全部" ? "":$("#prePayBank").val(),
             finalPayBank: $("#finalPayBank").val() == "全部" ? "":$("#finalPayBank").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
@@ -186,6 +194,14 @@ function resetQuery(){
     $("#ownerCompany").val("全部").trigger("change");
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
+    $("#prePaymentStartDate").val("");
+    $("#prePaymentEndDate").val("");
+    $("#finalPaymentStartDate").val("");
+    $("#finalPaymentEndDate").val("");
+    $("#prePaymentMin").val("");
+    $("#prePaymentMax").val("");
+    $("#finalPaymentMin").val("");
+    $("#finalPaymentMax").val("");
 }
 
 function getTotalInfo(){
@@ -214,6 +230,10 @@ function getTotalInfo(){
        etdEndDate: $("#etdEndDate").val(),
        etaStartDate: $("#etaStartDate").val(),
        etaEndDate: $("#etaEndDate").val(),
+       prePaymentMin: $("#prePaymentMin").val(),
+       prePaymentMax: $("#prePaymentMax").val(),
+       finalPaymentMin: $("#finalPaymentMin").val(),
+       finalPaymentMax: $("#finalPaymentMax").val(),
        prePayBank: $("#prePayBank").val() == "全部" ? "":$("#prePayBank").val(),
        finalPayBank: $("#finalPayBank").val() == "全部" ? "":$("#finalPayBank").val(),
        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),

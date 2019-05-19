@@ -10,14 +10,34 @@ public class ContractParam {
     private String externalContract;
     private String insideContract;
     private String businessMode;
+    private String caiyangdateStart;
+    private String caiyangdateEnd;
+    private String caiyangcangku;
     private String contractStartDate;
     private String contractEndDate;
     private String etaStartDate;
     private String etaEndDate;
     private String prePaymentStartDate;
     private String prePaymentEndDate;
+    private Double prePaymentMin;
+    private Double prePaymentMax;
     private String finalPaymentStartDate;
     private String finalPaymentEndDate;
+    private String financingDaoqiStart;
+    private String financingDaoqiEnd;
+    private String yahuidaoqiDateStart;
+    private String yahuidaoqiDateEnd;
+    private String remittanceDateStart;
+    private String issuingBank;
+    private String issuingDateStart;
+    private String issuingDateEnd;
+    private String remittanceDateEnd;
+    private Double yahuiMoneyMin;
+    private Double yahuiMoneyMax;
+    private Double finalPaymentMin;
+    private Double finalPaymentMax;
+    private Double financingMoneyMin;
+    private Double financingMoneyMax;
     private String prePayBank;
     private String finalPayBank;
     private String etdStartDate;
@@ -56,6 +76,166 @@ public class ContractParam {
     private Double maxWeight;
     private String storageCondition;
     private String currency;
+
+    public String getCaiyangdateStart() {
+        return caiyangdateStart;
+    }
+
+    public void setCaiyangdateStart(String caiyangdateStart) {
+        this.caiyangdateStart = caiyangdateStart;
+    }
+
+    public String getCaiyangdateEnd() {
+        return caiyangdateEnd;
+    }
+
+    public void setCaiyangdateEnd(String caiyangdateEnd) {
+        this.caiyangdateEnd = caiyangdateEnd;
+    }
+
+    public String getCaiyangcangku() {
+        return caiyangcangku;
+    }
+
+    public void setCaiyangcangku(String caiyangcangku) {
+        this.caiyangcangku = caiyangcangku;
+    }
+
+    public String getFinancingDaoqiStart() {
+        return financingDaoqiStart;
+    }
+
+    public void setFinancingDaoqiStart(String financingDaoqiStart) {
+        this.financingDaoqiStart = financingDaoqiStart;
+    }
+
+    public String getFinancingDaoqiEnd() {
+        return financingDaoqiEnd;
+    }
+
+    public void setFinancingDaoqiEnd(String financingDaoqiEnd) {
+        this.financingDaoqiEnd = financingDaoqiEnd;
+    }
+
+    public String getYahuidaoqiDateStart() {
+        return yahuidaoqiDateStart;
+    }
+
+    public void setYahuidaoqiDateStart(String yahuidaoqiDateStart) {
+        this.yahuidaoqiDateStart = yahuidaoqiDateStart;
+    }
+
+    public String getYahuidaoqiDateEnd() {
+        return yahuidaoqiDateEnd;
+    }
+
+    public void setYahuidaoqiDateEnd(String yahuidaoqiDateEnd) {
+        this.yahuidaoqiDateEnd = yahuidaoqiDateEnd;
+    }
+
+    public String getRemittanceDateStart() {
+        return remittanceDateStart;
+    }
+
+    public void setRemittanceDateStart(String remittanceDateStart) {
+        this.remittanceDateStart = remittanceDateStart;
+    }
+
+    public String getIssuingBank() {
+        return issuingBank;
+    }
+
+    public void setIssuingBank(String issuingBank) {
+        this.issuingBank = issuingBank;
+    }
+
+    public String getIssuingDateStart() {
+        return issuingDateStart;
+    }
+
+    public void setIssuingDateStart(String issuingDateStart) {
+        this.issuingDateStart = issuingDateStart;
+    }
+
+    public String getIssuingDateEnd() {
+        return issuingDateEnd;
+    }
+
+    public void setIssuingDateEnd(String issuingDateEnd) {
+        this.issuingDateEnd = issuingDateEnd;
+    }
+
+    public String getRemittanceDateEnd() {
+        return remittanceDateEnd;
+    }
+
+    public void setRemittanceDateEnd(String remittanceDateEnd) {
+        this.remittanceDateEnd = remittanceDateEnd;
+    }
+
+    public Double getYahuiMoneyMin() {
+        return yahuiMoneyMin;
+    }
+
+    public void setYahuiMoneyMin(Double yahuiMoneyMin) {
+        this.yahuiMoneyMin = yahuiMoneyMin;
+    }
+
+    public Double getYahuiMoneyMax() {
+        return yahuiMoneyMax;
+    }
+
+    public void setYahuiMoneyMax(Double yahuiMoneyMax) {
+        this.yahuiMoneyMax = yahuiMoneyMax;
+    }
+
+    public Double getFinancingMoneyMin() {
+        return financingMoneyMin;
+    }
+
+    public void setFinancingMoneyMin(Double financingMoneyMin) {
+        this.financingMoneyMin = financingMoneyMin;
+    }
+
+    public Double getFinancingMoneyMax() {
+        return financingMoneyMax;
+    }
+
+    public void setFinancingMoneyMax(Double financingMoneyMax) {
+        this.financingMoneyMax = financingMoneyMax;
+    }
+
+    public Double getPrePaymentMin() {
+        return prePaymentMin;
+    }
+
+    public void setPrePaymentMin(Double prePaymentMin) {
+        this.prePaymentMin = prePaymentMin;
+    }
+
+    public Double getPrePaymentMax() {
+        return prePaymentMax;
+    }
+
+    public void setPrePaymentMax(Double prePaymentMax) {
+        this.prePaymentMax = prePaymentMax;
+    }
+
+    public Double getFinalPaymentMin() {
+        return finalPaymentMin;
+    }
+
+    public void setFinalPaymentMin(Double finalPaymentMin) {
+        this.finalPaymentMin = finalPaymentMin;
+    }
+
+    public Double getFinalPaymentMax() {
+        return finalPaymentMax;
+    }
+
+    public void setFinalPaymentMax(Double finalPaymentMax) {
+        this.finalPaymentMax = finalPaymentMax;
+    }
 
     public String getCargoType() {
         return cargoType;

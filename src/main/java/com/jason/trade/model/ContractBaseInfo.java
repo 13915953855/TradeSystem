@@ -190,6 +190,36 @@ public class ContractBaseInfo {
     private Double expectSaleUnitPrice;
     @Column(name="expect_sale_weight")
     private Double expectSaleWeight;
+    @Column(name="caiyang")
+    private Integer caiyang;
+    @Column(name="caiyangdate")
+    private String caiyangdate;
+    @Column(name="caiyangcangku")
+    private String caiyangcangku;
+
+    public Integer getCaiyang() {
+        return caiyang;
+    }
+
+    public void setCaiyang(Integer caiyang) {
+        this.caiyang = caiyang;
+    }
+
+    public String getCaiyangdate() {
+        return caiyangdate;
+    }
+
+    public void setCaiyangdate(String caiyangdate) {
+        this.caiyangdate = caiyangdate;
+    }
+
+    public String getCaiyangcangku() {
+        return caiyangcangku;
+    }
+
+    public void setCaiyangcangku(String caiyangcangku) {
+        this.caiyangcangku = caiyangcangku;
+    }
 
     public String getCustomerName() {
         return customerName;

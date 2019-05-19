@@ -74,6 +74,7 @@
                                 <li><a href="/trade/query/contract">订单数据统计(台账)</a></li>
                                 <li><a href="/trade/query/cargo">订单数据统计(商品)</a></li>
                                 <li><a href="/trade/query/duty">付税信息</a></li>
+                                <li><a href="/trade/query/fuhui">付汇信息</a></li>
                                 <li><a href="/trade/query/fuhuiRZ" class="active">付汇信息(融资)</a></li>
                                 <li><a href="/trade/query/fuhuiKZ">付汇信息(开证)</a></li>
                                 <li><a href="/trade/query/baoguan">报关信息</a></li>
@@ -100,16 +101,24 @@
                         <div id="collapseOne" class="panel-body panel-collapse collapse in" style="padding-top:10px;padding-bottom:0;">
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
-                                    <label class="control-label col-sm-1">状态</label>
+                                    <label class="control-label col-sm-1">商品属性</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" id="status" multiple="multiple">
-                                            <option>全部</option>
-                                            <option>已下单</option>
-                                            <option>已装船</option>
-                                            <option>已到港</option>
-                                            <option>已入库</option>
-                                            <option>已售完</option>
+                                        <select class="form-control select2" id="cargoType">
+                                            <option></option>
+                                            <option>牛产品</option>
+                                            <option>猪产品</option>
+                                            <option>禽产品</option>
                                         </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">外商</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="externalCompany" multiple="multiple">
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1">原产地</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="originCountry" multiple="multiple"></select>
                                     </div>
                                     <label class="control-label col-sm-1">合同归属公司</label>
                                     <div class="col-sm-2">
@@ -119,19 +128,78 @@
                                             <option>紫荆华美</option>
                                         </select>
                                     </div>
-                                    <label class="control-label col-sm-1">合同日期从:</label>
+
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">预付款日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractStartDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="prePaymentStartDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
                                     <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="contractEndDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="prePaymentEndDate" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">尾款日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="finalPaymentStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="finalPaymentEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">预付款金额最小值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="prePaymentMin" />
+                                    </div>
+                                    <label class="control-label col-sm-1">预付款金额最大值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="prePaymentMax" />
+                                    </div>
+                                    <label class="control-label col-sm-1">尾款金额最小值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="finalPaymentMin" />
+                                    </div>
+                                    <label class="control-label col-sm-1">尾款金额最大值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="finalPaymentMax" />
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">融资到期日从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="financingDaoqiStart" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="financingDaoqiEnd" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">融资金额最小值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="financingMoneyMin" />
+                                    </div>
+                                    <label class="control-label col-sm-1">融资金额最大值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="financingMoneyMax" />
                                     </div>
                                 </div>
                                 <div class="form-group" style="">

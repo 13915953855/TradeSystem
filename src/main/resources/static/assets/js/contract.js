@@ -34,6 +34,7 @@ $(function () {
     });
     initLevel();
     initBusinessMode();
+    initCaiyangcangku();
     initExternalCompany();
     initCargoList();
     initAgent();
@@ -177,6 +178,9 @@ function getTotalInfo(){
         etaEndDate: $("#etaEndDate").val(),
         etdStartDate: $("#etdStartDate").val(),
         etdEndDate: $("#etdEndDate").val(),
+        caiyangcangku: $("#caiyangcangku").val(),
+        caiyangdateStart: $("#caiyangdateStart").val(),
+        caiyangdateEnd: $("#caiyangdateEnd").val(),
         cargoName: cargoName,
         cargoNo: $("#cargoNo").val(),
         cargoType: $("#cargoType").val(),
@@ -421,6 +425,9 @@ var TableInit = function () {
             taxPayDateStart: $("#taxPayDateStart").val(),
             taxPayDateEnd: $("#taxPayDateEnd").val(),
             etaStartDate: $("#etaStartDate").val(),
+            caiyangcangku: $("#caiyangcangku").val(),
+                    caiyangdateStart: $("#caiyangdateStart").val(),
+                    caiyangdateEnd: $("#caiyangdateEnd").val(),
             etaEndDate: $("#etaEndDate").val(),
             etdStartDate: $("#etdStartDate").val(),
             etdEndDate: $("#etdEndDate").val(),
@@ -659,6 +666,9 @@ var ButtonInit = function () {
             var companyNo= $("#companyNo").val();
             var cargoType= $("#cargoType").val();
             var ladingbillNo= $("#ladingbillNo").val();
+            var caiyangcangku= $("#caiyangcangku").val();
+            var caiyangdateStart= $("#caiyangdateStart").val();
+            var caiyangdateEnd= $("#caiyangdateEnd").val();
 
             var chk = new Array();
             $("input[name='excelChk']:checkbox").each(function(i){
@@ -675,6 +685,9 @@ var ButtonInit = function () {
             params += "&insideContract="+insideContract;
             params += "&contractStartDate="+contractStartDate;
             params += "&contractEndDate="+contractEndDate;
+            params += "&caiyangcangku="+caiyangcangku;
+            params += "&caiyangdateStart="+caiyangdateStart;
+            params += "&caiyangdateEnd="+caiyangdateEnd;
             params += "&storeStartDate="+storeStartDate;
             params += "&storeEndDate="+storeEndDate;
             params += "&taxPayDateStart="+taxPayDateStart;

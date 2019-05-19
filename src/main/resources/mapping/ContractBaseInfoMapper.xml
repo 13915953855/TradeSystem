@@ -77,6 +77,9 @@
     <result column="owner_company" property="ownerCompany" jdbcType="VARCHAR" />
     <result column="storage_condition" property="storageCondition" jdbcType="VARCHAR" />
     <result column="cargo_match" property="cargoMatch" jdbcType="INTEGER" />
+    <result column="caiyang" property="caiyang" jdbcType="INTEGER" />
+    <result column="caiyangdate" property="caiyangdate" jdbcType="VARCHAR" />
+    <result column="caiyangcangku" property="caiyangcangku" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="BaseResultMap2" type="com.jason.trade.entity.QueryContractInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -129,7 +132,7 @@
     version, warehouse, yahuidaoqi_date, exchange_rate, hasbaoguan,zhixiangfei,zhigangfei,
     is_yahui,yahui_money,yahui_year_rate,yahui_day_rate,is_financing,financing_money,
     financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,
-    owner_company,baoguandan,storage_condition,cargo_match
+    owner_company,baoguandan,storage_condition,cargo_match,caiyang,caiyangdate,caiyangcangku
   </sql>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
     update contract_base_info
@@ -400,6 +403,15 @@
       </if>
       <if test="storageCondition != null" >
         storage_condition = #{storageCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="caiyang != null" >
+        caiyang = #{caiyang,jdbcType=INTEGER},
+      </if>
+      <if test="caiyangdate != null" >
+        caiyangdate = #{caiyangdate,jdbcType=VARCHAR},
+      </if>
+      <if test="caiyangcangku != null" >
+        caiyangcangku = #{caiyangcangku,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -789,6 +801,15 @@
     <if test="ownerCompany != null and ownerCompany != ''" >
       and a.owner_company = '${ownerCompany}'
     </if>
+    <if test="caiyangcangku != null and caiyangcangku != ''" >
+      and a.caiyangcangku = '${caiyangcangku}'
+    </if>
+    <if test="caiyangdateStart != null and caiyangdateStart != ''" >
+      and a.caiyangdate &gt;= '${caiyangdateStart}'
+    </if>
+    <if test="caiyangdateEnd != null and caiyangdateEnd != ''" >
+      and a.caiyangdate &lt;= '${caiyangdateEnd}'
+    </if>
     <if test="cargoType != null and cargoType != ''" >
       and a.cargo_type = '${cargoType}'
     </if>
@@ -854,11 +875,23 @@
     <if test="prePaymentEndDate != null and prePaymentEndDate != ''" >
       and a.pre_payment_date &lt;= '${prePaymentEndDate}'
     </if>
+    <if test="prePaymentMin != null and prePaymentMin != ''" >
+      and a.pre_payment &gt;= '${prePaymentMin}'
+    </if>
+    <if test="prePaymentMax != null and prePaymentMax != ''" >
+      and a.pre_payment &lt;= '${prePaymentMax}'
+    </if>
     <if test="finalPaymentStartDate != null and finalPaymentStartDate != ''" >
       and a.final_payment_date &gt;= '${finalPaymentStartDate}'
     </if>
     <if test="finalPaymentEndDate != null and finalPaymentEndDate != ''" >
       and a.final_payment_date &lt;= '${finalPaymentEndDate}'
+    </if>
+    <if test="finalPaymentMin != null and finalPaymentMin != ''" >
+      and a.final_payment &gt;= '${finalPaymentMin}'
+    </if>
+    <if test="finalPaymentMax != null and finalPaymentMax != ''" >
+      and a.final_payment &lt;= '${finalPaymentMax}'
     </if>
     <if test="taxPayDateStart != null and taxPayDateStart != ''" >
       and a.tax_pay_date &gt;= '${taxPayDateStart}'
@@ -883,6 +916,45 @@
     </if>
     <if test="etdEndDate != null and etdEndDate != ''" >
       and a.etd &lt;= '${etdEndDate}'
+    </if>
+    <if test="issuingBank != null and issuingBank != ''" >
+      and a.issuing_bank = '${issuingBank}'
+    </if>
+    <if test="issuingDateStart != null and issuingDateStart != ''" >
+      and a.issuing_date &gt;= '${issuingDateStart}'
+    </if>
+    <if test="issuingDateEnd != null and issuingDateEnd != ''" >
+      and a.issuing_date &lt;= '${issuingDateEnd}'
+    </if>
+    <if test="remittanceDateStart != null and remittanceDateStart != ''" >
+      and a.remittance_date &gt;= '${remittanceDateStart}'
+    </if>
+    <if test="remittanceDateEnd != null and remittanceDateEnd != ''" >
+      and a.remittance_date &lt;= '${remittanceDateEnd}'
+    </if>
+    <if test="yahuidaoqiDateStart != null and yahuidaoqiDateStart != ''" >
+      and a.yahuidaoqi_date &gt;= '${yahuidaoqiDateStart}'
+    </if>
+    <if test="yahuidaoqiDateEnd != null and yahuidaoqiDateEnd != ''" >
+      and a.yahuidaoqi_date &lt;= '${yahuidaoqiDateEnd}'
+    </if>
+    <if test="yahuiMoneyMin != null and yahuiMoneyMin != ''" >
+      and a.yahui_money &gt;= '${yahuiMoneyMin}'
+    </if>
+    <if test="yahuiMoneyMax != null and yahuiMoneyMax != ''" >
+      and a.yahui_money &lt;= '${yahuiMoneyMax}'
+    </if>
+    <if test="financingDaoqiStart != null and financingDaoqiStart != ''" >
+      and a.financing_daoqi &gt;= '${financingDaoqiStart}'
+    </if>
+    <if test="financingDaoqiEnd != null and financingDaoqiEnd != ''" >
+      and a.financing_daoqi &lt;= '${financingDaoqiEnd}'
+    </if>
+    <if test="financingMoneyMin != null and financingMoneyMin != ''" >
+      and a.financing_money &gt;= '${financingMoneyMin}'
+    </if>
+    <if test="financingMoneyMax != null and financingMoneyMax != ''" >
+      and a.financing_money &lt;= '${financingMoneyMax}'
     </if>
     <if test="(businessMode != null and businessMode != '') or (cargoName != null and cargoName != '') or (level != null and level != '') or (companyNo != null and companyNo != '') or (cargoNo != null and cargoNo != '')" >
       and a.contract_id in (

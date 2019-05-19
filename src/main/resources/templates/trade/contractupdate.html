@@ -57,6 +57,7 @@
             var isFinancing = /*[[${contract.isFinancing}]]*/;
             var baoguandan = /*[[${contract.baoguandan}]]*/;
             var isYahui = /*[[${contract.isYahui}]]*/;
+            var caiyang = /*[[${contract.caiyang}]]*/;
             var cargoMatch = /*[[${contract.cargoMatch}]]*/;
             var isCheckElec = /*[[${contract.isCheckElec}]]*/;
             var qacertificate = /*[[${contract.qacertificate}]]*/;
@@ -80,6 +81,10 @@
             if(isFinancing == 1){
                 $("#isFinancing").attr("checked","checked");
                 $("#financingDiv").show();
+            }
+            if(caiyang == 1){
+                $("#caiyang").attr("checked","checked");
+                $("#caiyangDiv").show();
             }
             if(baoguandan == 1){
                 $("#baoguandan").attr("checked","checked");
@@ -141,6 +146,10 @@
             var warehouse = /*[[${contract.warehouse}]]*/;
             checkSelectOptionExist("warehouse",warehouse);
             $("#warehouse").val(warehouse).trigger("change");
+
+            var caiyangcangku = /*[[${contract.caiyangcangku}]]*/;
+            checkSelectOptionExist("caiyangcangku",caiyangcangku);
+            $("#caiyangcangku").val(caiyangcangku).trigger("change");
 
             var insuranceCompany = /*[[${contract.insuranceCompany}]]*/;
             checkSelectOptionExist("insuranceCompany",insuranceCompany);
@@ -870,6 +879,29 @@
                                                     <span></span>
                                                 </label>
                                             </div>
+                                            <label class="control-label col-sm-3">采样</label>
+                                            <div class="col-sm-3">
+                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="caiyang"/>
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="caiyangDiv" style="">
+                                            <label class="control-label col-sm-2">采样日期</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="caiyangdate" th:value="${contract.caiyangdate}" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                            <label class="control-label col-sm-3">采样仓库</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-control" id="caiyangcangku">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+
                                         </div>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2">滞箱费</label>

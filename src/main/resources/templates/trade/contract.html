@@ -295,6 +295,27 @@
                                     </div>
                                </div>
                                 <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">采样仓库</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control select2" id="caiyangcangku">
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-1" for="externalContract">采样日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="caiyangdateStart" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="caiyangdateEnd" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
                                     <div class="col-sm-12" style="text-align:right;">
                                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                                         <button type="button" id="btn_reset" class="btn btn-default">重置</button>
@@ -428,6 +449,8 @@
                                             <div class="col-sm-3"><input type="checkbox" name="excelChk" checked="checked"/>放行日期</div>
                                             <div class="col-sm-3"><input type="checkbox" name="excelChk" checked="checked"/>仓库</div>
                                             <div class="col-sm-3"><input type="checkbox" name="excelChk" checked="checked"/>入库日期</div>
+                                            <div class="col-sm-3"><input type="checkbox" name="excelChk" checked="checked"/>采样仓库</div>
+                                            <div class="col-sm-3"><input type="checkbox" name="excelChk" checked="checked"/>采样日期</div>
                                             <div class="col-sm-3"><input type="checkbox" name="excelChk" checked="checked"/>滞箱费</div>
                                             <div class="col-sm-3"><input type="checkbox" name="excelChk" checked="checked"/>滞港费</div>
                                             <div class="col-sm-3"><input type="checkbox" name="excelChk" checked="checked"/>备注</div>

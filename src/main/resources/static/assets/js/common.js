@@ -68,7 +68,17 @@ function initCargoList(){
         }
     });
 }
-
+function initCaiyangcangku(){
+    var opts = "";
+    opts += "<option></option>";
+    opts += "<option>大宛</option>";
+    opts += "<option>上港冷链</option>";
+    opts += "<option>洋山普菲斯</option>";
+    opts += "<option>外高桥普菲斯</option>";
+    opts += "<option>名联纪丰</option>";
+    opts += "<option>名联青浦</option>";
+    $("#caiyangcangku").append(opts);
+}
 function initWarehouse(){
     var opts = "";
     opts += "<option>库外</option>";

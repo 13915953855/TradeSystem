@@ -19,6 +19,7 @@ $(function () {
     initBank();
     initWarehouse();
     initCargoList();
+    initCaiyangcangku();
 
     $("#level").select2({
         tags: true
@@ -49,6 +50,19 @@ $(function () {
             $("#baoxianDiv").show();
         }else{
             $("#baoxianDiv").hide();
+        }
+    });
+
+    if($("#caiyang").checked){
+        $("#caiyangDiv").show();
+    }else{
+        $("#caiyangDiv").hide();
+    }
+    $("#caiyang").change(function(){
+        if(this.checked){
+            $("#caiyangDiv").show();
+        }else{
+            $("#caiyangDiv").hide();
         }
     });
 
@@ -620,6 +634,15 @@ function saveContract(){
     contract.storeDate = $("#storeDate").val();
     contract.remark = $("#remark").val();
     contract.cargoType = $("#cargoType").val();
+    if($("#caiyang").is(':checked')){
+        contract.caiyang = "1";
+        contract.caiyangdate = $("#caiyangdate").val();
+        contract.caiyangcangku = $("#caiyangcangku").val();
+    }else{
+        contract.caiyang = "0";
+        contract.caiyangdate = "";
+        contract.caiyangcangku = "";
+    }
     contract.zhixiangfei = $("#zhixiangfei").val() == "" ? 0:toFloat($("#zhixiangfei").val());
     contract.zhigangfei = $("#zhigangfei").val() == "" ? 0:toFloat($("#zhigangfei").val());
 

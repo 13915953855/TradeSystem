@@ -130,36 +130,67 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!--<div class="form-group" style="">
-                                    <label class="control-label col-sm-1">预付款日期从:</label>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">开证行:</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" id="issuingBank">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">开证日期从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="storeStartDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="issuingDateStart" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
                                     <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="storeEndDate" class="form-control" />
+                                            <input size="16" type="text" value="" id="issuingDateEnd" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                    <label class="control-label col-sm-1">尾款日期从:</label>
+                                    <label class="control-label col-sm-1">付汇日从:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="taxPayDateStart" class="form-control" />
+                                            <input size="16" type="text" value="" id="remittanceDateStart" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
                                     <label class="control-label col-sm-1">到:</label>
                                     <div class="col-sm-2">
                                         <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" id="taxPayDateEnd" class="form-control" />
+                                            <input size="16" type="text" value="" id="remittanceDateEnd" class="form-control" />
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         </div>
                                     </div>
-                                </div>-->
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">押汇到期日从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="yahuidaoqiDateStart" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="yahuidaoqiDateEnd" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">押汇金额最小值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="yahuiMoneyMin" />
+                                    </div>
+                                    <label class="control-label col-sm-1">押汇金额最大值:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="yahuiMoneyMax" />
+                                    </div>
+                                </div>
                                 <div class="form-group" style="">
                                     <div class="col-sm-12" style="text-align:right;">
                                         <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>

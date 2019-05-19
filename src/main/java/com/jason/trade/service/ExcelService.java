@@ -649,6 +649,8 @@ public class ExcelService {
         list.add(baseInfo.getAgentPassDate());//放行日期
         list.add(baseInfo.getWarehouse());//仓库
         list.add(baseInfo.getStoreDate());//入库日期
+        list.add(baseInfo.getCaiyangcangku());//采样仓库
+        list.add(baseInfo.getCaiyangdate());//采样日期
         list.add(baseInfo.getZhixiangfei());//滞箱费
         list.add(baseInfo.getZhigangfei());//滞港费
         list.add(baseInfo.getRemark());//备注

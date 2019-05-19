@@ -28,6 +28,7 @@ $("select").select2({
             $("#externalCompany").append("<option>全部</option>");
             initExternalCompany();
         });
+        initBank();
     initExternalCompany();
     initOriginCountry();
     getTotalInfo();
@@ -172,6 +173,15 @@ var TableInit = function () {
             offset: params.offset,  //页码
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
 cargoType:$("#cargoType").val(),
+        issuingBank:$("#issuingBank").val(),
+        issuingDateStart:$("#issuingDateStart").val(),
+        issuingDateEnd:$("#issuingDateEnd").val(),
+        remittanceDateStart:$("#remittanceDateStart").val(),
+        remittanceDateEnd:$("#remittanceDateEnd").val(),
+        yahuidaoqiDateStart:$("#yahuidaoqiDateStart").val(),
+        yahuidaoqiDateEnd:$("#yahuidaoqiDateEnd").val(),
+        yahuiMoneyMin:$("#yahuiMoneyMin").val(),
+        yahuiMoneyMax:$("#yahuiMoneyMax").val(),
        externalCompany: externalCompany,
        originCountry: originCountry,
             isYahui: "1"
@@ -204,7 +214,16 @@ function resetQuery(){
     $("#ownerCompany").val("全部").trigger("change");
     $("#externalCompany").val("全部").trigger("change");
     $("#originCountry").val("全部").trigger("change");
+    $("#issuingBank").val("").trigger("change");
     $("#cargoType").val("").trigger("change");
+    $("#issuingDateStart").val("");
+    $("#issuingDateEnd").val("");
+    $("#remittanceDateStart").val("");
+    $("#remittanceDateEnd").val("");
+    $("#yahuidaoqiDateStart").val("");
+    $("#yahuidaoqiDateEnd").val("");
+    $("#yahuiMoneyMin").val("");
+    $("#yahuiMoneyMax").val("");
 }
 
 function getTotalInfo(){
@@ -239,6 +258,15 @@ function getTotalInfo(){
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
        cargoType:$("#cargoType").val(),
+       issuingBank:$("#issuingBank").val(),
+               issuingDateStart:$("#issuingDateStart").val(),
+               issuingDateEnd:$("#issuingDateEnd").val(),
+               remittanceDateStart:$("#remittanceDateStart").val(),
+               remittanceDateEnd:$("#remittanceDateEnd").val(),
+               yahuidaoqiDateStart:$("#yahuidaoqiDateStart").val(),
+               yahuidaoqiDateEnd:$("#yahuidaoqiDateEnd").val(),
+               yahuiMoneyMin:$("#yahuiMoneyMin").val(),
+               yahuiMoneyMax:$("#yahuiMoneyMax").val(),
        externalCompany: externalCompany,
        originCountry: originCountry,
        isYahui: "1"

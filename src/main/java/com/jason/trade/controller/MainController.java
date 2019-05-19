@@ -284,6 +284,7 @@ public class MainController {
     @GetMapping(value="/trade/contract/output")
     public ResponseEntity<Resource> output(HttpSession session,@RequestParam(value="externalContract") String externalContract,
                @RequestParam(value="insideContract") String insideContract,@RequestParam(value="contractStartDate") String contractStartDate,
+               @RequestParam(value="caiyangdateStart") String caiyangdateStart,@RequestParam(value="caiyangdateEnd") String caiyangdateEnd,@RequestParam(value="caiyangcangku") String caiyangcangku,
                @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="agent") String agent,@RequestParam(value="ownerCompany") String ownerCompany,
                @RequestParam(value="ladingbillNo") String ladingbillNo,@RequestParam(value="destinationPort") String destinationPort,
                @RequestParam(value="businessMode") String businessMode,@RequestParam(value="externalCompany") String externalCompany,
@@ -297,6 +298,9 @@ public class MainController {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setExternalContract(externalContract);
+        contractParam.setCaiyangcangku(caiyangcangku);
+        contractParam.setCaiyangdateStart(caiyangdateStart);
+        contractParam.setCaiyangdateEnd(caiyangdateEnd);
         contractParam.setInsideContract(insideContract);
         contractParam.setContractStartDate(contractStartDate);
         contractParam.setContractEndDate(contractEndDate);

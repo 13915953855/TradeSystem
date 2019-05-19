@@ -23,6 +23,14 @@ $("select").select2({
     $("select").on("change",function(){
         $("#btn_query").click();
     });
+    $("#cargoType").change(function(){
+            $("#externalCompany").empty();
+            $("#externalCompany").append("<option>全部</option>");
+            initExternalCompany();
+        });
+
+    initExternalCompany();
+        initOriginCountry();
     getTotalInfo();
 });
 
@@ -78,6 +86,18 @@ var TableInit = function () {
                 field: 'insideContract',
                 title: '内合同编号'
             }, {
+                field: 'cargoType',
+                title: '商品属性',
+                visible: false
+            }, {
+                field: 'externalCompany',
+                title: '外商',
+                visible: false
+            }, {
+                field: 'originCountry',
+                title: '原产地',
+                visible: false
+            }, {
                 field: 'totalInvoiceMoney',
                 title: '发票总金额'
             }, {
@@ -128,28 +148,54 @@ var TableInit = function () {
 
     //得到查询的参数
     oTableInit.queryParams = function (params) {
-        var statusArr = $("#status").val();
-        var status = "";
-        if(statusArr != null){
-            for(var i=0;i<statusArr.length;i++){
-                if(statusArr[i] != '全部'){
-                    status += statusArr[i] + ",";
-                }else{
-                    status = "";break;
+    var externalCompanyArr = $("#externalCompany").val();
+            var externalCompany = "";
+            if(externalCompanyArr != null){
+                for(var i=0;i<externalCompanyArr.length;i++){
+                    if(externalCompanyArr[i] != '全部'){
+                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                    }else{
+                        externalCompany = "";break;
+                    }
                 }
             }
-        }
-        if(status.length > 1){
-            status = status.substring(0,status.length-1);
-        }
+            if(externalCompany.length > 1){
+                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+            }
+    var originCountryArr = $("#originCountry").val();
+            var originCountry = "";
+            if(originCountryArr != null){
+                for(var i=0;i<originCountryArr.length;i++){
+                    if(originCountryArr[i] != '全部'){
+                        originCountry += "'"+originCountryArr[i] + "',";
+                    }else{
+                        originCountry = "";break;
+                    }
+                }
+            }
+            if(originCountry.length > 1){
+                originCountry = originCountry.substring(0,originCountry.length-1);
+            }
 
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
-            contractStartDate: $("#contractStartDate").val(),
-            contractEndDate: $("#contractEndDate").val(),
+            prePaymentStartDate: $("#prePaymentStartDate").val(),
+            prePaymentEndDate: $("#prePaymentEndDate").val(),
+            finalPaymentStartDate: $("#finalPaymentStartDate").val(),
+            finalPaymentEndDate: $("#finalPaymentEndDate").val(),
+            financingDaoqiStart: $("#financingDaoqiStart").val(),
+            financingDaoqiEnd: $("#financingDaoqiEnd").val(),
+            prePaymentMin: $("#prePaymentMin").val(),
+            prePaymentMax: $("#prePaymentMax").val(),
+            finalPaymentMin: $("#finalPaymentMin").val(),
+            finalPaymentMax: $("#finalPaymentMax").val(),
+            financingMoneyMin: $("#financingMoneyMin").val(),
+            financingMoneyMax: $("#financingMoneyMax").val(),
+            cargoType: $("#cargoType").val(),
+            externalCompany: externalCompany,
+            originCountry:originCountry,
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
-            status: status,
             isFinancing: "1"
         };
         return temp;
@@ -177,33 +223,71 @@ var ButtonInit = function () {
 };
 
 function resetQuery(){
-    $("#status").val("全部").trigger("change");
+    $("#externalCompany").val("全部").trigger("change");
+    $("#originCountry").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
-    $("#contractStartDate").val("");
-    $("#contractEndDate").val("");
+     $("#cargoType").val("").trigger("change");
+    $("#prePaymentStartDate").val("");
+        $("#prePaymentEndDate").val("");
+        $("#finalPaymentStartDate").val("");
+        $("#finalPaymentEndDate").val("");
+        $("#financingDaoqiStart").val("");
+        $("#financingDaoqiEnd").val("");
+    $("#prePaymentMin").val("");
+    $("#prePaymentMax").val("");
+    $("#finalPaymentMin").val("");
+    $("#finalPaymentMax").val("");
+    $("#financingMoneyMin").val("");
+    $("#financingMoneyMax").val("");
 }
 
 function getTotalInfo(){
-        var statusArr = $("#status").val();
-        var status = "";
-        if(statusArr != null){
-            for(var i=0;i<statusArr.length;i++){
-                if(statusArr[i] != '全部'){
-                    status += statusArr[i] + ",";
-                }else{
-                    status = "";break;
-                }
-            }
-        }
-        if(status.length > 1){
-            status = status.substring(0,status.length-1);
-        }
+        var externalCompanyArr = $("#externalCompany").val();
+                    var externalCompany = "";
+                    if(externalCompanyArr != null){
+                        for(var i=0;i<externalCompanyArr.length;i++){
+                            if(externalCompanyArr[i] != '全部'){
+                                externalCompany += "'"+externalCompanyArr[i] + "',";
+                            }else{
+                                externalCompany = "";break;
+                            }
+                        }
+                    }
+                    if(externalCompany.length > 1){
+                        externalCompany = externalCompany.substring(0,externalCompany.length-1);
+                    }
+            var originCountryArr = $("#originCountry").val();
+                    var originCountry = "";
+                    if(originCountryArr != null){
+                        for(var i=0;i<originCountryArr.length;i++){
+                            if(originCountryArr[i] != '全部'){
+                                originCountry += "'"+originCountryArr[i] + "',";
+                            }else{
+                                originCountry = "";break;
+                            }
+                        }
+                    }
+                    if(originCountry.length > 1){
+                        originCountry = originCountry.substring(0,originCountry.length-1);
+                    }
 
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-       contractStartDate: $("#contractStartDate").val(),
-       contractEndDate: $("#contractEndDate").val(),
+      cargoType: $("#cargoType").val(),
+                  externalCompany: externalCompany,
+                  originCountry:originCountry,
        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
-       status: status,
+       prePaymentStartDate: $("#prePaymentStartDate").val(),
+       prePaymentEndDate: $("#prePaymentEndDate").val(),
+       finalPaymentStartDate: $("#finalPaymentStartDate").val(),
+       finalPaymentEndDate: $("#finalPaymentEndDate").val(),
+       financingDaoqiStart: $("#financingDaoqiStart").val(),
+       financingDaoqiEnd: $("#financingDaoqiEnd").val(),
+       prePaymentMin: $("#prePaymentMin").val(),
+       prePaymentMax: $("#prePaymentMax").val(),
+       finalPaymentMin: $("#finalPaymentMin").val(),
+       finalPaymentMax: $("#finalPaymentMax").val(),
+       financingMoneyMin: $("#financingMoneyMin").val(),
+       financingMoneyMax: $("#financingMoneyMax").val(),
        isFinancing: "1"
     };
 
