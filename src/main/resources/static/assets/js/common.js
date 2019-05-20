@@ -167,6 +167,7 @@ function initAgent() {
     opts += "<option>同华</option>";
     opts += "<option>亚东</option>";
     opts += "<option>创祥</option>";
+    opts += "<option>源鑫</option>";
     $("#agent").append(opts);
 }
 
