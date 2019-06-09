@@ -92,20 +92,7 @@ function getTotalInfo(){
                     originCountry = originCountry.substring(0,originCountry.length-1);
                 }
 
-        var levelArr = $("#level").val();
-        var level = "";
-        if(levelArr != null){
-            for(var i=0;i<levelArr.length;i++){
-                if(levelArr[i] != '全部'){
-                    level += "'"+levelArr[i] + "',";
-                }else{
-                    level = "";break;
-                }
-            }
-        }
-        if(level.length > 1){
-            level = level.substring(0,level.length-1);
-        }
+    var level = $("#level").val();
 
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
@@ -339,20 +326,7 @@ var TableInit = function () {
                         if(originCountry.length > 1){
                             originCountry = originCountry.substring(0,originCountry.length-1);
                         }
-        var levelArr = $("#level").val();
-        var level = "";
-        if(levelArr != null){
-            for(var i=0;i<levelArr.length;i++){
-                if(levelArr[i] != '全部'){
-                    level += "'"+levelArr[i] + "',";
-                }else{
-                    level = "";break;
-                }
-            }
-        }
-        if(level.length > 1){
-            level = level.substring(0,level.length-1);
-        }
+        var level = $("#level").val();
 
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
@@ -577,20 +551,7 @@ var ButtonInit = function () {
                             if(originCountry.length > 1){
                                 originCountry = originCountry.substring(0,originCountry.length-1);
                             }
-            var levelArr = $("#level").val();
-            var level = "";
-            if(levelArr != null){
-                for(var i=0;i<levelArr.length;i++){
-                    if(levelArr[i] != '全部'){
-                        level += "'"+levelArr[i] + "',";
-                    }else{
-                        level = "";break;
-                    }
-                }
-            }
-            if(level.length > 1){
-                level = level.substring(0,level.length-1);
-            }
+            var level = $("#level").val();
 
             var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
             var businessModeArr = $("#businessMode").val();

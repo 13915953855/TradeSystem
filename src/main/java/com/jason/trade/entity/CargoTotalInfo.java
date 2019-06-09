@@ -1,5 +1,7 @@
 package com.jason.trade.entity;
 
+import java.math.BigDecimal;
+
 public class CargoTotalInfo {
     private Float totalInvoiceMoney;
     private Float totalInvoiceWeight;
@@ -9,8 +11,44 @@ public class CargoTotalInfo {
     private Float expectStoreBoxes;
     private Float realStoreBoxes;
     private Float realStoreMoney;
+    private BigDecimal realSaleMoney;
+    private BigDecimal realSaleWeight;
+    private BigDecimal profit;
+    private Float realSaleBoxes;
     private int totalContract;
     private String currency;
+
+    public Float getRealSaleBoxes() {
+        return realSaleBoxes;
+    }
+
+    public void setRealSaleBoxes(Float realSaleBoxes) {
+        this.realSaleBoxes = realSaleBoxes;
+    }
+
+    public BigDecimal getRealSaleMoney() {
+        return realSaleMoney;
+    }
+
+    public void setRealSaleMoney(BigDecimal realSaleMoney) {
+        this.realSaleMoney = realSaleMoney;
+    }
+
+    public BigDecimal getRealSaleWeight() {
+        return realSaleWeight;
+    }
+
+    public void setRealSaleWeight(BigDecimal realSaleWeight) {
+        this.realSaleWeight = realSaleWeight;
+    }
+
+    public BigDecimal getProfit() {
+        return profit;
+    }
+
+    public void setProfit(BigDecimal profit) {
+        this.profit = profit;
+    }
 
     public String getCurrency() {
         return currency;

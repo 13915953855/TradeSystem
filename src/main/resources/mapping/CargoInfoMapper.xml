@@ -121,7 +121,7 @@
       and b.store_date &lt;= '${storeEndDate}'
     </if>
     <if test="level != null and level != ''" >
-      and b.level = '${level}'
+      and b.level like '%${level}%'
     </if>
     <if test="status != null and status != ''" >
       and b.status = '${status}'
@@ -211,7 +211,7 @@
       and b.store_date &lt;= '${storeEndDate}'
     </if>
     <if test="level != null and level != ''" >
-      and a.level = '${level}'
+      and a.level like '%${level}%'
     </if>
     <if test="cargoName != null and cargoName != ''" >
       and a.cargo_name = '${cargoName}'
@@ -281,7 +281,7 @@
       and b.store_date &lt;= '${storeEndDate}'
     </if>
     <if test="level != null and level != ''" >
-      and a.level = '${level}'
+      and a.level like '%${level}%'
     </if>
     <if test="cargoName != null and cargoName != ''" >
       and a.cargo_name = '${cargoName}'
@@ -550,7 +550,7 @@
       and b.cargo_name = '${cargoName}'
     </if>
     <if test="level != null and level != ''" >
-      and b.level = '${level}'
+      and b.level like '%${level}%'
     </if>
     <if test="customerName != null and customerName != ''" >
       and b.cargo_id in (
@@ -609,7 +609,9 @@
     <include refid="sellListWhere"></include>
   </select>
   <select id="getTotalStoreInfoForQuery" resultType="com.jason.trade.entity.CargoTotalInfo" parameterType="com.jason.trade.entity.CargoParam" >
-    select sum(b.real_store_weight) as realStoreWeight,sum(b.real_store_money) as realStoreMoney
+    select sum(b.real_store_weight) as realStoreWeight,sum(b.real_store_money) as realStoreMoney,
+    sum(a.real_sale_boxes) as realSaleBoxes,sum(a.profit) as profit,
+    sum(a.real_sale_weight) as realSaleWeight,sum(a.real_sale_money) as realSaleMoney
     from cargo_info b
     inner join sale_info a on a.cargo_id = b.cargo_id
     inner join contract_base_info c on c.contract_id = b.contract_id
@@ -726,7 +728,7 @@
       and b.destination_port in (${destinationPort})
     </if>
     <if test="level != null and level != ''" >
-      and b.level = '${level}'
+      and b.level like '%${level}%'
     </if>
     <if test="businessMode != null and businessMode != ''" >
       and b.business_mode = '${businessMode}'
@@ -804,7 +806,7 @@
       and b.store_date &lt;= '${storeEndDate}'
     </if>
     <if test="level != null and level != ''" >
-      and a.level = '${level}'
+      and a.level like '%${level}%'
     </if>
     <if test="status != null and status != ''" >
       and a.status = '${status}'

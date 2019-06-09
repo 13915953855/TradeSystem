@@ -272,9 +272,17 @@ function getTotalInfo(){
         success:function(res){
             $("#totalStoreWeight").html("0");
             $("#totalStoreMoney").html("0");
+            $("#totalSaleMoney").html("0");
+            $("#totalSaleWeight").html("0");
+            $("#totalSaleBoxes").html("0");
+            $("#totalLirun").html("0");
             if(res.status == "1"){
                 $("#totalStoreWeight").html(res.totalStoreWeight);
                 $("#totalStoreMoney").html(res.totalStoreMoney);
+                $("#totalSaleMoney").html(toFloat(res.totalSaleMoney));
+                $("#totalSaleWeight").html(toFloat(res.totalSaleWeight));
+                $("#totalSaleBoxes").html(res.totalSaleBoxes);
+                $("#totalLirun").html(toFloat(res.totalLirun));
             }
         }
     });

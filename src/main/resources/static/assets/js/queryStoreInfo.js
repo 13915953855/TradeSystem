@@ -164,20 +164,7 @@ var TableInit = function () {
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
-        var levelArr = $("#level").val();
-        var level = "";
-        if(levelArr != null){
-            for(var i=0;i<levelArr.length;i++){
-                if(levelArr[i] != '全部'){
-                    level += "'"+levelArr[i] + "',";
-                }else{
-                    level = "";break;
-                }
-            }
-        }
-        if(level.length > 1){
-            level = level.substring(0,level.length-1);
-        }
+        var level = $("#level").val();
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
         var businessMode = "";
@@ -265,20 +252,7 @@ var ButtonInit = function () {
                     if(externalCompany.length > 1){
                         externalCompany = externalCompany.substring(0,externalCompany.length-1);
                     }
-                    var levelArr = $("#level").val();
-                    var level = "";
-                    if(levelArr != null){
-                        for(var i=0;i<levelArr.length;i++){
-                            if(levelArr[i] != '全部'){
-                                level += "'"+levelArr[i] + "',";
-                            }else{
-                                level = "";break;
-                            }
-                        }
-                    }
-                    if(level.length > 1){
-                        level = level.substring(0,level.length-1);
-                    }
+            var level = $("#level").val();
                     var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
                     var businessModeArr = $("#businessMode").val();
                     var businessMode = "";
@@ -365,20 +339,7 @@ function getTotalInfo(){
         if(externalCompany.length > 1){
             externalCompany = externalCompany.substring(0,externalCompany.length-1);
         }
-        var levelArr = $("#level").val();
-        var level = "";
-        if(levelArr != null){
-            for(var i=0;i<levelArr.length;i++){
-                if(levelArr[i] != '全部'){
-                    level += "'"+levelArr[i] + "',";
-                }else{
-                    level = "";break;
-                }
-            }
-        }
-        if(level.length > 1){
-            level = level.substring(0,level.length-1);
-        }
+    var level = $("#level").val();
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
         var businessMode = "";

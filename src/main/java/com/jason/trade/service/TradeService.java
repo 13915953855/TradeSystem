@@ -658,9 +658,17 @@ public class TradeService {
         if(record != null) {
             result.put("totalStoreWeight", record.getRealStoreWeight());
             result.put("totalStoreMoney", record.getRealStoreMoney());
+            result.put("totalSaleWeight", record.getRealSaleWeight());
+            result.put("totalSaleMoney", record.getRealSaleMoney());
+            result.put("totalSaleBoxes", record.getRealSaleBoxes());
+            result.put("totalLirun", record.getProfit());
         }else{
             result.put("totalStoreWeight", "0");
             result.put("totalStoreMoney", "0");
+            result.put("totalSaleWeight", "0");
+            result.put("totalSaleMoney", "0");
+            result.put("totalSaleBoxes", "0");
+            result.put("totalLirun", "0");
         }
         result.put("status","1");
         return result;

@@ -526,7 +526,7 @@
         and cargo_name = '${cargoName}'
       </if>
       <if test="level != null and level != ''" >
-        and level in (${level})
+        and level like '%${level}%'
       </if>
       <if test="businessMode != null and businessMode != ''" >
         and business_mode in (${businessMode})
@@ -585,7 +585,7 @@
         and cargo_name = '${cargoName}'
       </if>
       <if test="level != null and level != ''" >
-        and level in (${level})
+        and level like '%${level}%'
       </if>
       <if test="businessMode != null and businessMode != ''" >
         and business_mode in (${businessMode})
@@ -692,7 +692,7 @@
       and b.cargo_name = '${cargoName}'
     </if>
     <if test="level != null and level != ''" >
-      and b.level in (${level})
+      and b.level like '%${level}%'
     </if>
     <if test="businessMode != null and businessMode != ''" >
       and b.business_mode in (${businessMode})
@@ -776,7 +776,7 @@
     and a.cargo_type = '${cargoType}'
   </if>
   <if test="level != null and level != ''" >
-    and b.level in (${level})
+    and b.level like '%${level}%'
   </if>
   <if test="status != null and status != ''" >
     and b.status in (${status})
@@ -963,7 +963,7 @@
         and cargo_name = '${cargoName}'
       </if>
       <if test="level != null and level != ''" >
-        and level in (${level})
+        and level like '%${level}%'
       </if>
       <if test="businessMode != null and businessMode != ''" >
         and business_mode in (${businessMode})
