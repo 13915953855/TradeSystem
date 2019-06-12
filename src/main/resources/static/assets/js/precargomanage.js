@@ -181,7 +181,7 @@ var TableInit = function () {
             originCountry = originCountry.substring(0,originCountry.length-1);
         }
 
-        var level = $("#level").val();
+        var level = $("#level").val() == "全部" ? "" : $("#level").val();
 
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
@@ -276,7 +276,7 @@ function getTotalStore(){
         originCountry = originCountry.substring(0,originCountry.length-1);
     }
 
-    var level = $("#level").val();
+    var level = $("#level").val() == "全部" ? "" : $("#level").val();
 
     var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
     var businessModeArr = $("#businessMode").val();

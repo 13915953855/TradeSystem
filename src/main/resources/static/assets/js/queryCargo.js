@@ -203,7 +203,7 @@ var TableInit = function () {
         if(destinationPort.length > 1){
             destinationPort = destinationPort.substring(0,destinationPort.length-1);
         }
-        var level = $("#level").val();
+        var level = $("#level").val() == "全部" ? "" : $("#level").val();
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
         var businessMode = "";
@@ -309,7 +309,7 @@ var ButtonInit = function () {
             if(externalCompany.length > 1){
                 externalCompany = externalCompany.substring(0,externalCompany.length-1);
             }
-            var level = $("#level").val();
+            var level = $("#level").val() == "全部" ? "" : $("#level").val();
             var destinationPortArr = $("#destinationPort").val();
             var destinationPort = "";
             if(destinationPortArr != null){
@@ -455,7 +455,7 @@ function getTotalInfo(){
                 if(destinationPort.length > 1){
                     destinationPort = destinationPort.substring(0,destinationPort.length-1);
                 }
-    var level = $("#level").val();
+    var level = $("#level").val() == "全部" ? "" : $("#level").val();
                 var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
                 var businessModeArr = $("#businessMode").val();
                 var businessMode = "";

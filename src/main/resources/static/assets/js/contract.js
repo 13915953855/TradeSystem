@@ -92,7 +92,7 @@ function getTotalInfo(){
                     originCountry = originCountry.substring(0,originCountry.length-1);
                 }
 
-    var level = $("#level").val();
+    var level = $("#level").val() == "全部" ? "" : $("#level").val();
 
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
@@ -326,7 +326,7 @@ var TableInit = function () {
                         if(originCountry.length > 1){
                             originCountry = originCountry.substring(0,originCountry.length-1);
                         }
-        var level = $("#level").val();
+        var level = $("#level").val() == "全部" ? "" : $("#level").val();
 
         var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
         var businessModeArr = $("#businessMode").val();
@@ -551,7 +551,7 @@ var ButtonInit = function () {
                             if(originCountry.length > 1){
                                 originCountry = originCountry.substring(0,originCountry.length-1);
                             }
-            var level = $("#level").val();
+            var level = $("#level").val() == "全部" ? "" : $("#level").val();
 
             var cargoName = $("#cargoName").val() == "全部" ? "":$("#cargoName").val();
             var businessModeArr = $("#businessMode").val();
