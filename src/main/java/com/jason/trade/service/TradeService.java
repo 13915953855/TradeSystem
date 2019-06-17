@@ -245,6 +245,11 @@ public class TradeService {
             cargoInfo.setRealStoreBoxes(cargoInfo.getRealStoreBoxes() + realSaleBoxes);
             if((cargoInfo.getRealStoreBoxes() + realSaleBoxes) > 0){
                 cargoInfo.setStatus(GlobalConst.STORED);
+                //获取台账状态
+                ContractBaseInfo contractBaseInfo = contractRepository.findByContractId(cargoInfo.getContractId());
+                if(contractBaseInfo.getStatus().equals(GlobalConst.SELLOUT)){
+                    contractRepository.updateStatusByContractId(Arrays.asList(cargoInfo.getContractId()),GlobalConst.STORED);
+                }
             }
             cargoRepository.save(cargoInfo);
 
