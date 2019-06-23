@@ -184,7 +184,8 @@ cargoType:$("#cargoType").val(),
         yahuiMoneyMax:$("#yahuiMoneyMax").val(),
        externalCompany: externalCompany,
        originCountry: originCountry,
-            isYahui: "1"
+            payType: "L/C"
+            //isYahui: "1"
         };
         return temp;
     };
@@ -269,7 +270,7 @@ function getTotalInfo(){
                yahuiMoneyMax:$("#yahuiMoneyMax").val(),
        externalCompany: externalCompany,
        originCountry: originCountry,
-       isYahui: "1"
+       payType: "L/C"
     };
 
     $.ajax({

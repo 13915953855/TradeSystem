@@ -163,7 +163,8 @@ var TableInit = function () {
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             externalCompany: externalCompany,
             status: "全部",
-            isFinancing: "1"
+            payType: "TT"
+            //isFinancing: "1"
         };
         return temp;
     };
@@ -192,6 +193,9 @@ var ButtonInit = function () {
 function resetQuery(){
     $("#status").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
+    $("#cargoType").val("全部").trigger("change");
+    $("#prePayBank").val("全部").trigger("change");
+    $("#finalPayBank").val("全部").trigger("change");
     $("#contractStartDate").val("");
     $("#contractEndDate").val("");
     $("#prePaymentStartDate").val("");
@@ -202,6 +206,11 @@ function resetQuery(){
     $("#prePaymentMax").val("");
     $("#finalPaymentMin").val("");
     $("#finalPaymentMax").val("");
+    $("#externalCompany").val("");
+    $("#etdStartDate").val("");
+    $("#etdEndDate").val("");
+    $("#etaStartDate").val("");
+    $("#etaEndDate").val("");
 }
 
 function getTotalInfo(){
@@ -239,7 +248,8 @@ function getTotalInfo(){
        ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
        externalCompany: externalCompany,
        status: "全部",
-       isFinancing: "1"
+        payType: "TT"
+       //isFinancing: "1"
     };
 
     $.ajax({

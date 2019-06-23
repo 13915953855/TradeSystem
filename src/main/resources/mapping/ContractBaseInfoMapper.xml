@@ -795,6 +795,9 @@
   </if>
 </sql>
   <sql id="selectByExampleWhere">
+    <if test="payType != null and payType != ''" >
+      and a.pay_type = '${payType}'
+    </if>
     <if test="isFinancing != null and isFinancing != ''" >
       and a.is_financing = '${isFinancing}'
     </if>

@@ -196,7 +196,8 @@ var TableInit = function () {
             externalCompany: externalCompany,
             originCountry:originCountry,
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
-            isFinancing: "1"
+            payType: "TT"
+            //isFinancing: "1"
         };
         return temp;
     };
@@ -288,7 +289,8 @@ function getTotalInfo(){
        finalPaymentMax: $("#finalPaymentMax").val(),
        financingMoneyMin: $("#financingMoneyMin").val(),
        financingMoneyMax: $("#financingMoneyMax").val(),
-       isFinancing: "1"
+        payType: "TT"
+       //isFinancing: "1"
     };
 
     $.ajax({
