@@ -683,28 +683,45 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">已核对电子版</label>
+                                            <label class="control-label col-sm-2">货代费</label>
                                             <div class="col-sm-3">
-                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                <input type="text" class="form-control" id="agentMoney" />
+                                            </div>
+                                            <label class="control-label col-sm-3">电子单据收到日期</label>
+                                            <div class="col-sm-3">
+                                                <!--<label class="fancy-checkbox" style="padding-top:5px;">
                                                     <input type="checkbox" id="isCheckElec"/>
                                                     <span></span>
-                                                </label>
+                                                </label>-->
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="dzdjsdrq" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
                                             </div>
-                                            <label class="control-label col-sm-3">已出检疫证</label>
-                                            <div class="col-sm-3">
-                                                <label class="fancy-checkbox" style="padding-top:5px;">
-                                                    <input type="checkbox" id="qacertificate"/>
-                                                    <span></span>
-                                                </label>
-                                            </div>
+
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">已出报关单</label>
+                                            <label class="control-label col-sm-2">检疫证签发日期</label>
                                             <div class="col-sm-3">
-                                                <label class="fancy-checkbox" style="padding-top:5px;">
+                                                <!--<label class="fancy-checkbox" style="padding-top:5px;">
+                                                    <input type="checkbox" id="qacertificate"/>
+                                                    <span></span>
+                                                </label>-->
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="jyzqfrq" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                            <label class="control-label col-sm-3">报关单出具日期</label>
+                                            <div class="col-sm-3">
+                                                <!--<label class="fancy-checkbox" style="padding-top:5px;">
                                                     <input type="checkbox" id="hasbaoguan"/>
                                                     <span></span>
-                                                </label>
+                                                </label>-->
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="bgdcjrq" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -714,7 +731,7 @@
                                                 <select class="form-control" id="agent">
                                                 </select>
                                             </div>
-                                            <label class="control-label col-sm-3">单据寄给货代日期</label>
+                                            <label class="control-label col-sm-3">正本单据收到日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
                                                     <input class="form-control" size="16" id="agentSendDate" type="text" />
@@ -731,29 +748,21 @@
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">仓库</label>
+                                            <label class="control-label col-sm-3">仓库</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control" id="warehouse">
                                                     <option></option>
                                                 </select>
                                             </div>
-                                            <label class="control-label col-sm-3">入库日期</label>
+
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">入库日期</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
                                                     <input class="form-control" size="16" id="storeDate" type="text" />
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">产品信息与单据相符</label>
-                                            <div class="col-sm-3">
-                                                <label class="fancy-checkbox" style="padding-top:5px;">
-                                                    <input type="checkbox" id="cargoMatch"/>
-                                                    <span></span>
-                                                </label>
                                             </div>
                                             <label class="control-label col-sm-3">采样</label>
                                             <div class="col-sm-3">

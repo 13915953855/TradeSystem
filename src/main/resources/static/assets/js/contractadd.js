@@ -567,11 +567,6 @@ function saveContract(){
     }else{
         contract.isYahui = "0";
     }
-    if($("#cargoMatch").is(':checked')){
-        contract.cargoMatch = "1";
-    }else{
-        contract.cargoMatch = "0";
-    }
     contract.yahuiMoney = $("#yahuiMoney").val() == "" ? 0:toFloat($("#yahuiMoney").val());
     contract.yahuiYearRate = $("#yahuiYearRate").val() == "" ? 0:toFloat($("#yahuiYearRate").val());
     contract.yahuiDayRate = $("#yahuiDayRate").val() == "" ? 0:toFloat($("#yahuiDayRate").val());
@@ -594,22 +589,11 @@ function saveContract(){
     contract.insuranceCompany = $("#insuranceCompany").val();
     contract.etd = $("#etd").val();
     contract.eta = $("#eta").val();
-    if($("#isCheckElec").is(':checked')){
-        contract.isCheckElec = "1";
-    }else{
-        contract.isCheckElec = "0";
-    }
-    if($("#qacertificate").is(':checked')){
-        contract.qacertificate = "1";
-    }else{
-        contract.qacertificate = "0";
-    }
-    if($("#hasbaoguan").is(':checked')){
-        contract.hasbaoguan = "1";
-    }else{
-        contract.hasbaoguan = "0";
-    }
+    contract.agentMoney = $("#agentMoney").val();
     contract.agent = $("#agent").val();
+    contract.dzdjsdrq = $("#dzdjsdrq").val();
+    contract.jyzqfrq = $("#jyzqfrq").val();
+    contract.bgdcjrq = $("#bgdcjrq").val();
     contract.agentSendDate = $("#agentSendDate").val();
     contract.tariff = $("#tariff").val() == "" ? 0:toFloat($("#tariff").val());
     contract.tariffNo = $("#tariffNo").val();

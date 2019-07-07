@@ -380,8 +380,12 @@ public class TradeService {
             Float totalAUDInvoiceMoney = 0F;
             Float totalContractAmount = 0F;
             Float totalInvoiceAmount = 0F;
-            Float totalFinancingMoney = 0F;
-            Float totalYahuiMoney = 0F;
+            Float totalCNYFinancingMoney = 0F;
+            Float totalUSDFinancingMoney = 0F;
+            Float totalAUDFinancingMoney = 0F;
+            Float totalCNYYahuiMoney = 0F;
+            Float totalUSDYahuiMoney = 0F;
+            Float totalAUDYahuiMoney = 0F;
             Float totalCNYPrePaymentMoney = 0F;
             Float totalUSDPrePaymentMoney = 0F;
             Float totalAUDPrePaymentMoney = 0F;
@@ -389,8 +393,6 @@ public class TradeService {
             Float totalUSDFinalPaymentMoney = 0F;
             Float totalAUDFinalPaymentMoney = 0F;
             for (ContractTotalInfo totalInfo : record) {
-                totalFinancingMoney += totalInfo.getTotalFinancingMoney();
-                totalYahuiMoney += totalInfo.getTotalYahuiMoney();
                 totalContractAmount += totalInfo.getTotalContractAmount();
                 totalInvoiceAmount += totalInfo.getTotalInvoiceAmount();
                 switch(totalInfo.getCurrency()){
@@ -399,18 +401,24 @@ public class TradeService {
                         totalCNYInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         totalCNYPrePaymentMoney += totalInfo.getTotalPrePayment();
                         totalCNYFinalPaymentMoney += totalInfo.getTotalFinalPayment();
+                        totalCNYYahuiMoney += totalInfo.getTotalYahuiMoney();
+                        totalCNYFinancingMoney += totalInfo.getTotalFinancingMoney();
                         break;
                     case "USD":
                         totalUSDContractMoney += totalInfo.getTotalContractMoney();
                         totalUSDInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         totalUSDPrePaymentMoney += totalInfo.getTotalPrePayment();
                         totalUSDFinalPaymentMoney += totalInfo.getTotalFinalPayment();
+                        totalUSDYahuiMoney += totalInfo.getTotalYahuiMoney();
+                        totalUSDFinancingMoney += totalInfo.getTotalFinancingMoney();
                         break;
                     case "AUD":
                         totalAUDContractMoney += totalInfo.getTotalContractMoney();
                         totalAUDInvoiceMoney += totalInfo.getTotalInvoiceMoney();
                         totalAUDPrePaymentMoney += totalInfo.getTotalPrePayment();
                         totalAUDFinalPaymentMoney += totalInfo.getTotalFinalPayment();
+                        totalAUDYahuiMoney += totalInfo.getTotalYahuiMoney();
+                        totalAUDFinancingMoney += totalInfo.getTotalFinancingMoney();
                         break;
                     default:break;
                 }
@@ -423,8 +431,12 @@ public class TradeService {
             result.put("totalAUDInvoiceMoney", totalAUDInvoiceMoney);
             result.put("totalContractAmount", totalContractAmount);
             result.put("totalInvoiceAmount", totalInvoiceAmount);
-            result.put("totalFinancingMoney", totalFinancingMoney);
-            result.put("totalYahuiMoney", totalYahuiMoney);
+            result.put("totalCNYFinancingMoney", totalCNYFinancingMoney);
+            result.put("totalUSDFinancingMoney", totalUSDFinancingMoney);
+            result.put("totalAUDFinancingMoney", totalAUDFinancingMoney);
+            result.put("totalCNYYahuiMoney", totalCNYYahuiMoney);
+            result.put("totalUSDYahuiMoney", totalUSDYahuiMoney);
+            result.put("totalAUDYahuiMoney", totalAUDYahuiMoney);
             result.put("totalCNYPrePaymentMoney", totalCNYPrePaymentMoney);
             result.put("totalUSDPrePaymentMoney", totalUSDPrePaymentMoney);
             result.put("totalAUDPrePaymentMoney", totalAUDPrePaymentMoney);
@@ -440,8 +452,12 @@ public class TradeService {
             result.put("totalAUDInvoiceMoney", "0");
             result.put("totalContractAmount", "0");
             result.put("totalInvoiceAmount", "0");
-            result.put("totalFinancingMoney", "0");
-            result.put("totalYahuiMoney", "0");
+            result.put("totalCNYFinancingMoney", "0");
+            result.put("totalUSDFinancingMoney", "0");
+            result.put("totalAUDFinancingMoney", "0");
+            result.put("totalCNYYahuiMoney", "0");
+            result.put("totalUSDYahuiMoney", "0");
+            result.put("totalAUDYahuiMoney", "0");
             result.put("totalCNYPrePaymentMoney", "0");
             result.put("totalUSDPrePaymentMoney", "0");
             result.put("totalAUDPrePaymentMoney", "0");

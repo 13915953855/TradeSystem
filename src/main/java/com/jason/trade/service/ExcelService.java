@@ -637,11 +637,12 @@ public class ExcelService {
         list.add(baseInfo.getInsuranceMoney());//保险费用
         list.add(baseInfo.getEtd());//ETD
         list.add(baseInfo.getEta());//ETA
-        list.add(baseInfo.getIsCheckElec()==1?"是":"否");//已核对电子版
-        list.add(baseInfo.getQacertificate()==1?"是":"否");//已出检疫证
-        list.add(baseInfo.getHasbaoguan()==1?"是":"否");//已出报关单
+        list.add(baseInfo.getAgentMoney());//货代费
+        list.add(baseInfo.getDzdjsdrq());//电子单据收到日期
+        list.add(baseInfo.getJyzqfrq());//检疫证签发日期
+        list.add(baseInfo.getBgdcjrq());//报关单出具日期
         list.add(baseInfo.getAgent());//货代
-        list.add(baseInfo.getAgentSendDate());//单据寄给货代日期
+        list.add(baseInfo.getAgentSendDate());//正本单据收到日期
         list.add(baseInfo.getTariff());//关税
         list.add(baseInfo.getAddedValueTax());//增值税
         list.add(baseInfo.getTaxPayDate());//付税日期

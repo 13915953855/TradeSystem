@@ -196,6 +196,46 @@ public class ContractBaseInfo {
     private String caiyangdate;
     @Column(name="caiyangcangku")
     private String caiyangcangku;
+    @Column(name="agent_money")
+    private Double agentMoney;
+    @Column(name="dzdjsdrq")
+    private String dzdjsdrq;
+    @Column(name="jyzqfrq")
+    private String jyzqfrq;
+    @Column(name="bgdcjrq")
+    private String bgdcjrq;
+
+    public Double getAgentMoney() {
+        return agentMoney;
+    }
+
+    public void setAgentMoney(Double agentMoney) {
+        this.agentMoney = agentMoney;
+    }
+
+    public String getDzdjsdrq() {
+        return dzdjsdrq;
+    }
+
+    public void setDzdjsdrq(String dzdjsdrq) {
+        this.dzdjsdrq = dzdjsdrq;
+    }
+
+    public String getJyzqfrq() {
+        return jyzqfrq;
+    }
+
+    public void setJyzqfrq(String jyzqfrq) {
+        this.jyzqfrq = jyzqfrq;
+    }
+
+    public String getBgdcjrq() {
+        return bgdcjrq;
+    }
+
+    public void setBgdcjrq(String bgdcjrq) {
+        this.bgdcjrq = bgdcjrq;
+    }
 
     public Integer getCaiyang() {
         return caiyang;

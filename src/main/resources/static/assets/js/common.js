@@ -91,6 +91,7 @@ function initWarehouse(){
     opts += "<option>洋山普菲斯</option>";
     opts += "<option>上港冷链</option>";
     opts += "<option>华辰</option>";
+    opts += "<option>镇江汇鸿</option>";
     $("#warehouse").append(opts);
 }
 

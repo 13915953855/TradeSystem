@@ -283,7 +283,9 @@ function getTotalInfo(){
                 $("#totalCNYInvoiceMoney").html(toFloat(res.totalCNYInvoiceMoney));
                 $("#totalUSDInvoiceMoney").html(toFloat(res.totalUSDInvoiceMoney));
                 $("#totalAUDInvoiceMoney").html(toFloat(res.totalAUDInvoiceMoney));
-                $("#totalYahuiMoney").html(toFloat4(res.totalYahuiMoney));
+                $("#totalCNYYahuiMoney").html(toFloat4(res.totalCNYYahuiMoney));
+                $("#totalUSDYahuiMoney").html(toFloat4(res.totalUSDYahuiMoney));
+                $("#totalAUDYahuiMoney").html(toFloat4(res.totalAUDYahuiMoney));
             }
         }
     });

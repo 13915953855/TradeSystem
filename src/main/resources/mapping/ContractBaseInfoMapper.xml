@@ -9,6 +9,10 @@
     <result column="qacertificate" property="qacertificate" jdbcType="INTEGER" />
     <result column="added_value_tax" property="addedValueTax" jdbcType="DOUBLE" />
     <result column="agent" property="agent" jdbcType="VARCHAR" />
+    <result column="agent_money" property="agentMoney" jdbcType="DOUBLE" />
+    <result column="dzdjsdrq" property="dzdjsdrq" jdbcType="VARCHAR" />
+    <result column="jyzqfrq" property="jyzqfrq" jdbcType="VARCHAR" />
+    <result column="bgdcjrq" property="bgdcjrq" jdbcType="VARCHAR" />
     <result column="agent_pass_date" property="agentPassDate" jdbcType="VARCHAR" />
     <result column="agent_send_date" property="agentSendDate" jdbcType="VARCHAR" />
     <result column="container_no" property="containerNo" jdbcType="VARCHAR" />
@@ -132,7 +136,8 @@
     version, warehouse, yahuidaoqi_date, exchange_rate, hasbaoguan,zhixiangfei,zhigangfei,
     is_yahui,yahui_money,yahui_year_rate,yahui_day_rate,is_financing,financing_money,
     financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,
-    owner_company,baoguandan,storage_condition,cargo_match,caiyang,caiyangdate,caiyangcangku
+    owner_company,baoguandan,storage_condition,cargo_match,caiyang,caiyangdate,caiyangcangku,
+    agent_money,dzdjsdrq,jyzqfrq,bgdcjrq
   </sql>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
     update contract_base_info
@@ -412,6 +417,18 @@
       </if>
       <if test="caiyangcangku != null" >
         caiyangcangku = #{caiyangcangku,jdbcType=VARCHAR},
+      </if>
+      <if test="agentMoney != null" >
+        agent_money = #{agentMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="dzdjsdrq != null" >
+        dzdjsdrq = #{dzdjsdrq,jdbcType=VARCHAR},
+      </if>
+      <if test="jyzqfrq != null" >
+        jyzqfrq = #{jyzqfrq,jdbcType=VARCHAR},
+      </if>
+      <if test="bgdcjrq != null" >
+        bgdcjrq = #{bgdcjrq,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
