@@ -482,7 +482,7 @@ public class MainController {
     public ResponseEntity<Resource> queryCargoOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
                                            @RequestParam(value="businessMode") String businessMode,@RequestParam(value="companyNo") String companyNo,@RequestParam(value="currency") String currency,
                                            @RequestParam(value="level") String level,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="ownerCompany") String ownerCompany,
-                                           @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,
+                                           @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,@RequestParam(value="cargoType") String cargoType,
                                            @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="status") String status,
                                            @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
                                            @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
@@ -496,6 +496,7 @@ public class MainController {
         contractParam.setDestinationPort(URLDecoder.decode(destinationPort, "UTF-8"));
         contractParam.setCurrency(currency);
         contractParam.setMinBox(minBox);
+        contractParam.setCargoType(cargoType);
         contractParam.setMaxBox(maxBox);
         contractParam.setExternalContract(externalContract);
         contractParam.setInsideContract(insideContract);
