@@ -593,6 +593,7 @@ function saveContract(){
     contract.agent = $("#agent").val();
     contract.dzdjsdrq = $("#dzdjsdrq").val();
     contract.jyzqfrq = $("#jyzqfrq").val();
+    contract.jyzzbsdrq = $("#jyzzbsdrq").val();
     contract.bgdcjrq = $("#bgdcjrq").val();
     contract.agentSendDate = $("#agentSendDate").val();
     contract.tariff = $("#tariff").val() == "" ? 0:toFloat($("#tariff").val());

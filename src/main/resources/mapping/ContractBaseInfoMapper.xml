@@ -12,6 +12,7 @@
     <result column="agent_money" property="agentMoney" jdbcType="DOUBLE" />
     <result column="dzdjsdrq" property="dzdjsdrq" jdbcType="VARCHAR" />
     <result column="jyzqfrq" property="jyzqfrq" jdbcType="VARCHAR" />
+    <result column="jyzzbsdrq" property="jyzzbsdrq" jdbcType="VARCHAR" />
     <result column="bgdcjrq" property="bgdcjrq" jdbcType="VARCHAR" />
     <result column="agent_pass_date" property="agentPassDate" jdbcType="VARCHAR" />
     <result column="agent_send_date" property="agentSendDate" jdbcType="VARCHAR" />
@@ -137,7 +138,7 @@
     is_yahui,yahui_money,yahui_year_rate,yahui_day_rate,is_financing,financing_money,
     financing_rate,financing_daoqi,daoqi_rate,financing_bank,pre_pay_bank,final_pay_bank,
     owner_company,baoguandan,storage_condition,cargo_match,caiyang,caiyangdate,caiyangcangku,
-    agent_money,dzdjsdrq,jyzqfrq,bgdcjrq
+    agent_money,dzdjsdrq,jyzqfrq,bgdcjrq,jyzzbsdrq
   </sql>
   <update id="updateByPrimaryKeySelective" parameterType="com.jason.trade.model.ContractBaseInfo" >
     update contract_base_info
@@ -429,6 +430,9 @@
       </if>
       <if test="bgdcjrq != null" >
         bgdcjrq = #{bgdcjrq,jdbcType=VARCHAR},
+      </if>
+      <if test="jyzzbsdrq != null" >
+        jyzzbsdrq = #{jyzzbsdrq,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

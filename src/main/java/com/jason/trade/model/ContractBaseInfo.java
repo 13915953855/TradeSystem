@@ -204,6 +204,16 @@ public class ContractBaseInfo {
     private String jyzqfrq;
     @Column(name="bgdcjrq")
     private String bgdcjrq;
+    @Column(name="jyzzbsdrq")
+    private String jyzzbsdrq;
+
+    public String getJyzzbsdrq() {
+        return jyzzbsdrq;
+    }
+
+    public void setJyzzbsdrq(String jyzzbsdrq) {
+        this.jyzzbsdrq = jyzzbsdrq;
+    }
 
     public Double getAgentMoney() {
         return agentMoney;

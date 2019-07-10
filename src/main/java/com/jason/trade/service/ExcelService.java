@@ -639,6 +639,7 @@ public class ExcelService {
         list.add(baseInfo.getEta());//ETA
         list.add(baseInfo.getAgentMoney());//货代费
         list.add(baseInfo.getDzdjsdrq());//电子单据收到日期
+        list.add(baseInfo.getJyzzbsdrq());//检疫证正本收到日期
         list.add(baseInfo.getJyzqfrq());//检疫证签发日期
         list.add(baseInfo.getBgdcjrq());//报关单出具日期
         list.add(baseInfo.getAgent());//货代
