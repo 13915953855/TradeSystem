@@ -623,7 +623,7 @@
   <select id="getStoreList" resultType="com.jason.trade.entity.CargoStoreInfo" parameterType="com.jason.trade.entity.CargoParam">
     select a.cargo_name,a.level,a.company_no,a.cargo_no,b.external_contract,b.inside_contract,
     b.container_no,b.ladingbill_no,b.store_date,b.warehouse,
-    a.invoice_amount,a.boxes,b.baoguandan,b.qacertificate
+    a.invoice_amount,a.boxes,b.baoguandan,b.qacertificate,b.jyzqfrq,b.bgdcjrq
     from cargo_info a
     inner join contract_base_info b on a.contract_id = b.contract_id
     where 1=1

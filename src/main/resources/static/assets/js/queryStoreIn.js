@@ -111,8 +111,13 @@ var TableInit = function () {
                 field: 'boxes',
                 title: '发票箱数'
             }, {
+                field: 'bgdcjrq',
+                title: '报关单出具日期',
+                visible: false,
+            }, {
                 field: 'baoguandan',
                 title: '是否上传报关单',
+                visible: false,
                 formatter: function(value,row,index){
                     if(value == "1") return "是";
                     else if(value == "0") return "否";
@@ -121,11 +126,15 @@ var TableInit = function () {
             }, {
                 field: 'qacertificate',
                 title: '是否上传检疫证',
+                visible: false,
                 formatter: function(value,row,index){
                     if(value == "1") return "是";
                     else if(value == "0") return "否";
                     else return "";
                 }
+            }, {
+                field: 'jyzqfrq',
+                title: '检疫证签发日期'
             }]
         });
     };
