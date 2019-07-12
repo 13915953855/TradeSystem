@@ -100,6 +100,76 @@
                         <div id="collapseOne" class="panel-body panel-collapse collapse in" style="padding-top:10px;padding-bottom:0;">
                             <form id="formSearch" class="form-horizontal">
                                 <div class="form-group" style="">
+                                    <label class="control-label col-sm-1" for="externalContract">外合同编号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="externalContract"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">内合同编号</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="insideContract"/>
+                                    </div>
+                                    <label class="control-label col-sm-1">检疫证签发日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="jyzqfrqStart" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="jyzqfrqEnd" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">检疫证正本收到日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="jyzzbsdrqStart" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="jyzzbsdrqEnd" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">放行日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="agentPassDateStart" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="agentPassDateEnd" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
+                                    <label class="control-label col-sm-1">入库日期从:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="storeStartDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <label class="control-label col-sm-1">到:</label>
+                                    <div class="col-sm-2">
+                                        <div class="input-append date form_datetime">
+                                            <input size="16" type="text" value="" id="storeEndDate" class="form-control" />
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="">
                                     <label class="control-label col-sm-1">货代</label>
                                     <div class="col-sm-2">
                                         <select class="form-control" id="agent" multiple="multiple">

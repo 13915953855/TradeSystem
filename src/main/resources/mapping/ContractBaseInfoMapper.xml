@@ -816,6 +816,24 @@
   </if>
 </sql>
   <sql id="selectByExampleWhere">
+    <if test="jyzqfrqStart != null and jyzqfrqStart != ''" >
+      and a.jyzqfrq &gt;= '${jyzqfrqStart}'
+    </if>
+    <if test="jyzqfrqEnd != null and jyzqfrqEnd != ''" >
+      and a.jyzqfrq &lt;= '${jyzqfrqEnd}'
+    </if>
+    <if test="jyzzbsdrqStart != null and jyzzbsdrqStart != ''" >
+      and a.jyzzbsdrq &gt;= '${jyzzbsdrqStart}'
+    </if>
+    <if test="jyzzbsdrqEnd != null and jyzzbsdrqEnd != ''" >
+      and a.jyzzbsdrq &lt;= '${jyzzbsdrqEnd}'
+    </if>
+    <if test="agentPassDateStart != null and agentPassDateStart != ''" >
+      and a.agent_pass_date &gt;= '${agentPassDateStart}'
+    </if>
+    <if test="agentPassDateEnd != null and agentPassDateEnd != ''" >
+      and a.agent_pass_date &lt;= '${agentPassDateEnd}'
+    </if>
     <if test="payType != null and payType != ''" >
       and a.pay_type = '${payType}'
     </if>

@@ -80,4 +80,10 @@ public class ContractParam {
     private Double maxWeight;
     private String storageCondition;
     private String currency;
+    private String jyzqfrqStart;
+    private String jyzqfrqEnd;
+    private String jyzzbsdrqStart;
+    private String jyzzbsdrqEnd;
+    private String agentPassDateStart;
+    private String agentPassDateEnd;
 }

@@ -100,6 +100,24 @@ var TableInit = function () {
             }, {
                 field: 'eta',
                 title: 'ETA'
+            }, {
+                field: 'jyzqfrq',
+                title: '检疫证签发日期'
+            }, {
+                field: 'jyzzbsdrq',
+                title: '检疫证正本收到日期'
+            }, {
+                field: 'agentPassDate',
+                title: '放行日期'
+            }, {
+                field: 'storeDate',
+                title: '入库日期'
+            }, {
+                field: 'dzdjsdrq',
+                title: '电子单据收到日期'
+            }, {
+                field: 'agentSendDate',
+                title: '正本单据收到日期'
             },{
               field: 'status',
               title: '状态',
@@ -172,6 +190,16 @@ var TableInit = function () {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
+            externalContract: $("#externalContract").val(),
+            insideContract: $("#insideContract").val(),
+            jyzqfrqStart: $("#jyzqfrqStart").val(),
+            jyzqfrqEnd: $("#jyzqfrqEnd").val(),
+            jyzzbsdrqStart: $("#jyzzbsdrqStart").val(),
+            jyzzbsdrqEnd: $("#jyzzbsdrqEnd").val(),
+            agentPassDateStart: $("#agentPassDateStart").val(),
+            agentPassDateEnd: $("#agentPassDateEnd").val(),
+            storeStartDate: $("#storeStartDate").val(),
+            storeEndDate: $("#storeEndDate").val(),
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
@@ -212,6 +240,16 @@ function resetQuery(){
     $("#ownerCompany").val("全部").trigger("change");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
+    $("#externalContract").val("");
+    $("#insideContract").val("");
+    $("#jyzqfrqStart").val("");
+    $("#jyzqfrqEnd").val("");
+    $("#jyzzbsdrqStart").val("");
+    $("#jyzzbsdrqEnd").val("");
+    $("#agentPassDateStart").val("");
+    $("#agentPassDateEnd").val("");
+    $("#storeStartDate").val("");
+    $("#storeEndDate").val("");
 }
 
 function getTotalInfo(){
@@ -261,6 +299,16 @@ function getTotalInfo(){
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
        etaStartDate: $("#etaStartDate").val(),
        etaEndDate: $("#etaEndDate").val(),
+        externalContract: $("#externalContract").val(),
+        insideContract: $("#insideContract").val(),
+        jyzqfrqStart: $("#jyzqfrqStart").val(),
+        jyzqfrqEnd: $("#jyzqfrqEnd").val(),
+        jyzzbsdrqStart: $("#jyzzbsdrqStart").val(),
+        jyzzbsdrqEnd: $("#jyzzbsdrqEnd").val(),
+        agentPassDateStart: $("#agentPassDateStart").val(),
+        agentPassDateEnd: $("#agentPassDateEnd").val(),
+        storeStartDate: $("#storeStartDate").val(),
+        storeEndDate: $("#storeEndDate").val(),
        agent: agent,
         storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
        status: status,
