@@ -105,6 +105,7 @@ function initBank(){
     opts += "<option>江苏银行</option>";
     opts += "<option>交通银行</option>";
     opts += "<option>南京银行</option>";
+    opts += "<option>宁波银行</option>";
     opts += "<option>农业发展银行</option>";
     opts += "<option>浦发银行</option>";
     opts += "<option>紫金农商银行</option>";
@@ -112,6 +113,7 @@ function initBank(){
     $("#prePayBank").append(opts);
     $("#finalPayBank").append(opts);
     $("#issuingBank").append(opts);
+    //$("#financingBank").append(opts);
 }
 
 function initOriginCountry(){
