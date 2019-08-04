@@ -58,6 +58,7 @@
     <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
     <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
     <result column="store_date" property="storeDate" jdbcType="VARCHAR" />
+    <result column="storage_condition" property="storageCondition" jdbcType="VARCHAR" />
     <result column="company_no" property="companyNo" jdbcType="VARCHAR" />
     <result column="external_company" property="externalCompany" jdbcType="VARCHAR" />
     <result column="origin_country" property="originCountry" jdbcType="VARCHAR" />
@@ -76,8 +77,13 @@
   </select>
   <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
-    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
-    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
+    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,
+    b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.storage_condition
+    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
+    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,
+    '' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,
+    '' as container_no,'' as storage_condition
+    from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
     order by b.id desc
