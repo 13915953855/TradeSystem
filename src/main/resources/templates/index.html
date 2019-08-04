@@ -13,38 +13,6 @@
         $(function(){
             //获取警示数目
             getNoticeNum();
-
-            <!--$.ajax({
-                url:'/trade/charts',
-                type:"POST",
-                dataType:"json",
-                data:{'type':'contractAdd'},
-                success:function(res){
-                    var data = {};
-                    // line chart
-                    var options = {
-                        height: "300px",
-                        showPoint: true,
-                        axisX: {
-                            showGrid: false
-                        },
-                        lineSmooth: false,
-                    };
-
-                    if(res.status == "1"){
-                        var a = [];
-                        var b = [];
-                        for(i=0;i!=res.data.length;i++){
-                            a[i] = res.data[res.data.length-1 - i].dateStr;
-                            b[i] = res.data[res.data.length-1 - i].total;
-                        }
-                        data.labels = a;
-                        data.series = [b];
-                    }
-
-                    new Chartist.Line('#demo-line-chart', data, options);
-                }
-            });-->
         });
 
     </script>

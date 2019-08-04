@@ -92,6 +92,9 @@ function initWarehouse(){
     opts += "<option>上港冷链</option>";
     opts += "<option>华辰</option>";
     opts += "<option>镇江汇鸿</option>";
+    opts += "<option>同盛保税库</option>";
+    opts += "<option>虎易保税库</option>";
+    opts += "<option>前海湾保税库</option>";
     $("#warehouse").append(opts);
 }
 
@@ -337,16 +340,25 @@ function alarm(index){
     if(index == 1){
         window.location.href = "/trade/contract?type=n1";
     }else if(index == 2){
-        window.location.href = "/trade/contract?type=n2";
+        var curDate = new Date();
+        var preDate = new Date(curDate.getTime() - 24*60*60*180*1000);
+        var year = preDate.getFullYear();
+        var month = preDate.getMonth() + 1;
+        var date = preDate.getDate();
+        var storeEndDate = year + '-' + p(month) + "-" + p(date);
+        var url = "/trade/query/storeIn?storeStartDate=2018-01-01&storeEndDate="+storeEndDate+"&status="+escape("已入库");
+        window.location.href = url;
     }else if (index == 3){
         window.location.href = "/trade/contract?type=n3";
     }else if(index == 4){
-        window.location.href = "/trade/cargomanage?status=已入库&minBox=0.001&maxBox=5";
+        window.location.href = "/trade/cargomanage?status="+escape("已入库")+"&minBox=0.001&maxBox=5";
     }else if(index == 5){
 
     }
 }
-
+function p(s) {
+    return s < 10 ? '0' + s : s;
+}
 function initOptions(id) {
     var group = "";
     if($("#cargoType").val() == undefined || $("#cargoType").val() == null || $("#cargoType").val() == ''){

@@ -1,4 +1,10 @@
 $(function () {
+    var storeEndDate = getParam("storeEndDate");
+    var storeStartDate = getParam("storeStartDate");
+    var status = getParam("status");
+    $("#status").val(status).trigger("change");
+    $("#storeStartDate").val(storeStartDate);
+    $("#storeEndDate").val(storeEndDate);
 
     //1.初始化Table
     var oTable = new TableInit();
@@ -7,7 +13,7 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-$("select").select2({
+    $("select").select2({
         tags: true
     });
     $(".form_datetime").datetimepicker({
@@ -104,6 +110,9 @@ var TableInit = function () {
             }, {
                 field: 'warehouse',
                 title: '仓库'
+            }, {
+                field: 'storage_condition',
+                title: '存储条件'
             }, {
                 field: 'invoice_amount',
                 title: '发票数量'

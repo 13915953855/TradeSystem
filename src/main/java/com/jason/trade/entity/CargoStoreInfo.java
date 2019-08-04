@@ -22,4 +22,5 @@ public class CargoStoreInfo implements Serializable {
     private String qacertificate;
     private String jyzqfrq;
     private String bgdcjrq;
+    private String storage_condition;
 }
