@@ -90,8 +90,11 @@
     limit ${start},${limit}
   </select>
   <sql id="selectByExampleWhere">
-    <if test="externalCompany != null and externalCompany != ''" >
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 1" >
       and b.external_company in (${externalCompany})
+    </if>
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 0" >
+      and b.external_company not in (${externalCompany})
     </if>
     <if test="originCountry != null and originCountry != ''" >
       and b.origin_country in (${originCountry})
@@ -724,8 +727,11 @@
     <if test="cargoType != null and cargoType != ''" >
       and b.cargo_type = '${cargoType}'
     </if>
-    <if test="externalCompany != null and externalCompany != ''" >
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 1" >
       and b.external_company in (${externalCompany})
+    </if>
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 0" >
+      and b.external_company not in (${externalCompany})
     </if>
     <if test="originCountry != null and originCountry != ''" >
       and b.origin_country in (${originCountry})

@@ -16,6 +16,7 @@ public class CargoParam {
     private String insideContract;
     private String level;
     private String cargoName;
+    private String cmpRel;
     private String cargoNo;
     private String cargoType;
     private String warehouse;

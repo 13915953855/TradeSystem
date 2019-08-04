@@ -22,6 +22,7 @@ public class ContractParam {
     private String etaEndDate;
     private String prePaymentStartDate;
     private String payType;
+    private String cmpRel;
     private String prePaymentEndDate;
     private Double prePaymentMin;
     private Double prePaymentMax;

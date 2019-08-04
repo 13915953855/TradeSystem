@@ -207,6 +207,7 @@ var TableInit = function () {
             level: level,
             status: status,
             companyNo: $("#companyNo").val(),
+            cmpRel: $("#cmpRel").val(),
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             businessMode: businessMode,
             externalCompany: externalCompany,
@@ -297,6 +298,7 @@ var ButtonInit = function () {
                     params += "&storeStartDate="+$("#storeStartDate").val();
                     params += "&cargoType="+$("#cargoType").val();
                     params += "&storeEndDate="+$("#storeEndDate").val();
+                    params += "&cmpRel="+$("#cmpRel").val();
                     params += "&originCountry="+originCountry;
                     var warehouse = $("#warehouse").val() == '全部'?"":$("#warehouse").val();
                     params += "&warehouse="+warehouse;
@@ -324,6 +326,7 @@ function resetQuery(){
     $("#level").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
+    $("#cmpRel").val("1").trigger("change");
     $("#storageCondition").val("全部").trigger("change");
 }
 
@@ -384,6 +387,7 @@ function getTotalInfo(){
         businessMode: businessMode,
         externalCompany: externalCompany,
         originCountry: originCountry,
+        cmpRel: $("#cmpRel").val(),
         warehouse: $("#warehouse").val() == '全部'?"":$("#warehouse").val(),
         containerNo: $("#containerNo").val(),
         ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),

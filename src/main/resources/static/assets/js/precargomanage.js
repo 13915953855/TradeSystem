@@ -229,6 +229,7 @@ var TableInit = function () {
             level: level,
             destinationPort: destinationPort,
             companyNo: $("#companyNo").val(),
+            cmpRel: $("#cmpRel").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),
             contractStartDate: $("#contractStartDate").val(),
             expectSaleDateStart: $("#expectSaleDateStart").val(),
@@ -320,6 +321,7 @@ function getTotalStore(){
         originCountry: originCountry,
         cargoName: cargoName,
         level: level,
+        cmpRel: $("#cmpRel").val(),
         destinationPort: destinationPort,
         companyNo: $("#companyNo").val(),
         expectSaleDateStart: $("#expectSaleDateStart").val(),
@@ -382,6 +384,7 @@ function resetQuery(){
     $("#businessMode").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
     $("#cargoType").val("全部").trigger("change");
+    $("#cmpRel").val("1").trigger("change");
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
     $("#containerNo").val("");

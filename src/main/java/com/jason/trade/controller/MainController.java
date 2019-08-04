@@ -288,7 +288,7 @@ public class MainController {
                @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="agent") String agent,@RequestParam(value="ownerCompany") String ownerCompany,
                @RequestParam(value="ladingbillNo") String ladingbillNo,@RequestParam(value="destinationPort") String destinationPort,
                @RequestParam(value="businessMode") String businessMode,@RequestParam(value="externalCompany") String externalCompany,
-               @RequestParam(value="status") String status,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="level") String level,
+               @RequestParam(value="status") String status,@RequestParam(value="cargoName") String cargoName,@RequestParam(value="level") String level,@RequestParam(value="cmpRel") String cmpRel,
                @RequestParam(value="containerNo") String containerNo,@RequestParam(value="companyNo") String companyNo,@RequestParam(value="chk") String[] chk,
                @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,
                @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,@RequestParam(value="originCountry") String originCountry,
@@ -298,6 +298,7 @@ public class MainController {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
         contractParam.setExternalContract(externalContract);
+        contractParam.setCmpRel(cmpRel);
         contractParam.setCaiyangcangku(caiyangcangku);
         contractParam.setCaiyangdateStart(caiyangdateStart);
         contractParam.setCaiyangdateEnd(caiyangdateEnd);
@@ -487,7 +488,7 @@ public class MainController {
                                            @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
                                            @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
                                            @RequestParam(value="externalContract") String externalContract,@RequestParam(value="insideContract") String insideContract,
-                                           @RequestParam(value="minBox") Double minBox,@RequestParam(value="maxBox") Double maxBox,
+                                           @RequestParam(value="minBox") Double minBox,@RequestParam(value="maxBox") Double maxBox,@RequestParam(value="cmpRel") String cmpRel,
                                            @RequestParam(value="storageCondition") String storageCondition) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
@@ -708,7 +709,7 @@ public class MainController {
     public ResponseEntity<Resource> queryContractOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="originCountry") String originCountry,
                                                      @RequestParam(value="ownerCompany") String ownerCompany,@RequestParam(value="status") String status,@RequestParam(value="currency") String currency,
                                                      @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,@RequestParam(value="cargoType") String cargoType,
-                                                     @RequestParam(value="insideContract") String insideContract,@RequestParam(value="externalContract") String externalContract,
+                                                     @RequestParam(value="insideContract") String insideContract,@RequestParam(value="externalContract") String externalContract,@RequestParam(value="cmpRel") String cmpRel,
                                                      @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
                                                      @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate) throws UnsupportedEncodingException {
@@ -717,6 +718,7 @@ public class MainController {
         contractParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
         contractParam.setOriginCountry(URLDecoder.decode(originCountry, "UTF-8"));
         contractParam.setCurrency(currency);
+        contractParam.setCmpRel(cmpRel);
         contractParam.setCargoType(cargoType);
         contractParam.setExternalContract(externalContract);
         contractParam.setInsideContract(insideContract);

@@ -257,6 +257,7 @@ var TableInit = function () {
             cargoType: $("#cargoType").val() == "全部"?"":$("#cargoType").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
+            cmpRel: $("#cmpRel").val(),
             startDate: $("#startDate").val(),
             endDate: $("#endDate").val(),
             etaStartDate: $("#etaStartDate").val(),
@@ -382,6 +383,7 @@ var ButtonInit = function () {
             var currency = $("#currency").val() == "全部"?"":$("#currency").val();
             params += "&currency="+ currency;
             params += "&insideContract="+$("#insideContract").val();
+            params += "&cmpRel="+$("#cmpRel").val();
             params += "&status="+status;
             params += "&cargoName="+cargoName;
             var cargoType = $("#cargoType").val() == "全部"?"":$("#cargoType").val();
@@ -410,6 +412,7 @@ function resetQuery(){
     $("#contractEndDate").val("");
     $("#companyNo").val("");
     $("#businessMode").val("全部").trigger("change");
+    $("#cmpRel").val("1").trigger("change");
     $("#destinationPort").val("全部").trigger("change");
     $("#externalCompany").val("全部").trigger("change");
     $("#cargoType").val("全部").trigger("change");
@@ -516,6 +519,7 @@ function getTotalInfo(){
             etdStartDate: $("#etdStartDate").val(),
             etdEndDate: $("#etdEndDate").val(),
             cargoName: cargoName,
+            cmpRel: $("#cmpRel").val(),
             minBox: $("#minBox").val(),
             maxBox: $("#maxBox").val(),
             level: level,

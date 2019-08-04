@@ -212,6 +212,7 @@ var TableInit = function () {
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
             cargoNo: $("#cargoNo").val(),
             cargoType: $("#cargoType").val(),
+            cmpRel: $("#cmpRel").val(),
             customerName: $("#customerName").val(),
             containerNo: $("#containerNo").val(),
             companyNo: $("#companyNo").val(),
@@ -273,6 +274,7 @@ var externalCompanyArr = $("#externalCompany").val();
         customerName: $("#customerName").val(),
         containerNo: $("#containerNo").val(),
         companyNo: $("#companyNo").val(),
+        cmpRel: $("#cmpRel").val(),
         storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
         status: $("#status").val() == "全部"?"":$("#status").val(),
         businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
@@ -324,6 +326,7 @@ function resetQuery(){
     $("#cargoName").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
+    $("#cmpRel").val("1").trigger("change");
     $("#storageCondition").val("全部").trigger("change");
     $("#businessMode").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");

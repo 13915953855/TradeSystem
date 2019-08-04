@@ -177,6 +177,7 @@ function getTotalInfo(){
         containerNo: $("#containerNo").val(),
         companyNo: $("#companyNo").val(),
         ladingbillNo: $("#ladingbillNo").val(),
+        cmpRel: $("#cmpRel").val(),
         destinationPort: destinationPort,
         businessMode: businessMode,
         externalCompany: externalCompany,
@@ -400,6 +401,7 @@ var TableInit = function () {
             taxPayDateEnd: $("#taxPayDateEnd").val(),
             etaStartDate: $("#etaStartDate").val(),
             caiyangcangku: $("#caiyangcangku").val(),
+            cmpRel: $("#cmpRel").val(),
                     caiyangdateStart: $("#caiyangdateStart").val(),
                     caiyangdateEnd: $("#caiyangdateEnd").val(),
             etaEndDate: $("#etaEndDate").val(),
@@ -624,6 +626,7 @@ var ButtonInit = function () {
             var etdEndDate= $("#etdEndDate").val();
             var containerNo=$("#containerNo").val();
             var cargoNo=$("#cargoNo").val();
+            var cmpRel=$("#cmpRel").val();
             var companyNo= $("#companyNo").val();
             var cargoType= $("#cargoType").val();
             var ladingbillNo= $("#ladingbillNo").val();
@@ -647,6 +650,7 @@ var ButtonInit = function () {
             params += "&contractStartDate="+contractStartDate;
             params += "&contractEndDate="+contractEndDate;
             params += "&caiyangcangku="+caiyangcangku;
+            params += "&cmpRel="+cmpRel;
             params += "&caiyangdateStart="+caiyangdateStart;
             params += "&caiyangdateEnd="+caiyangdateEnd;
             params += "&storeStartDate="+storeStartDate;
@@ -691,6 +695,7 @@ function resetQuery(){
     $("#ladingbillNo").val("");
     $("#storageCondition").val("全部").trigger("change");
     $("#agent").val("全部").trigger("change");
+    $("#cmpRel").val("1").trigger("change");
     $("#companyNo").val("");
     $("#destinationPort").val("全部").trigger("change");
     $("#businessMode").val("全部").trigger("change");

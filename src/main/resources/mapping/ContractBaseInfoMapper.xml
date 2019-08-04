@@ -667,8 +667,11 @@
     <if test="cargoType != null and cargoType != ''" >
       and a.cargo_type = '${cargoType}'
     </if>
-    <if test="externalCompany != null and externalCompany != ''" >
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 1" >
       and a.external_company in (${externalCompany})
+    </if>
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 0" >
+      and a.external_company not in (${externalCompany})
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and a.storage_condition = '${storageCondition}'
@@ -748,8 +751,11 @@
   <if test="insideContract != null" >
     and a.inside_contract like '%${insideContract}%'
   </if>
-  <if test="externalCompany != null and externalCompany != ''" >
+  <if test="externalCompany != null and externalCompany != '' and cmpRel == 1" >
     and a.external_company in (${externalCompany})
+  </if>
+  <if test="externalCompany != null and externalCompany != '' and cmpRel == 0" >
+    and a.external_company not in (${externalCompany})
   </if>
   <if test="destinationPort != null and destinationPort != ''" >
     and a.destination_port in (${destinationPort})
@@ -891,8 +897,11 @@
     <if test="tariffNo != null" >
       and a.tariff_no like '%${tariffNo}%'
     </if>
-    <if test="externalCompany != null and externalCompany != ''" >
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 1" >
       and a.external_company in (${externalCompany})
+    </if>
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 0" >
+      and a.external_company not in (${externalCompany})
     </if>
     <choose>
       <when test="status != null and status != ''">
