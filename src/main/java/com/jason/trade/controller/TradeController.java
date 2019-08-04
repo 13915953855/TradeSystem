@@ -67,58 +67,10 @@ public class TradeController {
     @Autowired
     private CargoInfoMapper cargoInfoMapper;
 
-    @RequestMapping(value = "/list")
-    public String getTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, ContractParam contractParam) throws JSONException {
-        contractParam.setStart(offset);
-        contractParam.setLimit(limit);
-        contractParam.setSortName("contract_date");
-        contractParam.setSortOrder("desc");
-        String type = contractParam.getType();
-        JSONObject result = new JSONObject();
-        if(StringUtils.isBlank(type)){
-            result = tradeService.queryContractList(contractParam);
-        }else{
-            switch (type){
-                case "n1":
-                    Date before14Date = DateUtil.getDateBefore(new Date(),14);
-                    String date1 = DateUtil.DateToString(before14Date);
-                    result.put("total",contractRepository.countByExpectSailingDateLessThanAndStatus(date1,GlobalConst.ENABLE));
-                    result.put("rows",contractRepository.findByExpectSailingDateLessThanAndStatus(date1,GlobalConst.ENABLE));
-                    break;
-                case "n2":
-                    Date before60Date = DateUtil.getDateBefore(new Date(),60);
-                    String date2 = DateUtil.DateToString(before60Date);
-                    result.put("total",contractRepository.countByStoreDateLessThanAndStatus(date2,GlobalConst.STORED));
-                    result.put("rows",contractRepository.findByStoreDateLessThanAndStatus(date2,GlobalConst.STORED));
-                    break;
-                case "n3":
-                    Date before15Date = DateUtil.getDateBefore(new Date(),15);
-                    String date3 = DateUtil.DateToString(before15Date);
-                    result.put("total",contractRepository.countByEtaLessThanAndStatus(date3,GlobalConst.ARRIVED));
-                    result.put("rows",contractRepository.findByEtaLessThanAndStatus(date3,GlobalConst.ARRIVED));
-                    break;
-                default:break;
-            }
-        }
-        return result.toString();
-    }
-    @RequestMapping(value = "/internal/list")
-    public String getInternalTradeList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, InternalContractParam contractParam) throws JSONException {
-        contractParam.setStart(offset);
-        contractParam.setLimit(limit);
-        JSONObject result = tradeService.queryInternalContractListByMapper(contractParam);
-        return result.toString();
-    }
+
+
     @RequestMapping(value = "/cargo/list")
     public String getCargoList(@RequestParam("contractId") String contractId) throws JSONException {
-        List<CargoInfo> list = cargoRepository.findByContractIdOrderByIdAsc(contractId);
-        JSONObject result = new JSONObject();
-        result.put("total",list.size());
-        result.put("rows",list);
-        return result.toString();
-    }
-    @RequestMapping(value = "/internal/cargo/list")
-    public String getInternalCargoList(@RequestParam("contractId") String contractId) throws JSONException {
         List<CargoInfo> list = cargoRepository.findByContractIdOrderByIdAsc(contractId);
         JSONObject result = new JSONObject();
         result.put("total",list.size());
@@ -748,5 +700,13 @@ public class TradeController {
         sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
         sysLogRepository.save(sysLog);
         return GlobalConst.SUCCESS;
+    }
+
+    @PostMapping(value = "/cargo/count")
+    public String getCargoCount(CargoParam cargoParam) throws JSONException {
+        Integer count = cargoInfoMapper.countCargoByContractId(cargoParam);
+        JSONObject result = new JSONObject();
+        result.put("count",count);
+        return result.toString();
     }
 }

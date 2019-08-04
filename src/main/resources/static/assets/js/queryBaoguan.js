@@ -86,6 +86,12 @@ var TableInit = function () {
                 field: 'totalInvoiceMoney',
                 title: '发票总金额'
             }, {
+                field: 'zhixiangfei',
+                title: '滞箱费'
+            }, {
+                field: 'zhigangfei',
+                title: '滞港费'
+            }, {
                 field: 'containerNo',
                 title: '柜号'
             }, {

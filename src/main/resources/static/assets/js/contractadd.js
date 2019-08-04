@@ -340,6 +340,7 @@ var ButtonInit = function () {
         });
         $("#btn_add").click(function(){
             resetForm("cargoForm");
+            autoSetCargoNo();
             $("#myModal").modal('show');
         });
         $("#btn_edit").click(function(){
@@ -739,3 +740,28 @@ function deleteAttachment(id,contractId){
     });
 }
 
+function autoSetCargoNo(){
+    var ownerCompany = $("#ownerCompany").val();
+    var insideContract = $("#insideContract").val();
+    var contractId = $("#contractId").val();
+    $.ajax({
+        url:'/trade/cargo/count',
+        type:"POST",
+        dataType:"json",
+        data:{'contractId':contractId},
+        success:function(res){
+            var cargoNo = insideContract;
+
+            if(res.count > 0 && cargoNo.length > 10){
+                var tmp = 901 + res.count;
+                cargoNo = cargoNo.substring(0, 8) + tmp + cargoNo.substring(11,cargoNo.length);
+            }
+            if(ownerCompany == "紫荆华美"){
+                cargoNo = cargoNo.substring(0, 3) + cargoNo.substring(4,cargoNo.length);
+            }
+
+            $("#cargoNo").val(cargoNo);
+        }
+    });
+
+}

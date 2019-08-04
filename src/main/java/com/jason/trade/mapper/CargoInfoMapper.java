@@ -23,6 +23,7 @@ public interface CargoInfoMapper {
     Integer getTotalStoreBoxesByExample(CargoParam cargoParam);
     Integer getInternalTotalStoreBoxesByExample(CargoParam cargoParam);
     Integer selectCountByExample(CargoParam cargoParam);
+    Integer countCargoByContractId(CargoParam cargoParam);
     Integer selectCountByExampleForPre(CargoParam cargoParam);
     void storeByContractId(String contractId);
     void updateStatusByContractId(@Param("contractId") String contractId, @Param("status") String status);
