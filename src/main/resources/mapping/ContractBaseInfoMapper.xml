@@ -914,6 +914,12 @@
     <if test="destinationPort != null and destinationPort != ''" >
       and a.destination_port in (${destinationPort})
     </if>
+    <if test="expectSailingDateStart != null and expectSailingDateStart != ''" >
+      and a.expect_sailing_date &gt;= '${expectSailingDateStart}'
+    </if>
+    <if test="expectSailingDateEnd != null and expectSailingDateEnd != ''" >
+      and a.expect_sailing_date &lt;= '${expectSailingDateEnd}'
+    </if>
     <if test="contractStartDate != null and contractStartDate != ''" >
       and a.contract_date &gt;= '${contractStartDate}'
     </if>

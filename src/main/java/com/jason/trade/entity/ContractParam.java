@@ -87,4 +87,6 @@ public class ContractParam {
     private String jyzzbsdrqEnd;
     private String agentPassDateStart;
     private String agentPassDateEnd;
+    private String expectSailingDateStart;
+    private String expectSailingDateEnd;
 }

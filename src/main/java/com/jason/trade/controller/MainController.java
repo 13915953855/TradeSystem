@@ -710,7 +710,7 @@ public class MainController {
                                                      @RequestParam(value="ownerCompany") String ownerCompany,@RequestParam(value="status") String status,@RequestParam(value="currency") String currency,
                                                      @RequestParam(value="contractEndDate") String contractEndDate,@RequestParam(value="contractStartDate") String contractStartDate,@RequestParam(value="cargoType") String cargoType,
                                                      @RequestParam(value="insideContract") String insideContract,@RequestParam(value="externalContract") String externalContract,@RequestParam(value="cmpRel") String cmpRel,
-                                                     @RequestParam(value="endDate") String endDate,@RequestParam(value="startDate") String startDate,@RequestParam(value="storageCondition") String storageCondition,
+                                                     @RequestParam(value="expectSailingDateEnd") String expectSailingDateEnd,@RequestParam(value="expectSailingDateStart") String expectSailingDateStart,@RequestParam(value="storageCondition") String storageCondition,
                                                      @RequestParam(value="etdStartDate") String etdStartDate,@RequestParam(value="etdEndDate") String etdEndDate,@RequestParam(value="destinationPort") String destinationPort,
                                                      @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
@@ -732,8 +732,8 @@ public class MainController {
         contractParam.setEtaEndDate(etaEndDate);
         contractParam.setEtdStartDate(etdStartDate);
         contractParam.setEtdEndDate(etdEndDate);
-        contractParam.setStartDate(startDate);
-        contractParam.setEndDate(endDate);
+        contractParam.setExpectSailingDateStart(expectSailingDateStart);
+        contractParam.setExpectSailingDateEnd(expectSailingDateEnd);
 
         ByteArrayOutputStream bos = null;
         List<ContractBaseInfo> data = contractBaseInfoMapper.selectByExample(contractParam);

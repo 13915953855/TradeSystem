@@ -214,8 +214,8 @@ var TableInit = function () {
             insideContract: $("#insideContract").val(),
             contractStartDate: $("#contractStartDate").val(),
             contractEndDate: $("#contractEndDate").val(),
-            startDate: $("#startDate").val(),
-            endDate: $("#endDate").val(),
+            expectSailingDateStart: $("#expectSailingDateStart").val(),
+            expectSailingDateEnd: $("#expectSailingDateEnd").val(),
             cargoType: $("#cargoType").val(),
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
@@ -315,6 +315,8 @@ var ButtonInit = function () {
             params += "&insideContract="+$("#insideContract").val();
             params += "&etaEndDate="+$("#etaEndDate").val();
             params += "&etaStartDate="+$("#etaStartDate").val();
+            params += "&expectSailingDateStart="+$("#expectSailingDateStart").val();
+            params += "&expectSailingDateEnd="+$("#expectSailingDateEnd").val();
             params += "&endDate="+$("#endDate").val();
             params += "&cmpRel="+$("#cmpRel").val();
             params += "&cargoType="+$("#cargoType").val();
@@ -352,8 +354,8 @@ function resetQuery(){
     $("#cmpRel").val("1").trigger("change");
     $("#currency").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
-    $("#startDate").val("");
-    $("#endDate").val("");
+    $("#expectSailingDateStart").val("");
+    $("#expectSailingDateEnd").val("");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
     $("#etdStartDate").val("");
@@ -422,10 +424,10 @@ function getTotalInfo(){
     var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         contractStartDate: $("#contractStartDate").val(),
         contractEndDate: $("#contractEndDate").val(),
-        startDate: $("#startDate").val(),
-        endDate: $("#endDate").val(),
         cmpRel: $("#cmpRel").val(),
         cargoType: $("#cargoType").val(),
+        expectSailingDateStart: $("#expectSailingDateStart").val(),
+        expectSailingDateEnd: $("#expectSailingDateEnd").val(),
         externalContract: $("#externalContract").val(),
         insideContract: $("#insideContract").val(),
         etaStartDate: $("#etaStartDate").val(),
