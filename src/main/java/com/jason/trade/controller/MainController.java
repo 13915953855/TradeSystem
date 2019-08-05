@@ -516,6 +516,7 @@ public class MainController {
         contractParam.setEtdEndDate(etdEndDate);
         contractParam.setStartDate(startDate);
         contractParam.setEndDate(endDate);
+        contractParam.setCmpRel(cmpRel);
 
         ByteArrayOutputStream bos = null;
         List<QueryContractInfo> data = contractBaseInfoMapper.queryCargoList(contractParam);

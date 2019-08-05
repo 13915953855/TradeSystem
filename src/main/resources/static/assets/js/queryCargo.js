@@ -386,8 +386,6 @@ var ButtonInit = function () {
             params += "&cmpRel="+$("#cmpRel").val();
             params += "&status="+status;
             params += "&cargoName="+cargoName;
-            var cargoType = $("#cargoType").val() == "全部"?"":$("#cargoType").val();
-            params += "cargoType="+cargoType;
             params += "&etaEndDate="+$("#etaEndDate").val();
             params += "&etaStartDate="+$("#etaStartDate").val();
             params += "&endDate="+$("#endDate").val();
