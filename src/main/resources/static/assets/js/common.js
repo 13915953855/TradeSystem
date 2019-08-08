@@ -346,7 +346,7 @@ function alarm(index){
         var month = preDate.getMonth() + 1;
         var date = preDate.getDate();
         var storeEndDate = year + '-' + p(month) + "-" + p(date);
-        var url = "/trade/query/storeIn?storeStartDate=2018-01-01&storeEndDate="+storeEndDate+"&status="+escape("已入库");
+        var url = "/trade/query/storeInfo?storeStartDate=2018-01-01&storeEndDate="+storeEndDate+"&status="+escape("已入库");
         window.location.href = url;
     }else if (index == 3){
         window.location.href = "/trade/contract?type=n3";

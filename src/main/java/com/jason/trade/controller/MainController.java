@@ -649,7 +649,7 @@ public class MainController {
     public ResponseEntity<Resource> queryDutyOutput(HttpSession session,@RequestParam(value="externalCompany") String externalCompany,@RequestParam(value="ownerCompany") String ownerCompany,
                                                     @RequestParam(value="etaStartDate") String etaStartDate,@RequestParam(value="etaEndDate") String etaEndDate,
                                                     @RequestParam(value="cargoType") String cargoType,@RequestParam(value="agent") String agent,
-                                                    @RequestParam(value="originCountry") String originCountry,
+                                                    @RequestParam(value="originCountry") String originCountry,@RequestParam(value="cmpRel") String cmpRel,
                                                          @RequestParam(value="taxPayDateStart") String taxPayDateStart,@RequestParam(value="taxPayDateEnd") String taxPayDateEnd) throws UnsupportedEncodingException {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         ContractParam contractParam = new ContractParam();
@@ -659,6 +659,7 @@ public class MainController {
         contractParam.setEtaStartDate(etaStartDate);
         contractParam.setEtaEndDate(etaEndDate);
         contractParam.setAgent(agent);
+        contractParam.setCmpRel(cmpRel);
         contractParam.setOriginCountry(originCountry);
         contractParam.setCargoType(cargoType);
         contractParam.setExternalCompany(URLDecoder.decode(externalCompany, "UTF-8"));

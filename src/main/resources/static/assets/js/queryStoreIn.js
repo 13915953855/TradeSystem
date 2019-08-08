@@ -1,10 +1,5 @@
 $(function () {
-    var storeEndDate = getParam("storeEndDate");
-    var storeStartDate = getParam("storeStartDate");
-    var status = getParam("status");
-    $("#status").val(status).trigger("change");
-    $("#storeStartDate").val(storeStartDate);
-    $("#storeEndDate").val(storeEndDate);
+
 
     //1.初始化Table
     var oTable = new TableInit();

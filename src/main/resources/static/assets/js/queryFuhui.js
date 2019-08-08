@@ -153,6 +153,7 @@ var TableInit = function () {
             etdEndDate: $("#etdEndDate").val(),
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
+            cmpRel: $("#cmpRel").val(),
             cargoType: $("#cargoType").val(),
             prePaymentMin: $("#prePaymentMin").val(),
             prePaymentMax: $("#prePaymentMax").val(),
@@ -211,6 +212,7 @@ function resetQuery(){
     $("#etdEndDate").val("");
     $("#etaStartDate").val("");
     $("#etaEndDate").val("");
+    $("#cmpRel").val("1").trigger("change");
 }
 
 function getTotalInfo(){
@@ -236,6 +238,7 @@ function getTotalInfo(){
        finalPaymentEndDate: $("#finalPaymentEndDate").val(),
        etdStartDate: $("#etdStartDate").val(),
        cargoType: $("#cargoType").val(),
+       cmpRel: $("#cmpRel").val(),
        etdEndDate: $("#etdEndDate").val(),
        etaStartDate: $("#etaStartDate").val(),
        etaEndDate: $("#etaEndDate").val(),

@@ -195,6 +195,7 @@ var TableInit = function () {
             cargoType: $("#cargoType").val(),
             externalCompany: externalCompany,
             originCountry:originCountry,
+            cmpRel: $("#cmpRel").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             payType: "TT"
             //isFinancing: "1"
@@ -237,6 +238,7 @@ function resetQuery(){
     $("#prePaymentMin").val("");
     $("#prePaymentMax").val("");
     $("#finalPaymentMin").val("");
+    $("#cmpRel").val("1").trigger("change");
     $("#finalPaymentMax").val("");
     $("#financingMoneyMin").val("");
     $("#financingMoneyMax").val("");
@@ -288,6 +290,7 @@ function getTotalInfo(){
        finalPaymentMin: $("#finalPaymentMin").val(),
        finalPaymentMax: $("#finalPaymentMax").val(),
        financingMoneyMin: $("#financingMoneyMin").val(),
+       cmpRel: $("#cmpRel").val(),
        financingMoneyMax: $("#financingMoneyMax").val(),
         payType: "TT"
        //isFinancing: "1"

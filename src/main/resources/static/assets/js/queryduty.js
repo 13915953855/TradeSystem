@@ -174,6 +174,7 @@ var TableInit = function () {
             etaStartDate: $("#etaStartDate").val(),
             etaEndDate: $("#etaEndDate").val(),
             cargoType: $("#cargoType").val(),
+            cmpRel: $("#cmpRel").val(),
             externalCompany: externalCompany,
             originCountry:originCountry,
             agent:agent
@@ -247,6 +248,7 @@ var ButtonInit = function () {
             params += "&ownerCompany="+ownerCompany;
             params += "&etaStartDate="+$("#etaStartDate").val();
             params += "&etaEndDate="+$("#etaEndDate").val();
+            params += "&cmpRel="+$("#cmpRel").val();
             params += "&cargoType="+$("#cargoType").val();
             params += "&agent="+agent;
             params += "&originCountry="+originCountry;
@@ -313,6 +315,7 @@ var externalCompanyArr = $("#externalCompany").val();
         etaStartDate: $("#etaStartDate").val(),
         etaEndDate: $("#etaEndDate").val(),
         cargoType: $("#cargoType").val(),
+        cmpRel: $("#cmpRel").val(),
         externalCompany: externalCompany,
         originCountry:originCountry,
         agent:agent

@@ -182,6 +182,7 @@ cargoType:$("#cargoType").val(),
         yahuidaoqiDateEnd:$("#yahuidaoqiDateEnd").val(),
         yahuiMoneyMin:$("#yahuiMoneyMin").val(),
         yahuiMoneyMax:$("#yahuiMoneyMax").val(),
+        cmpRel: $("#cmpRel").val(),
        externalCompany: externalCompany,
        originCountry: originCountry,
             payType: "L/C"
@@ -221,6 +222,7 @@ function resetQuery(){
     $("#issuingDateEnd").val("");
     $("#remittanceDateStart").val("");
     $("#remittanceDateEnd").val("");
+    $("#cmpRel").val("1").trigger("change");
     $("#yahuidaoqiDateStart").val("");
     $("#yahuidaoqiDateEnd").val("");
     $("#yahuiMoneyMin").val("");
@@ -268,6 +270,7 @@ function getTotalInfo(){
                yahuidaoqiDateEnd:$("#yahuidaoqiDateEnd").val(),
                yahuiMoneyMin:$("#yahuiMoneyMin").val(),
                yahuiMoneyMax:$("#yahuiMoneyMax").val(),
+               cmpRel: $("#cmpRel").val(),
        externalCompany: externalCompany,
        originCountry: originCountry,
        payType: "L/C"
