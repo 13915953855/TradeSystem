@@ -1,8 +1,10 @@
 $(function () {
     var storeEndDate = getParam("storeEndDate");
     var storeStartDate = getParam("storeStartDate");
-    var status = getParam("status");
-    $("#status").val(status).trigger("change");
+    var status1 = getParam("status");
+    if(status1 != null){
+        $("#status").val(status1).trigger("change");
+    }
     $("#storeStartDate").val(storeStartDate);
     $("#storeEndDate").val(storeEndDate);
 
