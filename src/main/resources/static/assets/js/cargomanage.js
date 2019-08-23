@@ -1,8 +1,10 @@
 $(function () {
-    var status = getParam("status");
     var minBox = getParam("minBox");
     var maxBox = getParam("maxBox");
-    $("#status").val(status).trigger("change");
+    var status1 = getParam("status");
+    if(status1 != null){
+        $("#status").val(status1).trigger("change");
+    }
     $("#minBox").val(minBox);
     $("#maxBox").val(maxBox);
     //1.初始化Table
