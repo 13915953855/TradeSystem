@@ -434,6 +434,9 @@
       <if test="jyzzbsdrq != null" >
         jyzzbsdrq = #{jyzzbsdrq,jdbcType=VARCHAR},
       </if>
+      <if test="cargoType != null" >
+        cargo_type = #{cargoType,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
