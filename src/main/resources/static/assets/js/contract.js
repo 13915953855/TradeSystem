@@ -479,6 +479,41 @@ var ButtonInit = function () {
         $("#btn_add").click(function(){
             window.location.href="/trade/contract/add";
         });
+        $("#btn_copy").click(function(){
+            swal({
+              title: '复制合同',
+              text: '确定复制吗？',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+            }).then(function(){
+              var a = $('#tb_contract').bootstrapTable('getSelections');
+              if(a.length == 1){
+                   var id = a[0].id;
+                   $.ajax({
+                     url:"/trade/contract/copy",
+                     type:"POST",
+                     dataType:"json",
+                     data:{"id":id},
+                     success:function(res){
+                         if(res.status == "1"){
+                             swal('复制成功！','','success');
+                         }else{
+                             swal('复制失败！','','error');
+                         }
+                         $("#tb_contract").bootstrapTable("refresh",{pageNumber:1});
+                     }
+                 });
+              }else if(a.length > 1){
+                  swal('仅支持编辑一行！','','warning');
+              }else{
+                  swal('请选中一行！','','warning');
+              }
+            });
+        });
         $("#btn_edit").click(function(){
             var a = $('#tb_contract').bootstrapTable('getSelections');
             if(a.length == 1){

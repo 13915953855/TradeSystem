@@ -21,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -718,4 +719,34 @@ public class TradeService {
         result.put("rows",cargoInfoMapper.getStoreList(cargoParam));
         return result;
     }
+
+    public void copyContract(Integer id){
+        ContractBaseInfo origin = contractRepository.findById(id);
+        ContractBaseInfo copy = new ContractBaseInfo();
+        String[] ignoreProperties = new String[]{"id"};
+        BeanUtils.copyProperties(origin, copy, ignoreProperties);
+        String contractId = UUID.randomUUID().toString();
+        copy.setContractId(contractId);
+        copy.setExternalContract(origin.getExternalContract()+"复制");
+        copy.setInsideContract(origin.getInsideContract()+"复制");
+        String status = origin.getStatus();
+        if(status.equals("5")){
+            copy.setStatus("4");
+        }
+        contractRepository.save(copy);
+        //保存商品
+        List<CargoInfo> cargoInfos = cargoRepository.findByContractIdOrderByIdAsc(origin.getContractId());
+        for (CargoInfo cargoInfo : cargoInfos) {
+            CargoInfo now = new CargoInfo();
+            BeanUtils.copyProperties(cargoInfo, now, ignoreProperties);
+            status = cargoInfo.getStatus();
+            if(status.equals("5")){
+                now.setStatus("4");
+            }
+            now.setCargoId(UUID.randomUUID().toString());
+            now.setContractId(contractId);
+            cargoRepository.save(now);
+        }
+    }
+
 }
