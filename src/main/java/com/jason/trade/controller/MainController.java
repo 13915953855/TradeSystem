@@ -7,6 +7,7 @@ import com.jason.trade.mapper.AttachmentMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
 import com.jason.trade.model.*;
 import com.jason.trade.repository.*;
+import com.jason.trade.service.ContentModerationClient;
 import com.jason.trade.service.ExcelService;
 import com.jason.trade.service.TradeService;
 import com.jason.trade.util.CommonUtil;
@@ -239,6 +240,7 @@ public class MainController {
         model.addAttribute("user", userInfo);
         return "trade/agent";
     }
+
     @PostMapping("/login")
     public @ResponseBody Map<String, Object> loginPost(String username, String password, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
