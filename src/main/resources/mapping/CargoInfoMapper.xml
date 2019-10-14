@@ -562,18 +562,16 @@
       and b.level like '%${level}%'
     </if>
     <if test="customerName != null and customerName != ''" >
-      and b.cargo_id in (
+      <!--and b.cargo_id in (
       select cargo_id from sale_info where 1=1
       <if test="customerName != null and customerName != ''" >
         and customer_name like '%${customerName}%'
       </if>
-      )
+      )-->
+      and a.customer_name like '%${customerName}%'
     </if>
     <if test="cargoNo != null" >
       and b.cargo_no like '%${cargoNo}%'
-    </if>
-    <if test="ladingbillNo != null" >
-      and c.ladingbill_no like '%${ladingbillNo}%'
     </if>
     <if test="ladingbillNo != null" >
       and c.ladingbill_no like '%${ladingbillNo}%'
