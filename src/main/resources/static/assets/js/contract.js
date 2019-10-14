@@ -19,7 +19,7 @@ $(function () {
         language: 'zh-CN'
     });
     $("select").select2({
-        tags: true
+        //tags: true
     });
     $("select").on("change",function(){
         $("#btn_query").click();
