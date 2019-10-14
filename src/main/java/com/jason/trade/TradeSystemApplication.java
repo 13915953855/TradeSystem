@@ -14,8 +14,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.servlet.MultipartConfigElement;
 
-@EnableFeignClients
-@EnableDiscoveryClient
+//@EnableFeignClients
+//@EnableDiscoveryClient
 @SpringBootApplication
 @EnableScheduling
 @Configuration
