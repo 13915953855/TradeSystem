@@ -30,7 +30,7 @@ $(function () {
         $("#btn_query").click();
     });
     $("select").select2({
-        tags: true
+        //tags: true
     });
     $("#cargoType").change(function(){
         $("#cargoName").empty();

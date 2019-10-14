@@ -9,7 +9,7 @@ $(function () {
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
     $("select").select2({
-        tags: true
+        //tags: true
     });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",

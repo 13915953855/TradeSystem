@@ -17,7 +17,7 @@ $(function () {
         language: 'zh-CN'
     });
     $("select").select2({
-        tags: true
+        //tags: true
     });
     initLevel();
     initBusinessMode();
