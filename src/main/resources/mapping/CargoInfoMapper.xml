@@ -170,15 +170,15 @@
   </sql>
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
     select count(1) from (
-    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
-    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
+    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.storage_condition,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
+    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as storage_condition,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
   </select>
   <select id="selectTotalByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
-    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
-    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
+    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.storage_condition,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
+    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' AS storage_condition,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
   </select>
