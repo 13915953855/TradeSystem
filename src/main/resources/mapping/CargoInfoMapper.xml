@@ -573,6 +573,9 @@
     <if test="cargoNo != null" >
       and b.cargo_no like '%${cargoNo}%'
     </if>
+    <if test="cargoType != null and cargoType != ''" >
+      and c.cargo_type = '${cargoType}'
+    </if>
     <if test="ladingbillNo != null" >
       and c.ladingbill_no like '%${ladingbillNo}%'
     </if>
@@ -826,6 +829,9 @@
     </if>
     <if test="cargoNo != null" >
       and a.cargo_no like '%${cargoNo}%'
+    </if>
+    <if test="cargoType != null and cargoType != ''" >
+      and b.cargo_type = '${cargoType}'
     </if>
     <if test="companyNo != null" >
       and a.company_no like '%${companyNo}%'

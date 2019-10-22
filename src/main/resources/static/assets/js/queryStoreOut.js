@@ -27,7 +27,11 @@ $(function () {
     initBusinessMode();
     initExternalCompany();
     initCargoList();
-
+    $("#cargoType").change(function(){
+        $("#cargoName").empty();
+        $("#cargoName").append("<option>全部</option>");
+        initCargoList();
+    });
     getTotalInfo();
 });
 
@@ -180,6 +184,7 @@ var TableInit = function () {
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             cargoNo: $("#cargoNo").val(),
+            cargoType: $("#cargoType").val(),
             customerName: $("#customerName").val(),
             containerNo: $("#containerNo").val(),
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
@@ -220,6 +225,7 @@ function resetQuery(){
     $("#cargoNo").val("");
     $("#warehouse").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
+    $("#cargoType").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
@@ -248,6 +254,7 @@ function getTotalInfo(){
          level: $("#level").val() == "全部"?"":$("#level").val(),
          cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
          cargoNo: $("#cargoNo").val(),
+         cargoType: $("#cargoType").val(),
          customerName: $("#customerName").val(),
          storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
          containerNo: $("#containerNo").val(),

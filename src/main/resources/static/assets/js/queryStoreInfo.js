@@ -37,7 +37,7 @@ $(function () {
     initOriginCountry();
     initCargoList();
     initWarehouse();
-$("#cargoType").change(function(){
+    $("#cargoType").change(function(){
         $("#cargoName").empty();
         $("#cargoName").append("<option>全部</option>");
         initCargoList();
