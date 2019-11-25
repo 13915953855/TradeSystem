@@ -93,7 +93,7 @@ var TableInit = function () {
                 title: '库号'
             }, {
                 field: 'external_contract',
-                title: '内合同编号'
+                title: '外合同编号'
             }, {
                 field: 'inside_contract',
                 title: '内合同编号'
