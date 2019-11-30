@@ -709,6 +709,12 @@
     <if test="contractEndDate != null and contractEndDate != ''" >
       and a.contract_date &lt;= '${contractEndDate}'
     </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and a.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and a.eta &lt;= '${etaEndDate}'
+    </if>
     <if test="storeStartDate != null and storeStartDate != ''" >
       and a.store_date &gt;= '${storeStartDate}'
     </if>

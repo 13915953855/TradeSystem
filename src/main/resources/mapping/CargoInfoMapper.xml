@@ -633,13 +633,23 @@
   <select id="getStoreList" resultType="com.jason.trade.entity.CargoStoreInfo" parameterType="com.jason.trade.entity.CargoParam">
     select a.cargo_name,a.level,a.company_no,a.cargo_no,b.external_contract,b.inside_contract,
     b.container_no,b.ladingbill_no,b.store_date,b.warehouse,b.storage_condition,
-    a.invoice_amount,a.boxes,b.baoguandan,b.qacertificate,b.jyzqfrq,b.bgdcjrq
+    a.invoice_amount,a.boxes,b.baoguandan,b.qacertificate,b.jyzqfrq,b.bgdcjrq,b.eta
     from cargo_info a
     inner join contract_base_info b on a.contract_id = b.contract_id
     where 1=1
     <include refid="getStoreListWhere"></include>
     order by a.contract_id,b.store_date,a.real_store_weight desc,a.real_store_boxes desc
     limit ${start},${limit}
+  </select>
+  <select id="getStoreList2" resultType="com.jason.trade.entity.CargoStoreInfo" parameterType="com.jason.trade.entity.CargoParam">
+    select a.cargo_name,a.level,a.company_no,a.cargo_no,b.external_contract,b.inside_contract,
+    b.container_no,b.ladingbill_no,b.store_date,b.warehouse,b.storage_condition,
+    a.invoice_amount,a.boxes,b.baoguandan,b.qacertificate,b.jyzqfrq,b.bgdcjrq,b.eta
+    from cargo_info a
+    inner join contract_base_info b on a.contract_id = b.contract_id
+    where 1=1
+    <include refid="getStoreListWhere"></include>
+    order by a.contract_id,b.store_date,a.real_store_weight desc,a.real_store_boxes desc
   </select>
   <select id="countStoreList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam">
     select count(1) from cargo_info a
@@ -817,6 +827,12 @@
     </if>
     <if test="storeEndDate != null and storeEndDate != ''" >
       and b.store_date &lt;= '${storeEndDate}'
+    </if>
+    <if test="etaStartDate != null and etaStartDate != ''" >
+      and b.eta &gt;= '${etaStartDate}'
+    </if>
+    <if test="etaEndDate != null and etaEndDate != ''" >
+      and b.eta &lt;= '${etaEndDate}'
     </if>
     <if test="level != null and level != ''" >
       and a.level like '%${level}%'

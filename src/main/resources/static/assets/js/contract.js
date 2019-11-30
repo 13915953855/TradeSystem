@@ -260,10 +260,18 @@ var TableInit = function () {
                 title: '预计船期'
             }, {
                 field: 'etd',
-                title: 'ETD'
+                title: 'ETD',
+                                            formatter: function(value,row,index){
+                                                if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                                                else return value;
+                                            }
             }, {
                 field: 'eta',
-                title: 'ETA'
+                title: 'ETA',
+                                            formatter: function(value,row,index){
+                                                if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                                                else return value;
+                                            }
             }, {
                 field: 'totalBoxes',
                 title: '库存总箱数'

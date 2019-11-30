@@ -49,4 +49,6 @@ public class GlobalConst {
             "增值税","货代","放行日期","仓库","入库时间"};
     public static final String[] HEAD_STOREINFO_QUERY_ARRAY = new String[]{"商品","级别","厂号","库号","外合同编号",
             "内合同编号","柜号","提单号","入库时间","仓库","发票重量","发票箱数","现库存重量","现库存箱数","库存成本"};
+    public static final String[] HEAD_STOREIN_QUERY_ARRAY = new String[]{"商品","级别","存储条件","厂号","库号","外合同编号",
+            "内合同编号","柜号","提单号","入库时间","冷库","发票数量","发票箱数","检疫证签发日期","是否上传检疫证","ETA"};
 }

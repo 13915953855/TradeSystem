@@ -140,10 +140,18 @@ var TableInit = function () {
                 title: '发票金额'
             }, {
                 field: 'etd',
-                title: 'ETD'
+                title: 'ETD',
+                                            formatter: function(value,row,index){
+                                                if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                                                else return value;
+                                            }
             }, {
                 field: 'eta',
-                title: 'ETA'
+                title: 'ETA',
+                                            formatter: function(value,row,index){
+                                                if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                                                else return value;
+                                            }
             }, {
                 field: 'expectSailingDate',
                 title: '预计船期'

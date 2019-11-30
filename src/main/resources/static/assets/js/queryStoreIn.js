@@ -102,10 +102,22 @@ var TableInit = function () {
                 title: '柜号'
             }, {
                 field: 'ladingbill_no',
-                title: '提单号'
+                title: '提单号',
+                visible: false
             }, {
                 field: 'store_date',
-                title: '入库时间'
+                title: '入库时间',
+                formatter: function(value,row,index){
+                    if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                    else return value;
+                }
+            }, {
+                field: 'eta',
+                title: 'ETA',
+                formatter: function(value,row,index){
+                    if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                    else return value;
+                }
             }, {
                 field: 'warehouse',
                 title: '仓库'
@@ -156,6 +168,8 @@ var TableInit = function () {
             warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
             storeStartDate: $("#storeStartDate").val(),
             storeEndDate: $("#storeEndDate").val(),
+            etaStartDate: $("#etaStartDate").val(),
+            etaEndDate: $("#etaEndDate").val(),
             insideContract: $("#insideContract").val(),
             level: $("#level").val() == "全部"?"":$("#level").val(),
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
@@ -164,8 +178,10 @@ var TableInit = function () {
             cargoType: $("#cargoType").val(),
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
             ladingbillNo: $("#ladingbillNo").val(),
-            baoguandan: $("#baoguandan").val() == "全部"?"":$("#baoguandan").val(),
-            qacertificate: $("#qacertificate").val() == "全部"?"":$("#qacertificate").val(),
+            //baoguandan: $("#baoguandan").val() == "全部"?"":$("#baoguandan").val(),
+            //qacertificate: $("#qacertificate").val() == "全部"?"":$("#qacertificate").val(),
+            baoguandan: "",
+            qacertificate: "",
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
             status: $("#status").val() == "全部"?"":$("#status").val()
         };
@@ -188,6 +204,33 @@ var ButtonInit = function () {
             resetQuery();
             getTotalInfo();
         });
+        $("#btn_output").click(function(){
+
+            var params = "?contractNo="+$("#contractNo").val();
+            params += "&storeStartDate="+$("#storeStartDate").val();
+            params += "&storeEndDate="+$("#storeEndDate").val();
+            params += "&etaEndDate="+$("#etaEndDate").val();
+            params += "&etaStartDate="+$("#etaStartDate").val();
+            params += "&insideContract="+$("#insideContract").val();
+            params += "&cargoNo="+$("#cargoNo").val();
+            params += "&containerNo="+$("#containerNo").val();
+            params += "&ladingbillNo="+$("#ladingbillNo").val();
+            var warehouse = $("#warehouse").val() == '全部'?"":$("#warehouse").val();
+            params += "&warehouse="+warehouse;
+            var ownerCompany = $("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val();
+            params += "&ownerCompany="+ownerCompany;
+            var level = $("#level").val() == "全部"?"":$("#level").val();
+            params += "&level="+level;
+            var cargoName = $("#cargoName").val() == "全部"?"":$("#cargoName").val();
+            params += "&cargoName="+cargoName;
+            var storageCondition = $("#storageCondition").val() == "全部"?"":$("#storageCondition").val();
+            params += "&storageCondition="+storageCondition;
+            var status = $("#status").val() == "全部"?"":$("#status").val();
+            params += "&status="+status;
+
+            var url = "/trade/queryStoreIn/output"+params;
+            window.open(url);
+        });
     };
 
     return oInit;
@@ -202,12 +245,14 @@ function resetQuery(){
     $("#cargoType").val("全部").trigger("change");
     $("#level").val("全部").trigger("change");
     $("#status").val("全部").trigger("change");
-    $("#baoguandan").val("全部").trigger("change");
-    $("#qacertificate").val("全部").trigger("change");
+    //$("#baoguandan").val("全部").trigger("change");
+    //$("#qacertificate").val("全部").trigger("change");
     $("#storageCondition").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
     $("#storeStartDate").val("");
     $("#storeEndDate").val("");
+    $("#etaStartDate").val("");
+    $("#etaEndDate").val("");
     $("#containerNo").val("");
     $("#ladingbillNo").val("");
     $("#customerName").val("");
@@ -221,6 +266,8 @@ function getTotalInfo(){
          warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
          storeStartDate: $("#storeStartDate").val(),
          storeEndDate: $("#storeEndDate").val(),
+         etaStartDate: $("#etaStartDate").val(),
+         etaEndDate: $("#etaEndDate").val(),
          insideContract: $("#insideContract").val(),
          level: $("#level").val() == "全部"?"":$("#level").val(),
          cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
@@ -229,8 +276,8 @@ function getTotalInfo(){
          containerNo: $("#containerNo").val(),
          ladingbillNo: $("#ladingbillNo").val(),
          cargoType: $("#cargoType").val(),
-         baoguandan: $("#baoguandan").val(),
-         qacertificate: $("#qacertificate").val(),
+         baoguandan: "",
+         qacertificate: "",
          storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
          status: $("#status").val() == "全部"?"":$("#status").val()
      };

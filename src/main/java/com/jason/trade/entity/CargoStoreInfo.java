@@ -23,4 +23,5 @@ public class CargoStoreInfo implements Serializable {
     private String jyzqfrq;
     private String bgdcjrq;
     private String storage_condition;
+    private String eta;
 }

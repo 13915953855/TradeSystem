@@ -1,6 +1,7 @@
 package com.jason.trade.service;
 
 import com.jason.trade.constant.GlobalConst;
+import com.jason.trade.entity.CargoStoreInfo;
 import com.jason.trade.entity.QueryContractInfo;
 import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
@@ -101,6 +102,63 @@ public class ExcelService {
         }
         return result;
     }
+    public XSSFWorkbook writeStoreInExcel(List<CargoStoreInfo> data){
+        //创建工作簿
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        //创建工作表
+        XSSFSheet sheet = workBook.createSheet();
+        //创建样式
+        XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+        XSSFCellStyle blueColor = createXssfCellStyleWithBlueColor(workBook);
+
+        //set date format
+        CellStyle dateCellStyle = workBook.createCellStyle();
+        CreationHelper createHelper = workBook.getCreationHelper();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/m/d"));
+
+        List<List<Object>> result = convertQueryStoreInList(data);
+
+        //创建头
+        //创建第一行
+        XSSFRow row = sheet.createRow(0);
+        //创建单元格
+        XSSFCell cell = null;
+        //创建单元格
+        for (int j = 0; j < GlobalConst.HEAD_STOREIN_QUERY_ARRAY.length; j++) {
+            cell = row.createCell(j, CellType.STRING);
+            cell.setCellValue(GlobalConst.HEAD_STOREIN_QUERY_ARRAY[j]);
+            cell.setCellStyle(styleNoColor);
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            //创建行
+            row = sheet.createRow(i+1);
+            List<Object> rowData = result.get(i);
+            for (int k = 0; k < GlobalConst.HEAD_STOREIN_QUERY_ARRAY.length; k++) {
+                cell = row.createCell(k, CellType.STRING);
+                String val = "";
+                if(rowData.get(k) == null){
+                    cell.setCellValue("");
+                }else {
+                    val = rowData.get(k).toString();
+                    cell.setCellValue(val);
+                }
+                cell.setCellStyle(styleNoColor);
+
+                //设置入库时间、ETA\ETD，七天内显示蓝色
+                String key = GlobalConst.HEAD_STOREIN_QUERY_ARRAY[k];
+                if(key.equals("入库时间") || key.equals("ETA")) {
+                    Date dateBeforeSevenDay = DateUtil.getDateBefore(new Date(), 7);
+                    String beforeSevenDay = DateUtil.DateToString(dateBeforeSevenDay);
+                    if(val.compareTo(beforeSevenDay) >= 0){
+                        cell.setCellStyle(blueColor);
+                    }
+                }
+
+            }
+        }
+        return workBook;
+    }
 
     public XSSFWorkbook writeStoreInfoExcel(List<QueryContractInfo> data){
         //创建工作簿
@@ -109,6 +167,7 @@ public class ExcelService {
         XSSFSheet sheet = workBook.createSheet();
         //创建样式
         XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+        XSSFCellStyle blueColor = createXssfCellStyleWithBlueColor(workBook);
 
         //set date format
         CellStyle dateCellStyle = workBook.createCellStyle();
@@ -135,17 +194,56 @@ public class ExcelService {
             List<Object> rowData = result.get(i);
             for (int k = 0; k < GlobalConst.HEAD_STOREINFO_QUERY_ARRAY.length; k++) {
                 cell = row.createCell(k, CellType.STRING);
+                String val = "";
                 if(rowData.get(k) == null){
                     cell.setCellValue("");
                 }else {
-                    cell.setCellValue(rowData.get(k).toString());
+                    val = rowData.get(k).toString();
+                    cell.setCellValue(val);
                 }
                 cell.setCellStyle(styleNoColor);
+
+                //设置入库时间、ETA\ETD，七天内显示蓝色
+                String key = GlobalConst.HEAD_STOREINFO_QUERY_ARRAY[k];
+                if(key.equals("入库时间") || key.equals("ETA") || key.equals("ETD")) {
+                    Date dateBeforeSevenDay = DateUtil.getDateBefore(new Date(), 7);
+                    String beforeSevenDay = DateUtil.DateToString(dateBeforeSevenDay);
+                    if(val.compareTo(beforeSevenDay) >= 0){
+                        cell.setCellStyle(blueColor);
+                    }
+                }
             }
         }
         return workBook;
     }
 
+    private XSSFCellStyle createXssfCellStyleWithBlueColor(XSSFWorkbook workBook) {
+        XSSFCellStyle styleNoColor = workBook.createCellStyle();
+        styleNoColor.setAlignment(HorizontalAlignment.CENTER);
+        styleNoColor.setVerticalAlignment(VerticalAlignment.CENTER);
+        styleNoColor.setBorderBottom(BorderStyle.THIN);
+        styleNoColor.setBorderLeft(BorderStyle.THIN);
+        styleNoColor.setBorderRight(BorderStyle.THIN);
+        styleNoColor.setBorderTop(BorderStyle.THIN);
+        styleNoColor.setWrapText(true);
+        styleNoColor.setFillForegroundColor((short)40);
+        styleNoColor.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        return styleNoColor;
+    }
+    private XSSFCellStyle createXssfCellStyleWithBlueFont(XSSFWorkbook workBook) {
+        XSSFCellStyle styleNoColor = workBook.createCellStyle();
+        styleNoColor.setAlignment(HorizontalAlignment.CENTER);
+        styleNoColor.setVerticalAlignment(VerticalAlignment.CENTER);
+        styleNoColor.setBorderBottom(BorderStyle.THIN);
+        styleNoColor.setBorderLeft(BorderStyle.THIN);
+        styleNoColor.setBorderRight(BorderStyle.THIN);
+        styleNoColor.setBorderTop(BorderStyle.THIN);
+        styleNoColor.setWrapText(true);
+        Font monthFont = workBook.createFont();
+        monthFont.setColor((short)40);
+        styleNoColor.setFont(monthFont);
+        return styleNoColor;
+    }
     private XSSFCellStyle createXssfCellStyle(XSSFWorkbook workBook) {
         XSSFCellStyle styleNoColor = workBook.createCellStyle();
         styleNoColor.setAlignment(HorizontalAlignment.CENTER);
@@ -181,6 +279,38 @@ public class ExcelService {
         }
         return result;
     }
+    private List<List<Object>> convertQueryStoreInList(List<CargoStoreInfo> data) {
+        List<List<Object>> result = new ArrayList<>();
+        for (CargoStoreInfo storeInfo : data) {
+            //商品，级别，存储条件，厂号，库号，外合同编号，内合同编号，柜号，提单号，入库时间，
+            // 冷库，发票数量，发票箱数，检疫证签发日期，是否上传检疫证，ETA
+            List<Object> list = new ArrayList<>();
+            list.add(storeInfo.getCargo_name());//"商品",
+            list.add(storeInfo.getLevel());// "级别",
+            list.add(storeInfo.getStorage_condition());// "存储条件",
+            list.add(storeInfo.getCompany_no());// "厂号",
+            list.add(storeInfo.getContainer_no());// "库号",
+            list.add(storeInfo.getExternal_contract());// "外合同编号",
+            list.add(storeInfo.getInside_contract());// "内合同编号",
+            list.add(storeInfo.getContainer_no());// "柜号",
+            list.add(storeInfo.getLadingbill_no());// "提单号",
+            list.add(storeInfo.getStore_date());// "入库时间",
+            list.add(storeInfo.getWarehouse());// "冷库",
+            list.add(storeInfo.getInvoice_amount());// "发票数量",
+            list.add(storeInfo.getBoxes());// "发票箱数",
+            list.add(storeInfo.getJyzqfrq());// "检疫证签发日期",
+            String a = storeInfo.getQacertificate();
+            if(a.equals("1")){
+                list.add("是");// "是否上传检疫证",
+            }else{
+                list.add("否");// "是否上传检疫证",
+            }
+            list.add(storeInfo.getEta());// "ETA"
+
+            result.add(list);
+        }
+        return result;
+    }
     public XSSFWorkbook writeContractExcel(List<ContractBaseInfo> data){
         //创建工作簿
         XSSFWorkbook workBook = new XSSFWorkbook();
@@ -188,6 +318,7 @@ public class ExcelService {
         XSSFSheet sheet = workBook.createSheet();
         //创建样式
         XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+        XSSFCellStyle blueColor = createXssfCellStyleWithBlueColor(workBook);
 
         //set date format
         CellStyle dateCellStyle = workBook.createCellStyle();
@@ -215,12 +346,23 @@ public class ExcelService {
             List<Object> rowData = result.get(i);
             for (int k = 0; k < GlobalConst.HEAD_CONTRACT_QUERY_ARRAY.length; k++) {
                 cell = row.createCell(k, CellType.STRING);
+                String val = "";
                 if(rowData.get(k) == null){
                     cell.setCellValue("");
                 }else {
-                    cell.setCellValue(rowData.get(k).toString());
+                    val = rowData.get(k).toString();
+                    cell.setCellValue(val);
                 }
                 cell.setCellStyle(styleNoColor);
+                //设置入库时间、ETA\ETD，七天内显示蓝色
+                String key = GlobalConst.HEAD_CONTRACT_QUERY_ARRAY[k];
+                if(key.equals("入库时间") || key.equals("ETA") || key.equals("ETD")) {
+                    Date dateBeforeSevenDay = DateUtil.getDateBefore(new Date(), 7);
+                    String beforeSevenDay = DateUtil.DateToString(dateBeforeSevenDay);
+                    if(val.compareTo(beforeSevenDay) >= 0){
+                        cell.setCellStyle(blueColor);
+                    }
+                }
             }
         }
         return workBook;
@@ -232,6 +374,7 @@ public class ExcelService {
         XSSFSheet sheet = workBook.createSheet();
         //创建样式
         XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+        XSSFCellStyle blueColor = createXssfCellStyleWithBlueColor(workBook);
 
         //set date format
         CellStyle dateCellStyle = workBook.createCellStyle();
@@ -259,12 +402,23 @@ public class ExcelService {
             List<Object> rowData = result.get(i);
             for (int k = 0; k < GlobalConst.HEAD_CARGO_QUERY_ARRAY.length; k++) {
                 cell = row.createCell(k, CellType.STRING);
+                String val = "";
                 if(rowData.get(k) == null){
                     cell.setCellValue("");
                 }else {
-                    cell.setCellValue(rowData.get(k).toString());
+                    val = rowData.get(k).toString();
+                    cell.setCellValue(val);
                 }
                 cell.setCellStyle(styleNoColor);
+                //设置入库时间、ETA\ETD，七天内显示蓝色
+                String key = GlobalConst.HEAD_CARGO_QUERY_ARRAY[k];
+                if(key.equals("入库时间") || key.equals("ETA") || key.equals("ETD")) {
+                    Date dateBeforeSevenDay = DateUtil.getDateBefore(new Date(), 7);
+                    String beforeSevenDay = DateUtil.DateToString(dateBeforeSevenDay);
+                    if(val.compareTo(beforeSevenDay) >= 0){
+                        cell.setCellStyle(blueColor);
+                    }
+                }
             }
         }
         return workBook;
@@ -341,6 +495,7 @@ public class ExcelService {
         XSSFSheet sheet = workBook.createSheet();
         //创建样式
         XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+        XSSFCellStyle blueColor = createXssfCellStyleWithBlueColor(workBook);
 
         //set date format
         CellStyle dateCellStyle = workBook.createCellStyle();
@@ -486,6 +641,15 @@ public class ExcelService {
                             if(String.valueOf(value).matches("\\d{4}\\-\\d{1,2}\\-\\d{1,2}")){//日期
                                 //cell.setCellValue(DateUtil.stringToDate(String.valueOf(value)));
                                 cell.setCellStyle(dateCellStyle);
+                            }
+                            //设置入库时间、ETA\ETD，七天内显示蓝色
+                            String key = GlobalConst.HEAD_CONTRACT_ARRAY[k];
+                            if(key.equals("入库日期") || key.equals("ETA") || key.equals("ETD")) {
+                                Date dateBeforeSevenDay = DateUtil.getDateBefore(new Date(), 7);
+                                String beforeSevenDay = DateUtil.DateToString(dateBeforeSevenDay);
+                                if(String.valueOf(value).compareTo(beforeSevenDay) >= 0){
+                                    cell.setCellStyle(blueColor);
+                                }
                             }
                         } else {
                             cell = row.createCell(contractSize++, CellType.NUMERIC);
@@ -1610,6 +1774,8 @@ public class ExcelService {
         row = sheet.createRow(begin);
         cell = row.createCell(0,CellType.STRING);
         cell.setCellValue("经办人:");
+
+
         cell.setCellStyle(leftTextStyle);
         cell = row.createCell(1,CellType.STRING);
         cell.setCellStyle(leftTextStyle);

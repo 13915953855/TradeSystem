@@ -127,7 +127,11 @@ var TableInit = function () {
                 }
             }, {
                 field: 'storeDate',
-                title: '入库时间'
+                title: '入库时间',
+                                             formatter: function(value,row,index){
+                                                 if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                                                 else return value;
+                                             }
             }, {
                 field: 'warehouse',
                 title: '仓库'

@@ -699,7 +699,7 @@ public class TradeService {
     public JSONObject queryCargoStoreInfo(CargoParam cargoParam){
         String status = cargoParam.getStatus();//0-作废，1-已下单，2-已装船，3-已到港，4-已入库, 5-已售完
         cargoParam.setStatus(CommonUtil.revertStatus(status));
-        String baoguandan = cargoParam.getBaoguandan();
+        /*String baoguandan = cargoParam.getBaoguandan();
         if(baoguandan.equals("是")){
             baoguandan = "1";
         }else if(baoguandan.equals("否")){
@@ -712,7 +712,7 @@ public class TradeService {
         }else if(qacertificate.equals("否")){
             qacertificate = "0";
         }
-        cargoParam.setQacertificate(qacertificate);
+        cargoParam.setQacertificate(qacertificate);*/
         Integer count = cargoInfoMapper.countStoreList(cargoParam);
         JSONObject result = new JSONObject();
         result.put("total",count);
