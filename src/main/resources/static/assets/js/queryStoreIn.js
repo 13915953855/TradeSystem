@@ -213,6 +213,7 @@ var ButtonInit = function () {
             params += "&etaStartDate="+$("#etaStartDate").val();
             params += "&insideContract="+$("#insideContract").val();
             params += "&cargoNo="+$("#cargoNo").val();
+            params += "&cargoType="+$("#cargoType").val();
             params += "&containerNo="+$("#containerNo").val();
             params += "&ladingbillNo="+$("#ladingbillNo").val();
             var warehouse = $("#warehouse").val() == '全部'?"":$("#warehouse").val();
