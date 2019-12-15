@@ -19,16 +19,19 @@ $(function(){
     });*/
 
     $.ajaxSetup({
-                    contentType:"application/x-www-form-urlencoded;charset=utf-8",
-                    complete:function(XMLHttpRequest,textStatus){
-                        //通过XMLHttpRequest取得响应头，sessionstatus，
-                        var sessionstatus=XMLHttpRequest.getResponseHeader("sessionstatus");
-                        if(sessionstatus=="timeout"){
-                            //如果超时就处理 ，指定要跳转的页面
-                            window.location = "/login";
-                        }
-                    }
-                });
+        contentType:"application/x-www-form-urlencoded;charset=utf-8",
+        complete:function(XMLHttpRequest,textStatus){
+            //通过XMLHttpRequest取得响应头，sessionstatus，
+            var sessionstatus=XMLHttpRequest.getResponseHeader("sessionstatus");
+            if(sessionstatus=="timeout"){
+                //如果超时就处理 ，指定要跳转的页面
+                window.location = "/login";
+            }
+            if(sessionstatus == "limit"){
+                swal("没有权限","","error");
+            }
+        }
+    });
 
 
 });
@@ -77,6 +80,7 @@ function initCaiyangcangku(){
     opts += "<option>外高桥普菲斯</option>";
     opts += "<option>名联纪丰</option>";
     opts += "<option>名联青浦</option>";
+    opts += "<option>同盛保税库</option>";
     $("#caiyangcangku").append(opts);
 }
 function initWarehouse(){
@@ -89,6 +93,7 @@ function initWarehouse(){
     opts += "<option>鑫汇洋</option>";
     opts += "<option>瑞源</option>";
     opts += "<option>洋山普菲斯</option>";
+    opts += "<option>外高桥普菲斯</option>";
     opts += "<option>上港冷链</option>";
     opts += "<option>华辰</option>";
     opts += "<option>镇江汇鸿</option>";

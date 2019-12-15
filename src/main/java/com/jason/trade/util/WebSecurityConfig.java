@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.jason.trade.model.UserInfo;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -41,8 +43,21 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
                 throws Exception {
             HttpSession session = request.getSession();
-            if (session.getAttribute(SESSION_KEY) != null)
+            if (session.getAttribute(SESSION_KEY) != null){
+                UserInfo user = (UserInfo) session.getAttribute(SESSION_KEY);
+                String name = user.getAccount();
+                String uri = request.getRequestURI();
+                String postType = request.getMethod();
+                if(
+                        name.equals("visitor") && postType.equals("POST") &&
+                        (uri.endsWith("update") || uri.endsWith("delete") || uri.endsWith("add") || uri.endsWith("upload") || uri.endsWith("copy"))
+                ) {
+                    response.setHeader("sessionstatus", "limit");//在响应头设置session状态
+                    return false;
+                }
                 return true;
+            }
+
             if (request.getHeader("x-requested-with") != null
                     && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) {
                 //如果是ajax请求响应头会有，x-requested-with
