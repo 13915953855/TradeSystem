@@ -638,7 +638,7 @@
     inner join contract_base_info b on a.contract_id = b.contract_id
     where 1=1
     <include refid="getStoreListWhere"></include>
-    order by a.contract_id,b.store_date,a.real_store_weight desc,a.real_store_boxes desc
+    order by b.store_date desc,a.real_store_weight desc,a.real_store_boxes desc
     limit ${start},${limit}
   </select>
   <select id="getStoreList2" resultType="com.jason.trade.entity.CargoStoreInfo" parameterType="com.jason.trade.entity.CargoParam">
@@ -649,7 +649,7 @@
     inner join contract_base_info b on a.contract_id = b.contract_id
     where 1=1
     <include refid="getStoreListWhere"></include>
-    order by a.contract_id,b.store_date,a.real_store_weight desc,a.real_store_boxes desc
+    order by b.store_date desc,a.real_store_weight desc,a.real_store_boxes desc
   </select>
   <select id="countStoreList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam">
     select count(1) from cargo_info a
