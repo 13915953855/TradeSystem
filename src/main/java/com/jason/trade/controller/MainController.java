@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -659,6 +660,17 @@ public class MainController {
             }
         }
         return null;
+    }
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+
+    @ResponseBody
+    @RequestMapping("/testListener")
+    public String testListener(){
+        applicationContext.publishEvent(new AddDateEvent("aaa"));
+        return "success";
     }
 
     /**
