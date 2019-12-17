@@ -300,7 +300,7 @@ public class ExcelService {
             list.add(storeInfo.getBoxes());// "发票箱数",
             list.add(storeInfo.getJyzqfrq());// "检疫证签发日期",
             String a = storeInfo.getQacertificate();
-            if(a.equals("1")){
+            if(StringUtils.isNotBlank(a) && a.equals("1")){
                 list.add("是");// "是否上传检疫证",
             }else{
                 list.add("否");// "是否上传检疫证",
