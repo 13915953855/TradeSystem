@@ -212,5 +212,6 @@ function initUser(){
     opts += "<option>唐誉天</option>";
     opts += "<option>徐舰艇</option>";
     opts += "<option>奚璐</option>";
+    opts += "<option>张成飞</option>";
     $("#pickupUser").append(opts);
 }

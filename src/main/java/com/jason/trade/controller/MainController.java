@@ -591,7 +591,7 @@ public class MainController {
      */
     @GetMapping(value = "/trade/queryStoreInfo/output")
     public ResponseEntity<Resource> queryStoreInfoOutput(HttpSession session, @RequestParam(value = "externalCompany") String externalCompany, @RequestParam(value = "ownerCompany") String ownerCompany,
-                                                         @RequestParam(value = "businessMode") String businessMode, @RequestParam(value = "companyNo") String companyNo,
+                                                         @RequestParam(value = "businessMode") String businessMode, @RequestParam(value = "companyNo") String companyNo,@RequestParam(value = "cmpRel") String cmpRel,
                                                          @RequestParam(value = "level") String level, @RequestParam(value = "cargoName") String cargoName, @RequestParam(value = "storageCondition") String storageCondition,
                                                          @RequestParam(value = "storeStartDate") String storeStartDate, @RequestParam(value = "storeEndDate") String storeEndDate,
                                                          @RequestParam(value = "status") String status, @RequestParam(value = "originCountry") String originCountry,
@@ -615,6 +615,7 @@ public class MainController {
         contractParam.setMinBox(minBox);
         contractParam.setMaxBox(maxBox);
         contractParam.setMinWeight(minWeight);
+        contractParam.setCmpRel(cmpRel);
         contractParam.setMaxWeight(maxWeight);
         contractParam.setLevel(level);
         contractParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));

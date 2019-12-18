@@ -536,7 +536,7 @@
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
     <include refid="sellListWhere"></include>
-    order by b.cargo_id desc
+    order by c.store_date desc
     limit ${start},${limit}
   </select>
   <sql id="sellListWhere">
