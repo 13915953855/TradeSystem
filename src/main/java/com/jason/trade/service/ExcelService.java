@@ -289,7 +289,7 @@ public class ExcelService {
             list.add(storeInfo.getLevel());// "级别",
             list.add(storeInfo.getStorage_condition());// "存储条件",
             list.add(storeInfo.getCompany_no());// "厂号",
-            list.add(storeInfo.getContainer_no());// "库号",
+            list.add(storeInfo.getCargo_no());// "库号",
             list.add(storeInfo.getExternal_contract());// "外合同编号",
             list.add(storeInfo.getInside_contract());// "内合同编号",
             list.add(storeInfo.getContainer_no());// "柜号",
