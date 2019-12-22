@@ -2,7 +2,6 @@ package com.jason.trade.controller;
 
 import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.ContractParam;
-import com.jason.trade.entity.InternalContractParam;
 import com.jason.trade.mapper.AttachmentMapper;
 import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
@@ -36,8 +35,6 @@ public class ContractController {
     private ContractRepository contractRepository;
     @Autowired
     private CargoRepository cargoRepository;
-    @Autowired
-    private OptionInfoRepository optionInfoRepository;
     @Autowired
     private InternalContractRepository internalContractRepository;
     @Autowired

@@ -1,10 +1,9 @@
 package com.jason.trade.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.jason.trade.constant.GlobalConst;
-import com.jason.trade.entity.CargoParam;
-import com.jason.trade.entity.CargoStoreInfo;
-import com.jason.trade.entity.ContractParam;
-import com.jason.trade.entity.QueryContractInfo;
+import com.jason.trade.entity.*;
 import com.jason.trade.mapper.AttachmentMapper;
 import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
@@ -758,6 +757,97 @@ public class MainController {
         }
         return null;
     }
+
+    @GetMapping(value = "/trade/queryStoreOut/output")
+    public ResponseEntity<Resource> queryStoreOut(HttpSession session, @RequestParam(value = "contractNo") String contractNo,
+                                                 @RequestParam(value = "realSaleDateStart") String realSaleDateStart,
+                                                 @RequestParam(value = "realSaleDateEnd") String realSaleDateEnd,
+                                                 @RequestParam(value = "pickupDateStart") String pickupDateStart,
+                                                 @RequestParam(value = "pickupDateEnd") String pickupDateEnd,
+                                                 @RequestParam(value = "insideContract") String insideContract,
+                                                 @RequestParam(value = "cargoNo") String cargoNo,
+                                                 @RequestParam(value = "cargoName") String cargoName,
+                                                 @RequestParam(value = "cargoType") String cargoType,
+                                                 @RequestParam(value = "containerNo") String containerNo,
+                                                 @RequestParam(value = "ladingbillNo") String ladingbillNo,
+                                                 @RequestParam(value = "customerName") String customerName,
+                                                 @RequestParam(value = "maxBox") String maxBox,
+                                                 @RequestParam(value = "minBox") String minBox,
+                                                 @RequestParam(value = "warehouse") String warehouse,
+                                                 @RequestParam(value = "ownerCompany") String ownerCompany,
+                                                 @RequestParam(value = "level") String level,
+                                                 @RequestParam(value = "storageCondition") String storageCondition,
+                                                 @RequestParam(value = "kaifapiao") String kaifapiao,
+                                                 @RequestParam(value = "businessMode") String businessMode,
+                                                 @RequestParam(value = "status") String status) throws UnsupportedEncodingException {
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        CargoParam cargoParam = new CargoParam();
+        cargoParam.setContractNo(contractNo);
+        cargoParam.setInsideContract(insideContract);
+        cargoParam.setKaifapiao(kaifapiao);
+        cargoParam.setBusinessMode(businessMode);
+        cargoParam.setMinBox(minBox);
+        cargoParam.setMaxBox(maxBox);
+        cargoParam.setRealSaleDateEnd(realSaleDateEnd);
+        cargoParam.setRealSaleDateStart(realSaleDateStart);
+        cargoParam.setPickupDateEnd(pickupDateEnd);
+        cargoParam.setPickupDateStart(pickupDateStart);
+        cargoParam.setCustomerName(customerName);
+        cargoParam.setLevel(URLDecoder.decode(level, "UTF-8"));
+        cargoParam.setCargoName(URLDecoder.decode(cargoName, "UTF-8"));
+        cargoParam.setCargoNo(cargoNo);
+        cargoParam.setCargoType(cargoType);
+        cargoParam.setWarehouse(URLDecoder.decode(warehouse, "UTF-8"));
+        cargoParam.setContainerNo(containerNo);
+        cargoParam.setLadingbillNo(ladingbillNo);
+        cargoParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
+        cargoParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
+        cargoParam.setStorageCondition(storageCondition);
+
+        ByteArrayOutputStream bos = null;
+        List<CargoSellInfo> data = cargoInfoMapper.getSellList(cargoParam);
+        String fileName = "出库信息" + DateUtil.DateToString(new Date(), "yyyyMMddHHmmss") + ".xlsx";
+        try {
+            Workbook workbook = excelService.writeStoreOutExcel(data);
+            bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            workbook.close();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            headers.add("charset", "utf-8");
+            //设置下载文件名
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            headers.add("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+
+            SysLog sysLog = new SysLog();
+            sysLog.setDetail("导出Excel记录");
+            sysLog.setOperation("导出");
+            sysLog.setUser(userInfo.getAccount());
+            sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+            sysLogRepository.save(sysLog);
+
+
+            Resource resource = new InputStreamResource(new ByteArrayInputStream(bos.toByteArray()));
+
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/x-msdownload")).body(resource);
+
+        } catch (IOException e) {
+            if (null != bos) {
+                try {
+                    bos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+
     @Autowired
     private CargoInfoMapper cargoInfoMapper;
 

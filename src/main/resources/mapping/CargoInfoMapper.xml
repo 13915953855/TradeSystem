@@ -481,6 +481,11 @@
     update cargo_info set status = 4
     where cargo_id = #{cargoId,jdbcType=VARCHAR}
   </update>
+  <select id="findByGroupEqualsAndFieldEqualsOrderByNameAsc" resultType="com.jason.trade.model.OptionInfo">
+    select distinct `name`,`group`,`field` from option_info
+    where `group` = #{group,jdbcType=VARCHAR} and `field` = #{field,jdbcType=VARCHAR}
+    order by `name` asc
+  </select>
 
 
 
@@ -537,7 +542,9 @@
     where 1=1
     <include refid="sellListWhere"></include>
     order by c.store_date desc
+    <if test="limit > 0">
     limit ${start},${limit}
+    </if>
   </select>
   <sql id="sellListWhere">
     <if test="contractNo != null and contractNo != ''" >

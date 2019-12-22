@@ -4,7 +4,6 @@ import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.CargoParam;
 import com.jason.trade.entity.ContractForCharts;
 import com.jason.trade.entity.ContractParam;
-import com.jason.trade.entity.InternalContractParam;
 import com.jason.trade.mapper.AttachmentMapper;
 import com.jason.trade.mapper.CargoInfoMapper;
 import com.jason.trade.mapper.ContractBaseInfoMapper;
@@ -31,8 +30,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/trade")
@@ -42,8 +43,6 @@ public class TradeController {
     private ContractRepository contractRepository;
     @Autowired
     private CargoRepository cargoRepository;
-    @Autowired
-    private OptionInfoRepository optionInfoRepository;
     @Autowired
     private InternalContractRepository internalContractRepository;
     @Autowired
@@ -381,7 +380,7 @@ public class TradeController {
 
     @RequestMapping("/common/getOption")
     public String getCommonOption(@RequestParam("group") String group, @RequestParam("field") String field) throws JSONException {
-        List<OptionInfo> data = optionInfoRepository.findByGroupEqualsAndFieldEqualsOrderByNameAsc(group,field);
+        List<OptionInfo> data = cargoInfoMapper.findByGroupEqualsAndFieldEqualsOrderByNameAsc(group,field);
         JSONObject result = new JSONObject();
         result.put("data",data);
         return result.toString();

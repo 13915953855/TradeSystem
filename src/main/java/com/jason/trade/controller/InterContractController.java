@@ -36,8 +36,6 @@ public class InterContractController {
     @Autowired
     private CargoRepository cargoRepository;
     @Autowired
-    private OptionInfoRepository optionInfoRepository;
-    @Autowired
     private InternalContractRepository internalContractRepository;
     @Autowired
     private InternalCargoRepository internalCargoRepository;

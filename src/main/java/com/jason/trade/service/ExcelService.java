@@ -1,6 +1,7 @@
 package com.jason.trade.service;
 
 import com.jason.trade.constant.GlobalConst;
+import com.jason.trade.entity.CargoSellInfo;
 import com.jason.trade.entity.CargoStoreInfo;
 import com.jason.trade.entity.QueryContractInfo;
 import com.jason.trade.mapper.CargoInfoMapper;
@@ -97,6 +98,103 @@ public class ExcelService {
             list.add(dutyInfo.getAgentPassDate());// "放行日期"
             list.add(dutyInfo.getWarehouse());// "仓库",
             list.add(dutyInfo.getStoreDate());// "入库时间",
+
+            result.add(list);
+        }
+        return result;
+    }
+    public XSSFWorkbook writeStoreOutExcel(List<CargoSellInfo> data){
+        //创建工作簿
+        XSSFWorkbook workBook = new XSSFWorkbook();
+        //创建工作表
+        XSSFSheet sheet = workBook.createSheet();
+        //创建样式
+        XSSFCellStyle styleNoColor = createXssfCellStyle(workBook);
+        XSSFCellStyle blueColor = createXssfCellStyleWithBlueColor(workBook);
+
+        //set date format
+        CellStyle dateCellStyle = workBook.createCellStyle();
+        CreationHelper createHelper = workBook.getCreationHelper();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/m/d"));
+
+        List<List<Object>> result = convertQueryStoreOutList(data);
+
+        //创建头
+        //创建第一行
+        XSSFRow row = sheet.createRow(0);
+        //创建单元格
+        XSSFCell cell = null;
+        //创建单元格
+        for (int j = 0; j < GlobalConst.HEAD_STOREOUT_QUERY_ARRAY.length; j++) {
+            cell = row.createCell(j, CellType.STRING);
+            cell.setCellValue(GlobalConst.HEAD_STOREOUT_QUERY_ARRAY[j]);
+            cell.setCellStyle(styleNoColor);
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            //创建行
+            row = sheet.createRow(i+1);
+            List<Object> rowData = result.get(i);
+            for (int k = 0; k < GlobalConst.HEAD_STOREOUT_QUERY_ARRAY.length; k++) {
+                cell = row.createCell(k, CellType.STRING);
+                String val = "";
+                if(rowData.get(k) == null){
+                    cell.setCellValue("");
+                }else {
+                    val = rowData.get(k).toString();
+                    cell.setCellValue(val);
+                }
+                cell.setCellStyle(styleNoColor);
+
+                //设置入库时间、ETA\ETD，七天内显示蓝色
+                String key = GlobalConst.HEAD_STOREOUT_QUERY_ARRAY[k];
+                if(key.equals("入库时间") || key.equals("ETA")) {
+                    Date dateBeforeSevenDay = DateUtil.getDateBefore(new Date(), 7);
+                    String beforeSevenDay = DateUtil.DateToString(dateBeforeSevenDay);
+                    if(val.compareTo(beforeSevenDay) >= 0){
+                        cell.setCellStyle(blueColor);
+                    }
+                }
+
+            }
+        }
+        return workBook;
+    }
+    private List<List<Object>> convertQueryStoreOutList(List<CargoSellInfo> data) {
+        List<List<Object>> result = new ArrayList<>();
+        for (CargoSellInfo storeInfo : data) {
+            //"内合同号","外商","厂号","商品","级别",
+             //       "仓库","单价","成本单价","库存重量","库存成本","柜号","提单号",
+            //       "出库时间","客户名称","实售重量","实售箱数","实售单价",
+              //      "实售金额","定金","客户来款金额","利润","发票"
+            List<Object> list = new ArrayList<>();
+            list.add(storeInfo.getInside_contract());// "内合同编号",
+            list.add(storeInfo.getExternal_company());//外商
+            list.add(storeInfo.getCompany_no());// "厂号",
+            list.add(storeInfo.getCargo_name());//"商品",
+            list.add(storeInfo.getLevel());// "级别",
+            list.add(storeInfo.getWarehouse());// "仓库",
+            list.add(storeInfo.getUnit_price());//单价
+            list.add(storeInfo.getCost_price());//成本单价
+            list.add(storeInfo.getReal_store_weight());
+            list.add(storeInfo.getReal_store_money());
+            list.add(storeInfo.getContainer_no());// "柜号",
+            list.add(storeInfo.getLadingbill_no());// "提单号",
+            list.add(storeInfo.getReal_sale_date());
+            list.add(storeInfo.getCustomer_name());
+            list.add(storeInfo.getReal_sale_weight());
+            list.add(storeInfo.getReal_sale_boxes());
+            list.add(storeInfo.getReal_sale_unit_price());
+            list.add(storeInfo.getReal_sale_money());
+            list.add(storeInfo.getDeposit());
+            list.add(storeInfo.getCustomer_pay_money());
+            list.add(storeInfo.getProfit());
+            String a = storeInfo.getKaifapiao();
+            if(StringUtils.isNotBlank(a) && a.equals("1")){
+                list.add("是");// "是",
+            }else{
+                list.add("否");// "否",
+            }
 
             result.add(list);
         }
