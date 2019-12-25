@@ -386,6 +386,14 @@ public class TradeController {
         return result.toString();
     }
 
+    @RequestMapping("/common/getLevel")
+    public String getLevel() throws JSONException {
+        List<String> data = cargoInfoMapper.getLevelList();
+        JSONObject result = new JSONObject();
+        result.put("data",data);
+        return result.toString();
+    }
+
     @PostMapping(value="/presale/add")
     public String presaleAdd(PreSaleInfo saleInfo, HttpSession session){
         saleInfo.setStatus(GlobalConst.ENABLE);

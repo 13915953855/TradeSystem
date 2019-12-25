@@ -674,7 +674,9 @@
   <select id="getAvgStatusByContractId" parameterType="java.lang.String" resultType="java.lang.Integer">
     select AVG(status) from cargo_info where contract_id = #{_parameter}
   </select>
-
+  <select id="getLevelList" resultType="string">
+    select DISTINCT level from cargo_info
+  </select>
 
 
   <select id="selectByExampleForPre" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
