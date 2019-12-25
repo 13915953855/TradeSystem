@@ -86,7 +86,10 @@ var TableInit = function () {
             }, {
                 field: 'external_company',
                 title: '外商',
-                                           visible: false
+                visible: false
+            }, {
+                field: 'cargo_no',
+                title: '库号'
             }, {
                 field: 'company_no',
                 title: '厂号'
@@ -102,28 +105,28 @@ var TableInit = function () {
             }, {
                 field: 'unit_price',
                 title: '单价',
-                                           visible: false
+                visible: false
             }, {
                 field: 'cost_price',
                 title: '成本单价'
             }, {
                 field: 'real_store_weight',
                 title: '库存重量',
-                                             visible: false,
+                visible: false,
               formatter: function(value, row, index){
                   return toFloat4(value);
               }
             }, {
                 field: 'real_store_money',
                 title: '库存成本',
-                                             visible: false
+                visible: false
             }, {
                 field: 'container_no',
                 title: '柜号'
             }, {
                 field: 'ladingbill_no',
                 title: '提单号',
-                                            visible: false
+                visible: false
             }, {
                 field: 'real_sale_date',
                 title: '出库时间'
@@ -135,7 +138,8 @@ var TableInit = function () {
                 title: '实售重量'
             }, {
                 field: 'real_sale_boxes',
-                title: '实售箱数'
+                title: '实售箱数',
+                visible: false
             }, {
                 field: 'real_sale_unit_price',
                 title: '实售单价'

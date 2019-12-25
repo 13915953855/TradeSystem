@@ -50,8 +50,8 @@ public class GlobalConst {
     public static final String[] HEAD_STOREINFO_QUERY_ARRAY = new String[]{"商品","级别","厂号","库号","外合同编号",
             "内合同编号","柜号","提单号","入库时间","仓库","发票重量","发票箱数","现库存重量","现库存箱数","库存成本"};
     public static final String[] HEAD_STOREIN_QUERY_ARRAY = new String[]{"商品","级别","存储条件","厂号","库号","外合同编号",
-            "内合同编号","柜号","提单号","入库时间","冷库","发票数量","发票箱数","检疫证签发日期","是否上传检疫证","ETA"};
-    public static final String[] HEAD_STOREOUT_QUERY_ARRAY = new String[]{"内合同号","外商","厂号","商品","级别",
+            "内合同编号","柜号","提单号","入库时间","冷库","发票数量","发票箱数","检疫证签发日期","是否上传检疫证","ETA","平均箱重"};
+    public static final String[] HEAD_STOREOUT_QUERY_ARRAY = new String[]{"内合同号","外商","库号","厂号","商品","级别",
             "仓库","单价","成本单价","库存重量","库存成本","柜号","提单号","出库时间","客户名称","实售重量","实售箱数","实售单价",
             "实售金额","定金","客户来款金额","利润","发票"};
 }

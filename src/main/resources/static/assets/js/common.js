@@ -261,6 +261,7 @@ function initLevel(){
     opts += "<option></option>";
     opts += "<option>A</option>";
     opts += "<option>B</option>";
+    opts += "<option>C</option>";
     opts += "<option>S</option>";
     opts += "<option>YP</option>";
     opts += "<option>YG</option>";

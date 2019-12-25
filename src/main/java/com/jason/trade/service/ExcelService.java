@@ -27,6 +27,7 @@ import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -163,13 +164,14 @@ public class ExcelService {
     private List<List<Object>> convertQueryStoreOutList(List<CargoSellInfo> data) {
         List<List<Object>> result = new ArrayList<>();
         for (CargoSellInfo storeInfo : data) {
-            //"内合同号","外商","厂号","商品","级别",
+            //"内合同号","外商","库号","厂号","商品","级别",
              //       "仓库","单价","成本单价","库存重量","库存成本","柜号","提单号",
             //       "出库时间","客户名称","实售重量","实售箱数","实售单价",
               //      "实售金额","定金","客户来款金额","利润","发票"
             List<Object> list = new ArrayList<>();
             list.add(storeInfo.getInside_contract());// "内合同编号",
             list.add(storeInfo.getExternal_company());//外商
+            list.add(storeInfo.getCargo_no());
             list.add(storeInfo.getCompany_no());// "厂号",
             list.add(storeInfo.getCargo_name());//"商品",
             list.add(storeInfo.getLevel());// "级别",
@@ -381,7 +383,7 @@ public class ExcelService {
         List<List<Object>> result = new ArrayList<>();
         for (CargoStoreInfo storeInfo : data) {
             //商品，级别，存储条件，厂号，库号，外合同编号，内合同编号，柜号，提单号，入库时间，
-            // 冷库，发票数量，发票箱数，检疫证签发日期，是否上传检疫证，ETA
+            // 冷库，发票数量，发票箱数，检疫证签发日期，是否上传检疫证，ETA,平均箱重
             List<Object> list = new ArrayList<>();
             list.add(storeInfo.getCargo_name());//"商品",
             list.add(storeInfo.getLevel());// "级别",
@@ -404,7 +406,11 @@ public class ExcelService {
                 list.add("否");// "是否上传检疫证",
             }
             list.add(storeInfo.getEta());// "ETA"
-
+            BigDecimal ave = BigDecimal.ZERO;
+            if(Integer.valueOf(storeInfo.getBoxes()) > 0){
+                ave = new BigDecimal(storeInfo.getInvoice_amount()).divide(new BigDecimal(storeInfo.getBoxes()),2,BigDecimal.ROUND_HALF_UP);
+            }
+            list.add(ave);
             result.add(list);
         }
         return result;

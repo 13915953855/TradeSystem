@@ -11,6 +11,8 @@ public class CargoSellInfo implements Serializable {
     private String inside_contract;
     @Excel(name="外商")
     private String external_company;
+    @Excel(name="库号")
+    private String cargo_no;
     @Excel(name="厂号")
     private String company_no;
     @Excel(name="商品")

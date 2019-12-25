@@ -639,7 +639,7 @@
     from contract_base_info a inner join cargo_info b on a.contract_id = b.contract_id
     where 1 = 1 and a.status != '0'
     <include refid="storeInfoWhere"></include>
-    order by a.store_date desc,b.real_store_weight desc,b.real_store_boxes desc
+    order by a.store_date asc,b.real_store_weight desc,b.real_store_boxes desc
     <if test="start != null and limit != null" >
       limit ${start},${limit}
     </if>

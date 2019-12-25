@@ -532,7 +532,7 @@
 
 
   <select id="getSellList" resultType="com.jason.trade.entity.CargoSellInfo" parameterType="com.jason.trade.entity.CargoParam">
-    select c.inside_contract,c.external_company,b.company_no,b.cargo_name,b.level,c.warehouse,
+    select c.inside_contract,c.external_company,b.company_no,b.cargo_name,b.level,c.warehouse,b.cargo_no,
     b.unit_price,b.real_store_weight,b.real_store_money,c.container_no,c.ladingbill_no,a.kaifapiao,
     a.real_sale_date,a.customer_name,a.real_sale_weight,a.real_sale_boxes,a.real_sale_unit_price,a.real_sale_money,
     a.deposit,(a.customer_pay_money+a.customer_pay_money2+a.customer_pay_money3+a.customer_pay_money4+a.customer_pay_money5) as customer_pay_money,a.profit,b.cost_price
@@ -541,7 +541,7 @@
     inner join contract_base_info c on c.contract_id = b.contract_id
     where 1=1
     <include refid="sellListWhere"></include>
-    order by c.store_date desc
+    order by a.real_sale_date desc
     <if test="limit > 0">
     limit ${start},${limit}
     </if>
