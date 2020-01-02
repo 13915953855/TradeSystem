@@ -1828,13 +1828,14 @@ public class ExcelService {
         cell.setCellValue("重量(KG)");
         cell.setCellStyle(blackStyle);
         cell = row.createCell(8,CellType.STRING);
-        cell.setCellValue("厂号");
+        cell.setCellValue("平均箱重");
         cell.setCellStyle(blackStyle);
         cell = row.createCell(9,CellType.STRING);
+        cell.setCellValue("厂号");
         cell.setCellStyle(blackStyle);
         cell = row.createCell(10,CellType.STRING);
         cell.setCellStyle(blackStyle);
-        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 8, 10));
+        sheet.addMergedRegion(new CellRangeAddress(ten, ten, 9, 10));
 
 
         for (int i = 0; i < cargoInfos.size(); i++) {
@@ -1865,13 +1866,19 @@ public class ExcelService {
             cell.setCellValue(cargoInfo.getInvoiceAmount());
             cell.setCellStyle(blackStyle);
             cell = row.createCell(8,CellType.STRING);
-            cell.setCellValue(cargoInfo.getCompanyNo());
+
+            BigDecimal ave = BigDecimal.ZERO;
+            if(Integer.valueOf(cargoInfo.getBoxes()) > 0){
+                ave = new BigDecimal(cargoInfo.getInvoiceAmount()).divide(new BigDecimal(cargoInfo.getBoxes()),2,BigDecimal.ROUND_HALF_UP);
+            }
+            cell.setCellValue(ave.toString());
             cell.setCellStyle(blackStyle);
             cell = row.createCell(9,CellType.STRING);
+            cell.setCellValue(cargoInfo.getCompanyNo());
             cell.setCellStyle(blackStyle);
             cell = row.createCell(10,CellType.STRING);
             cell.setCellStyle(blackStyle);
-            sheet.addMergedRegion(new CellRangeAddress(index, index, 8, 10));
+            sheet.addMergedRegion(new CellRangeAddress(index, index, 9, 10));
         }
 
         int begin = cargoInfos.size()+13;
