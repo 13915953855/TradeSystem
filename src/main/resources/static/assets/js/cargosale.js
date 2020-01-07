@@ -142,8 +142,12 @@ var TableInit = function () {
                 title: '商品序号',
                 visible: false
             }, {
+                field: 'pickupDate',
+                title: '提货<br>时间'
+            }, {
                 field: 'saleContractNo',
-                title: '购销合同<br>/订单号'
+                title: '购销合同<br>/订单号',
+                visible: false
             }, {
                  field: 'pickupUser',
                  title: '销售经理'
@@ -233,10 +237,6 @@ var TableInit = function () {
                 },
                 visible:false
             }, {
-                 field: 'pickupDate',
-                 title: '提货<br>时间',
-                 visible:false
-             } , {
                 field: 'remark',
                 title: '备注',
                 visible:false
