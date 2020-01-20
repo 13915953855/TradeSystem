@@ -141,8 +141,7 @@ var TableInit = function () {
                 title: '仓库'
             }, {
                 field: 'storeDate',
-                title: '入库日期',
-                visible: false
+                title: '入库日期'
             }, {
                 field: 'realStoreWeight',
                 title: '当前库存重量'
