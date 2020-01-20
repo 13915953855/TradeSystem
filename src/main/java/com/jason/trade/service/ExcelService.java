@@ -943,8 +943,15 @@ public class ExcelService {
         list.add(cargoInfo.getInvoiceMoney());//发票金额(小计:元)
         list.add(cargoInfo.getCostPrice());//成本单价(/KG)
         list.add(cargoInfo.getRealStoreMoney());//库存成本
-        list.add(cargoInfo.getRealStoreWeight());//当前库存重量
-        list.add(cargoInfo.getRealStoreBoxes());//当前库存箱数
+
+        if(cargoInfo.getStatus().equals(GlobalConst.STORED)){
+            list.add(cargoInfo.getRealStoreWeight());//当前库存重量
+            list.add(cargoInfo.getRealStoreBoxes());//当前库存箱数
+        }else{
+            list.add(0);//当前库存重量
+            list.add(0);//当前库存箱数
+        }
+
         return list;
     }
 

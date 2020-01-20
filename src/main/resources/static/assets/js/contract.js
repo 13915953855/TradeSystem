@@ -274,7 +274,14 @@ var TableInit = function () {
                                             }
             }, {
                 field: 'totalBoxes',
-                title: '库存总箱数'
+                title: '库存总箱数',
+              formatter: function(value, row, index){//0-作废，1-已下单，2-已装船，3-已到港，4-已入库,5-已售完
+                  if(row.status == "4"){
+                      return value;
+                  }else {
+                      return 0;
+                  }
+              }
             }, {
                 field: 'status',
                 title: '状态',
