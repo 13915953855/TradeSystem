@@ -103,19 +103,9 @@ $(function () {
         $("#contractMoney").val(contractMoney);
         $("#invoiceMoney").val(invoiceMoney);
 
-        //自动计算成本单价
-        var costPrice = 0;
-        var originCountry = $("#originCountry").val();
-        var exchangeRate = $("#exchangeRate").val();
-        if(originCountry == "澳大利亚"){
-            costPrice = unitPrice*exchangeRate*1.06*1.09+0.6;
-        }else if(originCountry == "新西兰" || originCountry == "哥斯达黎加"){
-            costPrice = unitPrice*exchangeRate*1.09+0.6;
-        }else{
-            costPrice = unitPrice*exchangeRate*1.12*1.09+0.6;
-        }
-        $("#costPrice").val(toFloat(costPrice));
+        autoCalculateCostPrice();
     });
+
     $("#contractAmount").blur(function(){
         var contractMoney = 0;
         var unitPrice = $("#unitPrice").val();
@@ -157,6 +147,33 @@ $(function () {
 
     //initChuanqi();
 });
+//自动计算成本单价
+function autoCalculateCostPrice(){
+    var costPrice = 0;
+    var eta = $("#eta").val();
+    var exchangeRate = $("#exchangeRate").val();
+    var cargoType = $("#cargoType").val();
+    var cargoName = $("#cargoName").val();
+
+    var unitPrice = $("#unitPrice").val();
+    var originCountry = $("#originCountry").val();
+
+    if(eta == '' || exchangeRate == '' || cargoType == '' || cargoName == '' || originCountry == ''){
+        return;
+    }
+
+    $.ajax({
+        url:'/trade/cargo/autoCalculateCostPrice',
+        type:"POST",
+        dataType:"json",
+        data:{"eta":eta,"originCountry":originCountry,"rate":exchangeRate,"unitPrice":unitPrice,"cargoType":cargoType,"cargoName":cargoName},
+        success:function(res){
+            $("#costPrice").val(res);
+        }
+    });
+
+}
+
 function rukudan(){
     var id = $("#id").val();
     var url = "/trade/contract/rukudan?id="+id;
