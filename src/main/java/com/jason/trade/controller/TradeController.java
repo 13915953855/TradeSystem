@@ -21,10 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -466,5 +463,134 @@ public class TradeController {
         JSONObject result = new JSONObject();
         result.put("count",count);
         return result.toString();
+    }
+
+    @PostMapping("/cargo/autoCalculateCostPrice")
+    public String autoCalculateCostPrice(@RequestParam String originCountry,@RequestParam String eta,@RequestParam String cargoType,
+                                        @RequestParam String cargoName,@RequestParam String unitPrice,@RequestParam String rate){
+        BigDecimal costPrice = BigDecimal.ZERO;
+        if(eta.compareTo("2019-09-15") > 0 && eta.compareTo("2019-12-24") < 0){
+            if(cargoType.equals("牛产品")){
+                if(cargoName.equals("脂肪")){
+                    if(!originCountry.equals("新西兰") || !originCountry.equals("哥斯达黎加外")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.04)).multiply(new BigDecimal(1.13))
+                                .add(new BigDecimal(0.7));
+                    }
+                }
+                if(!cargoName.equals("脂肪") || !cargoName.equals("背膘") || !cargoName.equals("碎膘") ||
+                        !cargoName.equals("板油") || !cargoName.equals("猪肝")){
+                    if(!originCountry.equals("新西兰") || !originCountry.equals("哥斯达黎加外")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.12)).multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }
+                }
+            }else if(cargoType.equals("猪产品")){
+                if(cargoName.equals("背膘") || cargoName.equals("碎膘") || cargoName.equals("板油") || cargoName.equals("猪肝")){
+                    costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                            .multiply(new BigDecimal(1.2)).multiply(new BigDecimal(1.09))
+                            .add(new BigDecimal(0.7));
+                }
+                if(!cargoName.equals("脂肪") || !cargoName.equals("背膘") || !cargoName.equals("碎膘") ||
+                        !cargoName.equals("板油") || !cargoName.equals("猪肝")){
+                    if(!originCountry.equals("新西兰") || !originCountry.equals("哥斯达黎加外")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.12)).multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }
+                }
+            }else if(cargoType.equals("羊产品")){
+                if(cargoName.equals("去骨羊后腿")){
+                    costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                            .multiply(new BigDecimal(1.067)).multiply(new BigDecimal(1.09))
+                            .add(new BigDecimal(0.7));
+                }
+            }
+        }else if(eta.compareTo("2019-12-25") > 0){
+            if(originCountry.equals("新西兰") || originCountry.equals("哥斯达黎加") || originCountry.equals("智利")){
+                if(cargoType.equals("脂肪")){
+                    costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                            .multiply(new BigDecimal(1.13))
+                            .add(new BigDecimal(0.7));
+                }else{
+                    costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                            .multiply(new BigDecimal(1.09))
+                            .add(new BigDecimal(0.7));
+                }
+            }else if(originCountry.equals("澳大利亚")){
+                if(cargoType.equals("牛产品")){
+                    if(cargoName.equals("脂肪")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.13))
+                                .add(new BigDecimal(0.7));
+                    }else{
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.048))
+                                .multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }
+                }else if(cargoType.equals("羊产品")){
+                    if(cargoName.equals("羊六分体") ||cargoName.equals("带骨羊后腿")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.04))
+                                .multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }else if(cargoName.equals("去骨羊后腿")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.05))
+                                .multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }else if(cargoName.equals("脂肪")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.13))
+                                .add(new BigDecimal(0.7));
+                    }
+                }
+            }else{
+                if(cargoType.equals("牛产品")){
+                    if(!cargoName.equals("脂肪")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.12))
+                                .multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }else{
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.04))
+                                .multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }
+                }else if(cargoType.equals("猪产品")){
+                    if(cargoName.equals("背膘") || cargoName.equals("碎膘") ||cargoName.equals("板油")|| cargoName.equals("猪肝")){
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.2))
+                                .multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }else{
+                        costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                                .multiply(new BigDecimal(1.08))
+                                .multiply(new BigDecimal(1.09))
+                                .add(new BigDecimal(0.7));
+                    }
+                }
+            }
+        }else{
+            if(originCountry == "澳大利亚"){
+                costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                        .multiply(new BigDecimal(1.06))
+                        .multiply(new BigDecimal(1.09))
+                        .add(new BigDecimal(0.6));
+            }else if(originCountry == "新西兰" || originCountry == "哥斯达黎加"){
+                costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                        .multiply(new BigDecimal(1.09))
+                        .add(new BigDecimal(0.6));
+            }else{
+                costPrice = new BigDecimal(unitPrice).multiply(new BigDecimal(rate))
+                        .multiply(new BigDecimal(1.12))
+                        .multiply(new BigDecimal(1.09))
+                        .add(new BigDecimal(0.6));
+            }
+        }
+        return costPrice.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
 }
