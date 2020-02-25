@@ -149,11 +149,15 @@ var TableInit = function () {
             }, {
                 field: 'deposit',
                 title: '定金',
-                                           visible: false
+                visible: false
             }, {
                 field: 'customer_pay_money',
                 title: '客户来款金额',
-                                               visible: false
+                visible: false
+            }, {
+                field: 'customer_type',
+                title: '客户属性',
+                visible: false
             }, {
                 field: 'profit',
                 title: '利润'
@@ -195,6 +199,7 @@ var TableInit = function () {
             kaifapiao: $("#kaifapiao").val() == "全部"?"":$("#kaifapiao").val(),
             businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
             minBox: $("#minBox").val(),
+            customerType: $("#customerType").val(),
             maxBox: $("#maxBox").val()
         };
         return temp;
@@ -229,6 +234,7 @@ var ButtonInit = function () {
             params += "&ladingbillNo="+$("#ladingbillNo").val();
             params += "&customerName="+$("#customerName").val();
             params += "&maxBox="+$("#maxBox").val();
+            params += "&customerType="+$("#customerType").val();
             params += "&minBox="+$("#minBox").val();
             var warehouse = $("#warehouse").val() == '全部'?"":$("#warehouse").val();
             params += "&warehouse="+warehouse;
@@ -266,6 +272,7 @@ function resetQuery(){
     $("#status").val("全部").trigger("change");
     $("#businessMode").val("全部").trigger("change");
     $("#storageCondition").val("全部").trigger("change");
+    $("#customerType").val("").trigger("change");
     $("#containerNo").val("");
     $("#ladingbillNo").val("");
     $("#customerName").val("");
@@ -299,6 +306,7 @@ function getTotalInfo(){
          businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
          ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
          minBox: $("#minBox").val(),
+         customerType: $("#customerType").val(),
          maxBox: $("#maxBox").val()
      };
 

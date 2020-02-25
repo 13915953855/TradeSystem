@@ -166,7 +166,7 @@ public class ExcelService {
         for (CargoSellInfo storeInfo : data) {
             //"内合同号","外商","库号","厂号","商品","级别",
              //       "仓库","单价","成本单价","库存重量","库存成本","柜号","提单号",
-            //       "出库时间","客户名称","实售重量","实售箱数","实售单价",
+            //       "出库时间","客户属性","客户名称","实售重量","实售箱数","实售单价",
               //      "实售金额","定金","客户来款金额","利润","发票"
             List<Object> list = new ArrayList<>();
             list.add(storeInfo.getInside_contract());// "内合同编号",
@@ -183,6 +183,7 @@ public class ExcelService {
             list.add(storeInfo.getContainer_no());// "柜号",
             list.add(storeInfo.getLadingbill_no());// "提单号",
             list.add(storeInfo.getReal_sale_date());
+            list.add(storeInfo.getCustomer_type());
             list.add(storeInfo.getCustomer_name());
             list.add(storeInfo.getReal_sale_weight());
             list.add(storeInfo.getReal_sale_boxes());
@@ -848,6 +849,7 @@ public class ExcelService {
     private List<Object> convertContractList(ContractBaseInfo baseInfo,Integer index) {
         List<Object> list = new ArrayList<>();
         list.add(index+1);//序号
+        list.add(baseInfo.getOwnerCompany());//合同归属公司
         list.add(baseInfo.getExternalContract());//外合同编号
         list.add(baseInfo.getInsideContract());//内合同编号
         list.add(baseInfo.getContractDate());//合同日期

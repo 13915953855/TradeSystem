@@ -33,6 +33,7 @@ public class CargoParam {
     private String etdStartDate;
     private String etdEndDate;
     private String customerName;
+    private String customerType;
     private String containerNo;
     private String ladingbillNo;
     private String status;

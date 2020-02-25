@@ -37,6 +37,8 @@ public class CargoSellInfo implements Serializable {
     private String real_sale_date;
     @Excel(name="客户名称")
     private String customer_name;
+    @Excel(name="客户属性")
+    private String customer_type;
     @Excel(name="实售重量")
     private String real_sale_weight;
     @Excel(name="实售箱数")

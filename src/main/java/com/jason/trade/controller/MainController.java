@@ -771,6 +771,7 @@ public class MainController {
                                                  @RequestParam(value = "containerNo") String containerNo,
                                                  @RequestParam(value = "ladingbillNo") String ladingbillNo,
                                                  @RequestParam(value = "customerName") String customerName,
+                                                 @RequestParam(value = "customerType") String customerType,
                                                  @RequestParam(value = "maxBox") String maxBox,
                                                  @RequestParam(value = "minBox") String minBox,
                                                  @RequestParam(value = "warehouse") String warehouse,
@@ -797,6 +798,7 @@ public class MainController {
         cargoParam.setCargoName(URLDecoder.decode(cargoName, "UTF-8"));
         cargoParam.setCargoNo(cargoNo);
         cargoParam.setCargoType(cargoType);
+        cargoParam.setCustomerType(customerType);
         cargoParam.setWarehouse(URLDecoder.decode(warehouse, "UTF-8"));
         cargoParam.setContainerNo(containerNo);
         cargoParam.setLadingbillNo(ladingbillNo);
