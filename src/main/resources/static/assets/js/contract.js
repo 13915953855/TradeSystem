@@ -21,6 +21,9 @@ $(function () {
     $("select").select2({
         //tags: true
     });
+    $("#level").select2({
+        tags: true
+    });
     $("select").on("change",function(){
         $("#btn_query").click();
     });

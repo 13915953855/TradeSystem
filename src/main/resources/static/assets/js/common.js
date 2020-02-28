@@ -17,6 +17,9 @@ $(function(){
     /*$("select").select2({
         tags: true
     });*/
+    $("#level").select2({
+        tags: true
+    });
 
     $.ajaxSetup({
         contentType:"application/x-www-form-urlencoded;charset=utf-8",
@@ -89,6 +92,7 @@ function initWarehouse(){
     opts += "<option>澳米特</option>";
     opts += "<option>名联纪丰</option>";
     opts += "<option>名联青浦</option>";
+    opts += "<option>九曳</option>";
     opts += "<option>领升</option>";
     opts += "<option>鑫汇洋</option>";
     opts += "<option>瑞源</option>";
@@ -179,6 +183,8 @@ function initAgent() {
     opts += "<option>亚东</option>";
     opts += "<option>创祥</option>";
     opts += "<option>源鑫</option>";
+    opts += "<option>誉尚</option>";
+    opts += "<option>宸信</option>";
     $("#agent").append(opts);
 }
 
