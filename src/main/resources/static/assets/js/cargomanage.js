@@ -32,6 +32,9 @@ $(function () {
     $("select").select2({
         //tags: true
     });
+    $("#level").select2({
+        tags: true
+    });
     $("#cargoType").change(function(){
         $("#cargoName").empty();
         $("#cargoName").append("<option>全部</option>");

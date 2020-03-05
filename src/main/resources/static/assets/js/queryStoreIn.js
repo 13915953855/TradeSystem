@@ -11,6 +11,9 @@ $(function () {
     $("select").select2({
         //tags: true
     });
+    $("#level").select2({
+        tags: true
+    });
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd",
         autoclose: true,

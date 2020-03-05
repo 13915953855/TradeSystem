@@ -36,6 +36,7 @@ $(function () {
         initExternalCompany();
     });
     initLevel();
+    initDestinationPort();
     initBusinessMode();
     initCaiyangcangku();
     initExternalCompany();

@@ -17,9 +17,6 @@ $(function(){
     /*$("select").select2({
         tags: true
     });*/
-    $("#level").select2({
-        tags: true
-    });
 
     $.ajaxSetup({
         contentType:"application/x-www-form-urlencoded;charset=utf-8",
@@ -223,6 +220,7 @@ function initDestinationPort(){
     opts += "<option>南京</option>";
     opts += "<option>太仓</option>";
     opts += "<option>张家港</option>";
+    opts += "<option>青岛</option>";
     opts += "<option>上海空港</option>";
     $("#destinationPort").append(opts);
 }
