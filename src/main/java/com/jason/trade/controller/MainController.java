@@ -776,6 +776,9 @@ public class MainController {
                                                  @RequestParam(value = "minBox") String minBox,
                                                  @RequestParam(value = "warehouse") String warehouse,
                                                  @RequestParam(value = "ownerCompany") String ownerCompany,
+                                                 @RequestParam(value = "externalCompany") String externalCompany,
+                                                 @RequestParam(value = "companyNo") String companyNo,
+                                                 @RequestParam(value = "cmpRel") String cmpRel,
                                                  @RequestParam(value = "level") String level,
                                                  @RequestParam(value = "storageCondition") String storageCondition,
                                                  @RequestParam(value = "kaifapiao") String kaifapiao,
@@ -788,6 +791,9 @@ public class MainController {
         cargoParam.setKaifapiao(kaifapiao);
         cargoParam.setBusinessMode(businessMode);
         cargoParam.setMinBox(minBox);
+        cargoParam.setExternalCompany(externalCompany);
+        cargoParam.setCmpRel(cmpRel);
+        cargoParam.setCompanyNo(companyNo);
         cargoParam.setMaxBox(maxBox);
         cargoParam.setRealSaleDateEnd(realSaleDateEnd);
         cargoParam.setRealSaleDateStart(realSaleDateStart);

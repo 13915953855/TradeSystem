@@ -547,6 +547,12 @@
     </if>
   </select>
   <sql id="sellListWhere">
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 1" >
+      and c.external_company in (${externalCompany})
+    </if>
+    <if test="externalCompany != null and externalCompany != '' and cmpRel == 0" >
+      and c.external_company not in (${externalCompany})
+    </if>
     <if test="contractNo != null and contractNo != ''" >
       and c.external_contract like '%${contractNo}%'
     </if>
@@ -555,6 +561,9 @@
     </if>
     <if test="containerNo != null" >
       and c.container_no like '%${containerNo}%'
+    </if>
+    <if test="companyNo != null" >
+      and c.company_no like '%${companyNo}%'
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and c.storage_condition = '${storageCondition}'

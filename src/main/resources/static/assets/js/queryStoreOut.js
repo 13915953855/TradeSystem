@@ -179,9 +179,26 @@ var TableInit = function () {
 
     //得到查询的参数
     oTableInit.queryParams = function (params) {
+        var externalCompanyArr = $("#externalCompany").val();
+            var externalCompany = "";
+            if(externalCompanyArr != null){
+                for(var i=0;i<externalCompanyArr.length;i++){
+                    if(externalCompanyArr[i] != '全部'){
+                        externalCompany += "'"+externalCompanyArr[i] + "',";
+                    }else{
+                        externalCompany = "";break;
+                    }
+                }
+            }
+            if(externalCompany.length > 1){
+                externalCompany = externalCompany.substring(0,externalCompany.length-1);
+            }
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
+            externalCompany: externalCompany,
+            cmpRel: $("#cmpRel").val(),
+            companyNo: $("#companyNo").val(),
             contractNo: $("#contractNo").val(),
             warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
             pickupDateStart: $("#pickupDateStart").val(),
@@ -225,6 +242,20 @@ var ButtonInit = function () {
             getTotalInfo();
         });
         $("#btn_output").click(function(){
+        var externalCompanyArr = $("#externalCompany").val();
+                    var externalCompany = "";
+                    if(externalCompanyArr != null){
+                        for(var i=0;i<externalCompanyArr.length;i++){
+                            if(externalCompanyArr[i] != '全部'){
+                                externalCompany += "'"+externalCompanyArr[i] + "',";
+                            }else{
+                                externalCompany = "";break;
+                            }
+                        }
+                    }
+                    if(externalCompany.length > 1){
+                        externalCompany = externalCompany.substring(0,externalCompany.length-1);
+                    }
             var params = "?contractNo="+$("#contractNo").val();
             params += "&realSaleDateStart="+$("#realSaleDateStart").val();
             params += "&realSaleDateEnd="+$("#realSaleDateEnd").val();
@@ -232,6 +263,9 @@ var ButtonInit = function () {
             params += "&pickupDateEnd="+$("#pickupDateEnd").val();
             params += "&insideContract="+$("#insideContract").val();
             params += "&cargoNo="+$("#cargoNo").val();
+            params += "&externalCompany="+externalCompany;
+            params += "&cmpRel="+$("#cmpRel").val();
+            params += "&companyNo="+$("#companyNo").val();
             params += "&cargoType="+$("#cargoType").val();
             params += "&containerNo="+$("#containerNo").val();
             params += "&ladingbillNo="+$("#ladingbillNo").val();
@@ -267,7 +301,9 @@ function resetQuery(){
     $("#contractNo").val("");
     $("#insideContract").val("");
     $("#cargoNo").val("");
+    $("#companyNo").val("");
     $("#warehouse").val("全部").trigger("change");
+    $("#externalCompany").val("全部").trigger("change");
     $("#cargoName").val("全部").trigger("change");
     $("#cargoType").val("全部").trigger("change");
     $("#ownerCompany").val("全部").trigger("change");
@@ -288,6 +324,20 @@ function resetQuery(){
 }
 
 function getTotalInfo(){
+    var externalCompanyArr = $("#externalCompany").val();
+    var externalCompany = "";
+    if(externalCompanyArr != null){
+        for(var i=0;i<externalCompanyArr.length;i++){
+            if(externalCompanyArr[i] != '全部'){
+                externalCompany += "'"+externalCompanyArr[i] + "',";
+            }else{
+                externalCompany = "";break;
+            }
+        }
+    }
+    if(externalCompany.length > 1){
+        externalCompany = externalCompany.substring(0,externalCompany.length-1);
+    }
      var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
          contractNo: $("#contractNo").val(),
          warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
@@ -295,6 +345,9 @@ function getTotalInfo(){
          level: $("#level").val() == "全部"?"":$("#level").val(),
          cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
          cargoNo: $("#cargoNo").val(),
+         externalCompany: externalCompany,
+         cmpRel: $("#cmpRel").val(),
+         companyNo: $("#companyNo").val(),
          cargoType: $("#cargoType").val(),
          customerName: $("#customerName").val(),
          storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
