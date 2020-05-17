@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>内贸台账新增-JOC系统</title>
+    <title>内贸台账新增-贸易系统</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
@@ -100,11 +100,9 @@
                                         <input type="hidden" id="id" value=""/>
                                         <input type="hidden" id="contractId" th:value="${contractId}"/>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2" style="color:red;">合同归属公司</label>
+                                            <label class="control-label col-sm-2" style="color:red;">合同代理公司</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="ownerCompany">
-                                                    <option>海企长城</option>
-                                                    <option>紫荆华美</option>
                                                 </select>
                                             </div>
                                             <label class="control-label col-sm-3">进口合同号</label>
@@ -129,9 +127,6 @@
                                             <label class="control-label col-sm-2">供货方</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control" id="supplier">
-                                                    <option>山格（上海）贸易有限公司</option>
-                                                    <option>上海冠高商贸有限公司</option>
-                                                    <option>上海芸味食品有限公司</option>
                                                 </select>
                                             </div>
                                             <label class="control-label col-sm-3">柜号</label>
@@ -175,14 +170,14 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">海企付款时间</label>
+                                            <label class="control-label col-sm-2">付款时间</label>
                                             <div class="col-sm-3">
                                                 <div class="input-append date form-date">
                                                     <input class="form-control" size="16" id="payDate" type="text" />
                                                     <span class="add-on"><i class="icon-th"></i></span>
                                                 </div>
                                             </div>
-                                            <label class="control-label col-sm-3">海企付款金额</label>
+                                            <label class="control-label col-sm-3">付款金额</label>
                                             <div class="col-sm-3">
                                                 <input type="text" class="form-control" id="payMoney" />
                                             </div>

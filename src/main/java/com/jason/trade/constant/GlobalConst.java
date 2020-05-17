@@ -23,7 +23,7 @@ public class GlobalConst {
     //public static final String FILE_PATH = "D:";
 
     //size
-    public static final String[] HEAD_CONTRACT_ARRAY = new String[]{"序号","合同归属公司","外合同编号","内合同编号","合同日期","外商","原产地",
+    public static final String[] HEAD_CONTRACT_ARRAY = new String[]{"序号","合同代理公司","外合同编号","内合同编号","合同日期","外商","原产地",
             "储存条件","价格条件","目的港","币种","付款方式","预计船期","汇率","箱数总计","合同总重量(KG)","合同总金额(元)","发票总重量(KG)",
             "发票总金额(元)","预售客户名称","预售时间","预售单价(元/KG)","预售重量(kg)","开证行","开证日期","LC NO.","付汇日","付汇汇率",
             "已办理押汇","押汇金额","押汇年利率","押汇到期日","到期日汇率","预付款金额","预付款日期","预付款银行","尾款银行","预付款汇率",

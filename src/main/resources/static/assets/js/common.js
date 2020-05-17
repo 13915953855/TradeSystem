@@ -252,11 +252,6 @@ function initBusinessMode(){
     opts += "<option></option>";
     opts += "<option>自营</option>";
     opts += "<option>定向</option>";
-    opts += "<option>代理(增值税专用发票)</option>";
-    opts += "<option>代理(代理费发票)</option>";
-    opts += "<option>HDL</option>";
-    opts += "<option>MJ</option>";
-    opts += "<option>WP</option>";
     $("#businessMode").append(opts);
 }
 

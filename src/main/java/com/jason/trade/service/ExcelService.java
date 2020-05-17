@@ -849,7 +849,7 @@ public class ExcelService {
     private List<Object> convertContractList(ContractBaseInfo baseInfo,Integer index) {
         List<Object> list = new ArrayList<>();
         list.add(index+1);//序号
-        list.add(baseInfo.getOwnerCompany());//合同归属公司
+        list.add(baseInfo.getOwnerCompany());//合同代理公司
         list.add(baseInfo.getExternalContract());//外合同编号
         list.add(baseInfo.getInsideContract());//内合同编号
         list.add(baseInfo.getContractDate());//合同日期
@@ -1644,7 +1644,7 @@ public class ExcelService {
         int three = 4;
         row = sheet.createRow(three);
         cell = row.createCell(0,CellType.STRING);
-        cell.setCellValue("合同归属公司");
+        cell.setCellValue("合同代理公司");
         cell.setCellStyle(blackLeftStyle);
         cell = row.createCell(1,CellType.STRING);
         cell.setCellStyle(blackLeftStyle);

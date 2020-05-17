@@ -588,11 +588,8 @@ function saveContract(){
     }else{
         contract.isFinancing = "0";
     }
-    if($("#baoguandan").is(':checked')){
-        contract.baoguandan = "1";
-    }else{
-        contract.baoguandan = "0";
-    }
+    contract.baoguandan = "0";
+
     if($("#isYahui").is(':checked')){
         contract.isYahui = "1";
     }else{
@@ -661,6 +658,13 @@ function saveContract(){
     }
     contract.zhixiangfei = $("#zhixiangfei").val() == "" ? 0:toFloat($("#zhixiangfei").val());
     contract.zhigangfei = $("#zhigangfei").val() == "" ? 0:toFloat($("#zhigangfei").val());
+
+    contract.jiesuanMoney = $("#jiesuanMoney").val();
+    contract.jiesuanDate = $("#jiesuanDate").val();
+    contract.dingjinMoney = $("#dingjinMoney").val();
+    contract.dingjinDate = $("#dingjinDate").val();
+    contract.weikuanMoney = $("#weikuanMoney").val();
+    contract.weikuanDate = $("#weikuanDate").val();
 
     var a = $("#tb_cargo").bootstrapTable("getData");
     var cargoIds = "";
@@ -771,10 +775,10 @@ function deleteAttachment(id,contractId){
 }
 
 /**
- * 1、 在新增台账时，当合同归属公司=海企长城，内合同号已经输入后，在新增第一个产品时，库号=内合同号；
+ * 1、 在新增台账时，当合同代理公司=海企长城，内合同号已经输入后，在新增第一个产品时，库号=内合同号；
  * 在新增第二个产品时，库号=内合同号，并且内合同号的第九位、第十位、第十一位的数字改成902；
  * 在新增第三个产品时，库号=内合同号，并且内合同号的第九位、第十位、第十一位的数字改成903；依次类推。。。
- * 2、 在新增台账时，当合同归属公司=紫荆华美，内合同号已经输入后，
+ * 2、 在新增台账时，当合同代理公司=紫荆华美，内合同号已经输入后，
  * 在新增第一个产品时，库号=内合同号，且去掉第四位数（M）,后面的数字往前顺移；
  * 在新增第二个产品时，库号=内合同号，且去掉第四位数（M）,后面的数字往前顺移，且将顺移后，第九位、第十位、第十一位的数字改成902；
  *
@@ -783,28 +787,28 @@ function autoSetCargoNo(){
     var ownerCompany = $("#ownerCompany").val();
     var insideContract = $("#insideContract").val();
     var contractId = $("#contractId").val();
-    $.ajax({
-        url:'/trade/cargo/count',
-        type:"POST",
-        dataType:"json",
-        data:{'contractId':contractId},
-        success:function(res){
-            var cargoNo = insideContract;
-
-            if(res.count > 0 && cargoNo.length > 10){
-                var tmp = 901 + res.count;
-                if(ownerCompany == "紫荆华美"){
-                    cargoNo = cargoNo.substring(0, 9) + tmp + cargoNo.substring(12,cargoNo.length);
-                }else{
-                    cargoNo = cargoNo.substring(0, 8) + tmp + cargoNo.substring(11,cargoNo.length);
-                }
-            }
-            if(ownerCompany == "紫荆华美"){
-                cargoNo = cargoNo.substring(0, 3) + cargoNo.substring(4,cargoNo.length);
-            }
-
-            $("#cargoNo").val(cargoNo);
-        }
-    });
+//    $.ajax({
+//        url:'/trade/cargo/count',
+//        type:"POST",
+//        dataType:"json",
+//        data:{'contractId':contractId},
+//        success:function(res){
+//            var cargoNo = insideContract;
+//
+//            if(res.count > 0 && cargoNo.length > 10){
+//                var tmp = 901 + res.count;
+//                if(ownerCompany == "紫荆华美"){
+//                    cargoNo = cargoNo.substring(0, 9) + tmp + cargoNo.substring(12,cargoNo.length);
+//                }else{
+//                    cargoNo = cargoNo.substring(0, 8) + tmp + cargoNo.substring(11,cargoNo.length);
+//                }
+//            }
+//            if(ownerCompany == "紫荆华美"){
+//                cargoNo = cargoNo.substring(0, 3) + cargoNo.substring(4,cargoNo.length);
+//            }
+//
+//            $("#cargoNo").val(cargoNo);
+//        }
+//    });
 
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>进口台账新增-JOC系统</title>
+    <title>进口台账新增-贸易系统</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
@@ -105,11 +105,11 @@
                                         <input type="hidden" id="id" value=""/>
                                         <input type="hidden" id="contractId" th:value="${contractId}"/>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2" style="color:red;">合同归属公司</label>
+                                            <label class="control-label col-sm-2" style="color:red;">合同代理公司</label>
                                             <div class="col-sm-3">
                                                 <select class="form-control select2" id="ownerCompany">
-                                                    <option>海企长城</option>
-                                                    <option>紫荆华美</option>
+                                                    <option>北京国润建科</option>
+                                                    <option>招商食品</option>
                                                 </select>
                                             </div>
                                             <label class="control-label col-sm-3"><span style="color:red">*</span>商品属性</label>
@@ -473,12 +473,44 @@
                                                     <span></span>
                                                 </label>
                                             </div>
-                                            <label class="control-label col-sm-3">已提交报关单</label>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">与代理结算金额（元）</label>
                                             <div class="col-sm-3">
-                                                <label class="fancy-checkbox" style="padding-top:5px;">
-                                                    <input type="checkbox" id="baoguandan"/>
-                                                    <span></span>
-                                                </label>
+                                                <input type="text" class="form-control" id="jiesuanMoney" />
+                                            </div>
+                                            <label class="control-label col-sm-3">与代理结算时间</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="jiesuanDate" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">支付代理定金（元）</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="dingjinMoney" />
+                                            </div>
+                                            <label class="control-label col-sm-3">支付定金时间</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="dingjinDate" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="">
+                                            <label class="control-label col-sm-2">支付代理尾款（元）</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="weikuanMoney" />
+                                            </div>
+                                            <label class="control-label col-sm-3">支付尾款时间</label>
+                                            <div class="col-sm-3">
+                                                <div class="input-append date form-date">
+                                                    <input class="form-control" size="16" id="weikuanDate" type="text" />
+                                                    <span class="add-on"><i class="icon-th"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div id="financingDiv">

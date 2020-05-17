@@ -437,6 +437,24 @@
       <if test="cargoType != null" >
         cargo_type = #{cargoType,jdbcType=VARCHAR},
       </if>
+      <if test="jiesuanMoney != null" >
+        jiesuan_money = #{jiesuanMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="jiesuanDate != null" >
+        jiesuan_date = #{jiesuanDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dingjinMoney != null" >
+        dingjin_money = #{dingjinMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="dingjinDate != null" >
+        dingjin_date = #{dingjinDate,jdbcType=VARCHAR},
+      </if>
+      <if test="weikuanMoney != null" >
+        weikuan_money = #{weikuanMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="weikuanDate != null" >
+        weikuan_date = #{weikuanDate,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>

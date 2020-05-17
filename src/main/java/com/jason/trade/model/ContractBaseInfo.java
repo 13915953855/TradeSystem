@@ -207,6 +207,32 @@ public class ContractBaseInfo {
     @Column(name="jyzzbsdrq")
     private String jyzzbsdrq;
 
+    @Column(name="jiesuan_money")
+    private String jiesuanMoney;
+    @Column(name="jiesuan_date")
+    private String jiesuanDate;
+    @Column(name="dingjin_money")
+    private String dingjinMoney;
+    @Column(name="dingjin_date")
+    private String dingjinDate;
+    @Column(name="weikuan_money")
+    private String weikuanMoney;
+    @Column(name="weikuan_date")
+    private String weikuanDate;
+
+    public String getJiesuanMoney() { return jiesuanMoney; }
+    public void setJiesuanMoney(String jiesuanMoney) { this.jiesuanMoney = jiesuanMoney; }
+    public String getJiesuanDate() { return jiesuanDate; }
+    public void setJiesuanDate(String jiesuanDate) { this.jiesuanDate = jiesuanDate; }
+    public String getDingjinMoney() { return dingjinMoney; }
+    public void setDingjinMoney(String dingjinMoney) { this.dingjinMoney = dingjinMoney; }
+    public String getDingjinDate() { return dingjinDate; }
+    public void setDingjinDate(String dingjinDate) { this.dingjinDate = dingjinDate; }
+    public String getWeikuanMoney() { return weikuanMoney; }
+    public void setWeikuanMoney(String weikuanMoney) { this.weikuanMoney = weikuanMoney; }
+    public String getWeikuanDate() { return weikuanDate; }
+    public void setWeikuanDate(String weikuanDate) { this.weikuanDate = weikuanDate; }
+
     public String getJyzzbsdrq() {
         return jyzzbsdrq;
     }

@@ -482,14 +482,7 @@ function checkStore(){
 function initUser(){
     var opts = "";
     opts += "<option></option>";
-    opts += "<option>董建</option>";
-    opts += "<option>景远方</option>";
-    opts += "<option>凌骁</option>";
-    opts += "<option>陶静</option>";
-    opts += "<option>唐琦</option>";
-    opts += "<option>唐誉天</option>";
-    opts += "<option>徐舰艇</option>";
-    opts += "<option>奚璐</option>";
-    opts += "<option>张成飞</option>";
+    opts += "<option>顾春玲</option>";
+    opts += "<option>张坚</option>";
     $("#pickupUser").append(opts);
 }
