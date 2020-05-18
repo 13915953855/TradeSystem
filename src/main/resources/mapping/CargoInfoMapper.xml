@@ -563,7 +563,7 @@
       and c.container_no like '%${containerNo}%'
     </if>
     <if test="companyNo != null" >
-      and c.company_no like '%${companyNo}%'
+      and b.company_no like '%${companyNo}%'
     </if>
     <if test="storageCondition != null and storageCondition != ''" >
       and c.storage_condition = '${storageCondition}'

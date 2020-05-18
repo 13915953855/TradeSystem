@@ -284,6 +284,23 @@ public class MainController {
         return "redirect:/login";
     }
 
+    @GetMapping("/modifyPwd")
+    public String modifyPwd() {
+        return "pwd";
+    }
+
+    @PostMapping(value = "/modifyPwd")
+    public @ResponseBody
+    String modifyPwd(UserInfoRequest userInfo) {
+        UserInfo account = userRepository.findByAccount(userInfo.getAccount());
+        if(userInfo.getOldPasswd().equals(account.getPasswd())){
+            account.setPasswd(userInfo.getNewPasswd());
+            userRepository.save(account);
+            return GlobalConst.SUCCESS;
+        }
+        return GlobalConst.FAILURE;
+    }
+
     @GetMapping("/register")
     public String register() {
         return "register";
