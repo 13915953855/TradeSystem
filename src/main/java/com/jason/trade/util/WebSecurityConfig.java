@@ -56,6 +56,15 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
                     response.setHeader("sessionstatus", "limit");//在响应头设置session状态
                     return false;
                 }
+                if(uri.endsWith("hesuan") || uri.endsWith("query/duty") || uri.endsWith("query/fuhui")
+                                || uri.endsWith("query/fuhuiRZ")|| uri.endsWith("query/fuhuiKZ")|| uri.endsWith("query/baoguan")){
+                    if(user.getLevelName() == null || !user.getLevelName().equals("admin")){
+                        // 跳转登录
+                        String url = "/index";
+                        response.sendRedirect(url);
+                        return false;
+                    }
+                }
                 return true;
             }
 

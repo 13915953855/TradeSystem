@@ -306,8 +306,7 @@ var TableInit = function () {
                 visible: false
             }, {
                 field: 'costPrice',
-                title: '成本单价(CNY/KG)',
-                visible: false
+                title: '成本单价(CNY/KG)'
             }, {
                 field: 'realStoreBoxes',
                 title: '库存箱数'
