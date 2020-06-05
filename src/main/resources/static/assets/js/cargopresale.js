@@ -19,6 +19,11 @@ $(function () {
     initLevel();
     initUser();
     $("#cargoDiv input[type=text]").attr('disabled','disabled');
+
+    var r = auth($("#user").val());
+    if(r!="1"){
+        $("#costPrice").hide();
+    }
 });
 
 var TableInit = function () {

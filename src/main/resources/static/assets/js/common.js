@@ -399,3 +399,11 @@ function doHandleMonth(month){
 　　return m;
 
 }
+
+function auth(name){
+    if($("#user").val() == "zhangjian" || $("#user").val() == "hanjun"){
+        return "1";
+    }else{
+        return "0";
+    }
+}

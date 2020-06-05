@@ -158,6 +158,17 @@ $(function () {
 
     getAllFile();
 
+    var r = auth($("#user").val());
+    if($("#action").val() == "view"){
+        if(r != "1"){
+            $("#totalContractMoney").hide();
+            $("#totalInvoiceMoney").hide();
+            $("#LCDiv").hide();
+            $("#TTDiv").hide();
+            $("#fushuiDiv").hide();
+        }
+    }
+
     //initChuanqi();
 });
 //自动计算成本单价
@@ -227,6 +238,13 @@ function payTypeChange(){
     }else{
         $("#TTDiv").hide();
         $("#LCDiv").hide();
+    }
+    var r = auth($("#user").val());
+    if($("#action").val() == "view"){
+        if(r != "1"){
+            $("#LCDiv").hide();
+            $("#TTDiv").hide();
+        }
     }
 }
 var TableInit = function () {
@@ -306,7 +324,15 @@ var TableInit = function () {
                 visible: false
             }, {
                 field: 'costPrice',
-                title: '成本单价(CNY/KG)'
+                title: '成本单价(CNY/KG)',
+                formatter: function(value, row, index){
+                    var r = auth($("#user").val());
+                    if(r == "1"){
+                        return value;
+                    }else{
+                        return '--';
+                    }
+                }
             }, {
                 field: 'realStoreBoxes',
                 title: '库存箱数'
@@ -519,6 +545,7 @@ function autoSetTotalMoney(){
     $("#totalContractAmount").val(toFloat4(totalContractAmount));
 }
 function setFormData(data){
+    var r = auth($("#user").val());
     $("#_id").val(data.id);
     $("#cargoId").val(data.cargoId);
     $("#cargoNo").val(data.cargoNo);
@@ -529,12 +556,12 @@ function setFormData(data){
     checkSelectOptionExist("businessMode",data.businessMode);
     $("#businessMode").val(data.businessMode).trigger("change");
     $("#companyNo").val(data.companyNo);
-    $("#unitPrice").val(data.unitPrice);
     $("#boxes").val(data.boxes);
     $("#contractAmount").val(data.contractAmount);
     $("#contractMoney").val(data.contractMoney);
     $("#invoiceAmount").val(data.invoiceAmount);
     $("#invoiceMoney").val(data.invoiceMoney);
+    $("#unitPrice").val(data.unitPrice);
     $("#costPrice").val(data.costPrice);
     $("#realStoreMoney").val(data.realStoreMoney);
 }

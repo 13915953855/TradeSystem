@@ -66,6 +66,10 @@ $(function () {
     $("#expectStoreWeight").val(toFloat4(expectStoreWeight));*/
     var realStoreWeight = $("#realStoreWeight").val();
     $("#realStoreWeight").val(toFloat4(realStoreWeight));
+    var r = auth($("#user").val());
+        if(r!="1"){
+            $("#costPrice").hide();
+        }
 });
 function autoSetProfit(){
     var profit = 0;

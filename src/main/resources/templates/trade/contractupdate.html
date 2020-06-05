@@ -204,6 +204,7 @@
                                         <input type="hidden" id="id" th:value="${contract.id}"/>
                                         <input type="hidden" id="status" th:value="${contract.status}"/>
                                         <input type="hidden" id="action" th:value="${action}"/>
+                                        <input type="hidden" id="user" th:value="${user.account}"/>
                                         <input type="hidden" id="contractId" th:value="${contract.contractId}"/>
                                         <div class="form-group" style="">
                                             <label class="control-label col-sm-2" style="color:red;">合同代理公司</label>
@@ -652,7 +653,7 @@
                                 </div>
                             </div>
 
-                            <div class="panel panel-default">
+                            <div id="fushuiDiv" class="panel panel-default">
                                 <div class="panel-heading">付税信息
                                     <div style="float:right;">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">展开/收起</a>
