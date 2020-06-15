@@ -401,7 +401,7 @@ function doHandleMonth(month){
 }
 
 function auth(name){
-    if($("#user").val() == "zhangjian" || $("#user").val() == "hanjun"){
+    if($("#user").val() == "zhangjian" || $("#user").val() == "dingjintian"){
         return "1";
     }else{
         return "0";
