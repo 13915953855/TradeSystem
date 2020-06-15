@@ -77,10 +77,7 @@
   </select>
   <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
-    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,
-    b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.storage_condition
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status = '4'
-    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,
+    select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,
     '' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,
     '' as container_no,'' as storage_condition
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status = '4' ) b
