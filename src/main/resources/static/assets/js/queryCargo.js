@@ -92,7 +92,8 @@ var TableInit = function () {
                 title: '外合同编号'
             }, {
                 field: 'insideContract',
-                title: '内合同编号'
+                title: '内合同编号',
+                visible: false
             }, {
                 field: 'externalCompany',
                 title: '外商'
@@ -101,14 +102,14 @@ var TableInit = function () {
                  title: '原产地'
              }, {
                 field: 'contractDate',
-                title: '合同日期'
-            }, {
-                field: 'containerNo',
-                title: '柜号',
-                visible: false
+                title: '合同日期',
+                                             visible: false
             }, {
                 field: 'companyNo',
                 title: '厂号'
+            }, {
+                field: 'containerNo',
+                title: '柜号'
             }, {
                 field: 'cargoName',
                 title: '商品'
@@ -121,10 +122,8 @@ var TableInit = function () {
                 visible: false
             }, {
                 field: 'storageCondition',
-                title: '存储条件'
-            }, {
-                field: 'unitPrice',
-                title: '单价'
+                title: '存储条件',
+                visible: false
             }, {
                 field: 'costPrice',
                 title: '成本单价',
@@ -134,27 +133,33 @@ var TableInit = function () {
                 title: '合同重量'
             }, {
                 field: 'contractMoney',
-                title: '合同金额'
+                title: '合同金额',
+                visible: false
             }, {
                 field: 'invoiceAmount',
-                title: '发票重量'
+                title: '发票重量',
+                visible: false
             }, {
                 field: 'invoiceMoney',
-                title: '发票金额'
+                title: '发票金额',
+                visible: false
             }, {
                 field: 'etd',
                 title: 'ETD',
-                                            formatter: function(value,row,index){
-                                                if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
-                                                else return value;
-                                            }
+                formatter: function(value,row,index){
+                    if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                    else return value;
+                }
             }, {
                 field: 'eta',
                 title: 'ETA',
-                                            formatter: function(value,row,index){
-                                                if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
-                                                else return value;
-                                            }
+                formatter: function(value,row,index){
+                    if(value > getDay(-7)) return "<font color='blue'>"+value+"</font>";
+                    else return value;
+                }
+            }, {
+                field: 'unitPrice',
+                title: '单价'
             }, {
                 field: 'expectSailingDate',
                 title: '预计船期'
@@ -165,6 +170,7 @@ var TableInit = function () {
             }, {
                 field: 'status',
                 title: '商品状态',
+                visible: false,
                 formatter: function(value, row, index){
                     if(value == 4) {
                         return '已入库';
