@@ -108,10 +108,26 @@ var TableInit = function () {
             }, {
                 field: 'unit_price',
                 title: '单价',
-                visible: false
+                visible: false,
+                formatter: function(value, row, index){
+                                  var r = auth($("#user").val());
+                                  if(r == "1"){
+                                      return value;
+                                  }else{
+                                      return '--';
+                                  }
+                                }
             }, {
                 field: 'cost_price',
-                title: '成本单价'
+                title: '成本单价',
+                formatter: function(value, row, index){
+                                  var r = auth($("#user").val());
+                                  if(r == "1"){
+                                      return value;
+                                  }else{
+                                      return '--';
+                                  }
+                                }
             }, {
                 field: 'real_store_weight',
                 title: '库存重量',

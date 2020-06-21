@@ -4,10 +4,7 @@ import com.jason.trade.constant.GlobalConst;
 import com.jason.trade.entity.CargoParam;
 import com.jason.trade.entity.ContractForCharts;
 import com.jason.trade.entity.ContractParam;
-import com.jason.trade.mapper.AttachmentMapper;
-import com.jason.trade.mapper.CargoInfoMapper;
-import com.jason.trade.mapper.ContractBaseInfoMapper;
-import com.jason.trade.mapper.InternalContractInfoMapper;
+import com.jason.trade.mapper.*;
 import com.jason.trade.model.*;
 import com.jason.trade.repository.*;
 import com.jason.trade.service.TradeService;
@@ -62,6 +59,8 @@ public class TradeController {
     private AttachmentMapper attachmentMapper;
     @Autowired
     private CargoInfoMapper cargoInfoMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
 
 
@@ -380,6 +379,14 @@ public class TradeController {
         List<OptionInfo> data = cargoInfoMapper.findByGroupEqualsAndFieldEqualsOrderByNameAsc(group,field);
         JSONObject result = new JSONObject();
         result.put("data",data);
+        return result.toString();
+    }
+
+    @RequestMapping("/common/getAuth")
+    public String getAuth(@RequestParam("name") String name) throws JSONException {
+        UserInfo userInfo = userInfoMapper.selectByAccount(name);
+        JSONObject result = new JSONObject();
+        result.put("data","admin".equalsIgnoreCase(userInfo.getLevelName()) ? 1 : 0);
         return result.toString();
     }
 

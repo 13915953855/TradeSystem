@@ -127,7 +127,15 @@ var TableInit = function () {
             }, {
                 field: 'costPrice',
                 title: '成本单价',
-                visible: false
+                visible: false,
+                formatter: function(value, row, index){
+                  var r = auth($("#user").val());
+                  if(r == "1"){
+                      return value;
+                  }else{
+                      return '--';
+                  }
+                }
             }, {
                 field: 'contractAmount',
                 title: '合同重量'
@@ -159,7 +167,15 @@ var TableInit = function () {
                 }
             }, {
                 field: 'unitPrice',
-                title: '单价'
+                title: '单价',
+                formatter: function(value, row, index){
+                    var r = auth($("#user").val());
+                    if(r == "1"){
+                        return value;
+                    }else{
+                        return '--';
+                    }
+                }
             }, {
                 field: 'expectSailingDate',
                 title: '预计船期'

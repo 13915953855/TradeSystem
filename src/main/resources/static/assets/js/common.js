@@ -401,9 +401,18 @@ function doHandleMonth(month){
 }
 
 function auth(name){
+    /*$.ajax({
+        url:'/trade/common/getAuth',
+        type:"POST",
+        dataType:"json",
+        data:{'name':name},
+        success:function(res){
+            return res.data;
+        }
+    });*/
     if($("#user").val() == "zhangjian" || $("#user").val() == "dingjintian"){
-        return "1";
-    }else{
         return "0";
+    }else{
+        return "1";
     }
 }
