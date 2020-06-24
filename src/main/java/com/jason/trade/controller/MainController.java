@@ -208,8 +208,8 @@ public class MainController {
             model.addAttribute("storageCondition", "");
             model.addAttribute("from", "neimao");
             model.addAttribute("type", "内贸台账");
-            model.addAttribute("containerNo", contractBaseInfo.getContainerNo());
-            model.addAttribute("warehouse", contractBaseInfo.getWarehouse());
+            model.addAttribute("containerNo", internalContractInfo.getContainerNo());
+            model.addAttribute("warehouse", internalContractInfo.getWarehouse());
         }
         return "trade/cargosaleview";
     }
