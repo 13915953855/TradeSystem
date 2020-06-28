@@ -52,8 +52,8 @@
     <result column="real_store_money" property="realStoreMoney" jdbcType="DOUBLE" />
     <result column="real_store_weight" property="realStoreWeight" jdbcType="DOUBLE" />
     <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="external_contract" property="contractNo" jdbcType="VARCHAR" />
-    <result column="inside_contract" property="insideContract" jdbcType="VARCHAR" />
+    <result column="external_contract" property="importContractNo" jdbcType="VARCHAR" />
+    <result column="inside_contract" property="contractNo" jdbcType="VARCHAR" />
     <result column="unit_price" property="unitPrice" jdbcType="DOUBLE" />
     <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
     <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
@@ -77,8 +77,8 @@
   </select>
   <select id="selectByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
-    select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,
-    '' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,
+    select a.*,'' as external_company,'' as origin_country,b.contract_no as inside_contract,
+    b.import_contract_no as external_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as ladingbill_no,
     '' as container_no,'' as storage_condition
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status = '4' ) b
     where 1 = 1
@@ -167,15 +167,13 @@
   </sql>
   <select id="selectCountByExample" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
     select count(1) from (
-    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.storage_condition,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status ='4'
-    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as storage_condition,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status ='4' ) b
+    select a.*,'' as external_company,'' as origin_country,b.contract_no AS inside_contract,b.import_contract_no AS external_contract,'' as warehouse,'' as store_date,b.cargo_type,'' as storage_condition,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status ='4' ) b
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
   </select>
   <select id="selectTotalByExample" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
-    select a.*,b.external_company,b.origin_country,b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.storage_condition,b.ladingbill_no,b.container_no from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5')
-    UNION select a.*,'' as external_company,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,'' as store_date,b.cargo_type,'' AS storage_condition,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
+    select a.*,'' as external_company,'' as origin_country,b.contract_no AS inside_contract,b.import_contract_no AS external_contract,'' as warehouse,'' as store_date,b.cargo_type,'' AS storage_condition,'' as ladingbill_no,'' as container_no from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('4','5') ) b
     where 1 = 1
     <include refid="selectByExampleWhere"></include>
   </select>
@@ -684,13 +682,8 @@
 
   <select id="selectByExampleForPre" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select b.* from (
-    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
-    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company,c.expect_sale_date
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
-    inner join presale_info c on c.cargo_id = a.cargo_id where 1 = 1 and b.status in ('1','2','3')
-    UNION
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
-    '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
+    '' as destination_port,'' as origin_country,b.contract_no as inside_contract,b.import_contract_no as external_contract,'' as warehouse,
     '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company,'' as expect_sale_date
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
     ) b
@@ -701,13 +694,8 @@
   </select>
   <select id="selectCountByExampleForPre" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam" >
     select count(1) from (
-    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
-    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company,c.expect_sale_date
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
-    inner join presale_info c on c.cargo_id = a.cargo_id where 1 = 1 and b.status in ('1','2','3')
-    UNION
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
-    '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
+    '' as destination_port,'' as origin_country,b.contract_no as inside_contract,b.import_contract_no as external_contract,'' as warehouse,
     '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company,'' as expect_sale_date
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
     ) b
@@ -716,13 +704,8 @@
   </select>
   <select id="selectTotalByExampleForPre" resultMap="BaseResultMap2" parameterType="com.jason.trade.entity.CargoParam" >
     select sum(b.yys) as yys,sum(b.expect_store_weight) as expect_store_weight,sum(b.contract_amount) as contract_amount from (
-    select (a.contract_amount-a.expect_store_weight) as yys,a.*,b.eta,b.etd,b.storage_condition,b.owner_company,b.destination_port,b.origin_country,
-    b.external_contract,b.inside_contract,b.warehouse,b.store_date,b.cargo_type,b.ladingbill_no,b.container_no,b.expect_sailing_date,b.external_company,c.expect_sale_date
-    from cargo_info a inner join contract_base_info b on a.contract_id = b.contract_id
-    inner join presale_info c on c.cargo_id = a.cargo_id where 1 = 1 and b.status in ('1','2','3')
-    UNION
     select (a.contract_amount-a.expect_store_weight) as yys,a.*,'' as eta,'' as etd,'' as storage_condition,b.owner_company,
-    '' as destination_port,'' as origin_country,b.contract_no as external_contract,'' as inside_contract,'' as warehouse,
+    '' as destination_port,'' as origin_country,b.contract_no as inside_contract,b.import_contract_no as external_contract,'' as warehouse,
     '' as store_date,b.cargo_type,'' as ladingbill_no,'' as container_no,'' as expect_sailing_date,'' as external_company,'' as expect_sale_date
     from cargo_info a inner join internal_contract_info b on a.contract_id = b.contract_id where 1 = 1 and b.status in ('1','2','3')
     ) b

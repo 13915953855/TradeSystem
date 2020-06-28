@@ -77,14 +77,14 @@ var TableInit = function () {
                 checkbox: true
             },{
                 field: 'contractNo',
-                title: '外合同编号',
+                title: '内合同编号',
                 formatter: function(value,row,index){
                     var s = '<a href="/trade/contract/viewByEC?externalContract='+value+'">'+value+'</a>';
                     return s;
                 }
             },{
-                field: 'insideContract',
-                title: '内合同编号'
+                field: 'importContractNo',
+                title: '进口合同编号'
             },{
                 field: 'companyNo',
                 title: '厂号'

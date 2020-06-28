@@ -80,8 +80,9 @@
                         <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-file-empty"></i> <span>贸易台账管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subPages" class="collapse in">
                             <ul class="nav">
-                                <li><a href="/trade/contract">进口台账</a></li>
-                                <li><a href="/trade/cargomanage" class="active">进销存</a></li>
+                                <li><a href="/trade/contract" class="active">进口台账</a></li>
+                                <li><a href="/trade/cargomanage">进销存</a></li>
+                                <li><a href="/trade/precargomanage">预售</a></li>
                                 <li><a href="/trade/internal">内贸台账</a></li>
                             </ul>
                         </div>
@@ -131,7 +132,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="">
-                                            <label class="control-label col-sm-2">外合同编号</label>
+                                            <label class="control-label col-sm-2">合同编号</label>
                                             <div class="col-sm-3">
                                                 <a th:href="@{'/trade/contract/viewByEC?externalContract='+${externalContract}}"><span th:text="${externalContract}"></span></a>
                                             </div>
