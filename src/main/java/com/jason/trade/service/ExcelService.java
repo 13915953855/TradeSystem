@@ -169,7 +169,7 @@ public class ExcelService {
             //       "出库时间","客户属性","客户名称","实售重量","实售箱数","实售单价",
               //      "实售金额","定金","客户来款金额","利润","发票"
             List<Object> list = new ArrayList<>();
-            list.add(storeInfo.getInside_contract());// "内合同编号",
+            list.add(storeInfo.getContract_no());// "内合同编号",
             list.add(storeInfo.getExternal_company());//外商
             list.add(storeInfo.getCargo_no());
             list.add(storeInfo.getCompany_no());// "厂号",
@@ -181,7 +181,7 @@ public class ExcelService {
             list.add(storeInfo.getReal_store_weight());
             list.add(storeInfo.getReal_store_money());
             list.add(storeInfo.getContainer_no());// "柜号",
-            list.add(storeInfo.getLadingbill_no());// "提单号",
+            list.add("");// "提单号",
             list.add(storeInfo.getReal_sale_date());
             list.add(storeInfo.getCustomer_type());
             list.add(storeInfo.getCustomer_name());

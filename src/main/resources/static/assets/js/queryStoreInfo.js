@@ -140,13 +140,13 @@ var TableInit = function () {
                 title: '仓库'
             }, {
                 field: 'invoiceAmount',
-                title: '发票重量',
+                title: '实际重量',
                 formatter: function(value, row, index){
                     return toFloat4(value);
                 }
             }, {
                 field: 'boxes',
-                title: '发票箱数'
+                title: '采购箱数'
             }, {
                 field: 'realStoreWeight',
                 title: '现库存重量',

@@ -13,6 +13,7 @@ import java.util.List;
 
 public interface InternalCargoRepository extends JpaRepository<InternalCargoInfo,Integer>,JpaSpecificationExecutor<InternalCargoInfo> {
     List<InternalCargoInfo> findByContractIdAndStatus(String contractId, String status);
+    List<InternalCargoInfo> findByContractIdOrderByIdAsc(String contractId);
     List<InternalCargoInfo> findByContractIdAndStatusNot(String contractId, String status);
     Page<InternalCargoInfo> findByContractIdAndStatus(String contractId, String status, Pageable pageable);
     Page<InternalCargoInfo> findByContractIdAndStatusNot(String contractId, String status, Pageable pageable);

@@ -749,4 +749,32 @@ public class TradeService {
         }
     }
 
+    public void copyInternalContract(Integer id){
+        InternalContractInfo origin = internalContractRepository.findById(id);
+        InternalContractInfo copy = new InternalContractInfo();
+        String[] ignoreProperties = new String[]{"id"};
+        BeanUtils.copyProperties(origin, copy, ignoreProperties);
+        String contractId = "in_"+UUID.randomUUID().toString();
+        copy.setContractId(contractId);
+        copy.setContractNo(origin.getContractNo()+"复制");
+        copy.setImportContractNo(origin.getImportContractNo()+"复制");
+        String status = origin.getStatus();
+        if(status.equals("5")){
+            copy.setStatus("4");
+        }
+        internalContractRepository.save(copy);
+        //保存商品
+        List<CargoInfo> cargoInfos = cargoRepository.findByContractIdOrderByIdAsc(origin.getContractId());
+        for (CargoInfo cargoInfo : cargoInfos) {
+            CargoInfo now = new CargoInfo();
+            BeanUtils.copyProperties(cargoInfo, now, ignoreProperties);
+            status = cargoInfo.getStatus();
+            if(status.equals("5")){
+                now.setStatus("4");
+            }
+            now.setCargoId(UUID.randomUUID().toString());
+            now.setContractId(contractId);
+            cargoRepository.save(now);
+        }
+    }
 }

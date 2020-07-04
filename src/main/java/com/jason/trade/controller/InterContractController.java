@@ -91,7 +91,19 @@ public class InterContractController {
 
         return GlobalConst.SUCCESS;
     }
+    @PostMapping(value="/internal/contract/copy")
+    public String contractCopy(@RequestParam("id") Integer id, HttpSession session){
+        UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
+        tradeService.copyInternalContract(id);
 
+        SysLog sysLog = new SysLog();
+        sysLog.setDetail("复制合同"+id);
+        sysLog.setOperation("复制");
+        sysLog.setUser(userInfo.getAccount());
+        sysLog.setCreateDate(DateUtil.DateTimeToString(new Date()));
+        sysLogRepository.save(sysLog);
+        return GlobalConst.SUCCESS;
+    }
     @PostMapping(value="/internal/cargo/add")
     public String internalcargoAdd(InternalCargoInfo cargoInfo, HttpSession session){
         log.info("开始处理商品新增或修改的请求");

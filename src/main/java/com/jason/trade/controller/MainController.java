@@ -781,12 +781,11 @@ public class MainController {
                                                  @RequestParam(value = "realSaleDateEnd") String realSaleDateEnd,
                                                  @RequestParam(value = "pickupDateStart") String pickupDateStart,
                                                  @RequestParam(value = "pickupDateEnd") String pickupDateEnd,
-                                                 @RequestParam(value = "insideContract") String insideContract,
+                                                 @RequestParam(value = "importContractNo") String importContractNo,
                                                  @RequestParam(value = "cargoNo") String cargoNo,
                                                  @RequestParam(value = "cargoName") String cargoName,
                                                  @RequestParam(value = "cargoType") String cargoType,
                                                  @RequestParam(value = "containerNo") String containerNo,
-                                                 @RequestParam(value = "ladingbillNo") String ladingbillNo,
                                                  @RequestParam(value = "customerName") String customerName,
                                                  @RequestParam(value = "customerType") String customerType,
                                                  @RequestParam(value = "maxBox") String maxBox,
@@ -804,7 +803,7 @@ public class MainController {
         UserInfo userInfo = (UserInfo) session.getAttribute(WebSecurityConfig.SESSION_KEY);
         CargoParam cargoParam = new CargoParam();
         cargoParam.setContractNo(contractNo);
-        cargoParam.setInsideContract(insideContract);
+        cargoParam.setImportContractNo(importContractNo);
         cargoParam.setKaifapiao(kaifapiao);
         cargoParam.setBusinessMode(businessMode);
         cargoParam.setMinBox(minBox);
@@ -824,7 +823,6 @@ public class MainController {
         cargoParam.setCustomerType(customerType);
         cargoParam.setWarehouse(URLDecoder.decode(warehouse, "UTF-8"));
         cargoParam.setContainerNo(containerNo);
-        cargoParam.setLadingbillNo(ladingbillNo);
         cargoParam.setStatus(CommonUtil.revertStatus(URLDecoder.decode(status, "UTF-8")));
         cargoParam.setOwnerCompany(URLDecoder.decode(ownerCompany, "UTF-8"));
         cargoParam.setStorageCondition(storageCondition);

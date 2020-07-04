@@ -8,7 +8,9 @@ import java.io.Serializable;
 @Data
 public class CargoSellInfo implements Serializable {
     @Excel(name="内合同号")
-    private String inside_contract;
+    private String contract_no;
+    @Excel(name="进口合同号")
+    private String import_contract_no;
     @Excel(name="外商")
     private String external_company;
     @Excel(name="库号")
@@ -31,8 +33,6 @@ public class CargoSellInfo implements Serializable {
     private String real_store_money;
     @Excel(name="柜号")
     private String container_no;
-    @Excel(name="提单号")
-    private String ladingbill_no;
     @Excel(name="出库时间")
     private String real_sale_date;
     @Excel(name="客户名称")

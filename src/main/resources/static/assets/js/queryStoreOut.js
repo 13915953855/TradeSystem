@@ -84,7 +84,7 @@ var TableInit = function () {
             cardView: false,                    //是否显示详细视图
             detailView: false,                   //是否显示父子表
             columns: [{
-                field: 'inside_contract',
+                field: 'contract_no',
                 title: '内合同编号'
             }, {
                 field: 'external_company',
@@ -142,10 +142,6 @@ var TableInit = function () {
             }, {
                 field: 'container_no',
                 title: '柜号'
-            }, {
-                field: 'ladingbill_no',
-                title: '提单号',
-                visible: false
             }, {
                 field: 'real_sale_date',
                 title: '出库时间'
@@ -215,13 +211,13 @@ var TableInit = function () {
             externalCompany: externalCompany,
             cmpRel: $("#cmpRel").val(),
             companyNo: $("#companyNo").val(),
+            importContractNo: $("#importContractNo").val(),
             contractNo: $("#contractNo").val(),
             warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
             pickupDateStart: $("#pickupDateStart").val(),
             pickupDateEnd: $("#pickupDateEnd").val(),
             realSaleDateStart: $("#realSaleDateStart").val(),
             realSaleDateEnd: $("#realSaleDateEnd").val(),
-            insideContract: $("#insideContract").val(),
             level: $("#level").val() == "全部"?"":$("#level").val(),
             cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
             ownerCompany:$("#ownerCompany").val() == "全部"?"":$("#ownerCompany").val(),
@@ -230,7 +226,6 @@ var TableInit = function () {
             customerName: $("#customerName").val(),
             containerNo: $("#containerNo").val(),
             storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
-            ladingbillNo: $("#ladingbillNo").val(),
             status: $("#status").val() == "全部"?"":$("#status").val(),
             kaifapiao: $("#kaifapiao").val() == "全部"?"":$("#kaifapiao").val(),
             businessMode: $("#businessMode").val() == "全部"?"":$("#businessMode").val(),
@@ -277,14 +272,13 @@ var ButtonInit = function () {
             params += "&realSaleDateEnd="+$("#realSaleDateEnd").val();
             params += "&pickupDateStart="+$("#pickupDateStart").val();
             params += "&pickupDateEnd="+$("#pickupDateEnd").val();
-            params += "&insideContract="+$("#insideContract").val();
+            params += "&importContractNo="+$("#importContractNo").val();
             params += "&cargoNo="+$("#cargoNo").val();
             params += "&externalCompany="+externalCompany;
             params += "&cmpRel="+$("#cmpRel").val();
             params += "&companyNo="+$("#companyNo").val();
             params += "&cargoType="+$("#cargoType").val();
             params += "&containerNo="+$("#containerNo").val();
-            params += "&ladingbillNo="+$("#ladingbillNo").val();
             params += "&customerName="+$("#customerName").val();
             params += "&maxBox="+$("#maxBox").val();
             params += "&customerType="+$("#customerType").val();
@@ -315,7 +309,7 @@ var ButtonInit = function () {
 
 function resetQuery(){
     $("#contractNo").val("");
-    $("#insideContract").val("");
+    $("#importContractNo").val("");
     $("#cargoNo").val("");
     $("#companyNo").val("");
     $("#warehouse").val("全部").trigger("change");
@@ -329,7 +323,6 @@ function resetQuery(){
     $("#storageCondition").val("全部").trigger("change");
     $("#customerType").val("").trigger("change");
     $("#containerNo").val("");
-    $("#ladingbillNo").val("");
     $("#customerName").val("");
     $("#pickupDateStart").val("");
     $("#pickupDateEnd").val("");
@@ -357,7 +350,7 @@ function getTotalInfo(){
      var queryParams = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
          contractNo: $("#contractNo").val(),
          warehouse: $("#warehouse").val() == "全部"?"":$("#warehouse").val(),
-         insideContract: $("#insideContract").val(),
+         importContractNo: $("#importContractNo").val(),
          level: $("#level").val() == "全部"?"":$("#level").val(),
          cargoName: $("#cargoName").val() == "全部"?"":$("#cargoName").val(),
          cargoNo: $("#cargoNo").val(),
@@ -368,7 +361,6 @@ function getTotalInfo(){
          customerName: $("#customerName").val(),
          storageCondition: $("#storageCondition").val() == "全部"?"":$("#storageCondition").val(),
          containerNo: $("#containerNo").val(),
-         ladingbillNo: $("#ladingbillNo").val(),
          pickupDateStart: $("#pickupDateStart").val(),
          pickupDateEnd: $("#pickupDateEnd").val(),
          realSaleDateStart: $("#realSaleDateStart").val(),

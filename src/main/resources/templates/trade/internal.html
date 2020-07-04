@@ -155,6 +155,9 @@
                                     <div class="col-sm-2">
                                         <select class="form-control" id="status" multiple="multiple">
                                             <option>全部</option>
+                                            <option>已下单</option>
+                                            <option>已入库</option>
+                                            <option>已售完</option>
                                         </select>
                                     </div>
 
@@ -203,6 +206,9 @@
                         </button>
                         <button id="btn_delete" type="button" class="btn btn-default">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                        </button>
+                        <button id="btn_copy" type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>复制合同
                         </button>
                     </div>
                     <table id="tb_contract"></table>

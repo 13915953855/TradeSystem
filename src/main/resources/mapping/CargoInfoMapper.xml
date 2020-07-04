@@ -527,13 +527,13 @@
 
 
   <select id="getSellList" resultType="com.jason.trade.entity.CargoSellInfo" parameterType="com.jason.trade.entity.CargoParam">
-    select c.inside_contract,c.external_company,b.company_no,b.cargo_name,b.level,c.warehouse,b.cargo_no,
-    b.unit_price,b.real_store_weight,b.real_store_money,c.container_no,c.ladingbill_no,a.kaifapiao,
+    select c.contract_no,c.import_contract_no,b.company_no,b.cargo_name,b.level,c.warehouse,b.cargo_no,
+    b.unit_price,b.real_store_weight,b.real_store_money,c.container_no,a.kaifapiao,
     a.real_sale_date,a.customer_type,a.customer_name,a.real_sale_weight,a.real_sale_boxes,a.real_sale_unit_price,a.real_sale_money,
     a.deposit,(a.customer_pay_money+a.customer_pay_money2+a.customer_pay_money3+a.customer_pay_money4+a.customer_pay_money5) as customer_pay_money,a.profit,b.cost_price
     from cargo_info b
     inner join sale_info a on a.cargo_id = b.cargo_id
-    inner join contract_base_info c on c.contract_id = b.contract_id
+    inner join internal_contract_info c on c.contract_id = b.contract_id
     where 1=1
     <include refid="sellListWhere"></include>
     order by a.real_sale_date desc
@@ -549,10 +549,10 @@
       and c.external_company not in (${externalCompany})
     </if>
     <if test="contractNo != null and contractNo != ''" >
-      and c.external_contract like '%${contractNo}%'
+      and c.contract_no like '%${contractNo}%'
     </if>
-    <if test="insideContract != null and insideContract != ''" >
-      and c.inside_contract like '%${insideContract}%'
+    <if test="importContractNo != null and importContractNo != ''" >
+      and c.import_contract_no like '%${importContractNo}%'
     </if>
     <if test="containerNo != null" >
       and c.container_no like '%${containerNo}%'
@@ -583,9 +583,6 @@
     </if>
     <if test="cargoType != null and cargoType != ''" >
       and c.cargo_type = '${cargoType}'
-    </if>
-    <if test="ladingbillNo != null" >
-      and c.ladingbill_no like '%${ladingbillNo}%'
     </if>
     and c.status in (4,5)
     <if test="status != null and status != ''" >
@@ -622,7 +619,7 @@
   <select id="countSellList" resultType="java.lang.Integer" parameterType="com.jason.trade.entity.CargoParam">
     select count(1) from cargo_info b
     inner join sale_info a on a.cargo_id = b.cargo_id
-    inner join contract_base_info c on c.contract_id = b.contract_id
+    inner join internal_contract_info c on c.contract_id = b.contract_id
     where 1=1
     <include refid="sellListWhere"></include>
   </select>
@@ -632,7 +629,7 @@
     sum(a.real_sale_weight) as realSaleWeight,sum(a.real_sale_money) as realSaleMoney
     from cargo_info b
     inner join sale_info a on a.cargo_id = b.cargo_id
-    inner join contract_base_info c on c.contract_id = b.contract_id
+    inner join internal_contract_info c on c.contract_id = b.contract_id
     where 1=1
     <include refid="sellListWhere"></include>
   </select>

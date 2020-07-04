@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface InternalContractRepository extends JpaRepository<InternalContractInfo,Integer>,JpaSpecificationExecutor<InternalContractInfo> {
+    InternalContractInfo findById(Integer id);
     InternalContractInfo findByContractId(String contractId);
     InternalContractInfo findByContractNo(String contractNo);
 

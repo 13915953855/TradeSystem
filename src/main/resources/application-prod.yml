@@ -1,8 +1,8 @@
 spring:
   datasource:
       name: trade
-      url: jdbc:mysql://127.0.0.1:3306/trade?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
-      #url: jdbc:mysql://121.196.12.115:3306/trade?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+      #url: jdbc:mysql://127.0.0.1:3306/trade?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+      url: jdbc:mysql://121.196.12.115:3306/trade?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
       username: root
       password: Dap1234$
       # 使用druid数据源

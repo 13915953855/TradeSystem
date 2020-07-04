@@ -128,14 +128,6 @@ var TableInit = function () {
                 field: 'cargoNo',
                 title: '库号'
             }, {
-                field: 'businessMode',
-                title: '业务模式',
-                visible: false
-            }, {
-                field: 'externalCompany',
-                title: '外商',
-                visible: false
-            }, {
                 field: 'originCountry',
                 title: '原产地',
                 visible: false
