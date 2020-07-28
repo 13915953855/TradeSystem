@@ -104,7 +104,7 @@ $(function () {
         $("#invoiceMoney").val(invoiceMoney);
 
         //自动计算成本单价
-        var costPrice = 0;
+        /*var costPrice = 0;
         var originCountry = $("#originCountry").val();
         var exchangeRate = $("#exchangeRate").val();
         if(originCountry == "澳大利亚"){
@@ -114,9 +114,9 @@ $(function () {
         }else{
             costPrice = unitPrice*exchangeRate*1.12*1.09+0.6;
         }
-        $("#costPrice").val(toFloat(costPrice));
+        $("#costPrice").val(toFloat(costPrice));*/
 
-        //autoCalculateCostPrice();
+        autoCalculateCostPrice();
     });
 
     $("#contractAmount").blur(function(){
@@ -164,6 +164,7 @@ $(function () {
 function autoCalculateCostPrice(){
     var costPrice = 0;
     var eta = $("#eta").val();
+    var etd = $("#etd").val();
     var exchangeRate = $("#exchangeRate").val();
     var cargoType = $("#cargoType").val();
     var cargoName = $("#cargoName").val();
@@ -171,7 +172,7 @@ function autoCalculateCostPrice(){
     var unitPrice = $("#unitPrice").val();
     var originCountry = $("#originCountry").val();
 
-    if(eta == '' || exchangeRate == '' || cargoType == '' || cargoName == '' || originCountry == ''){
+    if(exchangeRate == '' || cargoType == '' || cargoName == '' || originCountry == ''){
         return;
     }
 
@@ -179,7 +180,7 @@ function autoCalculateCostPrice(){
         url:'/trade/cargo/autoCalculateCostPrice',
         type:"POST",
         dataType:"json",
-        data:{"eta":eta,"originCountry":originCountry,"rate":exchangeRate,"unitPrice":unitPrice,"cargoType":cargoType,"cargoName":cargoName},
+        data:{"eta":eta,"etd":etd,"originCountry":originCountry,"rate":exchangeRate,"unitPrice":unitPrice,"cargoType":cargoType,"cargoName":cargoName},
         success:function(res){
             $("#costPrice").val(res);
         }
