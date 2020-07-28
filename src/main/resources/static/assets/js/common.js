@@ -101,6 +101,8 @@ function initWarehouse(){
     opts += "<option>同盛保税库</option>";
     opts += "<option>虎易保税库</option>";
     opts += "<option>前海湾保税库</option>";
+    opts += "<option>宝山宏制冷库</option>";
+    opts += "<option>新宜虹桥北冷链</option>";
     $("#warehouse").append(opts);
 }
 
