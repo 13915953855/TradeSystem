@@ -17,7 +17,7 @@ spring:
         - src/main/java
   datasource:
       name: trade
-      url: jdbc:mysql://127.0.0.1:3306/tradejoc?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true
+      url: jdbc:mysql://127.0.0.1:3306/tradejoc?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
       username: root
       password: Dap1234$
       # 使用druid数据源
