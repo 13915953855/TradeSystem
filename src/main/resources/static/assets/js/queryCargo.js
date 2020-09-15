@@ -7,9 +7,7 @@ $(function () {
     //2.初始化Button的点击事件
     var oButtonInit = new ButtonInit();
     oButtonInit.Init();
-    $("select").select2({
-        //tags: true
-    });
+
     $("#level").select2({
         tags: true
     });

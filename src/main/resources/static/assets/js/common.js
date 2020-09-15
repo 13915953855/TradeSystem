@@ -18,6 +18,9 @@ $(function(){
         tags: true
     });*/
 
+    $("#ownerCompany").select2({
+        tags: true
+    });
     $.ajaxSetup({
         contentType:"application/x-www-form-urlencoded;charset=utf-8",
         complete:function(XMLHttpRequest,textStatus){

@@ -14,6 +14,9 @@ $(function () {
     $("#level").select2({
         tags: true
     });
+    $("#supplier").select2({
+        tags: true
+    });
 
     $("#unitPrice").blur(function(){
         var money = 0;

@@ -18,9 +18,6 @@ $(function () {
         todayHighlight: true,
         language: 'zh-CN'
     });
-    $("select").select2({
-        //tags: true
-    });
     $("#level").select2({
         tags: true
     });
