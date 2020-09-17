@@ -28,6 +28,7 @@ $(function () {
     initExternalCompany();
     initOriginCountry();
     initDestinationPort();
+    initOwnerCompanyList();
     getTotalInfo();
 });
 

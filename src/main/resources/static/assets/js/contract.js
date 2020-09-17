@@ -40,6 +40,7 @@ $(function () {
     initCargoList();
     initAgent();
     initOriginCountry();
+    initOwnerCompanyList();
     if(queryType == "" || queryType == null || queryType == undefined){
         $("#totalInfoDiv").show();
         $("#btn_excel").show();

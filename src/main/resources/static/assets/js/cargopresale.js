@@ -18,6 +18,7 @@ $(function () {
     });
     initLevel();
     initUser();
+    initOwnerCompanyList();
     $("#cargoDiv input[type=text]").attr('disabled','disabled');
 
     var r = auth($("#user").val());

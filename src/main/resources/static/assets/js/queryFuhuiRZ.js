@@ -29,6 +29,7 @@ $(function () {
 
     initExternalCompany();
         initOriginCountry();
+    initOwnerCompanyList();
     getTotalInfo();
 });
 

@@ -27,6 +27,7 @@ $(function () {
     initLevel();
     initBusinessMode();
     initExternalCompany();
+    initOwnerCompanyList();
     initCargoList();
     $("#cargoType").change(function(){
         $("#cargoName").empty();

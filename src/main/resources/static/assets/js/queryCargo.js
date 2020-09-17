@@ -37,6 +37,7 @@ $(function () {
     initCargoList();
     initOriginCountry();
     initDestinationPort();
+    initOwnerCompanyList();
     getTotalInfo();
 });
 

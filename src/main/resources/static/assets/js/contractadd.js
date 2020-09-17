@@ -20,7 +20,7 @@ $(function () {
     initWarehouse();
     initCargoList();
     initCaiyangcangku();
-
+    initOwnerCompanyList();
     $("#level").select2({
         tags: true
     });

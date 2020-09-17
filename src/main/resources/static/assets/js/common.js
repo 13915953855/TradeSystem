@@ -14,13 +14,14 @@ $(function(){
         },300);
     });
 
-    /*$("select").select2({
-        tags: true
-    });*/
+    $("select").select2({
+        //tags: true
+    });
 
     $("#ownerCompany").select2({
         tags: true
     });
+
     $.ajaxSetup({
         contentType:"application/x-www-form-urlencoded;charset=utf-8",
         complete:function(XMLHttpRequest,textStatus){
@@ -52,6 +53,36 @@ function checkSelectOptionExist(id,val){
     if(!flag){
         $("#"+id).append("<option>"+val+"</option>");
     }
+}
+function initSupplierList(){
+    var opts = "<option></option>";
+    $.ajax({
+        url:'/trade/common/getSupplierList',
+        type:"POST",
+        dataType:"json",
+        data:{},
+        success:function(res){
+            for(var i=0;i<res.data.length;i++){
+                opts += "<option>"+res.data[i]+"</option>";
+            }
+            $("#supplier").append(opts);
+        }
+    });
+}
+function initOwnerCompanyList(){
+    var opts = "<option></option>";
+    $.ajax({
+        url:'/trade/common/getOwnerCompanyList',
+        type:"POST",
+        dataType:"json",
+        data:{},
+        success:function(res){
+            for(var i=0;i<res.data.length;i++){
+                opts += "<option>"+res.data[i]+"</option>";
+            }
+            $("#ownerCompany").append(opts);
+        }
+    });
 }
 function initCargoList(){
     var group = "";

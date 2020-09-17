@@ -771,7 +771,14 @@
     where 1 = 1 and a.status != '0'
     <include refid="queryCargoListWhere"></include>
   </select>
-<sql id="queryCargoListWhere">
+
+    <select id="getSupplierList" resultType="java.lang.String">
+        select DISTINCT supplier from internal_contract_info
+    </select>
+    <select id="getOwnerCompanyList" resultType="java.lang.String">
+        select DISTINCT owner_company from contract_base_info
+    </select>
+    <sql id="queryCargoListWhere">
   <if test="externalContract != null" >
     and a.external_contract like '%${externalContract}%'
   </if>

@@ -27,6 +27,7 @@ $(function () {
     });
     initLevel();
     initCargoList();
+    initOwnerCompanyList();
     $("#cargoType").change(function(){
         $("#cargoName").empty();
         $("#cargoName").append("<option>全部</option>");

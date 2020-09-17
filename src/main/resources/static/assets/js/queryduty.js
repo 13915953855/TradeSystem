@@ -26,7 +26,8 @@ $(function () {
     initCargoList();*/
     initExternalCompany();
     initAgent();
-        initOriginCountry();
+    initOriginCountry();
+    initOwnerCompanyList();
     getTotalInfo();
 });
 

@@ -23,6 +23,7 @@ $(function () {
     });
     initWarehouse();
     initCargoList();
+    initSupplierList();
 });
 
 var toFloat = function (value) {

@@ -23,6 +23,7 @@ $(function () {
     });
     initDestinationPort();
     initAgent();
+    initOwnerCompanyList();
     getTotalInfo();
 });
 

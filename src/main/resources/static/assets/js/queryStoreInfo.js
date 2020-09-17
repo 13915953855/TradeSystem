@@ -35,6 +35,7 @@ $(function () {
     initLevel();
     initBusinessMode();
     initExternalCompany();
+    initOwnerCompanyList();
     initOriginCountry();
     initCargoList();
     initWarehouse();

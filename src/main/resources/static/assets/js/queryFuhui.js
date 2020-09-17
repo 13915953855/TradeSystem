@@ -28,6 +28,7 @@ $(function () {
         });
     initBank();
     initExternalCompany();
+    initOwnerCompanyList();
     getTotalInfo();
 });
 

@@ -56,6 +56,7 @@
             $("#cargoType").val(cargoType).trigger("change");
 
             var supplier = /*[[${contract.supplier}]]*/;
+            checkSelectOptionExist("supplier",supplier);
             $("#supplier").val(supplier).trigger("change");
 
             var warehouse = /*[[${contract.warehouse}]]*/;

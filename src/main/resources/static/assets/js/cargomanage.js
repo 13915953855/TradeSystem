@@ -44,6 +44,7 @@ $(function () {
     initWarehouse();
     initExternalCompany();
     initOriginCountry();
+    initOwnerCompanyList();
 });
 
 var toFloat = function (value) {

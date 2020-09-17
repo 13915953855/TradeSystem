@@ -382,6 +382,22 @@ public class TradeController {
         return result.toString();
     }
 
+    @RequestMapping("/common/getSupplierList")
+    public String getSupplierList() throws JSONException {
+        List<String> data = contractBaseInfoMapper.getSupplierList();
+        JSONObject result = new JSONObject();
+        result.put("data",data);
+        return result.toString();
+    }
+
+    @RequestMapping("/common/getOwnerCompanyList")
+    public String getOwnerCompanyList() throws JSONException {
+        List<String> data = contractBaseInfoMapper.getOwnerCompanyList();
+        JSONObject result = new JSONObject();
+        result.put("data",data);
+        return result.toString();
+    }
+
     @RequestMapping("/common/getAuth")
     public String getAuth(@RequestParam("name") String name) throws JSONException {
         UserInfo userInfo = userInfoMapper.selectByAccount(name);

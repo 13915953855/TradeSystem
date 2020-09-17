@@ -24,4 +24,6 @@ public interface ContractBaseInfoMapper {
     List<CargoTotalInfo> getTotalStoreInfoForQuery(ContractParam contractParam);
     List<QueryContractInfo> queryCargoList(ContractParam contractParam);
     Integer countCargoList(ContractParam contractParam);
+    List<String> getSupplierList();
+    List<String> getOwnerCompanyList();
 }

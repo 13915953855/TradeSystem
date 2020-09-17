@@ -10,7 +10,7 @@ $(function () {
     initCargoList();
     initLevel();
     initWarehouse();
-
+    initSupplierList();
     $("#level").select2({
         tags: true
     });

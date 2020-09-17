@@ -35,6 +35,7 @@ $(function () {
     initOriginCountry();
     initWarehouse();
     initDestinationPort();
+    initOwnerCompanyList();
 });
 
 
